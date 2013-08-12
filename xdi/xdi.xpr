@@ -10,11 +10,26 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>xdi-discovery/xdi-discovery-1.0-wd01.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>OASIS DocBook FO A4</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>xdi-messaging/xdi-messaging-1.0-wd01.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>OASIS DocBook HTML Offline</String>
+                                        <String>OASIS DocBook FO A4</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
