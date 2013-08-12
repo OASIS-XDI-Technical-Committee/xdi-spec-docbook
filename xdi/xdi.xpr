@@ -397,17 +397,17 @@
         </options>
     </meta>
     <projectTree name="xdi.xpr">
-        <folder path="xdi-asynchronous-messaging/"/>
-        <folder path="xdi-conformance-policies/"/>
-        <folder path="xdi-core/"/>
-        <folder path="xdi-dictionary/"/>
-        <folder path="xdi-discovery/"/>
-        <folder path="xdi-messaging/"/>
-        <folder path="xdi-policy/"/>
-        <folder path="xdi-queries/"/>
-        <folder path="xdi-security-mechanisms/"/>
-        <folder path="xdi-signatures/"/>
-        <folder path="xdi-synchronization/"/>
-        <folder path="xdi-versioning/"/>
+        <folder path="xdi-asynchronous-messaging-1.0/"/>
+        <folder path="xdi-conformance-policies-1.0/"/>
+        <folder path="xdi-core-1.0/"/>
+        <folder path="xdi-dictionary-1.0/"/>
+        <folder path="xdi-discovery-1.0/"/>
+        <folder path="xdi-messaging-1.0/"/>
+        <folder path="xdi-policy-1.0/"/>
+        <folder path="xdi-queries-1.0/"/>
+        <folder path="xdi-security-mechanisms-1.0/"/>
+        <folder path="xdi-signatures-1.0/"/>
+        <folder path="xdi-synchronization-1.0/"/>
+        <folder path="xdi-versioning-1.0/"/>
     </projectTree>
 </project>
