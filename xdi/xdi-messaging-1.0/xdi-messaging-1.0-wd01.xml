@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
 For use when a committee document points at the OASIS web site for publishing:
 <?xml-stylesheet type="text/xsl" 
@@ -24,21 +24,21 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
          "file:///c:/oasis/spec-0.6/docbook/docbookx.dtd" 
 -->
 <?xml-stylesheet type="text/xsl" 
-href="http://docs.oasis-open.org/templates/DocBook/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
+href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
 <!DOCTYPE article
   PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
          "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
 [
 <!--the document properties-->
-<!ENTITY name "oasis-specification">
-<!ENTITY pversion "0.0">
+<!ENTITY name "xdi-messaging">
+<!ENTITY pversion "NONE">
 <!ENTITY version "1.0">
 <!ENTITY stage "wd01">
 <!ENTITY standard "Working Draft 01">
-<!ENTITY this-loc "http://docs.oasis-open.org/templates/DocBook/spec-&version;">
-<!ENTITY previous-loc "http://docs.oasis-open.org/templates/DocBook/spec-&pversion;">
-<!ENTITY latest-loc "http://docs.oasis-open.org/templates/DocBook/oasis-specification">
-<!ENTITY pubdate "25 July 2013">
+<!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;">
+<!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
+<!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
+<!ENTITY pubdate "25 September 2013">
 <!ENTITY title "XDI Messaging V&version;">
 ]>
 <article status="&standard;">
@@ -46,27 +46,27 @@ href="http://docs.oasis-open.org/templates/DocBook/spec-0.6/stylesheets/oasis-sp
 <articleinfo>
 <title>&title;</title>
 
-<releaseinfo role="cvs">
+<!--releaseinfo role="cvs">
 $Id: oasis-specification-0.6-wd04.xml,v 1.2 2012/06/14 01:57:23 admin Exp $
-</releaseinfo>
+</releaseinfo-->
 
 <productname>&name;</productname>
 <productnumber>&version;-&stage;</productnumber>
-<releaseinfo role="track">Non-standards Track Work Product</releaseinfo>
+<releaseinfo role="track">Standards Track Work Product</releaseinfo>
 
-<releaseinfo role="OASIS-specification-this-authoritative">&this-loc;/&name;-&version;-&stage;.html</releaseinfo>
+<releaseinfo role="OASIS-specification-this-authoritative">&this-loc;/&name;-&version;-&stage;.xml</releaseinfo>
 <releaseinfo role="OASIS-specification-this">&this-loc;/&name;-&version;-&stage;.pdf</releaseinfo>
-<releaseinfo role="OASIS-specification-this">&this-loc;/&name;-&version;-&stage;.xml</releaseinfo>
+<releaseinfo role="OASIS-specification-this">&this-loc;/&name;-&version;-&stage;.html</releaseinfo>
 
-<releaseinfo role="OASIS-specification-previous-authoritative">&previous-loc;/&name;-&pversion;.html</releaseinfo>
+<releaseinfo role="OASIS-specification-previous-authoritative">&previous-loc;/&name;-&pversion;.xml</releaseinfo>
 <releaseinfo role="OASIS-specification-previous">&previous-loc;/&name;-&pversion;.pdf</releaseinfo>
-<releaseinfo role="OASIS-specification-previous">&previous-loc;/&name;-&pversion;.xml</releaseinfo>
+<releaseinfo role="OASIS-specification-previous">&previous-loc;/&name;-&pversion;.html</releaseinfo>
 
-<releaseinfo role="OASIS-specification-latest-authoritative">&latest-loc;/&name;.html</releaseinfo>
+<releaseinfo role="OASIS-specification-latest-authoritative">&latest-loc;/&name;.xml</releaseinfo>
 <releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.pdf</releaseinfo>
-<releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.xml</releaseinfo>
+<releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.html</releaseinfo>
 
-<releaseinfo role="committee"><ulink url="http://www.oasis-open.org/">OASIS TC Administration</ulink></releaseinfo>
+<releaseinfo role="committee"><ulink url="http://www.oasis-open.org/committees/xdi">OASIS XDI TC</ulink></releaseinfo>
 
 <authorgroup>
 <editor>
@@ -88,7 +88,7 @@ $Id: oasis-specification-0.6-wd04.xml,v 1.2 2012/06/14 01:57:23 admin Exp $
     <affiliation>
       <orgname>XDI.org</orgname>
     </affiliation>
-    <email>boyle.joseph@gmail.com</email>
+    <email>firstname at orgname</email>
   </editor>
 </authorgroup>
 
@@ -163,8 +163,7 @@ This working draft builds on <xref linkend="xdi-core-1.0"/>.</para>
 <section>
   <title>Terminology</title>
   <section>
-    <title>
-      Key words</title>
+    <title> Key words</title>
     <para>The key words <glossterm>must</glossterm>, <glossterm>must
       not</glossterm>, <glossterm>required</glossterm>,
       <glossterm>shall</glossterm>, <glossterm>shall not</glossterm>,
@@ -182,9 +181,9 @@ This working draft builds on <xref linkend="xdi-core-1.0"/>.</para>
   <bibliolist>
     <bibliomixed id="xdi-core-1.0">
       <abbrev>xdi-core-1.0</abbrev>
-      OASIS Committee Draft 4.4
-      <title><ulink url="http://www.xdi-core-1.0.com">XDI 1.0 core</ulink></title>
-      , OASIS January 27, 2005, 
+      OASIS Committee Working Draft 01
+      <title><ulink url="../xdi-core-1.0/xdi-core-1.0-wd01.xml">XDI 1.0 Core Specification</ulink></title>,
+      OASIS &pubdate;, 
     </bibliomixed>
     <bibliomixed id="rfc2119">
       <abbrev>RFC 2119</abbrev>
@@ -200,11 +199,11 @@ This working draft builds on <xref linkend="xdi-core-1.0"/>.</para>
 <section>
   <title>Non-Normative References</title>
   <bibliolist>
-    <bibliomixed id="xdi-core-1.0-dummy">
-      <abbrev>xdi-core-1.0</abbrev>
-      OASIS Committee Draft 4.4
-      <title><ulink url="http://www.xdi-core-1.0.com">XDI 1.0 core</ulink></title>
-      , OASIS January 27, 2005, 
+    <bibliomixed id="json-ld">
+      <abbrev>json-ld</abbrev>
+      W3C Editor's Draft 20 August 2013,
+      <title><ulink url="http://json-ld.org/spec/latest/json-ld">JSON-LD: A JSON-based Serialization for Linked Data</ulink></title>
+      , W3C 20 August 2013 
     </bibliomixed>
   </bibliolist>
 </section>
