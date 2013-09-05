@@ -31,7 +31,7 @@ href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
 [
 <!--the document properties-->
 <!ENTITY name "xdi-messaging">
-<!ENTITY pversion "NONE">
+<!ENTITY pversion "0.1">
 <!ENTITY version "1.0">
 <!ENTITY stage "wd01">
 <!ENTITY standard "Working Draft 01">
