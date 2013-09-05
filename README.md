@@ -1,4 +1,4 @@
-# XDI Specification #
+## XDI Specification ##
 
 The contents of this directory and subdirectory can be found online through
 the links on the [DocBook-based
