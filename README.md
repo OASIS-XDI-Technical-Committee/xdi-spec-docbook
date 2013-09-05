@@ -1,3 +1,5 @@
+# XDI Specification #
+
 The contents of this directory and subdirectory can be found online through
 the links on the [DocBook-based
 XML authoring environment and methodology for publishing OASIS specifications](http://docs.oasis-open.org/templates/).
