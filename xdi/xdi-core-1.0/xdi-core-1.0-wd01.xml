@@ -209,9 +209,6 @@ This working draft builds on <xref linkend="xdi-core-1.0"/>.</para>
   </bibliolist>
 </section>
 
-
-http://www.ietf.org/rfc/rfc2234.txt
-
 <section>
   
   <title>Non-Normative References</title>
@@ -226,15 +223,15 @@ http://www.ietf.org/rfc/rfc2234.txt
 </section>
 
 </section>
-  <section><title>DesignGoals</title><para>Design Goals</para>
+  <section><title>DesignGoals</title><para>This section communicates the design goals that have guided the development of XDI.</para>
     <section><title>UniversalAddressability</title><para>Universal Addressability</para></section>
     <section><title>PeerAuthority</title><para>Peer Authority</para></section>
     <section><title>ContextualIdentification</title><para>Contextual Identification</para></section>
     <section><title>PersistentIdentification</title><para>Persistent Identification</para></section>
     <section><title>SerializationIndependence</title><para>Serialization Independence</para></section>
     <section><title>Portability</title><para>Portability</para></section>
-    <section><title>AuthorizationandPolicyExpression</title><para>Authorization and Policy Expression</para></section>
-    <section><title>SchemaandOntologyExpression</title><para>Schema and Ontology Expression</para></section>
+    <section><title>Authorization and Policy Expression</title><para>Authorization and Policy Expression</para></section>
+    <section><title>Schema and Ontology Expression</title><para>Schema and Ontology Expression</para></section>
     <section><title>Extensibility</title><para>Extensibility</para></section>
   </section>
   <section><title>TheXDIGraphModel</title><para>The XDI Graph Model</para>
