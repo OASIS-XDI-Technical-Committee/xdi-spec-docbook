@@ -46,10 +46,6 @@ href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
 <articleinfo>
 <title>&title;</title>
 
-<!--releaseinfo role="cvs">
-$Id: oasis-specification-0.6-wd04.xml,v 1.2 2012/06/14 01:57:23 admin Exp $
-</releaseinfo-->
-
 <productname>&name;</productname>
 <productnumber>&version;-&stage;</productnumber>
 <releaseinfo role="track">Standards Track Work Product</releaseinfo>
@@ -71,23 +67,17 @@ $Id: oasis-specification-0.6-wd04.xml,v 1.2 2012/06/14 01:57:23 admin Exp $
 <authorgroup>
   <editor>
     <firstname>Joseph</firstname><surname>Boyle</surname>
-    <affiliation>
-      <orgname>XDI.org</orgname>
-    </affiliation>
-    <email>firstname at orgname</email>
+    <affiliation><orgname>XDI.org</orgname></affiliation>
+    <email>joseph@xdi.org</email>
   </editor>
   <editor>
     <firstname>Drummond</firstname><surname>Reed</surname>
-    <affiliation>
-      <orgname>Respect Network</orgname>
-    </affiliation>
+    <affiliation><orgname>Respect Network</orgname></affiliation>
     <email>drummond@respectnetwork.net</email>
   </editor>
   <editor>
     <firstname>Markus</firstname><surname>Sabadello</surname>
-    <affiliation>
-      <orgname>Project Danube</orgname>
-    </affiliation>
+    <affiliation><orgname>Project Danube</orgname></affiliation>
     <email>sabadello@projectdanube.org</email>
   </editor>
 </authorgroup>
@@ -157,26 +147,18 @@ document made available to committee members to support the publishing process.<
 <section id="s.introduction">
 <title>Introduction</title>
 
-<para>
-This working draft specifies the abstract pattern for all XDI core together with the binding to the http/https protocol for performing XDI operations using XDI messages..</para>
+  <para>This working draft specifies the XDI graph model and serializations.</para>
 
-<para>
-This working draft builds on <xref linkend="xdi-core-1.0"/>.</para>
+<para></para>
 
 <section>
-  
   <title>Terminology</title>
   <section>
-  
     <title> Key words</title>
-    <para>The key words <glossterm>must</glossterm>, <glossterm>must
-      not</glossterm>, <glossterm>required</glossterm>,
-      <glossterm>shall</glossterm>, <glossterm>shall not</glossterm>,
-      <glossterm>should</glossterm>, <glossterm>should not</glossterm>,
-      <glossterm>recommended</glossterm>, <glossterm>may</glossterm>, and
-      <glossterm>optional</glossterm> are to be
-      interpreted as described in <xref linkend="rfc2119"/>. Note that for
-      reasons of style, these words are not capitalized in this
+    <para>The key words <glossterm>must</glossterm>, <glossterm>must not</glossterm>, <glossterm>required</glossterm>,
+      <glossterm>shall</glossterm>, <glossterm>shall not</glossterm>, <glossterm>should</glossterm>, <glossterm>should not</glossterm>,
+      <glossterm>recommended</glossterm>, <glossterm>may</glossterm>, and <glossterm>optional</glossterm> are to be
+      interpreted as described in <xref linkend="rfc2119"/>. Note that for reasons of style, these words are not capitalized in this
       document.</para>
   </section>
 </section>
@@ -185,34 +167,56 @@ This working draft builds on <xref linkend="xdi-core-1.0"/>.</para>
   
   <title>Normative References</title>
   <bibliolist>
-    <bibliomixed id="xdi-core-1.0">
-      <abbrev>xdi-core-1.0</abbrev>
-      OASIS Committee Working Draft 01
-      <title><ulink url="../xdi-core-1.0/xdi-core-1.0-wd01.xml">XDI 1.0 Core Specification</ulink></title>,
-      OASIS &pubdate;, 
+    <bibliomixed id="xdi-messaging-1.0">
+      <abbrev>xdi-messaging-1.0</abbrev>
+      <title><ulink url="../../xdi-messaging-1.0/xdi-messaging-1.0-wd01.xml">XDI 1.0 Messaging Specification</ulink></title>
+      <author><firstname>Markus</firstname><surname>Sabadello</surname></author>
+      <author><firstname>Drummond</firstname><surname>Reed</surname></author>
+      <releaseinfo>OASIS Committee Working Draft 01, OASIS &pubdate;</releaseinfo> 
     </bibliomixed>
     <bibliomixed id="rfc2119">
       <abbrev>RFC 2119</abbrev>
-      <title>Key words for use in RFCs to Indicate Requirement Levels</title>, 
-      <date>March 1997. </date>
-      <author><firstname>S. </firstname><surname>Bradner</surname></author>.
+      <title>Key words for use in RFCs to Indicate Requirement Levels</title>
+      <date>March 1997</date>
+      <author><firstname>S. </firstname><surname>Bradner</surname></author>
       <releaseinfo>IETF (Internet Engineering Task Force) RFC 2119, </releaseinfo>
       <citetitle><ulink url="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</ulink></citetitle>
     </bibliomixed>
     <bibliomixed id="rfc2234">
       <abbrev>RFC 2234</abbrev>
-      <title>Augmented BNF for Syntax Specifications: ABNF</title>, 
-      <date>November 1997. </date>
-      <author><firstname>D. </firstname><surname>Crocker</surname></author>.
-      <author><firstname>P. </firstname><surname>Overell</surname></author>.
-      <releaseinfo>IETF (Internet Engineering Task Force) RFC 2234, </releaseinfo>
+      <title>Augmented BNF for Syntax Specifications: ABNF</title>
+      <date>November 1997</date>
+      <author><firstname>D. </firstname><surname>Crocker</surname></author>
+      <author><firstname>P. </firstname><surname>Overell</surname></author>
+      <releaseinfo>IETF (Internet Engineering Task Force) RFC 2234</releaseinfo>
       <citetitle><ulink url="http://www.ietf.org/rfc/rfc2234.txt">http://www.ietf.org/rfc/rfc2234.txt</ulink></citetitle>
+    </bibliomixed>
+    <bibliomixed id="rfc4627">
+      <abbrev>RFC 4627</abbrev>
+      <title>The application/json Media Type for JavaScript Object Notation (JSON)</title>
+      <date>July 2006</date>
+      <author><firstname>D. </firstname><surname>Crockford</surname></author>
+      <releaseinfo>IETF (Internet Engineering Task Force) RFC 4627</releaseinfo>
+      <citetitle><ulink url="http://www.ietf.org/rfc/rfc4627.txt">http://www.ietf.org/rfc/rfc4627.txt</ulink></citetitle>
+    </bibliomixed>
+    <bibliomixed id="rfc4122">
+      <abbrev>RFC 4122</abbrev>
+      <title>A Universally Unique IDentifier (UUID) URN Namespace</title>
+      <date>July 2005</date>
+      <author><firstname>D. </firstname><surname>Crockford</surname></author>
+      <releaseinfo>IETF (Internet Engineering Task Force) RFC 4122</releaseinfo>
+      <citetitle><ulink url="http://www.ietf.org/rfc/rfc4122.txt">http://www.ietf.org/rfc/rfc4122.txt</ulink></citetitle>
+    </bibliomixed>
+    <bibliomixed id="rfc5952">
+      <abbrev>RFC 5952</abbrev>
+      <title>A Recommendation for IPv6 Address Text Representation</title>
+      <date>August 2010</date>
+      <author><firstname>D. </firstname><surname>Crockford</surname></author>
+      <releaseinfo>IETF (Internet Engineering Task Force) RFC 4627</releaseinfo>
+      <citetitle><ulink url="http://www.ietf.org/rfc/rfc5952.txt">http://www.ietf.org/rfc/rfc4627.txt</ulink></citetitle>
     </bibliomixed>
   </bibliolist>
 </section>
-
-
-http://www.ietf.org/rfc/rfc2234.txt
 
 <section>
   
@@ -220,222 +224,302 @@ http://www.ietf.org/rfc/rfc2234.txt
   <bibliolist>
     <bibliomixed id="json-ld">
       <abbrev>json-ld</abbrev>
-      W3C Editor's Draft 20 August 2013,
       <title><ulink url="http://json-ld.org/spec/latest/json-ld">JSON-LD: A JSON-based Serialization for Linked Data</ulink></title>
-      , W3C 20 August 2013 
+      <date>04 October 2013</date>
+      <author><firstname>Gregg</firstname><surname>Kellogg</surname></author>
+      <author><firstname>Markus</firstname><surname>Lanthaler</surname></author>
+      <author><firstname>Niklaus</firstname><surname>Lindström</surname></author>
+      <author><firstname>Dave</firstname><surname>Longley</surname></author>
+      <author><firstname>Manu</firstname><surname>Sporny</surname></author>
+      <releaseinfo>W3C Editor's Draft 04 October 2013 </releaseinfo>
     </bibliomixed>
   </bibliolist>
 </section>
 
 </section>
-  <section><title>DesignGoals</title><para>Design Goals</para>
-    <section><title>UniversalAddressability</title><para>Universal Addressability</para></section>
-    <section><title>PeerAuthority</title><para>Peer Authority</para></section>
-    <section><title>ContextualIdentification</title><para>Contextual Identification</para></section>
-    <section><title>PersistentIdentification</title><para>Persistent Identification</para></section>
-    <section><title>SerializationIndependence</title><para>Serialization Independence</para></section>
-    <section><title>Portability</title><para>Portability</para></section>
-    <section><title>AuthorizationandPolicyExpression</title><para>Authorization and Policy Expression</para></section>
-    <section><title>SchemaandOntologyExpression</title><para>Schema and Ontology Expression</para></section>
-    <section><title>Extensibility</title><para>Extensibility</para></section>
+  <section><title>Design Goals</title><para>This section communicates the design goals that have guided the development of XDI.</para>
+    <section><title>Universal Addressability</title>
+      <para>Universal Addressability</para></section>
+    <section><title>Peer Authority</title>
+      <para>Peer Authority</para></section>
+    <section><title>Contextual Identification</title>
+      <para>Contextual Identification</para></section>
+    <section><title>Persistent Identification</title>
+      <para>Persistent Identification</para></section>
+    <section><title>Serialization Independence</title>
+      <para>Serialization Independence</para></section>
+    <section><title>Portability</title>
+      <para>Portability</para></section>
+    <section><title>Authorization and Policy Expression</title>
+      <para>Authorization and Policy Expression</para></section>
+    <section><title>Schema and Ontology Expression</title>
+      <para>Schema and Ontology Expression</para></section>
+    <section><title>Extensibility</title>
+      <para>Extensibility</para></section>
   </section>
-  <section><title>TheXDIGraphModel</title><para>The XDI Graph Model</para>
-    <section><title>Overview</title><para>Overview</para>
+  <section><title>The XDI Graph Model</title><para>The XDI Graph Model</para>
+    <section><title>Overview</title>
+      <para>The XDI graph is a directed acyclic graph with nodes connected by arcs. An XDI path is a connected chain of successive arcs; it forms an address designating the node at the end of the arc chain.</para></section>
+    <section><title>Nodes</title>
+      <para>There are four basic node types:</para>
+      <section><title>Root ( )</title>
+        <para></para></section>
+      <section><title>Entity</title>
+        <para></para></section>
+      <section><title>Attribute &lt; &gt;</title>
+        <para></para></section>
+      <section><title>Value &amp;</title>
+        <para></para></section>
     </section>
-    <section><title>NodeTypes</title><para>Node Types</para>
-      <section><title>LiteralNodes</title><para>Literal Nodes</para></section>
-      <section><title>ContextNodes</title><para>Context Nodes</para></section>
-    </section>
-    <section><title>ArcTypes</title><para>Arc Types</para>
-      <section><title>LiteralArcs</title><para>Literal Arcs</para></section>
-      <section><title>ContextualArcs</title><para>Contextual Arcs</para></section>
-      <section><title>RelationalArcs</title><para>Relational Arcs</para></section>
+    <section><title>Arcs</title>
+      <para>Arcs in the XDI graph consist of an identifier with one or more context symbols or functions attached.</para>
+      <section><title>Literal</title>
+        <para>These are terminal and can only lead to a value node</para></section>
+      <section><title>Contextual</title>
+        <para>These express most of the XDI graph, with each arc in a path representing a specialization.</para></section>
+      <section><title>Relational</title>
+        <para>These specify equivalence or other relations between two nodes. When represented as statements, the two nodes are the subject and object of the statement, while the relation is the predicate.</para></section>
     </section>
   </section>
-    <section><title>ContextNodes-1</title><para>Context Nodes</para>
-      <section><title>Root</title><para>Root</para>
-      <section><title>Outer</title><para>Outer</para></section>
-      <section><title>Peer</title><para>Peer</para></section>
-      <section><title>Inner</title><para>Inner</para></section>
-      <section><title>Statement</title><para>Statement</para></section>
+  <section><title>Node Types</title>
+    <para>There are four (five?) types: value, variable, root, and subgraph.</para>
+    <section><title>Literal &amp;</title>
+      <para>Leaf node carrying literal data value. Syntax is &amp; (as predicate arc)</para></section>
+    <section><title>Value &amp;</title>
+      <para>Node identifying the value of an attribute. Syntax is &amp; (as final arc of a subject path)</para></section>
+    <section><title>Root ( )</title>
+      <para>An XDI graph starts at a root. An XDI path may start with zero, one, or multiple root expressions. Roots are enclosed in parentheses.</para>
+      <section><title>Outer ()</title>
+        <para>The outer root roots the whole graph and is expressed as ().</para></section>
+      <section><title>Peer (S)</title>
+        <para>Peer root Mutability depends on the XDI address inside the xref</para></section>
+      <section><title>Inner (S/P)</title>
+        <para>Inner root Mutability depends on the XDI address inside the xref</para></section>
+      <section><title>Statement (S/P/O)</title>
+        <para>Statement root Mutability depends on the XDI address inside the xref</para></section>
     </section>
-    <section><title>Collection</title><para>Collection</para>
-       <section><title>Entity</title><para>Entity</para></section>
-       <section><title>Attribute</title><para>Attribute</para></section>
+    <section><title>Singleton</title><para>A single instance of a class</para>
+      <section><title>Entity</title><para>Entity</para></section>
+      <section><title>Attribute</title><para>Enclosing in angle brackets &lt; &gt; indicates an attribute as opposed to an entity.</para></section>
     </section>
-    <section><title>Member</title><para>Member</para>
-      <section><title>Entity-1</title><para>Entity</para></section>
-      <section><title>Attribute-1</title><para>Attribute</para></section>
+    <section><title>Collection [ ]</title><para>Collection</para>
+       <section><title>Entity</title>
+         <para>An entity may contain subentities and attributes but not a value. Enclosing in brackets [ ] indicates a collection as opposed to a singleton.</para></section>
+       <section><title>Attribute</title>
+         <para>An attribute may only contain subattributes (and, if singular, a value)</para></section>
     </section>
-    <section><title>Singleton</title><para>Singleton</para>
-      <section><title>Entity-2</title><para>Entity</para></section>
-      <section><title>Attribute-2</title><para>Attribute</para></section>
+    <section><title>Member # !</title>
+      <para>A node identifying an instance of an entity or attribute within a collection</para>
+      <section><title>Entity</title><para>Entity</para></section>
+      <section><title>Attribute</title><para>Attribute</para></section>
     </section>
-    <section><title>Definition</title><para>Definition</para>
-      <section><title>Entity-3</title><para>Entity</para></section>
-      <section><title>Attribute-3</title><para>Attribute</para></section>
+    <section><title>Definition +</title><para>XDI dictionary definition</para>
+      <section><title>Entity</title><para>Entity</para></section>
+      <section><title>Attribute</title><para>Attribute</para></section>
     </section>
-    <section><title>Variable</title><para>Variable</para></section>
-    <section><title>Value</title><para>Value</para></section>
+    <section><title>Variable { }</title> 
+      <para>This syntax can enclose any other node type. To be further defined.</para></section>
   </section>
-  <section><title>ContextSymbols</title><para>Context Symbols</para>
-    <section><title>Authorities</title><para>Authorities</para>
-      <section><title>Personal (=)</title><para>Personal (=)</para></section>
-      <section><title>Legal (@)</title><para>Legal (@)</para></section>
-      <section><title>General (*)</title><para>General (*)</para></section>
+  <section><title>Namespace Symbols</title><para>Formerly Context Symbols</para>
+    <section><title>Authorities</title>
+      <para>Authorities</para>
+      <section><title>Personal =</title>
+        <para>Natural persons</para></section>
+      <section><title>Legal @</title>
+        <para>Groups, organizations, or other entities in whose identities legal rights may be asserted</para></section>
+      <section><title>General *</title>
+        <para>Entities in whose identities legal rights may not be asserted</para></section>
     </section>
     <section><title>Classes</title><para>Classes</para>
-      <section><title>Reserved ($)</title><para>Reserved ($)</para></section>
-      <section><title>Unreserved (+)</title><para>Unreserved (+)</para></section>
+      <section><title>Reserved $</title>
+        <para>XDI grammar and keywords use "dollar words".</para></section>
+      <section><title>Unreserved +</title>
+        <para>XDI generic dictionary words for user use.</para></section>
     </section>
     <section><title>Instances</title><para>Instances</para>
-      <section><title>Ordered (#)</title><para>Ordered (#)</para></section>
-      <section><title>Unordered (!)</title><para>Unordered (!)</para></section>
+      <section><title>Ordered #</title>
+        <para>Zero-based numeric order</para></section>
+      <section><title>Unordered !</title>
+        <para>Unordered </para></section>
     </section>
   </section>
-  <section><title>ContextFunctions</title><para>Context Functions</para>
-    <section><title>Simple</title><para>Simple</para>
-      <section><title>Collections [ ]</title><para>Collections [ ]</para></section>
-      <section><title>Attributes &lt; &gt;</title><para>Attributes &lt; &gt;</para></section>
-    </section>
-    <section><title>Complex</title><para>Complex</para>
-      <section><title>Roots ()</title><para>Roots ( )</para></section>
-      <section><title>Variables { }</title><para>Variables { }</para></section>
-    </section>
+  <section><title>Equivalence Relations</title><para>These are indicated by relational arcs.</para>
+    <section><title>Identity Relations ($is)</title>
+      <para>$is indicates complete equivalence.</para></section>
+    <section><title>Reference Relations ($ref)</title>
+      <para>$ref indicates the subject is a reference pointing to the object</para></section>
+    <section><title>Replacement Relations ($rep)</title>
+      <para>$rep indicates the subject not only stands for the object, but that the reference should be replaced with the object.</para></section>
   </section>
-  <section><title>EquivalenceRelations</title><para>Equivalence Relations</para>
-    <section><title>IdentityRelations ($is)</title><para>Identity Relations ($is)</para></section>
-    <section><title>ReferenceRelations ($ref)</title><para>Reference Relations ($ref)</para></section>
-    <section><title>ReplacementRelations ($rep)</title><para>Replacement Relations ($rep)</para></section>
-  </section>
-  <section><title>Formal Grammar</title>
-    <para>This is given in Augmented Backus-Naur Form as defined in <citation>rfc2234</citation></para>
-
+  <section><title>XDI Graph Grammars</title>
+    <para>Grammars are given in Augmented Backus-Naur Form as defined in <xref linkend="rfc2234"/>. Slash / is alternation, parentheses are grouping, * means zero or more of following, 1* means one or more of following, brackets [] mean zero or one of following, i.e. optional.</para>
+    <para>The XDI graph's grammar is independent of serialization. Each serialization is defined by adding a small grammar defining its delimiters, the productions in all capital letters.</para>
+    <para>XDI values are JSON values, and the JSON grammar is included for non-normative reference.</para>
 
     <section><title>Statement Grammar</title>
+      <para></para>
 <programlisting>
-statement-list          = STARTLIST statement *( STMTSEP statement) ENDLIST
+statement-list          = STARTLIST statement *(STMTSEP statement) ENDLIST
 statement               = STARTSTMT (contextual-statement / relational-statement / literal-statement) ENDSTMT
 contextual-statement    = direct-contextual / inverse-contextual
-direct-contextual       = absolute         / root-relative / context-relative / class-relative
-inverse-contextual      = absolute-inverse / root-inverse  / context-inverse  / class-inverse
-absolute                =        outer-root SPSEP       outer-root POSEP context-list
-root-relative           =     relative-root SPSEP       outer-root POSEP context-list
-context-relative        =      context-path SPSEP       outer-root POSEP relative-context-list
-class-relative          =     class-context SPSEP       outer-root POSEP instance-context-list
-absolute-inverse        =      context-path SPSEP "$is" outer-root POSEP outer-root
-root-inverse            =      context-path SPSEP "$is" outer-root POSEP relative-root
-context-inverse         =  relative-context SPSEP "$is" outer-root POSEP contextlist
-class-inverse           =  instance-context SPSEP "$is" outer-root POSEP class-contexts
+direct-contextual       = absolute         / root-relative / context-relative / collection-relative
+inverse-contextual      = absolute-inverse / root-inverse  / context-inverse  / collection-inverse
+absolute                =        outer-root SUBPRED       outer-root PREDOBJ    xdi-paths
+root-relative           =     relative-root SUBPRED       outer-root PREDOBJ    xdi-paths
+context-relative        =          xdi-path SUBPRED       outer-root PREDOBJ    relative-contexts
+collection-relative     =collection-context SUBPRED       outer-root PREDOBJ    member-contexts
+absolute-inverse        =          xdi-path SUBPRED "$is" outer-root PREDOBJ    outer-root
+root-inverse            =          xdi-path SUBPRED "$is" outer-root PREDOBJ    relative-root
+context-inverse         =  relative-context SUBPRED "$is" outer-root PREDOBJ    xdi-paths
+collection-inverse      =    member-context SUBPRED "$is" outer-root PREDOBJ    collection-contexts
+
 relational-statement    = inverse-relational / direct-relational
-direct-relational       =      context-path SPSEP       context-path POSEP ( context-path / outer-root / context-list)
-inverse-relational      =      context-path SPSEP "$is" context-path POSEP ( context-path / outer-root / context-list)
-literal-statement       = literal-context "&amp;" SPSEP "&amp;" POSEP json-value
+direct-relational       =          xdi-path SUBPRED       xdi-path PREDOBJ    ( xdi-path / outer-root / xdi-paths)
+inverse-relational      =          xdi-path SUBPRED "$is" xdi-path PREDOBJ    ( xdi-path / outer-root / xdi-paths)
+
+literal-statement       = literal-context "&amp;" SUBPRED    "&amp;" PREDOBJ    json-value
 </programlisting>
     </section>
 
     <section><title>Path List Grammar</title>
+      <para>This is used when multiple objects per subject/predicate pair are used in multiple-line display format or in JSON serialization.</para>
+      <para>Needs further work.</para>
 <programlisting>
-;context-list           = context-path            ; for single-line display format only - make alternative?
-context-list            = DOWNLEVEL 1*(CTXTSEP context-path )    UPLEVEL
+;xdi-paths              = xdi-path            ; for single-line display format only - make alternative?
+xdi-paths               = DOWNLEVEL 1*(CTXTSEP xdi-path )    UPLEVEL   ; for multiple-object statements
 relative-contexts       = DOWNLEVEL 1*(CTXTSEP relative-context) UPLEVEL
-class-contexts          = DOWNLEVEL 1*(CTXTSEP class-context)    UPLEVEL
-instance-contexts       = DOWNLEVEL 1*(CTXTSEP instance-context) UPLEVEL
+collection-contexts     = DOWNLEVEL 1*(CTXTSEP collection-context)    UPLEVEL
+member-contexts         = DOWNLEVEL 1*(CTXTSEP member-context) UPLEVEL
 </programlisting>
     </section>
+    
     <section><title>Path Grammar</title>
-[[GraphModelRules]] constrain paths to this form:
-<programlisting>
-path = *root   *( entity-singleton / attribute-singleton / ( entity-class *entity-instance ) / ( attribute-class *attribute-instance ) )   [ ( attribute-singleton / ( attribute-class 1*attribute-instance ) ) value ]
-</programlisting>
-<programlisting>
+      <para>An XDI path can contain roots, then entities, then attributes, then value, in that order. Each of those elements is optional, except that a value must be preceded by an attribute singleton or attribute member.</para>
 
-context-path            = outer-root / ( 1*relative-root [ relative-context ] ) / relative-context ; ND equivalent to *relative-root *subpath minus the empty case
-relative-context        = 1*subpath
-class-context           = [ 1*relative-root ] class-path                                           ; ND *relative-root *subpath class
-class-path              = ( subpath class-path ) / class
-instance-context        = 1*instance [ relative-context ]                                          ; ND 1*instance *subpath
-literal-context         = [ 1*relative-root ] literal-path
-literal-path            = ( subpath literal-path ) / attribute-singleton / attribute-path         ; ND *subpath ( attribute-singleton / attribute-path )
-attribute-path          = attribute-class 1*instance
-subpath                 = singleton / ( class [ 1*instance ] ) / definition / variable
+<programlisting>
+xdi-path          = *root-node *entity-node *attribute-node [ attribute-value ]
+entity-node       = ( entity-singleton    / ( entity-collection     *entity-member ) )
+attribute-node    = ( attribute-singleton / ( attribute-collection  *attribute-member ) ) 
+attribute-value   = ( attribute-singleton / ( attribute-collection 1*attribute-member ) ) value 
+</programlisting>
+      <para>The following section is probably obsolete. Please confirm.</para>
+<programlisting>
+xdi-path       = outer-root / ( 1*relative-root [ relative-context ] ) / relative-context ; ND equivalent to *relative-root *subpath minus the empty case
+relative-context   = 1*subpath
+collection-context = [ 1*relative-root ] collection-path                                      ; ND *relative-root *subpath collection
+collection-path    = ( subpath collection-path ) / collection
+member-context     = 1*member [ relative-context ]                                            ; ND 1*member *subpath
+literal-context    = [ 1*relative-root ] literal-path
+literal-path       = ( subpath literal-path ) / attribute-singleton / attribute-path          ; ND *subpath ( attribute-singleton / attribute-path )
+attribute-path     = attribute-collection 1*member
+subpath            = singleton / ( collection [ 1*member ] ) / definition / variable
 </programlisting>
     </section>
 
-    <section><title>Root Grammar</title>
+    <section><title>Unfactored Root Grammar</title>
+      <para>This alternative does not factor the parentheses out of the root definition.</para>
 <programlisting>
-root                    = outer-root / relative-root        ;unused "(" [ identifier / iri / ( context-path [ "/" context-path [ "/" context-path ] ] ) ] ")"
+root-node               = outer-root / relative-root
 outer-root              = "()"
 relative-root           = peer-root / inner-root / statement-root
 peer-root               = xref
-inner-root              = "(" context-path SPSEP context-path ")"
+inner-root              = "(" xdi-path SUBPRED xdi-path ")"
 statement-root          = "(" statement ")"                                                 
-
-xref                    = "(" ( context-path / presumed-iri / xdi-identifier ) ")"  
+xref                    = "(" ( xdi-path / presumed-iri / xdi-identifier ) ")"  
 </programlisting>
     </section>
 
-    <section><title>Arc Grammar</title>
+    <section><title>Factored Root Grammar</title>
+      <para>This alternative factors the parentheses out of the root definition.</para>
 <programlisting>
-singleton               = entity-singleton / attribute-singleton
-entity-singleton        = authority-singleton / type-singleton / instance-singleton
-authority-singleton     = person-singleton / group-singleton
+root-node               = outer-root / relative-root
+outer-root              = "(" ")"
+relative-root           = "(" ( peer-root / inner-root / statement-root ) ")"
+peer-root               = xref
+inner-root              = xdi-path SUBPRED xdi-path
+statement-root          = statement                                             
+xref                    = ( xdi-path / presumed-iri / xdi-identifier )  
+</programlisting>
+    <para>Note that since a statement is a subject / predicate / object triple, a root may contain a 3-tuple (statement), 2-tuple (inner root), or 1-tuple (path) of XDI paths; or an XDI identifier or an IRI.</para>
+    </section>
+
+    <section><title>Arc Grammar</title>
+      <para>These describe an individual directed edge in the XDI graph.</para>
+<programlisting>
+entity-singleton        = authority-singleton / type-singleton / member-singleton
+authority-singleton     = person-singleton / legal-singleton
 type-singleton          = unreserved-type / reserved-type
 person-singleton        = "=" SYMSEP ( xref / xdi-identifier )
-group-singleton         = "@" SYMSEP ( xref / xdi-identifier )
-instance-singleton      = "*" SYMSEP ( xref / xscheme / xdi-identifier )
-unreserved-type         = "+" SYMSEP ( xref / xscheme / xdi-identifier )
+legal-singleton         = "@" SYMSEP ( xref / xdi-identifier )
+general-singleton       = "*" SYMSEP ( xref / xdi-scheme / xdi-identifier )
+unreserved-type         = "+" SYMSEP ( xref / xdi-scheme / xdi-identifier )
 reserved-type           = "$" SYMSEP xdi-identifier
+
 attribute-singleton     = "&lt;" SYMSEP type-singleton "&gt;"   ;need to remove > for parsed format
 
-class                   = meta-class / concrete-class
-meta-class              = reserved-meta-class / unreserved-meta-class
-reserved-meta-class     = "[$]"
-unreserved-meta-class   = "[+]"
-concrete-class          = entity-class    / attribute-class
-entity-class            = authority-class / type-class / instance-class
-authority-class         = person-class    / group-class
-type-class              = reserved-class  / unreserved-class
-instance-class          = ordered-class   / unordered-class / singleton-class
-reserved-class          = "[" SYMSEP   reserved-type "]"
-unreserved-class        = "[" SYMSEP unreserved-type "]"
-person-class            = "[=]" SYMSEP ; need to remove ] if we make it two levels
-group-class             = "[@]" SYMSEP 
-ordered-class           = "[#]" SYMSEP 
-unordered-class         = "[!]" SYMSEP 
-singleton-class         = "[*]" SYMSEP 
-attribute-class         = "[" attribute-singleton "]"
+entity-collection       = authority-collection / type-collection / member-collection
+authority-collection    = person-collection    / legal-collection
+person-collection       = "[=]" SYMSEP ; need to remove ] if we make it two levels
+legal-collection        = "[@]" SYMSEP 
+type-collection         = reserved-collection  / unreserved-collection
+reserved-collection     = "[" SYMSEP   reserved-type "]"
+unreserved-collection   = "[" SYMSEP unreserved-type "]"
 
-instance                = ordered-instance / unordered-instance
-ordered-instance        = "#" SYMSEP ( ( %x31-39 DIGIT ) / "0" )                         ; No leading zeros
-unordered-instance      = "!" SYMSEP ( xref / xscheme / xdi-identifier )
+general-collection      = ordered-collection   / unordered-collection / singleton-collection
+singleton-collection    = "[*]" SYMSEP 
+
+attribute-collection    = "[" attribute-singleton "]"
+
+member                  = ordered-member / unordered-member
+ordered-member          = "#" SYMSEP ( ( %x31-39 DIGIT ) / "0" )                         ; No leading zeros
+unordered-member        = "!" SYMSEP ( xref / xdi-scheme / xdi-identifier )
 
 definition              = authority-definition / type-definition
 authority-definition    = "$(" SYMSEP ( authority-singleton / authority-path ) ")"
-authority-path          = authority-class 1*instance
+authority-path          = authority-collection 1*member
 type-definition         = entity-definition / attribute-definition
 entity-definition       = "$(" SYMSEP type-singleton ")"
 attribute-definition    = "$(" SYMSEP attribute-singleton ")"
 
-variable                = "{" [ context-path ] "}"                                ; ISSUE #3 - this needs a full definition
+variable                = "{" [ xdi-path ] "}"                                ; ISSUE #3 - this needs a full definition
+</programlisting>
+    </section>
+    
+    <section><title>XDI Scheme Grammar</title>
+      <para>These define canonical forms of certain classes of XDI identifiers.</para>
+      <para>The canonical form for IPv6 identifiers follows the canonical form of <xref linkend="rfc5952"/>, except that :: compression is not used.</para>
+      <para>The canonical form for UUID identifiers follows the canonical form of <xref linkend="rfc4122"/>.</para>
+<programlisting>
+xdi-scheme              = ":" ( xdi-scheme-ipv6 / xdi-scheme-uuid )
+xdi-scheme-ipv6         = "ipv6:" 4HEX 7*( ":" 4HEX )  
+xdi-scheme-uuid         = "uuid:" 8HEX "-" 4HEX "-" 4HEX "-" 4HEX "-" 12HEX
 </programlisting>
     </section>
 
+  </section>
+  <section><title>Serialization Grammars</title>
+      <para></para>
+
     <section><title>Display Format Statement Serialization Grammar</title>
-      <para>For XdiDisplayFormat</para>
+      <para>XDI Display Format is a compact human-readable representation of XDI paths and statements using a minimum of delimiters, but is not in a standard data interchange format such as JSON. Each statement is on a separate line, and the subject/predicate/object of a triple are separated by the slash /.</para>
+      <para>Multiline XDI Display Format allows a subject/predicate pair to by followed by multiple objects, indicated by indentation.</para>
 <programlisting>
 STARTLIST = ""
 ENDLIST   = ""
 STARTSTMT = ""
 ENDSTMT   = ""
 STMTSEP   = ENDLINE
-SPSEP     = "/"
-POSEP     = "/"
+SUBPRED   = "/"
+PREDOBJ   = "/"
 CTXTSEP   = ENDLINE %x09
 SYMSEP    = ""
 DOWNLEVEL = ""     ; if need cumulative indentation but impossible in ABNF, use tokens INDENT,
 UPLEVEL   = ""     ; DEDENT of http://docs.python.org/2/reference/lexical_analysis.html#indentation
 </programlisting>
+        <para>Example:</para>
+<screen>
+[=]!:uuid:1111+profiles[&lt;+work&gt;]&lt;!:uuid:5555&gt;/$ref/[=]!:uuid:1111+first&lt;+name&gt;
+</screen>
     </section>
 
     <section><title>Flat JSON Statement Serialization Grammar</title>
@@ -443,16 +527,24 @@ UPLEVEL   = ""     ; DEDENT of http://docs.python.org/2/reference/lexical_analys
 <programlisting>
 STARTLIST = "{" 
 ENDLIST   = "}"
-STARTSTMT =       "{" QUOTE
+STARTSTMT = "{" QUOTE
 ENDSTMT   = QUOTE "}"
 STMTSEP   = QUOTE "," QUOTE
-SPSEP     = "/"
-POSEP     = QUOTE ":" QUOTE
+SUBPRED   = "/"
+PREDOBJ   = QUOTE ":" QUOTE
 CTXTSEP   = ","
 SYMSEP    = ""
 DOWNLEVEL = "["
 UPLEVEL   = "]"
 </programlisting>
+        <para>Example:</para>
+<screen>
+{
+  "[=]!:uuid:1111+profiles[&lt;+work&gt;]&lt;!:uuid:5555&gt;/$ref": [
+    "[=]!:uuid:1111+first&lt;+name&gt;"
+  ]
+}
+</screen>
     </section>
 
     <section><title>Parsed JSON Statement Serialization Grammar</title>
@@ -460,20 +552,76 @@ UPLEVEL   = "]"
 <programlisting>
 STARTLIST = "["
 ENDLIST   = "]"
-STARTSTMT =       "[" QUOTE
+STARTSTMT = "[" QUOTE
 ENDSTMT   = QUOTE "]"
 STMTSEP   = QUOTE "," QUOTE
-SPSEP     = QUOTE "," QUOTE
-POSEP     = QUOTE "," QUOTE
+SUBPRED   = QUOTE "," QUOTE
+PREDOBJ   = QUOTE "," QUOTE
 CTXTSEP   = ","
 SYMSEP    = QUOTE "," QUOTE
 DOWNLEVEL = "["
 UPLEVEL   = "]"
 </programlisting>
+        <para>Example:</para>
+<screen>
+[
+  [
+    [
+      {
+        "[": "="
+      },
+      {
+        "!": ":uuid:1111"
+      },
+      {
+        "+": "profiles"
+      },
+      {
+        "[": {
+          "&lt;": {
+            "+": "work"
+          }
+        }
+      },
+      {
+        "&lt;": {
+          "!": ":uuid:5555"
+        }
+      }
+    ],
+    {
+      "$": "ref"
+    },
+    [
+      {
+        "[": "="
+      },
+      {
+        "!": ":uuid:1111"
+      },
+      {
+        "+": "first"
+      },
+      {
+        "&lt;": {
+          "+": "name"
+        }
+      }
+    ]
+  ]
+]
+
+
+</screen>
+<sidebar><title>A Sidebar</title>
+<para>
+Sidebar content.
+</para>
+</sidebar>
     </section>
 
     <section><title>Graph Tree Serialization Grammar</title>
-      <para>For XdiTreeSerialization</para>
+      <para>Not yet finished.</para>
 <programlisting>
 node            = context-node / literal-node
 context-node    = "{" node *( "," node ) "}"
@@ -481,62 +629,100 @@ literal-node    = "{" QUOTE "&amp;" QUOTE ":" json-value "}"
 arc             = contextual-arc / relational-arcs
 contextual-arc  = QUOTE singleton QUOTE ":" context-node
 relational-arcs = "{" QUOTE "/" QUOTE ":" relation *( "," relation ) "}"
-relation        = "{" QUOTE pred QUOTE ":" "[" path *( "," path ) "]" "}"
+relation        = "{" QUOTE pred QUOTE ":" "[" xdi-path *( "," xdi-path ) "]" "}"
 </programlisting>
+        <para>Example:</para>
+<screen>
+{
+  "[=]": {
+    "!:uuid:1111": {
+      "+profiles": {
+        "[&lt;+work&gt;]": {
+          "&lt;!:uuid:5555&gt;": {
+            "/": {
+              "$ref": [
+                "[=]!:uuid:1111+first&lt;+name&gt;"
+              ]
+            }
+          }
+        }
+      },
+      "+first": {}
+    }
+  }
+}
+</screen>
     </section>
 
     <section><title>JSON Grammar</title>
-      <para>Based on [[http://json.org]] syntax diagrams (no actual grammar rules found there) restricted for canonical form (add reference) canonicality restrictions: no + signs, no leading zeros, no trailing zeros on fraction</para>
+      <para>Based on <xref linkend="rfc4627"/> syntax diagrams (no actual grammar rules found there) restricted for canonical form (add reference) canonicality restrictions: no + signs, no leading zeros, no trailing zeros on fraction</para>
+      <para>Get ABNF from 4427 and/or ECMA</para>
+      <para>We use JSON values, i.e. a value may be a single string, number, true, false, or null, not necessarily a JSON array or object, as is required by "JSON text" in the JSON MIME type specification.</para>
+      <para>XDI processors SHOULD accept non-canonical JSON values as input.</para>
+      <para>XDI processors MAY output partly, fully, or not at all canonicalized versions of JSON values that clients have input, for example by removing spaces.</para>
+      <para>XDI processors SHOULD fully canonicalize JSON values that are results and not user input.</para>
+      <para>Canonical form includes:</para>
+      <para>No unnecessary whitespace</para>
+      <para>Nonzero numbers have no leading zeros or preceding + sign in either fraction or exponent</para>
+      <para>An exponent is preceded by uppercase E</para>
+      <para>Hex in \u character escapes should be lowercase</para>
 <programlisting>
 json-value       = json-object / json-array / json-string / json-number / "true" / "false" / "null"
 json-object      = "{" [ json-string ":" json-value *( "," json-string ":" json-value ) ] "}"
 json-array       = "[" [                 json-value *( ","                 json-value ) ] "]"
 json-string      = QUOTE *( " " / "!" / %x23-5B  / %x5D-EFFFD / json-char-escape )    QUOTE
 json-char-escape = "\"    ("\" / "/" / "b" / "f" / "n" / "r" / "t" / QUOTE / ( "u" 4HEX ) )
-json-number      = ( "0" / [ "-" ] noleading ) [ "." notrailing ] [ "E" [ "-" ] noleading ]   ; ban +, use sign only if -, no length restriction
-noleading        = %x31-39 *DIGIT                                     ; ban leading zero for canonicality
-notrailing       = *DIGIT  %x31-39                                    ; ban trailing zero for canonicality
+json-number      = ( "0" / [ "-" ] noleading ) [ "." notrailing ] [ "E" [ "-" ] noleading ]
+noleading        = %x31-39 *DIGIT
+notrailing       = *DIGIT  %x31-39
 </programlisting>
     </section>
 
     <section><title>Identifier Grammar</title>
+      <para>A simple IRI grammar is a lightweight initial parsing alternative to the full IRI grammar in <xref linkend="rfc4627"/>. An XDI processor MAY check an IRI for full compliance with all details of IRI syntax, but this may not be necessary unless the XDI processor is about to use or dereference the IRI. </para>
 <programlisting>
-
-xscheme             = ":" ( xscheme-ipv6 / xscheme-uuid )
-xscheme-ipv6        = "ipv6:" 4HEX 7*( ":" 4HEX )                       ; ISSUE - needs revision into canonical form per RFC 5952
-xscheme-uuid        = "uuid:" 8HEX "-" 4HEX "-" 4HEX "-" 4HEX "-" 12HEX
-HEX                 = DIGIT / %x61-66   ; 0-9, a-f                      ; Hex in ipv6, uuid is lowercase. Only E in JSON numbers uppercase.
 
 presumed-iri        = %x61-7A *( %x61-7A / DIGIT ) ":" *iri-body        ; Quick check for something that looks like an IRI without checking body details 
 iri-body            = ( "(" iri-body ")" ) / *iri-char                  ; paired "(" and ")" are allowed in body
 iri-char            = xdi-identifier-char / context-symbol / other-iri-delim
-other-iri-delim     = "/" / "?" / "#" / "[" / "]" / "'" / ","           ; double quote included? no
 context-symbol      = "!" / "*" / "=" / "@" / "+" / "$"
+other-iri-delim     = "/" / "?" / "#" / "[" / "]" / "'" / ","
 
 xdi-identifier      = *xdi-identifier-char    ; Note: Includes any JSON numbers
 xdi-identifier-char = %x41-5A / %x61-7A / DIGIT / "-" / "." / "_" / %x80-EFFFD      ; ISSUE - is there a way to leave high end open?
 
+HEX                 = DIGIT / %x61-66
 DIGIT               = %x30-39
 NZDIG               = %x31-39
 QUOTE               = %x22
 ENDLINE             = %x0D / %x0A / ( %x0D %x0A )
 </programlisting>
+      <para>Hex digits in ipv6, uuid are lowercase; only the exponent prefix E in JSON numbers is uppercase.</para>
+      <para>Policy on unicode characters.</para>
     </section>
 
 
-
   </section>
-  <section><title>Serialization</title><para>Serialization</para>
-    <section><title>Formats</title><para>Formats</para></section>
-    <section><title>Rules</title><para>Rules</para></section>
+  <section><title>Serialization</title>
+    <para>Serialization</para>
+    <section><title>Formats</title>
+      <para>Formats</para></section>
+    <section><title>Rules</title>
+      <para>Rules</para></section>
   </section>
-  <section><title>AddressingRules</title><para>Addressing Rules</para>
+  <section><title>Addressing Rules</title>
+    <para>Addressing Rules</para>
   </section>
-  <section><title>XDISchemes</title><para>XDI Schemes</para>
-    <section><title>UUID</title><para>UUID</para></section>
-    <section><title>IPV6</title><para>IPV6</para></section>
-    <section><title>SHA</title><para>SHA</para></section>
-    <section><title>Extensibility-1</title><para>Extensibility</para></section>
+  <section><title>XDI Identifier Schemes</title>
+    <para>Schemes indicate certain classes of identifiers in canonical form. Schemes are signaled by a prefix between colons, preceding the identifier.</para>
+    <section><title>UUID</title>
+      <para>Universally Unique Identifier</para></section>
+    <section><title>IPv6 number</title>
+      <para>This is a single IPv6 number, in unabbreviated form.</para></section>
+    <section><title>SHA-2 hash</title>
+      <para>SHA-256, SHA-384, and SHA-512</para></section>
+    <section><title>Extensibility</title>
+      <para>Extensibility</para></section>
   </section>
 
 <appendix id="s.acknowledgements" role="non-normative">
