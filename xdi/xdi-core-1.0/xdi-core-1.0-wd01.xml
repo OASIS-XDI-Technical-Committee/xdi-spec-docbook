@@ -68,17 +68,17 @@ href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
   <editor>
     <firstname>Joseph</firstname><surname>Boyle</surname>
     <affiliation><orgname>XDI.org</orgname></affiliation>
-    <email>joseph@xdi.org</email>
+    <email>joseph.boyle@xdi.org</email>
   </editor>
   <editor>
     <firstname>Drummond</firstname><surname>Reed</surname>
     <affiliation><orgname>Respect Network</orgname></affiliation>
-    <email>drummond@respectnetwork.net</email>
+    <email>drummond.reed@xdi.org</email>
   </editor>
   <editor>
     <firstname>Markus</firstname><surname>Sabadello</surname>
     <affiliation><orgname>Project Danube</orgname></affiliation>
-    <email>sabadello@projectdanube.org</email>
+    <email>markus.sabadello@xdi.org</email>
   </editor>
 </authorgroup>
 
@@ -113,9 +113,7 @@ document made available to committee members to support the publishing process.<
 
 <legalnotice role="citation"><title>Citation format</title>
 <para>When referencing this specification the following citation format should be used:</para>
-
 <bibliolist>
-
 <bibliomixed>
   <abbrev>OASIS-XDI-Core-V1.0</abbrev>
   <title>OASIS XDI Core V1.0</title>
@@ -123,9 +121,7 @@ document made available to committee members to support the publishing process.<
   <releaseinfo>OASIS &standard;. </releaseinfo>
   <citetitle><ulink url="&latest-loc;/&name;.html">&latest-loc;/&name;.html</ulink>.</citetitle>
 </bibliomixed>
-
 </bibliolist>
-
 </legalnotice>
 <legalnotice role="notices"><title>Notices</title>
 <para>Copyright &#169; OASIS&#174; Open 2013. All Rights Reserved. 
@@ -164,73 +160,89 @@ document made available to committee members to support the publishing process.<
 </section>
 
 <section>
-  
   <title>Normative References</title>
   <bibliolist>
     <bibliomixed id="xdi-messaging-1.0">
-      <abbrev>xdi-messaging-1.0</abbrev>
-      <title><ulink url="../../xdi-messaging-1.0/xdi-messaging-1.0-wd01.xml">XDI 1.0 Messaging Specification</ulink></title>
-      <author><firstname>Markus</firstname><surname>Sabadello</surname></author>
-      <author><firstname>Drummond</firstname><surname>Reed</surname></author>
-      <releaseinfo>OASIS Committee Working Draft 01, OASIS &pubdate;</releaseinfo> 
+      <abbrev>OASIS-XDI-Messaging-V1.0</abbrev>
+      <title><ulink url="../../xdi-messaging-1.0/xdi-messaging-1.0-wd01.xml">OASIS XDI 1.0 Messaging Specification</ulink></title>
+      <author><firstname>Markus </firstname>
+        <surname>Sabadello</surname></author>,
+      <author><firstname>Drummond </firstname>
+        <surname>Reed</surname></author>. 
+      <date>&pubdate;. </date>
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-messaging.html">&latest-loc;/xdi-messaging.html</ulink>.</citetitle>
     </bibliomixed>
     <bibliomixed id="rfc2119">
       <abbrev>RFC 2119</abbrev>
-      <title>Key words for use in RFCs to Indicate Requirement Levels</title>
+      <title><ulink url="http://www.ietf.org/rfc/rfc2119.txt">Key words for use in RFCs to Indicate Requirement Levels</ulink></title>
       <date>March 1997</date>
-      <author><firstname>S. </firstname><surname>Bradner</surname></author>
-      <releaseinfo>IETF (Internet Engineering Task Force) RFC 2119, </releaseinfo>
-      <citetitle><ulink url="http://www.ietf.org/rfc/rfc2119.txt">http://www.ietf.org/rfc/rfc2119.txt</ulink></citetitle>
+      <author><firstname>S. </firstname>
+        <surname>Bradner</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
     </bibliomixed>
     <bibliomixed id="rfc2234">
       <abbrev>RFC 2234</abbrev>
-      <title>Augmented BNF for Syntax Specifications: ABNF</title>
+      <title><ulink url="http://www.ietf.org/rfc/rfc2234.txt">Augmented BNF for Syntax Specifications: ABNF</ulink></title>
       <date>November 1997</date>
-      <author><firstname>D. </firstname><surname>Crocker</surname></author>
-      <author><firstname>P. </firstname><surname>Overell</surname></author>
-      <releaseinfo>IETF (Internet Engineering Task Force) RFC 2234</releaseinfo>
-      <citetitle><ulink url="http://www.ietf.org/rfc/rfc2234.txt">http://www.ietf.org/rfc/rfc2234.txt</ulink></citetitle>
+      <author><firstname>D. </firstname>
+        <surname>Crocker</surname></author>,
+      <author><firstname>P. </firstname>
+        <surname>Overell</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
     </bibliomixed>
     <bibliomixed id="rfc4627">
       <abbrev>RFC 4627</abbrev>
-      <title>The application/json Media Type for JavaScript Object Notation (JSON)</title>
+      <title><ulink url="http://www.ietf.org/rfc/rfc4627.txt">The application/json Media Type for JavaScript Object Notation (JSON)</ulink></title>
       <date>July 2006</date>
-      <author><firstname>D. </firstname><surname>Crockford</surname></author>
-      <releaseinfo>IETF (Internet Engineering Task Force) RFC 4627</releaseinfo>
-      <citetitle><ulink url="http://www.ietf.org/rfc/rfc4627.txt">http://www.ietf.org/rfc/rfc4627.txt</ulink></citetitle>
+      <author><firstname>D. </firstname> 
+        <surname>Crockford</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
     </bibliomixed>
     <bibliomixed id="rfc4122">
       <abbrev>RFC 4122</abbrev>
-      <title>A Universally Unique IDentifier (UUID) URN Namespace</title>
+      <title><ulink url="http://www.ietf.org/rfc/rfc4122.txt">A Universally Unique IDentifier (UUID) URN Namespace</ulink></title>
       <date>July 2005</date>
-      <author><firstname>D. </firstname><surname>Crockford</surname></author>
-      <releaseinfo>IETF (Internet Engineering Task Force) RFC 4122</releaseinfo>
-      <citetitle><ulink url="http://www.ietf.org/rfc/rfc4122.txt">http://www.ietf.org/rfc/rfc4122.txt</ulink></citetitle>
+      <author><firstname>D. </firstname> 
+        <surname>Crockford</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
     </bibliomixed>
     <bibliomixed id="rfc5952">
       <abbrev>RFC 5952</abbrev>
-      <title>A Recommendation for IPv6 Address Text Representation</title>
+      <title><ulink url="http://www.ietf.org/rfc/rfc5952.txt">A Recommendation for IPv6 Address Text Representation</ulink></title>
       <date>August 2010</date>
-      <author><firstname>D. </firstname><surname>Crockford</surname></author>
-      <releaseinfo>IETF (Internet Engineering Task Force) RFC 4627</releaseinfo>
-      <citetitle><ulink url="http://www.ietf.org/rfc/rfc5952.txt">http://www.ietf.org/rfc/rfc4627.txt</ulink></citetitle>
+      <author><firstname>D. </firstname>
+        <surname>Crockford</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
     </bibliomixed>
   </bibliolist>
 </section>
 
 <section>
-  
   <title>Non-Normative References</title>
   <bibliolist>
+    <bibliomixed id="erm">
+      <abbrev>erm</abbrev>
+      <title><ulink url="https://en.wikiversity.org/wiki/1976/Chen">The Entity-Relationship Model: Toward a Unified View of Data</ulink></title>
+      <date>1976</date>
+      <author><firstname>Peter</firstname>
+        <surname>Chen</surname></author>
+      <releaseinfo>ACM Transactions on Database Systems 1(1): 9–36. doi:10.1145/320434.320440</releaseinfo>
+    </bibliomixed>
     <bibliomixed id="json-ld">
       <abbrev>json-ld</abbrev>
       <title><ulink url="http://json-ld.org/spec/latest/json-ld">JSON-LD: A JSON-based Serialization for Linked Data</ulink></title>
       <date>04 October 2013</date>
-      <author><firstname>Gregg</firstname><surname>Kellogg</surname></author>
-      <author><firstname>Markus</firstname><surname>Lanthaler</surname></author>
-      <author><firstname>Niklaus</firstname><surname>Lindström</surname></author>
-      <author><firstname>Dave</firstname><surname>Longley</surname></author>
-      <author><firstname>Manu</firstname><surname>Sporny</surname></author>
+      <author><firstname>Gregg </firstname>
+        <surname>Kellogg</surname></author>,
+      <author><firstname>Markus </firstname>
+        <surname>Lanthaler</surname></author>,
+      <author><firstname>Niklaus </firstname>
+        <surname>Lindström</surname></author>,
+      <author><firstname>Dave </firstname>
+        <surname>Longley</surname></author>,
+      <author><firstname>Manu </firstname>
+        <surname>Sporny</surname></author>. 
       <releaseinfo>W3C Editor's Draft 04 October 2013 </releaseinfo>
     </bibliomixed>
   </bibliolist>
@@ -264,6 +276,48 @@ document made available to committee members to support the publishing process.<
       <para>There are four basic node types:</para>
       <section><title>Root ( )</title>
         <para></para></section>
+        <svg width="260" height="160" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(30,30)" text-anchor="middle" dominant-baseline="middle">
+           <g transform="translate(0,0)">
+             <circle r="15" stroke="black" fill="white"/>
+             <text fill="black" dominant-baseline="middle">r</text>
+             <path d="M15 0 h70" stroke="black"/>
+             <path d="M85 0 l-8 -4 v8 l8 -4 Z" stroke="black"/>
+           </g>
+           <g transform="translate(100,0)">
+             <circle r="15" stroke="black" fill="red"/>
+             <text fill="white" dominant-baseline="middle">s</text>
+             <path d="M0 15 v70" stroke="black"/>
+             <path d="M0 85 l-4 -8 h8 l-4 8 Z" stroke="black"/>
+           </g>
+           <g transform="translate(100,100)">
+             <path d="M0 -15 L-20 0 L0 15 L20 0 Z" stroke="black" fill="green"/>
+             <text fill="white" dominant-baseline="middle">n</text>
+             <path d="M20 0 h60" stroke="black"/>
+             <path d="M80 0 l-8 -4 v8 l8 -4 Z" stroke="black"/>
+           </g>
+           <g transform="translate(200,100)">
+             <path d="M0 -15 L-20 0 L0 15 L20 0 Z" stroke="black" fill="white"/>
+             <text fill="black" dominant-baseline="middle">x</text>
+             <path d="M0 -15 v-75" stroke="black" stroke-dasharray="2 2"/>
+             <path d="M0 -90 l-4 8 h8 l-4 -8 Z" stroke="black"/>
+           </g>
+           <g transform="translate(200,0)">
+             <text fill="black" dominant-baseline="middle">"value"</text>
+           </g>
+           <g transform="translate(0,100)">
+             <rect x="-15" y="-10" width="30" height="20" stroke="black" fill="blue"/>
+             <text fill="white" dominant-baseline="middle">e</text>
+           </g>
+           <g transform="translate(0,0)">
+             <path d="M0 15 v75" stroke="black" stroke-dasharray="7 7"/>
+             <path d="M0 90 l-4 -8 h8 l-4 8 Z" stroke="black"/>
+           </g>
+        </g>
+        <!-- Show outline of canvas using 'rect' element -->
+        <rect x="0" y="0" width="260" height="160" fill="none" stroke="black" stroke-width=".02cm" />
+      </svg>
+        
       <section><title>Entity</title>
         <para></para></section>
       <section><title>Attribute &lt; &gt;</title>
