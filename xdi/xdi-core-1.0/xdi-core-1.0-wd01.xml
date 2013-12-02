@@ -415,39 +415,41 @@ document made available to committee members to support the publishing process.<
     <section><title>Replacement $rep</title>
       <para>$rep indicates the subject not only stands for the object, but that the reference should be replaced with the object.</para></section>
   </section>
-  <section><title>XDI Graph Grammars</title>
+  <section><title>XDI Graph and Statement Grammars</title>
     <para>Grammars are given in Augmented Backus-Naur Form as defined in <xref linkend="rfc2234"/>. Slash / is alternation, parentheses are grouping, * means zero or more of following, 1* means one or more of following, brackets [] mean zero or one of following, i.e. optional.</para>
     <para>XDI values are JSON values, and the JSON grammar is included for non-normative reference.</para>
-    <section><title>Dekimiter Grammar</title>
-    <para>The XDI graph's grammar is independent of serialization. Each serialization is defined by adding a small grammar defining its delimiters. These productions in all capital letters are the generic delimiters; in the next section, serializations will be defined by how they are concretely realized.</para>
+    <section><title>Delimiter Grammar</title>
+    <para>XDI statements' grammar is defined on a level independent of serialization, using generic delimiter symbols. In the following section, each specific statement serialization is then defined by adding a small grammar defining its delimiters. These symbols in all capital letters are the generic delimiters:.</para>
 <programlisting>
 STMTSL,R: Before and after a list of statements
-STMTN:    Between statements in a list of statements
+STMTSN:   Between statements in a list of statements
 STMTL,R:  Before and after a statement
 OBJSL,R:  Before and after a list of objects, for serializations allowing multiple objects for one subject/predicate
-OBJN:     Between objects in a list of objects
+OBJSN:    Between objects in a list of objects
 S-P, P-O: Between subject, predicate, and object of a statement
 C-I:      Between a context symbol and the following identifier
 </programlisting>
 
     </section>
     <section><title>Statement Grammar</title>
-      <para>Three types of statements are defined here: contextual statements, relational statements, and literal statements. (Will following specs define more types?)</para>
-      <para>Contextual statements can only be valid if the concatenation of the subject and object (or object and subject, for an inverse contextual statement) is a valid XDI path according to the Path Grammar below: proceeding from peer roots to inner roots, then entities, then attributes, then optionally to value. Also, if the object starts with a member specifier, then the subject must end with a collection specifier.
-        </para>
+      <para>Three types of statements are defined here: contextual statements, relational statements, and literal statements. </para>
+      <para>Contextual statements assert a relative address (the statement's object) starting from a given node (the statement's subject) The statement can only be valid if the concatenation of the subject and object (or object and subject, for an inverse contextual statement) is a valid XDI path according to the Path Grammar below: proceeding from peer roots to inner roots, then entities, then attributes, then optionally to value. Also, if the object starts with a member specifier, then the subject must end with a collection specifier. </para>
+      <para>Direct contextual statements have the empty string as their predicate, so therefore appear as subject//object.  The concatenated address can be constructed simply by removing the //. Put another way, given an XDI address, we can cut it placing // between two of its arcs, and get a contextual statement asserting the second part's existence as a relative address starting at the context node definid by the first part. </para>
       <para>Currently only contextual statements are allowed to have multiple objects in the multiple-object serializations. (Check assumption that relational statements cannot have multiple objects)</para>
 
 <programlisting>
-xdi-statement-list   = STMTSL [ xdi-statement *( STMTN xdi-statement ) ] STMTSR
-xdi-statement        = STMTL (contextual-statement / relational-statement / literal-statement) STMTR
+xdi-statement-list   = STMTSL [ xdi-statement *( STMTSN xdi-statement ) ] STMTSR
+xdi-statement        = STMTL ( contextual-statement / relational-statement / literal-statement ) STMTR
 contextual-statement = direct-contextual / inverse-contextual
 relational-statement = direct-relational / inverse-relational
-direct-contextual    = xdi-address   S-P                     P-O xdi-addresses
-inverse-contextual   = xdi-address   S-P "$is" "()"          P-O xdi-addresses
-direct-relational    = xdi-address   S-P       xdi-predicate P-O ( xdi-address /  xref )
-inverse-relational   = xdi-address   S-P "$is" xdi-predicate P-O xdi-address
-literal-statement    = value-address S-P     value-predicate P-O json-value
+direct-contextual    =   xdi-address S-P                     P-O   xdi-addresses
+inverse-contextual   =   xdi-address S-P "$is" "()"          P-O   xdi-addresses
+direct-relational    =   xdi-address S-P       xdi-predicate P-O xrefs-addresses
+inverse-relational   =  xref-address S-P "$is" xdi-predicate P-O   xdi-address
+literal-statement    = value-address S-P       "&amp;"       P-O  json-value
 </programlisting>
+   <para>XDI values are JSON values with JSON syntax; the JSON grammar is included at the end of this sectionfor non-normative reference.</para>
+      <para>Here inverse-relational statements appear to be a subset of direct-relational statements, because we are not strongly constraining predicates yet</para>
     </section>
 
     <section><title>Predicate Grammar</title>
@@ -460,33 +462,33 @@ xdi-operation   = $get / $set / $del / $copy / $move / ( $do [ do-extension ] )
 do-extension    = $signal 
 xdi-event       = $domain 
 xdi-condition   = $equals / $greater / $lesser
-value-predicate = "&amp;"
 </programlisting>
     </section>
     
     <section><title>Address Grammar</title>
-      <para>An XDI address can contain peer roots, then inner roots, then entities, then attributes, then literal (value), in that order. Each of those elements is optional, except that a value must be preceded by an attribute singleton or attribute member.</para>
+      <para>An XDI address can contain peer roots (cross-references), then inner roots, then entities, then attributes, then literal (value), in that order. Each of those elements is optional, except that a value must be preceded by an attribute singleton or attribute member.</para>
       <para>Addresses are interpreted as absolute; that is, they start at the outer root. The initial outer root is not written, except in the special case of the empty path, which is written () instead of as an empty string. This special case is not described in the ABNF as it is not context-free, but is to be implemented in serialization after generation, and deserialization before parsing.</para>
       <para>xdi-addresses is used when multiple objects per subject/predicate pair are used in multiple-line display format or in JSON serialization. For the non-multiple-object serializations, simply use xdi-addresses = xdi-address instead.</para>
 
 <programlisting>
-xdi-addresses      = OBJSL 1*(OBJN xdi-address ) OBJSR 
-xdi-address        = *peer-root *inner-root *entity-node *attribute-node [ attribute-instance value-arc]
-value-address      = *peer-root *inner-root *entity-node *attribute-node   attribute-instance value-arc
-entity-node        = (    entity-singleton / (    entity-collection [    entity-member ] ) )
-attribute-node     = ( attribute-singleton / ( attribute-collection [ attribute-member ] ) ) 
-attribute-instance = ( attribute-singleton / ( attribute-collection   attribute-member   ) )
+xdi-addresses   = OBJSL [  xdi-address *( OBJSN  xdi-address ) ] OBJSR 
+xrefs-addresses = OBJSL [ xref-address *( OBJSN xref-address ) ] OBJSR 
+xref-address    = xdi-address / xref
+xdi-address     = *xref *inner-root *entity-node *attrib-node [ attrib-value ]
+value-address   = *xref *inner-root *entity-node *attrib-node   attrib-value
+entity-node     = ( entity-singleton / ( entity-collection [ entity-member ] ) )
+attrib-node     = ( attrib-singleton / ( attrib-collection [ attrib-member ] ) ) 
+attrib-value    = ( attrib-singleton / ( attrib-collection   attrib-member   ) ) value-arc
 </programlisting>
       <para></para>
 <programlisting>
 </programlisting>
       <para>The outer root is simply the empty string case of xdi-address, so does not appear here.</para>
-      <para>All peer roots must occur before all inner roots in a xdi-address. (and all roots before all entities, attributes, and values)</para>
+      <para>Peer roots (xrefs) must occur before inner roots in a xdi-address. (and all roots precede entities, attributes, and values)</para>
       <para>*Statement roots no longer appear as such. Since they can only occur as the object of a relational statement, they are accounted for in the Statement Grammar instead.</para>
 <programlisting>
-peer-root      = xref
-xref           = "(" ( xdi-address / presumed-iri / xdi-identifier ) ")"
-inner-root     = "("   xdi-address S-P xdi-address ")"
+xref        = "(" ( xdi-address / xdi-iri / xdi-name ) ")"
+inner-root  = "("   xdi-address S-P xdi-address ")"
 </programlisting>
     <para>A root may contain a subject-predicate pair (inner root), or a single XDI path; or a single XDI identifier with no context symbols; or an IRI.</para>
     </section>
@@ -498,11 +500,11 @@ inner-root     = "("   xdi-address S-P xdi-address ")"
 entity-singleton     = authority-singleton / type-singleton / general-singleton
 authority-singleton  = person-singleton / legal-singleton
 type-singleton       = unreserved-type / reserved-type
-person-singleton     = "=" C-I ( xdi-identifier / xref )
-legal-singleton      = "@" C-I ( xdi-identifier / xref )
-general-singleton    = "*" C-I ( xdi-identifier / xref / xdi-scheme )
-unreserved-type      = "+" C-I ( xdi-identifier / xref / xdi-scheme )
-reserved-type        = "$" C-I   xdi-identifier
+person-singleton     = "=" C-I ( xdi-name / xref )
+legal-singleton      = "@" C-I ( xdi-name / xref )
+general-singleton    = "*" C-I ( xdi-name / xref / xdi-scheme )
+unreserved-type      = "+" C-I ( xdi-name / xref / xdi-scheme )
+reserved-type        = "$" C-I   xdi-name
 
 entity-collection    = authority-collection / type-collection / general-collection
 authority-collection = person-collection    / legal-collection
@@ -519,7 +521,7 @@ singleton-collection = COLL             "*" COLR
 entity-member        = member 
 member               = ordered-member / unordered-member
 ordered-member       = "#" C-I ( ( %x31-39 DIGIT ) / "0" )
-unordered-member     = "!" C-I ( xdi-identifier / xref / xdi-scheme )
+unordered-member     = "!" C-I ( xdi-name / xref / xdi-scheme )
 </programlisting>
       <para>Member indexes are positive integers without leading zeroes, except for 0 itself.</para>
     </section>
@@ -528,30 +530,30 @@ unordered-member     = "!" C-I ( xdi-identifier / xref / xdi-scheme )
       <para>Other arc types include attributes, definitions, and variables.</para>  
       <para>Attributes are constructed by enclosing the corresponding entity in attribute delimiters, outside everything but collection delimiters:</para>  
 <programlisting>
-attribute-singleton  = ATTL C-I  type-singleton ATTR
-attribute-collection = COLL attribute-singleton COLR
-attribute-member     = ATTL C-I  member ATTR 
+attrib-singleton  = ATTL C-I type-singleton ATTR
+attrib-collection = COLL   attrib-singleton COLR
+attrib-member     = ATTL C-I         member ATTR 
 
 definition           = authority-definition / type-definition
-type-definition      = entity-definition / attribute-definition
-entity-definition    = DEFL C-I      type-singleton DEFR
-attribute-definition = DEFL C-I attribute-singleton DEFR
-authority-definition = DEFL C-I authority-instance  DEFR
-authority-instance   = ( authority-singleton / ( authority-collection [ member ] ) )
+type-definition      = entity-definition / attrib-definition
+entity-definition    = DEFL C-I   type-singleton DEFR
+attrib-definition    = DEFL C-I attrib-singleton DEFR
+authority-definition = DEFL C-I   authority-node DEFR
+authority-node       = ( authority-singleton / ( authority-collection [ member ] ) )
 
 variable             = VARL [ xdi-address ] VARR
 value-arc            = "&amp;"
 </programlisting>
       <para>Bracketing delimiters used are:</para>  
 <programlisting>
-COLL        = "[" 
-COLR        = "]"
-ATTL        = "&lt;" 
-ATTR        = "&gt;" 
-DEFL        = "|"
-DEFR        = "|"
-VARL        = "{" 
-VARR        = "}"
+COLL     = "[" 
+COLR     = "]"
+ATTL     = "&lt;" 
+ATTR     = "&gt;" 
+DEFL     = "|"
+DEFR     = "|"
+VARL     = "{" 
+VARR     = "}"
 </programlisting>
     </section>
     
@@ -570,31 +572,32 @@ xdi-ipv6     = ":ipv6:"      4HEX 7*( ":" 4HEX )
 </programlisting>
     </section>
     <section><title>Identifier Grammar</title>
-      <para>A simple IRI grammar is a lightweight initial parsing alternative to the full IRI grammar in <xref linkend="rfc4627"/>. An XDI processor MAY check an IRI for full compliance with all details of IRI syntax, but this may not be necessary unless the XDI processor is about to use or dereference the IRI. </para>
+      <para>A simple IRI grammar is a lightweight parsing alternative to the full IRI grammar in <xref linkend="rfc4627"/>. An XDI processor MAY check for full compliance with IRI syntax, which may not be necessary unless about to dereference or analyze the IRI. </para>
       <para>Paired "(" and ")" are allowed in IRI body to accomodate IRI schemes like tel: and sms:. </para>
 <programlisting>
-presumed-iri  = iri-scheme ":" *iri-body        ; Quick check for something that looks like an IRI without checking body details 
-iri-scheme    = LOWER *( LOWER / DIGIT ) 
-iri-body      = ( "(" iri-body ")" ) / *iri-char
-iri-char      = xdi-identifier-char / context-symbol / iri-delim
-iri-delim     = "/" / "?" / "#" / "[" / "]" / "'" / ","
+xdi-iri    = iri-scheme ":" *iri-body
+iri-scheme = LOWER *( LOWER / DIGIT ) 
+iri-body   = ( "(" iri-body ")" ) / *iri-char
+iri-char   = xdi-name-char / context-symbol / iri-delim
+iri-delim  = "/" / "?" / "#" / "[" / "]" / "'" / ","
 
-xdi-identifier      = *xdi-identifier-char    ; Note: Includes any JSON numbers
+xdi-name   = *xdi-name-char    ; Note: Includes any JSON numbers
 </programlisting>
     </section>
 
     <section><title>Character Class Grammar</title>
       <para>This contains definitions of character classes and endline. </para>
 <programlisting>
-xdi-identifier-char = %x41-5A / %x61-7A / DIGIT / "-" / "." / "_" / %x80-EFFFD      ; ISSUE - is there a way to leave high end open?
-context-symbol      = "!" / "*" / "=" / "@" / "+" / "$"
+xdi-name-char  = UPPER / LOWER / DIGIT / "-" / "." / "_" / %x80-EFFFD      ; ISSUE - is there a way to leave high end open?
+context-symbol = "!" / "*" / "=" / "@" / "+" / "$"
 
-LOWER               = %x61-7A
-HEX                 = DIGIT / %x61-66
-DIGIT               = %x30-39
-NZDIG               = %x31-39
-QUOTE               = %x22
-ENDLINE             = %x0D / %x0A / ( %x0D %x0A )
+LOWER          = %x61-7A
+UPPER          = %x41-5A
+HEX            = DIGIT / %x61-66
+DIGIT          = %x30-39
+NZDIG          = %x31-39
+QUOTE          = %x22
+ENDLINE        = %x0D / %x0A / ( %x0D %x0A )
 </programlisting>
       <para>Hex digits in ipv6, uuid are lowercase; only the exponent prefix E in JSON numbers is uppercase.</para>
       <para>Policy on unicode characters.</para>
@@ -613,14 +616,14 @@ ENDLINE             = %x0D / %x0A / ( %x0D %x0A )
       <para>An exponent is preceded by uppercase E</para>
       <para>Hex in \u character escapes should be lowercase</para>
 <programlisting>
-json-value       = json-object / json-array / json-string / json-number / "true" / "false" / "null"
-json-object      = "{" [ json-string ":" json-value *( "," json-string ":" json-value ) ] "}"
-json-array       = "[" [                 json-value *( ","                 json-value ) ] "]"
-json-string      = QUOTE *( " " / "!" / %x23-5B  / %x5D-EFFFD / json-char-escape )    QUOTE
-json-char-escape = "\"    ("\" / "/" / "b" / "f" / "n" / "r" / "t" / QUOTE / ( "u" 4HEX ) )
-json-number      = ( "0" / [ "-" ] noleading ) [ "." notrailing ] [ "E" [ "-" ] noleading ]
-noleading        = %x31-39 *DIGIT
-notrailing       = *DIGIT  %x31-39
+json-value  = json-object / json-array / json-string / json-number / "true" / "false" / "null"
+json-object = "{" [ json-string ":" json-value *( "," json-string ":" json-value ) ] "}"
+json-array  = "[" [                 json-value *( ","                 json-value ) ] "]"
+json-string = QUOTE *( " " / "!" / %x23-5B  / %x5D-EFFFD / json-escape )    QUOTE
+json-escape = "\"    ("\" / "/" / "b" / "f" / "n" / "r" / "t" / QUOTE / ( "u" 4HEX ) )
+json-number = ( "0" / [ "-" ] noleading ) [ "." notrailing ] [ "E" [ "-" ] noleading ]
+noleading   = %x31-39 *DIGIT
+notrailing  = *DIGIT  %x31-39
 </programlisting>
     </section>
 
@@ -628,26 +631,24 @@ notrailing       = *DIGIT  %x31-39
   </section>
   <section><title>Serialization Grammars</title>
       <para>The previous sections used these symbols as generic delimiters; a serialization is defined by how these delimiters are concretely represented.</para>
-      <para>STMTSL,R: Before and after a list of statements</para>
-      <para>STMTN:    Between statements in a list of statements</para>
-      <para>STMTL,R:  Before and after a statement</para>
-      <para>OBJSL,R:  Before and after a list of objects, for serializations allowing multiple objects for one subject/predicate</para>
-      <para>OBJN:     Between objects in a list of objects</para>
-      <para>S-P, P-O: Between subject, predicate, and object of a statement</para>
-      <para>C-I:      Between a context symbol and the following identifier</para>
+      <para>STMTSL,R,N: Before, after, and between items of, a list of statements</para>
+      <para>OBJSL,R,N:  Before, after, and between items of, a list of objects, for serializations allowing multiple objects for one subject/predicate</para>
+      <para>STMTL,R:    Before and after a statement</para>
+      <para>S-P, P-O:   Between subject, predicate, and object of a statement</para>
+      <para>C-I:        Between a context symbol and the following identifier</para>
 
     <section><title>Display Format Statement Serialization Grammar</title>
       <para>XDI Display Format is a compact human-readable representation of XDI paths and statements using a minimum of delimiters, but is not in a standard data interchange format such as JSON. Each statement is on a separate line, and the subject/predicate/object of a triple are separated by the slash /.</para>
       <para>Multiline XDI Display Format allows a subject/predicate pair to by followed by multiple objects, indicated by indentation.</para>
 <programlisting>
 STMTSL = ""
-STMTN  = ENDLINE
+STMTSN = ENDLINE
 STMTSR = ""
+OBJSL  = ""
+OBJSN  = ENDLINE %x09
+OBJSR  = ""
 STMTL  = ""
 STMTR  = ""
-OBJSL  = ""
-OBJN   = ENDLINE %x09
-OBJSR  = ""
 S-P    = "/"
 P-O    = "/"
 C-I    = ""
@@ -659,16 +660,17 @@ C-I    = ""
     </section>
 
     <section><title>Flat JSON Statement Serialization Grammar</title>
-      <para>For XdiFlatSerialization</para>
+      <para>The JSON serializations may have extra whitespace when prettyprinted, but XDI processors SHOULD generate JSON with no extraneous whitespace, as wire format in normal operation.</para>
+      <para>In the Flat JSON statement list serialization, the statement list is a JSON object of key-value pairs where each key is a subject/predicate pair (strings joined by a slash) and each value is a JSON array of objects; except in the case of the value statement where the value is simply the value.</para>
 <programlisting>
 STMTSL = "{" 
-STMTN  = QUOTE "," QUOTE
+STMTSN = QUOTE "," QUOTE
 STMTSR = "}"
+OBJSL  = "["
+OBJSN  = ","
+OBJSR  = "]"
 STMTL  = "{" QUOTE
 STMTR  = QUOTE "}"
-OBJSL  = "["
-OBJN   = ","
-OBJSR  = "]"
 S-P    = "/"
 P-O    = QUOTE ":" QUOTE
 C-I    = ""
@@ -684,16 +686,16 @@ C-I    = ""
     </section>
 
     <section><title>Parsed JSON Statement Serialization Grammar</title>
-      <para>For XdiParseSerialization</para>
+      <para>In the Parsed JSON statement list serialization, the statement list is a JSON array, of statements which are each a JSON array of 3 addresses, which are each JSON array of arcs, each of which is a JSON object with context symbol (or left delimiter) as key and identifier as value. When there are multiple symbols and operators, the first symbol is a key, whose value is a JSON object representing the remainder of the arc.</para>
 <programlisting>
 STMTSL = "["
-STMTN  = QUOTE "," QUOTE
+STMTSN = QUOTE "," QUOTE
 STMTSR = "]"
+OBJSL  = "["
+OBJSN  = ","
+OBJSR  = "]"
 STMTL  = "[" QUOTE
 STMTR  = QUOTE "]"
-OBJSL  = "["
-OBJN   = ","
-OBJSR  = "]"
 S-P    = QUOTE "," QUOTE
 P-O    = QUOTE "," QUOTE
 C-I    = QUOTE "," QUOTE
@@ -757,7 +759,9 @@ Sidebar content.
     </section>
 
     <section><title>Graph Tree Serialization Grammar</title>
-      <para>Not yet finished.</para>
+      <para>Unlike the previous serializations, this directly represents a (sub)graph, rather than a list of statements that build up a (sub)graph; therefore it cannot be constructed from the statement grammar simply by plugging in delimiters.</para>
+      <para>Strings represent single arcs between context nodes, which obviates the need for long addresses; except in the case of the object of a relational statement, which is still represented by a single address string.</para>
+      <para>A context node is represented as a JSON object, whose keys are the labels of the outgoing arcs, and whose values are the target nodes, either more context nodes, or terminal value nodes which are objects with key "&amp;". Relational statements are in a list under the special key "/"..</para>
 <programlisting>
 node            = context-node / literal-node
 context-node    = "{" node *( "," node ) "}"
