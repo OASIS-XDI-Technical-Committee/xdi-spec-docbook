@@ -1,33 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
 For use when a committee document points at the OASIS web site for publishing:
-<?xml-stylesheet type="text/xsl" 
-href="http://docs.oasis-open.org/templates/DocBook/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
-<!DOCTYPE article
-  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
-         "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
-
-For use when a committee document points to an embedded runtime installation:
-<?xml-stylesheet type="text/xsl" 
-         href="htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
-<!DOCTYPE article
- PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" 
-        "htmlruntime/spec-0.6/docbook/docbookx.dtd" 
-
-For use when a committee document is published in a local environment only
-(note the instructions for local publishing require adjusting the stylesheet
- and DocBook directories in these declarations):
-<?xml-stylesheet type="text/xsl" 
-href="file:///Users/user/xdi-spec-docbook/htmlruntime/spec-0.6/stylesheets/oasis-specification-html-offline.xsl"?>
-<!DOCTYPE article
-  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
-         "file:///c:/oasis/spec-0.6/docbook/docbookx.dtd" 
 -->
 <?xml-stylesheet type="text/xsl" 
 href="http://xdi.org/xdi-spec-docbook/htmlruntime/spec-0.6/stylesheets/oasis-specification-html-offline.xsl"?>
 <!DOCTYPE article
   PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
-         "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
+         "https://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
 [
 <!--the document properties-->
 <!ENTITY name "xdi-core">
@@ -260,24 +239,65 @@ document made available to committee members to support the publishing process.<
 
 </section>
   <section><title>Design Goals</title><para>This section communicates the design goals that have guided the development of XDI.</para>
-    <section><title>100% Addressability</title>
-      <para>You can address any node in the graph. Uniquely, unlike RDF.</para></section>
-    <section><title>No Central Authority</title>
-      <para>Peer to peer graph model is possible but not compulsory</para></section>
+
+    <section><title>100% Addressability of All Graph Nodes</title>
+      <para>To perform semantic data interchange with precise control over every data element, the first requirement of the XDI TC was that every node of every XDI graph be uniquely addressable. This architecture essentially mirrors that of the W3C in the Architecture of the World Wide Web, where it states:</para>
+
+<quote>"To benefit from and increase the value of the World Wide Web, agents should provide URIs as identifiers for resources."</quote>
+
+      <para>This requirement is one reason that the XDI TC does not use the term “XDI document” or compare XDI graphs to documents. A document metaphor suggests a natural division between addressing of the document and addressing of nodes inside the document. In Web URI architecture, this is reflected by the # fragment, which represents an address local to the current resource, vs. an address outside this resource.</para>
+
+      <para>The XDI graph model does not have this distinction because every node of every XDI graph is equally addressable. Or, as members of the XDI TC have put it, “It’s turtles all the way down.”</para>
+
+      <para>Note that XDI addressing stops once you reach an XDI literal node—the ultimate leaf nodes of an XDI graph which contain the literal data values. If a client needs to address within a literal data value, it must switch from an XDI address to an address in the native addressing syntax of the literal data (e.g., a JSON path for a JSON document, an XML path for an XML document, a fragment for an HTML document, etc.) Such addresses are out of scope for XDI.</para>
+
+      <para>This requirement is perhaps the most significant difference between XDI and RDF, because unique addressability of RDF graph nodes was not part of the RDF problem domain. Appendix A contains a short analysis of how the RDF and XDI graph models treat addressability differently.</para></section>
+    <section><title>Heterarchical — No Central Authority</title>
+      <para>A second major design goal of XDI architecture is to support heterarchy, i.e., to not assume or rely on a central authority. This meant designing a fundamentally peer-to-peer model in which any group of peers may cooperate to create an addressing and interchange space for its community. This addressing space may make use of existing resolvable identifiers for those peers, or it may extend those existing addresses, or it may be an entirely new addressing space. In all cases XDI can standardize discovery of peers and peer addresses, including both public and private discovery. This “radically P2P” architecture supports any deployment topology, from highly centralized to highly decentralized, and imposes the fewest pre-existing policy assumptions or restrictions on communities of XDI users.</para>
+
+      <para>Note: for more about this aspect of XDI, see the XDI Discovery specification.</para></section>
     <section><title>Contextual Identification</title>
-      <para>Ability to address context is built into the graph. Arcs can carry semantic value.</para></section>
+      <para>It is a mantra in digital identity that “identity is contextual”, i.e., that both the requirements for identification and the uniqueness of identifiers is relative to the context in which identification is required. Even “global” or “absolute” identifiers like telephone numbers, email addresses, or URIs are still relative to a particular addressing context.</para>
+
+<para>It is also a maxim in the privacy community that “privacy is contextual”, and thus a data authority must be able to control the data being shared and permissions being granted in any identification context.</para>
+
+<para>This primacy of context means that a third core XDI design goal is that it support the ability to model context at any degree of granularity and enable XDI authorities to control the sharing of identity and data by context.</para>
+
+<para>Again, we note that modeling of context was not a requirement of the RDF problem domain, so this is not an aspect of digital identity or data sharing addressed by the RDF graph model.</para></section>
     <section><title>Persistent Identification</title>
-      <para>The ability to have nodes in the graph whose address will not change over time or be reused.</para></section>
+      <para>A second core quality of identification is whether it is persistent (immutable) or reassignable (mutable). In the former case, an identifier (or other means of identification) is bound to the resource being identified in such a way that this association will not change over time—ideally forever. In the latter case, an identifier bound to one resource at one point in time (such as an IP address assigned to one computer, or a domain name registered to one owner) may subsequently be bound to a different resource at another point in time (such as when an IP address is reassigned to a new computer, or when the domain name is transferred to a new owner).</para>
+
+      <para>In the context of digital identity and secure data sharing, persistent identification is a requirement for one core reason: if an XDI authority with a particular identifier has been granted a particular set of permissions, and the XDI authority identified by that identifier changes, then the permissions now belong to (and can be exercised by) a different authority.</para>
+
+      <para>Persistent identification is also important for portability (see below), because if an identifier (or other means of identification) needs to change when the location of an XDI graph changes, the XDI relations described in that XDI graph will break. For these reasons, it is critical that XDI support a class of identifiers that are assigned once to a resource and never be reassigned to another resource.</para>
+
+      <para>At the same time, it is widely acknowledged that persistent identification is a nightmare from a usability standpoint. The human brain is wired to use simple, memorable natural language identifiers for our cognition and communication, and to subconsciously adjust the mappings of those identifiers over time as we learn, grow, and evolve. For example, the person you first think of by the name “Tom” today may be different from the person you first thought of by that name when you were a child.</para>
+
+      <para>So a key design goal of XDI is to support the requirements of both persistent and reassignable forms of identification; to provide precise means to map between them; and to make it syntactically unambiguous which form is being used in which context.</para></section>
     <section><title>Serialization Independence</title>
-      <para>The graph model is not bound to a particular serialization format. Different serializations can be used as appropriate.</para></section>
-    <section><title>Portability</title>
-      <para>Instance of the graph can be moved to other locations on the net and still maintain 100% of their semantics.</para></section>
+      <para>Another goal is for the XDI graph model to be a precise logical abstract model that is independent of any specified serialization format. For example, in the XDI 1.0 specifications, several JSON serialization forms are specified. In addition the XDI TC plans to specify at least one XML serialization format. All these formats transmit 100% of the information in an XDI graph, and all are losslessly convertible into the others.</para></section>
+    <section><title>Portability and Location Independence</title>
+      <para>Since XDI graphs may be used to describe the data associated with any entity, including people and businesses that are constantly changing contexts, attributes, service providers, and endpoints on the network, another design goal is for the semantics expressed in an XDI graph to be portable, i.e., location-independent. This means an XDI graph can be moved to any location (endpoint) on a network without breaking any of the descriptions or relations described in the graph.</para>
+
+      <para>This design goal is particularly important for XDI graphs representing individuals, as it supports the ability for an individual to maintain ongoing, sustainable control of his/her personal data and relationships independent of any particular service provider or network location.</para>
+
+      <para>Note: the specialized use of the XDI protocol provide wide-area location independence is defined in the XDI Discovery specification.</para></section>
+    <section><title>Protocol Expression and Transport Independence</title>
+      <para>To make semantic data interchange as simple and extensible as possible, another XDI design goal is to define the XDI semantic data interchange protocol in XDI itself. This means all XDI messages must be valid XDI graphs, and all XDI data sharing operations are XDI graph merge operations.</para>
+
+      <para>This design goal also achieves transport independence, i.e., as a logical protocol for the exchange of data between any two systems, the XDI protocol can be independent of any specific transport protocol (e.g., TCP/IP, HTTP(S), XMPP, SMTP, etc.), with bindings defined to such transport protocols as needed.</para>
+
+      <para>Note: The logical XDI protocol and its binding to HTTP(S) is defined in the XDI Messaging specification.</para></section>
     <section><title>Authorization and Policy Expression</title>
-      <para>Authorization and Policy expression can be modeled in the graph to govern rights or access to data.</para></section>
+      <para>To meet the security and privacy requirements of XDI authorities, the XDI protocol must enable them to precisely describe the rights pertaining to any shared data. And in order for these rights to be enforced uniformly by the all XDI authorities to which they are granted, XDI authorization must be able to be fully described in XDI itself. This includes the ability to express any policy governing authorization and the ability for such policies to reference data, variables, relations, and other statements in the relevant XDI graphs.</para>
+
+      <para>Note: the primary XDI data structure that fulfills this design goal is called a link contract and is defined in the XDI Policy specification.</para></section>
     <section><title>Schema and Ontology Expression</title>
-      <para>Schema requirements and Ontological concepts can be modeled in the graph for use in the graph. </para></section>
+      <para>The core difference between markup languages and semantic data interchange is that an express goal of the latter is to solve the problem of interoperable data semantics, i.e., to provide the infrastructure necessary to map semantics between widely disparate systems with the precision necessary for digital data to automatically flow between them. To do that, it is a design goal of XDI to enable definition of schemas and ontologies for XDI data in XDI.</para>
+
+      <para>Note: XDI schema and ontology definition is defined in the XDI Dictionary specification.</para></section>
     <section><title>Extensibility</title>
-      <para></para></section>
+      <para>A final design goal (and the reason for the “X” in “XDI”) is for any XDI authority to be able to extend XDI semantics without permission from any other XDI authority. This includes the ability to establish new XDI addressing spaces, to define new XDI dictionary vocabulary, and to create specializations of the XDI protocol for specific types of semantic data interchange.</para></section>
   </section>
   <section><title>The XDI Graph Model</title><para></para>
     <section><title>Overview</title>
@@ -286,7 +306,7 @@ document made available to committee members to support the publishing process.<
       <para>There are four basic node types:</para>
       <section><title>Root ( )</title>
         <para></para></section>
-        <svg width="260" height="160" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <!--svg width="260" height="160" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <g transform="translate(30,30)" text-anchor="middle" dominant-baseline="middle">
            <g transform="translate(0,0)">
              <circle r="15" stroke="black" fill="white"/>
@@ -324,9 +344,9 @@ document made available to committee members to support the publishing process.<
              <path d="M0 90 l-4 -8 h8 l-4 8 Z" stroke="black"/>
            </g>
         </g>
-        <!-- Show outline of canvas using 'rect' element -->
+        Show outline of canvas using 'rect' element 
         <rect x="0" y="0" width="260" height="160" fill="none" stroke="black" stroke-width=".02cm" />
-      </svg>
+      </svg-->
         
       <section><title>Entity</title>
         <para></para></section>
@@ -444,26 +464,26 @@ contextual-statement = direct-contextual / inverse-contextual
 relational-statement = direct-relational / inverse-relational
 direct-contextual    =   xdi-address S-P                     P-O   xdi-addresses
 inverse-contextual   =   xdi-address S-P "$is" "()"          P-O   xdi-addresses
-direct-relational    =   xdi-address S-P       xdi-predicate P-O xrefs-addresses
-inverse-relational   =  xref-address S-P "$is" xdi-predicate P-O   xdi-address
+direct-relational    =   xdi-address S-P       xdi-address   P-O xrefs-addresses
+inverse-relational   =  xref-address S-P "$is" xdi-address   P-O   xdi-address
 literal-statement    = value-address S-P       "&amp;"       P-O  json-value
 </programlisting>
    <para>XDI values are JSON values with JSON syntax; the JSON grammar is included at the end of this sectionfor non-normative reference.</para>
       <para>Here inverse-relational statements appear to be a subset of direct-relational statements, because we are not strongly constraining predicates yet</para>
     </section>
 
-    <section><title>Predicate Grammar</title>
+    <!--section><title>Predicate Grammar</title>
       <para>Most relational predicates will be described in more detail in following specs.</para>
 <programlisting>
-xdi-predicate   = xdi-equivalence / xdi-operator
+xdi-predicate   = xdi-equivalence / xdi-operation / xdi-boolean / xdi-condition
 xdi-equivalence = $is / [ $is ] $ref / [ $is ] $rep
-xdi-operator    = $true / $false / xdi-operation
+xdi-boolean     = $true / $false / $and / $or / $not
 xdi-operation   = $get / $set / $del / $copy / $move / ( $do [ do-extension ] )
 do-extension    = $signal 
 xdi-event       = $domain 
 xdi-condition   = $equals / $greater / $lesser
 </programlisting>
-    </section>
+    </section-->
     
     <section><title>Address Grammar</title>
       <para>An XDI address can contain peer roots (cross-references), then inner roots, then entities, then attributes, then literal (value), in that order. Each of those elements is optional, except that a value must be preceded by an attribute singleton or attribute member.</para>
@@ -497,26 +517,23 @@ inner-root  = "("   xdi-address S-P xdi-address ")"
       <para>These describe an individual directed edge in the XDI graph.</para>
       <para>First, entity definitions:</para>
 <programlisting>
-entity-singleton     = authority-singleton / type-singleton / general-singleton
-authority-singleton  = person-singleton / legal-singleton
-type-singleton       = unreserved-type / reserved-type
-person-singleton     = "=" C-I ( xdi-name / xref )
-legal-singleton      = "@" C-I ( xdi-name / xref )
+entity-singleton     = authority-singleton / class-singleton 
+authority-singleton  = person-singleton / legal-singleton / general-singleton
+class-singleton      = unreserved-class / reserved-class
+person-singleton     = "=" C-I ( xdi-name / xref / xdi-scheme )
+legal-singleton      = "@" C-I ( xdi-name / xref / xdi-scheme )
 general-singleton    = "*" C-I ( xdi-name / xref / xdi-scheme )
 unreserved-type      = "+" C-I ( xdi-name / xref / xdi-scheme )
 reserved-type        = "$" C-I   xdi-name
 
-entity-collection    = authority-collection / type-collection / general-collection
-authority-collection = person-collection    / legal-collection
-type-collection      = reserved-collection  / unreserved-collection
-general-collection   = ordered-collection   / unordered-collection / singleton-collection
-person-collection    = COLL             "=" COLR 
-legal-collection     = COLL             "@" COLR 
-reserved-collection  = COLL   reserved-type COLR
-unreserved-collection= COLL unreserved-type COLR
-ordered-collection   = COLL             "#" COLR 
-unordered-collection = COLL             "!" COLR 
-singleton-collection = COLL             "*" COLR 
+entity-collection    = authority-collection / class-collection 
+authority-collection = person-collection    / legal-collection / general-collection
+class-collection     = reserved-collection  / unreserved-collection
+person-collection    = COLL              "=" COLR 
+legal-collection     = COLL              "@" COLR 
+general-collection   = COLL              "*" COLR 
+reserved-collection  = COLL   reserved-class COLR
+unreserved-collection= COLL unreserved-class COLR
 
 entity-member        = member 
 member               = ordered-member / unordered-member
@@ -530,13 +547,13 @@ unordered-member     = "!" C-I ( xdi-name / xref / xdi-scheme )
       <para>Other arc types include attributes, definitions, and variables.</para>  
       <para>Attributes are constructed by enclosing the corresponding entity in attribute delimiters, outside everything but collection delimiters:</para>  
 <programlisting>
-attrib-singleton  = ATTL C-I type-singleton ATTR
-attrib-collection = COLL   attrib-singleton COLR
-attrib-member     = ATTL C-I         member ATTR 
+attrib-singleton  = ATTL C-I class-singleton ATTR
+attrib-collection = COLL    attrib-singleton COLR
+attrib-member     = ATTL C-I          member ATTR 
 
-definition           = authority-definition / type-definition
-type-definition      = entity-definition / attrib-definition
-entity-definition    = DEFL C-I   type-singleton DEFR
+definition           = authority-definition / class-definition
+class-definition     = entity-definition / attrib-definition
+entity-definition    = DEFL C-I  class-singleton DEFR
 attrib-definition    = DEFL C-I attrib-singleton DEFR
 authority-definition = DEFL C-I   authority-node DEFR
 authority-node       = ( authority-singleton / ( authority-collection [ member ] ) )
