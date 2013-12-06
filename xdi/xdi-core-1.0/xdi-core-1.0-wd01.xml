@@ -117,7 +117,7 @@ document made available to committee members to support the publishing process.<
 </articleinfo>
 
 
-<section><title>About</title><para>About</para></section>
+<!--section><title>About</title><para>About</para></section-->
 
 <section id="s.introduction">
 <title>Introduction</title>
@@ -218,6 +218,25 @@ document made available to committee members to support the publishing process.<
         <surname>Chen</surname></author>.
       <releaseinfo>ACM Transactions on Database Systems 1(1): 9–36. doi:10.1145/320434.320440</releaseinfo>
     </bibliomixed>
+
+    <bibliomixed id="webarch">
+      <abbrev>webarch</abbrev>
+      <title><ulink url="http://www.w3.org/TR/webarch/#id-resources">Architecture of the World Wide Web, Volume One</ulink></title>
+      <date>15 December 2004</date>
+      <author><firstname>Ian </firstname>
+        <surname>Jacobs</surname></author>,
+      <author><firstname>Norman </firstname>
+        <surname>Walsh</surname></author>.
+      <releaseinfo>W3C Recommendation 15 December 2004</releaseinfo>
+    </bibliomixed>
+
+
+    <bibliomixed id="reification">
+      <abbrev>reification</abbrev>
+      <title><ulink url="http://en.wikipedia.org/wiki/Reification_(computer_science)">Reification (computer science)</ulink></title>
+      <releaseinfo>Wikipedia</releaseinfo>
+    </bibliomixed>
+
     <bibliomixed id="json-ld">
       <abbrev>json-ld</abbrev>
       <title><ulink url="http://json-ld.org/spec/latest/json-ld">JSON-LD: A JSON-based Serialization for Linked Data</ulink></title>
@@ -299,14 +318,18 @@ document made available to committee members to support the publishing process.<
     <section><title>Extensibility</title>
       <para>A final design goal (and the reason for the “X” in “XDI”) is for any XDI authority to be able to extend XDI semantics without permission from any other XDI authority. This includes the ability to establish new XDI addressing spaces, to define new XDI dictionary vocabulary, and to create specializations of the XDI protocol for specific types of semantic data interchange.</para></section>
   </section>
-  <section><title>The XDI Graph Model</title><para></para>
-    <section><title>Overview</title>
+  <section><title>The XDI Graph Model</title><para>Given the design goals above, the XDI TC has developed the semantic graph model defined in this section. Figure 1 shows a high-level taxonomy of the XDI graph model.</para>
+  <figure><title>XDI Node Types</title>
+    <mediaobject><imageobject><imagedata fileref="xdi-nodes.png"/></imageobject>
+      <textobject><phrase>XDI Node Types</phrase></textobject></mediaobject></figure>
+        <para>This diagram illustrates how XDI graph model builds on the Entity-Attribute-Value (EAV) data model that dates back at least to the 1970’s<xref linkend='erm'/> and forms the basis for semantic description logics such as RDF. The XDI graph model adds one more dimension to the EAV model by enabling EAV statements to be relative to the graph in which they are contained. This is called the Graph-Entity-Attribute-Value (GEAV) model.</para>
+    <!--section><title>Overview</title>
       <para>The XDI graph is a directed acyclic graph with nodes connected by arcs. An XDI path is a connected chain of successive arcs; it forms an address designating the node at the end of the arc chain.</para></section>
     <section><title>Nodes</title>
-      <para>There are four basic node types:</para>
+      <para>This section defines each of the node types in the XDI graph model. The complete taxonomy of node types, together with a key to the XDI syntax used for each, is shown in Figure ___.</para>
       <section><title>Root ( )</title>
         <para></para></section>
-        <!--svg width="260" height="160" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <svg width="260" height="160" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <g transform="translate(30,30)" text-anchor="middle" dominant-baseline="middle">
            <g transform="translate(0,0)">
              <circle r="15" stroke="black" fill="white"/>
@@ -346,7 +369,7 @@ document made available to committee members to support the publishing process.<
         </g>
         Show outline of canvas using 'rect' element 
         <rect x="0" y="0" width="260" height="160" fill="none" stroke="black" stroke-width=".02cm" />
-      </svg-->
+      </svg>
         
       <section><title>Entity</title>
         <para></para></section>
@@ -363,77 +386,163 @@ document made available to committee members to support the publishing process.<
         <para>These express most of the XDI graph, with each arc in a path representing a specialization.</para></section>
       <section><title>Relational</title>
         <para>These specify equivalence or other relations between two nodes. When represented as statements, the two nodes are the subject and object of the statement, while the relation is the predicate.</para></section>
-    </section>
+    </section-->
   </section>
   <section><title>Node Types</title>
-    <para>There are four (five?) types: value, variable, root, and subgraph.</para>
-    <section><title>Literal &amp;</title>
-      <para>Leaf node carrying literal data value. Syntax is &amp; (as predicate arc)</para></section>
-    <section><title>Value &amp;</title>
-      <para>Node identifying the value of an attribute. Syntax is &amp; (as final arc of a subject path)</para></section>
-    <section><title>Root ( )</title>
-      <para>An XDI graph starts at the outer root, whose XDI address is <code>()</code>. An XDI (address) path may start with zero, one, or multiple root expressions. Roots are enclosed in parentheses.</para>
-      <section><title>Outer ()</title>
-        <para>The outer root roots the whole graph and is expressed as ().</para></section>
-      <section><title>Peer (S)</title>
-        <para>This contains an XDI address, or an IRI.</para></section>
-      <section><title>Inner (S/P)</title>
-        <para>Inner root consists of a subject and predicate</para></section>
-      <section><title>Statement (S/P/O)</title>
-        <para>This contains an entire XDI statement, i.e. a triple of subject/predicate/object.</para></section>
+    <para>This section defines each of the node types in the XDI graph model. The complete taxonomy of node types, together with a key to the XDI syntax used for each, is shown in Figure 2.</para>
+      <figure><title>XDI Node Types (Detailed)</title>
+    <mediaobject><imageobject><imagedata fileref="xdi-nodes-detailed.png"/></imageobject>
+      <textobject><phrase>XDI Node Types (Detailed)</phrase></textobject></mediaobject></figure>
+    <section><title>Literals</title>
+      <para>As in RDF, the final leaf nodes of an XDI graph — the nodes containing the raw data values described by the graph — are called <firstterm>literals</firstterm>. In the abstract graph model, there is no constraint on the data type of an XDI literal. XDI natively supports the six data types defined by JSON:
+        <orderedlist>
+      <listitem>Number (double-precision floating-point format in JavaScript)</listitem>
+      <listitem>String (double-quoted Unicode, with backslash escaping)</listitem>
+      <listitem>Boolean (<code>true</code> or <code>false</code>)</listitem>
+      <listitem>Array (an ordered, comma-separated sequence of values enclosed in square brackets; the values do not need to be of the same type)</listitem>
+      <listitem>Object (an unordered, comma-separated collection of key:value pairs enclosed in curly braces, with the '<code>:</code>' character separating the key and the value)</listitem>
+      <listitem><code>null</code> (empty) </listitem></orderedlist>
+      Literals of these data types, when serialized in an XDI JSON serialization format, do not require an XDI type statement. Literals of any other data type MAY be described using an XDI type statement.</para></section>
+      <section><title>Contexts</title><para>All other nodes in the XDI graph model that provide context for the literal data nodes are called <firstterm>context</firstterm> nodes. Context nodes MAY contain other context nodes as defined by the XDI ABNF rules. This nesting of context nodes is represented by contextual arcs. In this specification, the term <firstterm>contains</firstterm> means that there is a directed contextual arc from the containing node to the contained node. This is how the XDI graph model fulfills the <firstterm>Contextual Identification</firstterm> design goal.</para>
+      <para>The term <firstterm>XDI context</firstterm> may apply to any of the context node types described in the following sections. Certain XDI context node types have an associated <firstterm>context symbol</firstterm>—a single symbol character that denotes an instance of that context type.</para></section>
+    <section><title>Graph Root Nodes</title>
+      <para>An XDI graph is an abstract logical resource that serves as a container of XDI statements. From an XDI addressing standpoint, the starting point for every contextual statement within an XDI graph is called the <firstterm>root node</firstterm> of the graph. Three important points about XDI graphs and their root nodes:</para>
+      <orderedlist>
+      <listitem>The relationship of multiple independent XDI graphs is heterarchical. Although the context nodes within each XDI graph form a directed acyclic graph (a tree), of which the graph root node is the starting point, the root nodes of all independent XDI graphs are peers at the same level, and any peer may form the starting point for discovery of relationships with any other peer. This architecture is how the XDI graph model fulfills the <firstterm>No Central Authority</firstterm> design goal.</listitem>
+      <listitem>The root node of an XDI graph by itself never identifies or represents anything but the XDI graph itself. As a pure logical data structure, the XDI graph is what the Architecture of the World Wide Web calls an “information resource”.<xref linkend='webarch'/> This means the attributes of a graph root node are strictly the attributes of the graph itself; for example, its network location (the <code>&lt;$uri&gt;</code> attribute) or its timestamp (the <code>&lt;$t&gt;</code> attribute).</listitem>
+      <listitem>Every graph root node restarts the XDI addressing space. This means that when traversing from peer to peer across a set of the root nodes of independent XDI graphs, each node begins a new set of XDI addresses rooted in that node. This concept is critical to XDI discovery.</listitem> 
+      </orderedlist>
+      <para>There are three types of XDI graph root nodes.</para>
+      <section><title>The Common Root Node</title>
+        <para>Every XDI graph has exactly one <firstterm>common root node</firstterm>. It is called the common root because it the one logical node shared by all XDI graphs. To use the analogy of trees in a forest, if every tree represents an XDI graph, the common root node of all the trees is the earth.</para>
+        <para>The XDI address of the common root node is the <firstterm>empty address</firstterm>. Thus any XDI statement that does not begin with a peer root address or an inner root address is by definition relative to the common root node.</para></section>
+      <section><title>Peer Root Nodes</title>
+        <para>An XDI graph MAY describe zero or more <firstterm>peer graphs</firstterm>, each with its own <firstterm>peer root node</firstterm>. A peer root node represents an independent XDI graph with its own XDI address. In most cases this XDI address will be at a different network endpoint that the current XDI graph. However the common root node of an XDI graph may also describe its own XDI address by virtue of an XDI reference statement to a peer root node.</para>
+        <para>The XDI address of a peer root node MUST consist of only an single XDI address segment (representing an XDI subject) enclosed in parentheses. This address MUST NOT be preceded by an XDI context symbol. Examples:</para>
+        <code>(=example)</code>
+        <para><code>([=]!:uuid:f81d4fae-7dec-11d0-a765-00a0c91e0001)</code></para>
+        <para><code>(@example.company)</code></para>
+        <para><code>([@]!:uuid:9ce739f0-7665-11e2-bcfd-0800200c0002)</code></para>
+        <code>([@]!:uuid:9ce739f0-7665-11e2-bcfd-0800200c0002+sales)</code>
+        <para>An example of an XDI reference statement asserting the peer root address of its own common root node:</para>
+        <para><code>([=]!:uuid:f81d4fae-7dec-11d0-a765-00a0c91e0001)/$ref/)</code></para>
+        <para>Note that the object of the statement (the third segment of the address) is empty—this is the XDI address of the common root node.</para>
+      </section>
+      <section><title>Inner Root Nodes</title>
+        <para>An <firstterm>inner graph</firstterm> is a graph-within-a-graph. Unlike a peer root graph, an inner root graph represents the set of XDI statements that are the object of another XDI statement. In RDF this is known as reification.<xref linkend='reification'/></para>
+        <para>The XDI address of an <firstterm>inner root node</firstterm> MUST consist of two XDI address segments—an XDI subject followed by an XDI relational predicate—enclosed in parentheses. This XDI address MUST NOT be preceeded by an XDI context symbol. Examples:</para>
+        <para><code>(=example.1/+nominated)</code></para>
+        <para><code>(@company.1/+acquired)</code></para>
+        <para>Examples of XDI statements that begin with these peer root addresses:</para>
+        <para><code>(=example.1/+nominated)=example.2/+chair/@school+board</code></para>
+        <para><code>(@company.1/+acquired)@company.2&lt;$t&gt;&amp;/&amp;/”2013-11-30Z”</code></para>
+        <para>Because an inner graph represents the object(s) of an XDI relational statement, it differs from a peer graph in one key respect: the XDI statements contained by an inner graph are relative only to that particular inner root node and cannot be copied to another XDI graph without copying that same inner root node.</para></section>
     </section>
-    <section><title>Singleton</title><para>A single instance of a class</para>
-      <section><title>Entity</title><para>Entity</para></section>
-      <section><title>Attribute</title><para>Enclosing in angle brackets &lt; &gt; indicates an attribute as opposed to an entity.</para></section>
+      <section><title>Subgraphs</title>
+        <para>A <firstterm>subgraph</firstterm> is a branch of an XDI graph that does not begin with a root node. A subgraph MUST begin with an entity, attribute, or value node. See the definitions of these node types below.</para>
+      <section><title>Variables</title> 
+        <para>A <firstterm>variable</firstterm> is a node serves as a template or a query for other XDI graphs. A variable node MUST represent a set of zero or more nodes in the instance graph. A variable MAY represent any type of XDI graph node. A variable MAY be typed by containing the XDI address of a class. If a variable is typed, a valid instance of that variable MUST be a valid instance of that class.</para></section>
+      <section><title>Entities</title><para>An <firstterm>entity</firstterm> node represents the digital identity of any independent physical or logical resource other than an XDI graph. An entity MUST be either an authority, an entity class, or an instance of an entity class. An entity MAY contain another entity (a <firstterm>subentity</firstterm>) or an attribute. An entity MUST NOT contain a value.</para></section>
+      <section><title>Attributes</title><para>An <firstterm>attribute node</firstterm> represents a property of its parent graph, entity, or attribute. An attribute MAY contain another attribute (a <firstterm>subattribute</firstterm>). An attribute MAY contain exactly one value node. Note that only attributes may contain value nodes. An XDI graph root node or entity node MUST NOT contain a value node directly, only attribute nodes that have value nodes.</para>
+      <para>The XDI address of an attribute node MUST be contained in chevrons (angle brackets) “<code>&lt;</code>” and “<code>&gt;</code>”. (An attribute definition or collection has additional containing syntax—see the ABNF section.)</para></section>
+      <section><title>Values</title>
+      <para>A <firstterm>value</firstterm> node represents the abstract XDI address of the literal value of an XDI attribute. A value node MUST be a singleton node (see below). Because an attribute node can only have one value node, and because that value node is always relative to its containing attribute node, all XDI value nodes MUST be identified using a single XDI context symbol: the ampersand character “<code>&amp;</code>”.</para>
+      <para>An attribute node is NOT REQUIRED to have a value node. A value node MAY have exactly one literal node describe by one XDI literal arc. A value node is NOT REQUIRED to have a literal node.</para>
+      <para>If an attribute node does not have a value node, the literal value of the attribute SHOULD be in indeterminate.</para>
+      <para>If an attribute node has a value node, but the value node does not have a literal node, the literal value of the attribute SHOULD be indeterminate.</para>
+      <para>If an attribute node has a value node, and value node has a literal node, the literal value of the attribute MUST be an XDI literal data type. The literal value MAY be the XDI data type representing a null value. In the JSON serialization, this is the JSON <code>null</code> value.</para></section>
     </section>
-    <section><title>Collection [ ]</title><para>Collection</para>
-       <section><title>Entity</title>
-         <para>An entity may contain entities and attributes but cannot directly contain a value. Enclosing in brackets [ ] indicates a collection as opposed to a singleton.</para></section>
-       <section><title>Attribute</title>
-         <para>An attribute may only contain subattributes (and, if singular, a value)</para></section>
+    <section><title>Definitions</title><para>A <firstterm>definition</firstterm> node represents the start of a subgraph defining or qualifying the definition of an XDI entity or attribute. Definitions are how XDI meets the <firstterm>Schema and Ontology Expression</firstterm> design goal.</para>
+      <para>The XDI address of a definition node MUST be enclosed in pipe characters “<code>|</code>” and “<code>|</code>”. The entity and attribute vocabulary used by XDI definitions will be specified in the XDI Dictionary specification.</para>
     </section>
-    <section><title>Member # !</title>
-      <para>A node identifying an instance of an entity or attribute within a collection</para>
-      <section><title>Entity</title><para>Entity</para></section>
-      <section><title>Attribute</title><para>Attribute</para></section>
+    <section><title>Singletons</title><para>A <firstterm>singleton</firstterm> node represents a single instance of an XDI entity or attribute that is not a collection and does not have any members. A singleton is the default form of an XDI address and does not have any special syntax.</para>
     </section>
-    <section><title>Definition +</title><para>XDI dictionary definition</para>
-      <section><title>Entity</title><para>Entity</para></section>
-      <section><title>Attribute</title><para>Attribute</para></section>
+    <section><title>Collections</title><para>A <firstterm>collection</firstterm> node represents a set of XDI entities or attributes of the same type. A collection MAY have zero or more members. The XDI address of a collection node MUST be enclosed in square bracket characters “<code>[</code>” and “<code>]</code>”. The type of the members of the collection is specified by the XDI address contained in the square brackets.</para></section>
+    <section><title>Members</title>
+      <para>A <firstterm>member</firstterm> node represents an XDI entity or attribute that is a member of a collection. A member node MUST have a containing collection.
+There are two types of member nodes.</para>
+      <section><title>Ordered</title><para>An <firstterm>ordered</firstterm> member node represents an ordered member of a collection. The XDI address of an ordered member node MUST begin with the context symbol “<code>#</code>” and MUST be followed by one or more digits representing the order of the member in the collection. Ordering of members in collections MUST begin with zero. Zero MUST NOT be the leading digit unless it is the only digit.
+[TODO – Must ordering be consecutive?]
+The XDI address of an ordered member MUST NOT be interpreted as an immutable address of that entity or attribute.</para></section>
+      <section><title>Unordered</title><para>An unordered member node represents an member of a collection that is not ordered. The XDI address of an unordered member node MUST begin with the context symbol “<code>!</code>”.
+The XDI address of an unordered member MUST be interpreted as an immutable address of that entity or attribute.</para>
+
+</section>
     </section>
-    <section><title>Variable { }</title> 
-      <para>This syntax can enclose any other node type. To be further defined.</para></section>
-  </section>
-  <section><title>Namespace Symbols</title><para>Formerly Context Symbols</para>
     <section><title>Authorities</title>
-      <para>Authorities</para>
-      <section><title>Personal =</title>
-        <para>Natural persons</para></section>
-      <section><title>Legal @</title>
-        <para>Groups, organizations, or other entities in whose identities legal rights may be asserted</para></section>
-      <section><title>General *</title>
-        <para>Entities in whose identities legal rights may not be asserted</para></section>
+      <para>An <firstterm>authority</firstterm> is an XDI entity representing the digital identity of a real-world entity that is authoritative for its XDI subgraph.
+There are three types of XDI authorities forming supersets of each other as shown in Figure 3.</para>
+  <figure><title>XDI Authority Types</title>
+    <mediaobject><imageobject><imagedata fileref="xdi-authorities.png"/></imageobject>
+      <textobject><phrase>XDI Authority Types</phrase></textobject></mediaobject></figure>
+
+      <section><title>Personal</title>
+        <para>A <firstterm>personal</firstterm> authority is an XDI entity representing the digital identity of a natural person. The XDI address of a personal authority MUST begin with the context symbol “<code>=</code>”.</para></section>
+      <section><title>Legal</title>
+        <para>A <firstterm>legal</firstterm> authority is an XDI entity representing the digital identity of a legal entity that is not required to be a natural person. Examples include groups, sole proprietorships, partnerships, associations, corporations, governments or government agencies of any kind, and trademarks. The XDI address of a legal authority MUST begin with the context symbol “<code>@</code>”.</para></section>
+      <section><title>General</title>
+        <para>A <firstterm>general</firstterm> authority is an XDI entity representing the digital identity of an entity that is not required to be a legal entity. Examples include physical objects or assets, locations, devices, applications, databases, and network endpoints. The XDI address of a general authority MUST begin with the context symbol “<code>*</code>”.</para></section>
     </section>
-    <section><title>Classes</title><para>Classes</para>
-      <section><title>Reserved $</title>
-        <para>XDI grammar and keywords use "dollar words".</para></section>
+    <section><title>Classes</title><para>A <firstterm>class</firstterm> is an XDI entity or attribute representing a defined set of subentities, attributes, relations, or literal datatypes. The semantics of an XDI class are specified by its XDI definition, typically in an XDI dictionary (see above).
+Each of the three XDI authority context symbols, when used by itself, represents a class.
+The class of all people is represented by the context symbol “<code>=</code>” alone. The collection of all members of this class is represented by “<code>[=]</code>”.
+The class of all legal entities is represented by the context symbol “<code>@</code>” alone. The collection of all members of this class is represented by “<code>[@]</code>”.
+The class of all entities regardless of legal status is represented by the context symbol “*” alone. The collection of all members of this class is represented by “<code>[*]</code>”.
+There are two other types of XDI classes.</para>
+      <section><title>Reserved</title>
+        <para>The <firstterm>reserved</firstterm> class is the set of XDI classes specified by the OASIS XDI Technical Committee to define the universal grammar of XDI. The XDI address of a reserved class MUST begin with the context symbol “<code>$</code>”. For this reason they are also called <firstterm>dollar words</firstterm> or <firstterm>XDI keywords</firstterm>. Examples:</para>
+<simplelist type='horiz' columns='6'>
+  <member>$uri</member>
+  <member>$do</member>
+  <member>$and</member>
+  <member>$or</member>
+  <member>$not</member>
+  <member>$public</member>
+</simplelist>
+<para>An reserved class name MUST be interpreted as an immutable XDI address.</para>
+<para>A reserved class name MUST be defined in a specification from the OASIS XDI Technical Committee (including this specification) or by another OASIS Technical Committee or another standards body specified by the OASIS XDI Technical Committee.</para></section>
       <section><title>Unreserved +</title>
-        <para>XDI generic dictionary words for user use.</para></section>
+        <para>The <firstterm>unreserved</firstterm> class is the set of XDI classes defined by other XDI authorities. The XDI address of an unreserved class MUST begin with the context symbol “<code>+</code>”. Unreserved class names are typically defined in XDI dictionaries. For this reason they are also called <firstterm>plus words</firstterm> or <firstterm>dictionary words</firstterm>. Examples:</para>
+<simplelist type='horiz' columns='6'>
+  <member>+tel</member>
+  <member>+home</member>
+  <member>+work</member>
+  <member>+friend</member>
+  <member>+enemy</member>
+</simplelist>
+<para>An <firstterm>unreserved</firstterm> class name MUST be interpreted as an immutable XDI address.</para>
+<para>Dictionary words MAY be defined by any XDI authority in any context. Dictionary words whose semantics are intended to be defined by one XDI authority in a specific set of contexts SHOULD be defined in that authority’s own context. Dictionary words that are intended to be generic, i.e., to share the same semantics in all XDI graphs, SHOULD be defined directly in the context of the common root node.</para>
+<para>This begs the question of authority for generic XDI dictionary words. Since they represent a community consensus about shared semantics, it is RECOMMENDED that generic XDI dictionary words be specified in XDI community dictionaries cooperatively maintained by the set of XDI authorities who wish to contribute to the community. This is the model popularized (and proven to scale) by Wikipedia for human-readable encyclopedia articles.</para>
+<para>XDI.org is one example of a non-profit community organization whose mission includes the cooperative development of XDI dictionaries.</para></section></section>
     </section>
-    <section><title>Instances</title><para>Instances</para>
-      <section><title>Ordered #</title>
-        <para>Zero-based numeric order</para></section>
-      <section><title>Unordered !</title>
-        <para>Unordered </para></section>
-    </section>
-  </section>
-  <section><title>Equivalence Relations</title><para>These are indicated by relational arcs.</para>
-    <section><title>Identity $is</title>
-      <para>$is indicates complete equivalence.</para></section>
-    <section><title>Reference $ref</title>
-      <para>$ref indicates the subject is a reference pointing to the object</para></section>
-    <section><title>Replacement $rep</title>
-      <para>$rep indicates the subject not only stands for the object, but that the reference should be replaced with the object.</para></section>
+  <section><title>Statement Types</title><para>As with an RDF graph, an XDI graph consists of a set of one or more <firstterm>XDI statements</firstterm>. Each XDI statement MUST have a <firstterm>subject</firstterm>, <firstterm>predicate</firstterm>, and <firstterm>object</firstterm> (even if one or more of these is the empty address). Every XDI statement MUST represent exactly one arc in the XDI graph model, and every arc in the XDI graph model MUST represent exactly one XDI statement.</para>
+      <para>In XDI display format (see below), the XDI addresses for the subject, predicate, and object of the statement are separated by the forward slash character “<code>/</code>”, so each component is called a <firstterm>segment</firstterm>.</para>
+      <para>There are three types of XDI statements.</para>
+    <section><title>Literal Statements</title>
+      <para>A <firstterm>literal statement</firstterm> represents exactly one <firstterm>literal arc</firstterm> in the XDI graph model. It specifies the literal value of an XDI attribute. In a literal statement:</para>
+<orderedlist><listitem>The XDI address of the subject MUST end in an attribute singleton or a member of an attribute collection followed by an ampersand character “<code>&amp;</code>”.</listitem> 
+<listitem>The XDI address of the predicate by the ampersand character “<code>&amp;</code>”.</listitem>
+<listitem>The XDI address of the object MUST be the literal data value as specified by the serialization format.</listitem></orderedlist>
+<para>There is no inverse of a literal statement. Example:</para>
+<para><code>=forrest.gump&lt;+email&gt;&amp;/&amp;/”forrest.gump@example.com”</code></para></section>
+    <section><title>Relational Statements</title>
+      <para>A <firstterm>relational</firstterm> statement represents exactly one <firstterm>relational arc</firstterm> in the XDI graph model. It specifies the relationship of two XDI context nodes. In a relational statement:</para>
+<orderedlist><listitem>The XDI address of the subject MAY be any XDI context node.</listitem>
+<listitem>The XDI address of the predicate MAY be any XDI relation for which the subject node is a valid domain. Reserved classes are used for a small set of universally defined XDI relations. (See the Equivalent Relations section below.)</listitem>
+<listitem>The XDI address of the object MUST be another XDI context node. The object node MUST be in the valid range for the specified relation.</listitem></orderedlist>
+<para>The inverse of any relational statement MAY be asserted by: a) reversing the subject and object components, and b) putting the XDI address of the relation in the <code>$is</code> context. Example:</para>
+<para><code>=forrest.gump/+mother/=mama.gump</code></para>
+<para><code>=mama.gump/$is+mother/=forrest.gump</code></para></section>
+    <section><title>Contextual Statements</title>
+      <para>A <firstterm>contextual statement</firstterm> represents exactly one <firstterm>contextual arc</firstterm> in the XDI graph model. It specifies the relationship of two XDI context nodes. In a relational statement:</para>
+      <orderedlist>
+        <listitem>The XDI address of the subject MAY be any XDI context node except a value node (since value nodes are the leaf nodes of an XDI context tree). If the subject is the common root node, the XDI address is empty.</listitem>
+        <listitem>The XDI address of the predicate MUST be the empty address.</listitem>
+        <listitem>The XDI address of the object MUST be the contained XDI context node. In addition, the concatenation of the XDI address of the subject of the contextual statement and the object of the contextual statement MUST produce a valid XDI address according to the rules of the XDI ABNF (below).</listitem>
+      </orderedlist>
+The inverse of any contextual statement MAY be asserted by: a) reversing the subject and object components, and b) using the <code>$is()</code> predicate. Example:
+<para><code>=forrest.gump//&lt;+email&gt;</code></para>
+<para><code>&lt;+email&gt;/$is()/=forrest.gump</code></para></section>
   </section>
   <section><title>XDI Graph and Statement Grammars</title>
     <para>Grammars are given in Augmented Backus-Naur Form as defined in <xref linkend="rfc2234"/>. Slash / is alternation, parentheses are grouping, * means zero or more of following, 1* means one or more of following, brackets [] mean zero or one of following, i.e. optional.</para>
@@ -487,7 +596,6 @@ xdi-condition   = $equals / $greater / $lesser
     
     <section><title>Address Grammar</title>
       <para>An XDI address can contain peer roots (cross-references), then inner roots, then entities, then attributes, then literal (value), in that order. Each of those elements is optional, except that a value must be preceded by an attribute singleton or attribute member.</para>
-      <para>Addresses are interpreted as absolute; that is, they start at the outer root. The initial outer root is not written, except in the special case of the empty path, which is written () instead of as an empty string. This special case is not described in the ABNF as it is not context-free, but is to be implemented in serialization after generation, and deserialization before parsing.</para>
       <para>xdi-addresses is used when multiple objects per subject/predicate pair are used in multiple-line display format or in JSON serialization. For the non-multiple-object serializations, simply use xdi-addresses = xdi-address instead.</para>
 
 <programlisting>
@@ -503,9 +611,7 @@ attrib-value    = ( attrib-singleton / ( attrib-collection   attrib-member   ) )
       <para></para>
 <programlisting>
 </programlisting>
-      <para>The outer root is simply the empty string case of xdi-address, so does not appear here.</para>
       <para>Peer roots (xrefs) must occur before inner roots in a xdi-address. (and all roots precede entities, attributes, and values)</para>
-      <para>*Statement roots no longer appear as such. Since they can only occur as the object of a relational statement, they are accounted for in the Statement Grammar instead.</para>
 <programlisting>
 xref        = "(" ( xdi-address / xdi-iri / xdi-name ) ")"
 inner-root  = "("   xdi-address S-P xdi-address ")"
@@ -622,7 +728,6 @@ ENDLINE        = %x0D / %x0A / ( %x0D %x0A )
 
     <section><title>JSON Grammar</title>
       <para>Based on <xref linkend="rfc4627"/> syntax diagrams (no actual grammar rules found there) restricted for canonical form (add reference) canonicality restrictions: no + signs, no leading zeros, no trailing zeros on fraction</para>
-      <para>Get ABNF from 4427 and/or ECMA</para>
       <para>We use JSON values, i.e. a value may be a single string, number, true, false, or null, not necessarily a JSON array or object, as is required by "JSON text" in the JSON MIME type specification.</para>
       <para>XDI processors SHOULD accept non-canonical JSON values as input.</para>
       <para>XDI processors MAY output partly, fully, or not at all canonicalized versions of JSON values that clients have input, for example by removing spaces.</para>
@@ -768,11 +873,11 @@ C-I    = QUOTE "," QUOTE
 
 
 </screen>
-<sidebar><title>A Sidebar</title>
+<!--sidebar><title>A Sidebar</title>
 <para>
 Sidebar content.
 </para>
-</sidebar>
+</sidebar-->
     </section>
 
     <section><title>Graph Tree Serialization Grammar</title>
@@ -814,7 +919,7 @@ relation        = "{" QUOTE pred QUOTE ":" "[" xdi-address *( "," xdi-address ) 
 
 
   </section>
-  <section><title>Serialization</title>
+  <!--section><title>Serialization</title>
     <para>Serialization</para>
     <section><title>Formats</title>
       <para>Formats</para></section>
@@ -852,6 +957,6 @@ relation        = "{" QUOTE pred QUOTE ":" "[" xdi-address *( "," xdi-address ) 
   <title>Examples</title>
   
   <para>This appendix contains XDI core examples.</para>
-</appendix>
+</appendix-->
 
 </article>
