@@ -213,7 +213,21 @@ This working draft builds on <xref linkend="xdi-core-1.0"/>.</para>
 <section>
   <title>XDI Messaging</title>
   
-  <para>Describe here how XDI Messaging provides the API for interacting with XDI graphs.</para>
+  <para>XDI Messaging provides a mechanism for interacting with XDI graphs. In the context of XDI Messaging,
+  the XDI graph one interacts with is called the "target graph". The interactions with the target graph are represented
+  as a "message", which is itself an XDI graph. Given a message and a target graph, the message can be "applied"
+  to the target graph, which can result in one, or both, of the following:</para>
+  <ul>
+    <li>A modification of the target graph</li>
+    <li>A "message result", which is itself an XDI graph</li>
+  </ul>
+  <para>In order to apply a message to a target graph, an XDI processor is required that performs the XDI Messaging
+  logic. This can be done either locally with the help of a software library that acts as the XDI processor, or it can
+  be done through a transport binding. In the case of a transport binding, a protocol such as HTTP is used for transporting
+  messages and message results over a network.</para>
+  <para>Transport bindings may be based on a client/server model or on other network topologies. They may be
+  synchronous or asynchronous. The XDI Messaging concepts of "target graph", "message", "message result", as well as
+  the logic performed by the XDI processor, remain constant and independent of a transport binding.</para>
 </section>
 
 <section>
@@ -236,14 +250,29 @@ This working draft builds on <xref linkend="xdi-core-1.0"/>.</para>
   <section>
     <title>Operations</title>
     
-    <para>Describe here Operations</para>
+    <para>Operations express the actual interactions to be applied to the target graph. Three core operations ($get, $set, $del)
+    are defined for reading, writing, and deleting data in the target graph. A fourth operation ($do) is defined for extensible,
+    custom interactions with the target graph. Within the message, operations are represented as XDI relational arcs.</para>
   </section>
   
   <section>
     <title>Target Addresses and Target Statements</title>
     
-    <para>Describe here Target Addresses and Target Statements</para>
-  </section>
+    <para>Every operation has a target to which the interaction applies. An operation's target hereby corresponds to the
+    target context of the XDI relational arc that represents the operation:</para>
+	  <ul>
+      <li>If the target context is an XDI inner graph, then all non-implied statements in that XDI inner graphs are "target statements"
+      of the operation.</li>
+      <li>If the target context is not an XDI inner graph, then the address of the target context is the "target address" of the
+      operation.</li>
+    </ul>
+    </section>
+</section>
+
+<section>
+  <title>XDI Message Envelope Processing</title>
+  
+  <para></para>
 </section>
 
 <section>
@@ -276,13 +305,26 @@ This working draft builds on <xref linkend="xdi-core-1.0"/>.</para>
   <section>
     <title>Link Contract</title>
     
-    <para>Describe here Link Contract</para>
+    <para>Every message MUST contain a reference to an XDI link contract for authorizing the message. This
+    reference is represented as an XDI $do relational arc on the message. The target context of this relational
+    arc is the address of the XDI link contract in the target graph.</para>
+    <para>If no XDI link contract exists at the given address in the target graph, the message fails, and
+    the XDI processor raises an error.</para>
+    <para>If the XDI link contract in the target graph contains an XDI policy, the XDI processor evaluates the
+    XDI policy before applying the message's opertions to the target graph. If the XDI policy evaluates to false,
+    the message fails, and the XDI processor raises an error.</para>
+    <para>If the message contains an operation which is not permitted by the XDI link contract, the operation fails,
+    and the XDI processor raises and error (TODO: what if some but not all of the operations are permitted?)</para>
   </section>
   
   <section>
     <title>Message Policy</title>
     
-    <para>Describe here Message Policy</para>
+    <para>A message MAY contain an XDI message policy for conditional application of the message. This XDI
+    message policy is represented as an XDI $if sub-context of the message.</para>
+    <para>The XDI processor evaluates the XDI policy before applying the message's opertions to the 
+    target graph. If the XDI message policy evaluates to false, the message fails, and the XDI processor raises
+    an error.</para>
   </section>
   
   <section>
@@ -300,6 +342,8 @@ This working draft builds on <xref linkend="xdi-core-1.0"/>.</para>
 
 <section>
   <title>XDI Operation Processing</title>
+  
+  <
   
   <section>
     <title>$get</title>
