@@ -425,7 +425,7 @@ document made available to committee members to support the publishing process.<
         <para><code>([@]!:uuid:9ce739f0-7665-11e2-bcfd-0800200c0002)</code></para>
         <code>([@]!:uuid:9ce739f0-7665-11e2-bcfd-0800200c0002+sales)</code>
         <para>An example of an XDI reference statement asserting the peer root address of its own common root node:</para>
-        <para><code>([=]!:uuid:f81d4fae-7dec-11d0-a765-00a0c91e0001)/$ref/)</code></para>
+        <para><code>([=]!:uuid:f81d4fae-7dec-11d0-a765-00a0c91e0001)/$ref/</code></para>
         <para>Note that the object of the statement (the third segment of the address) is empty—this is the XDI address of the common root node.</para>
       </section>
       <section><title>Inner Root Nodes</title>
