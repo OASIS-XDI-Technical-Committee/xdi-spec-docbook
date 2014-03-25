@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section
+  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+         "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
+[
+<!--the document properties-->
+]>
+<!--
+    this glossary can be included in any XDI document by:
+    1] adding 
+    <!ENTITY % xinclude SYSTEM "/Applications/oxygen-13.2/frameworks/docbook/4.4/dtd/xinclude.mod">
+    %xinclude;
+    
+    to the document preamble,
+    2] insterting 
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../xdi-docbook-util/xdi-glossary-wd01.xml"/>
+    where the glossary section is to be included.
+    -->
+
+<section id="s.glossary">
+    <title>Glossary of Terms</title>
+    <para>
+        <glosslist>
+            <glossentry>
+                <glossterm>XDI</glossterm><glossdef><para>XRI Data Interchange</para></glossdef>
+            </glossentry>
+            <glossentry>
+                <glossterm>Normalized Graph</glossterm><glossdef><para>the canonical form of the graph, necessary to ensure successful signature validation.</para></glossdef>
+            </glossentry>
+            <glossentry>
+                <glossterm>Signature Block</glossterm><glossdef><para>a collection of XDI statements describing metadata about the signature sufficient to ensure successful validation, and the signature itself.</para></glossdef>
+            </glossentry>
+        </glosslist>
+    </para>
+</section>
