@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<!DOCTYPE section
+  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+         "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
+[
+<!--the document properties-->
+]>
+<!--
+    this biblio can be included in any XDI document by:
+    1] adding 
+    <!ENTITY % xinclude SYSTEM "/Applications/oxygen-13.2/frameworks/docbook/4.4/dtd/xinclude.mod">
+    %xinclude;
+    
+    to the document preamble,
+    2] insterting 
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../xdi-docbook-util/xdi-biblio-wd01.xml"/>
+    where the normative reference section is to be included.
+    -->
+    
+<section id="s.biblio">
+    <title>Normative References</title>
+    <bibliolist>
+        <bibliomixed id="rfc2119">
+            <abbrev>RFC 2119</abbrev>
+            <title>Key words for use in RFCs to Indicate Requirement Levels</title>, <date>March
+                1997. </date>
+            <author>
+                <firstname>S. </firstname>
+                <surname>Bradner</surname>
+            </author>. <releaseinfo>IETF (Internet Engineering Task Force) RFC 2119, </releaseinfo>
+            <citetitle><ulink url="http://www.ietf.org/rfc/rfc2119.txt"
+                    >http://www.ietf.org/rfc/rfc2119.txt</ulink></citetitle>
+        </bibliomixed>
+        <bibliomixed id="rfc4627">
+            <abbrev>RFC 4627</abbrev>
+            <title>The application/json Media Type for JavaScript Object Notation (JSON)</title>, <date>July
+                2006. </date>
+            <author>
+                <firstname>D. </firstname>
+                <surname>Crockford</surname>
+            </author>. <releaseinfo>IETF (Internet Engineering Task Force) RFC 4627, </releaseinfo>
+            <citetitle><ulink url="http://www.ietf.org/rfc/rfc4627.txt"
+                >http://www.ietf.org/rfc/rfc4627.txt</ulink></citetitle>
+        </bibliomixed>
+        <bibliomixed id="XDICore">
+            <abbrev>XDICore</abbrev>
+            <title>XDI Core version &version;</title>, <date>June 2014</date>
+            <editor>
+                <firstname>Drummond</firstname>
+                <surname>Reed</surname>
+            </editor>. 
+            <publisher>
+                <publishername>OASIS</publishername>
+            </publisher>
+            <releaseinfo/>
+            <citetitle><ulink url=""/>XDICore</citetitle>
+        </bibliomixed>
+        <bibliomixed id="XDIMsg">
+            <abbrev>XDIMsg</abbrev>
+            <title>XDI Messaging version &version;</title>, <date>June 2014</date>
+            <editor>
+                <firstname>Drummond</firstname>
+                <surname>Reed</surname>
+            </editor>. 
+            <publisher>
+                <publishername>OASIS</publishername>
+            </publisher>
+            <releaseinfo/>
+            <citetitle><ulink url=""/>XDIMsg</citetitle>
+        </bibliomixed>
+        <bibliomixed id="XDIDisc">
+            <abbrev>XDIDisc</abbrev>
+            <title>XDI Discovery version &version;</title>, <date>June 2014</date>
+            <editor>
+                <firstname>Drummond</firstname>
+                <surname>Reed</surname>
+            </editor>. 
+            <publisher>
+                <publishername>OASIS</publishername>
+            </publisher>
+            <releaseinfo/>
+            <citetitle><ulink url=""/>XDIDisc</citetitle>
+        </bibliomixed>
+        <bibliomixed id="XDIPolicy">
+            <abbrev>XDIPolicy</abbrev>
+            <title>XDI Policy version &version;</title>, <date>June 2014</date>
+            <editor>
+                <firstname>Drummond</firstname>
+                <surname>Reed</surname>
+            </editor>. 
+            <publisher>
+                <publishername>OASIS</publishername>
+            </publisher>
+            <releaseinfo/>
+            <citetitle><ulink url=""/>XDIPolicy</citetitle>
+        </bibliomixed>
+        <bibliomixed id="XDISec">
+            <abbrev>XDISec</abbrev>
+            <title>XDI Security Mechanisms version &version;</title>, <date>June 2014</date>
+            <editor>
+                <firstname>Peter</firstname>
+                <surname>Davis</surname>
+            </editor>. 
+            <publisher>
+                <publishername>OASIS</publishername>
+            </publisher>
+            <releaseinfo/>
+            <citetitle><ulink url=""/>XDISec</citetitle>
+        </bibliomixed>
+        <bibliomixed id="XDIPriv">
+            <abbrev>XDIPriv</abbrev>
+            <title>XDI Privacy version &version;</title>, <date>June 2014</date>
+            <editor>
+                <firstname>Peter</firstname>
+                <surname>Davis</surname>
+            </editor>. 
+            <publisher>
+                <publishername>OASIS</publishername>
+            </publisher>
+            <releaseinfo/>
+            <citetitle><ulink url=""/>XDIPriv</citetitle>
+        </bibliomixed>
+        <bibliomixed id="XDIDictionary">
+            <abbrev>XDIDictionary</abbrev>
+            <title>XDI Dictionary version &version;</title>, <date>June 2014</date>
+            <editor>
+                <firstname>Drummond</firstname>
+                <surname>Reed</surname>
+            </editor>. 
+            <publisher>
+                <publishername>OASIS</publishername>
+            </publisher>
+            <releaseinfo/>
+            <citetitle><ulink url=""/>XDIDictionary</citetitle>
+        </bibliomixed>
+        <bibliomixed id="XDIDisc">
+            <abbrev>XDISig</abbrev>
+            <title>XDI Signatures version &version;</title>, <date>June 2014</date>
+            <editor>
+                <firstname>Peter</firstname>
+                <surname>Davis</surname>
+            </editor>. 
+            <publisher>
+                <publishername>OASIS</publishername>
+            </publisher>
+            <releaseinfo/>
+            <citetitle><ulink url=""/>XDISig</citetitle>
+        </bibliomixed>
+    </bibliolist>
+
+</section>

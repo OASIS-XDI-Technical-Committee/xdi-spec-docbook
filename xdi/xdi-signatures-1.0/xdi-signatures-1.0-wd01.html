@@ -1,0 +1,283 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>XDI Signatures V1.0</title><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><meta name="description" content="Abstract This working draft describes an environment for writing and publishing an OASIS specification using DocBook XML. It is an internal OASIS support document and not the basis of an OASIS specification in and of itself."></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article" title="XDI Signatures V1.0"><div class="titlepage"><div><div><h2 class="title"><a name="d6e1"></a>XDI Signatures V1.0</h2></div><div><div class="authorgroup">
+      <div class="editor"><h4 class="editedby">Edited by</h4><h3 class="editor"><span class="firstname">Peter</span> <span class="surname">Davis</span></h3><div class="affiliation">
+          <span class="orgname">Neustar, Inc.<br></span>
+        </div><code class="email">&lt;<a class="email" href="mailto:peter.davis@neustar.biz">peter.davis@neustar.biz</a>&gt;</code></div>
+      <div class="editor"><h4 class="editedby">Edited by</h4><h3 class="editor"><span class="firstname">Dan</span> <span class="surname">Blum</span></h3><div class="affiliation">
+          <span class="orgname">Respect Network Corp.<br></span>
+        </div></div>
+    </div></div><div><p class="releaseinfo"> $Id: oasis-specification-0.6-wd04.xml,v 1.2 2012/06/14 01:57:23 admin
+      Exp $ </p></div><div><p class="releaseinfo">Standards Track Work Product</p></div><div><p class="releaseinfo">http://docs.oasis-open.org/templates/DocBook/spec-1.0/oasis-specification-1.0-wd01.html</p></div><div><p class="releaseinfo">http://docs.oasis-open.org/templates/DocBook/spec-1.0/oasis-specification-1.0-wd01.pdf</p></div><div><p class="releaseinfo">http://docs.oasis-open.org/templates/DocBook/spec-1.0/oasis-specification-1.0-wd01.xml</p></div><div><p class="releaseinfo">http://docs.oasis-open.org/templates/DocBook/spec-0.0/oasis-specification-0.0.html</p></div><div><p class="releaseinfo">http://docs.oasis-open.org/templates/DocBook/spec-0.0/oasis-specification-0.0.pdf</p></div><div><p class="releaseinfo">http://docs.oasis-open.org/templates/DocBook/spec-0.0/oasis-specification-0.0.xml</p></div><div><p class="releaseinfo">http://docs.oasis-open.org/templates/DocBook/oasis-specification/oasis-specification.html</p></div><div><p class="releaseinfo">http://docs.oasis-open.org/templates/DocBook/oasis-specification/oasis-specification.pdf</p></div><div><p class="releaseinfo">http://docs.oasis-open.org/templates/DocBook/oasis-specification/oasis-specification.xml</p></div><div><p class="releaseinfo"><a class="ulink" href="https://www.oasis-open.org/apps/org/workgroup/xdi/" target="_top">OASIS XRI Data Interchange (XDI) TC</a></p></div><div><p class="copyright">Copyright &copy; 2014 OASIS Open, Inc. All Rights Reserved.</p></div><div><div class="legalnotice" title="Additional artifacts"><a name="d6e35"></a>
+      <p class="legalnotice-title"><b>Additional artifacts</b></p>
+      <p>This specification is one component of a suite of specifications which includes:</p>
+      <div class="itemizedlist"><ul class="itemizedlist" type="disc" compact><li class="listitem">
+          <p></p>
+        </li></ul></div>
+    </div></div><div><div class="legalnotice" title="Notices"><a name="d6e44"></a>
+      <p class="legalnotice-title"><b>Notices</b></p>
+      <p>Copyright &copy; OASIS&reg; Open 2012. All Rights Reserved. </p>
+      <p>All capitalized terms in the following text have the meanings assigned to them in the
+        OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full Policy may be
+        found at <a class="ulink" href="http://www.oasis-open.org/who/intellectualproperty.php" target="_top">http://www.oasis-open.org/who/intellectualproperty.php</a>.</p>
+      <p>This document and translations of it may be copied and furnished to others, and
+        derivative works that comment on or otherwise explain it or assist in its implementation may
+        be prepared, copied, published, and distributed, in whole or in part, without restriction of
+        any kind, provided that the above copyright notice and this section are included on all such
+        copies and derivative works. However, this document itself may not be modified in any way,
+        including by removing the copyright notice or references to OASIS, except as needed for the
+        purpose of developing any document or deliverable produced by an OASIS Technical Committee
+        (in which case the rules applicable to copyrights, as set forth in the OASIS IPR Policy,
+        must be followed) or as required to translate it into languages other than English.</p>
+      <p>The limited permissions granted above are perpetual and will not be revoked by OASIS or
+        its successors or assigns.</p>
+      <p>This document and the information contained herein is provided on an "AS IS" basis and
+        OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY
+        WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR
+        ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</p>
+      <p>OASIS requests that any OASIS Party or any other party that believes it has patent
+        claims that would necessarily be infringed by implementations of this OASIS Committee
+        Specification or OASIS Standard, to notify OASIS TC Administrator and provide an indication
+        of its willingness to grant patent licenses to such patent claims in a manner consistent
+        with the IPR Mode of the OASIS Technical Committee that produced this specification.</p>
+      <p>OASIS invites any party to contact the OASIS TC Administrator if it is aware of a claim
+        of ownership of any patent claims that would necessarily be infringed by implementations of
+        this specification by a patent holder that is not willing to provide a license to such
+        patent claims in a manner consistent with the IPR Mode of the OASIS Technical Committee that
+        produced this specification. OASIS may include such claims on its website, but disclaims any
+        obligation to do so.</p>
+      <p>OASIS takes no position regarding the validity or scope of any intellectual property or
+        other rights that might be claimed to pertain to the implementation or use of the technology
+        described in this document or the extent to which any license under such rights might or
+        might not be available; neither does it represent that it has made any effort to identify
+        any such rights. Information on OASIS' procedures with respect to rights in any document or
+        deliverable produced by an OASIS Technical Committee can be found on the OASIS website.
+        Copies of claims of rights made available for publication and any assurances of licenses to
+        be made available, or the result of an attempt made to obtain a general license or
+        permission for the use of such proprietary rights by implementers or users of this OASIS
+        Committee Specification or OASIS Standard, can be obtained from the OASIS TC Administrator.
+        OASIS makes no representation that any information or list of intellectual property rights
+        will at any time be complete, or that any claims in such list are, in fact, Essential
+        Claims.</p>
+      <p>The name "OASIS" is a trademark of <a class="ulink" href="http://www.oasis-open.org" target="_top">OASIS</a>,
+        the owner and developer of this specification, and should be used only to refer to the
+        organization and its official outputs. OASIS welcomes reference to, and implementation and
+        use of, specifications, while reserving the right to enforce its marks against misleading
+        uses. Please see <a class="ulink" href="http://www.oasis-open.org/who/trademark.php" target="_top">http://www.oasis-open.org/who/trademark.php</a> for above guidance.</p>
+    </div></div><div><p class="pubdate">25 July 2013</p></div><div><div class="abstract" title="Abstract"><p class="title"><b>Abstract</b></p>
+      
+      <p>This working draft describes an environment for writing and publishing an OASIS
+        specification using DocBook XML. It is an internal OASIS support document and not the basis
+        of an OASIS specification in and of itself.</p>
+    </div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#s.intro">Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#d6e61">Related Publications</a></span></dt><dt><span class="section"><a href="#d6e68">Terminology</a></span></dt><dt><span class="section"><a href="#d6e70">Key words</a></span></dt><dt><span class="section"><a href="#s.glossary">Glossary of Terms</a></span></dt></dl></dd><dt><span class="section"><a href="#s.usage">Usage</a></span></dt><dt><span class="section"><a href="#d6e106"> Key Material Representations</a></span></dt><dt><span class="section"><a href="#d6e109">Signature Metadata</a></span></dt><dt><span class="section"><a href="#d6e117">Signature Processing Rules</a></span></dt><dd><dl><dt><span class="section"><a href="#d6e120">Canonical Representation</a></span></dt><dt><span class="section"><a href="#d6e139">Graph Signatures</a></span></dt><dt><span class="section"><a href="#d6e142">Message Signatures</a></span></dt></dl></dd><dt><span class="section"><a href="#d6e145">Algorithms</a></span></dt><dt><span class="section"><a href="#d6e148">Security Considerations</a></span></dt><dt><span class="section"><a href="#s.biblio">Normative References</a></span></dt><dt><span class="appendix"><a href="#d6e270">A. Examples</a></span></dt><dd><dl><dt><span class="section"><a href="#d6e272">Graph Signature Examples</a></span></dt><dt><span class="section"><a href="#d6e274">Message Signature Examples</a></span></dt></dl></dd></dl></div>
+
+  
+
+  <div class="section" title="Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s.intro"></a>Introduction</h2></div></div></div>
+    
+    <p></p>
+    <div class="section" title="Related Publications"><div class="titlepage"><div><div><h3 class="title"><a name="d6e61"></a>Related Publications</h3></div></div></div>
+      
+      <p>This Working Draft 01 is part of a broadre suite of specifications collectively referred to as XDI 1.0. The following specifications constitute the complete suite:
+      </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>XDI Core <a class="xref" href="#XDICore" title="XDI Core version">[<abbr class="abbrev">XDICore</abbr>]</a></p></li></ul></div><p>
+      </p>
+    </div>
+    
+    <div class="section" title="Terminology"><div class="titlepage"><div><div><h3 class="title"><a name="d6e68"></a>Terminology</h3></div></div></div>
+      
+    </div>
+      <div class="section" title="Key words"><div class="titlepage"><div><div><h3 class="title"><a name="d6e70"></a>Key words</h3></div></div></div>
+        
+        <p>The key words <em class="glossterm">MUST</em>, <em class="glossterm">MUST NOT</em>,
+            <em class="glossterm">REQUIRED</em>, <em class="glossterm">SHALL</em>, <em class="glossterm">SHALL NOT</em>, <em class="glossterm">SHOULD</em>, <em class="glossterm">SHOULD NOT</em>,
+            <em class="glossterm">RECOMMENDED</em>, <em class="glossterm">MAY</em>, and
+            <em class="glossterm">OPTIONAL</em> are to be interpreted as described in <a class="xref" href="#rfc2119" title="Key words for use in RFCs to Indicate Requirement Levels">[<abbr class="abbrev">RFC 2119</abbr>]</a>.</p>
+      </div>
+    <div class="section" title="Glossary of Terms"><div class="titlepage"><div><div><h3 class="title"><a name="s.glossary"></a>Glossary of Terms</h3></div></div></div>
+    
+    <p>
+        </p><div class="glosslist"><dl><dt>XDI</dt><dd><p>XRI Data Interchange</p></dd><dt>Normalized Graph</dt><dd><p>the canonical form of the graph, necessary to ensure successful signature validation.</p></dd><dt>Signature Block</dt><dd><p>a collection of XDI statements describing metadata about the signature sufficient to ensure successful validation, and the signature itself.</p></dd></dl></div><p>
+    </p>
+</div> 
+  </div>
+
+  <div class="section" title="Usage"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s.usage"></a>Usage</h2></div></div></div>
+    
+    <p>XDI requests and responses SHOULD be signed, to ensure message integrity and authenticity. <a class="xref" href="#XDISec" title="XDI Security Mechanisms version">[<abbr class="abbrev">XDISec</abbr>]</a> defines other mechanisms to achieve integrity and authenticity. This specification defines signatures that require SHA-256 or greater hashing, and allows for HMAC, RSA and ECDSA algorithms. In the future, additional hashing and encryption algorithms may be added.</p>
+    <p>Signatures over sub-graphs are established in a manner such that the signature may be included in the graph.</p>
+    <p>Recipients of signed XDI messages SHOULD validate all signatures present.</p>
+  </div>
+
+  <div class="section" title="Key Material Representations"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d6e106"></a> Key Material Representations</h2></div></div></div>
+    
+    <p>TBD</p>
+  </div>
+  
+  <div class="section" title="Signature Metadata"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d6e109"></a>Signature Metadata</h2></div></div></div>
+    
+    <p>To construct the <em class="glossterm">Signature Block</em>, the following statements MUST be added to the <em class="glossterm">Normalized Graph</em>:
+    </p>
+    <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p></p></li></ol></div>
+  </div>
+  <div class="section" title="Signature Processing Rules"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d6e117"></a>Signature Processing Rules</h2></div></div></div>
+    
+    <p></p>
+    <div class="section" title="Canonical Representation"><div class="titlepage"><div><div><h3 class="title"><a name="d6e120"></a>Canonical Representation</h3></div></div></div>
+      
+      <p>Signing XDI messages involves first normalizing to the XdiFlatSerialization as defined in <a class="xref" href="#XDICore" title="XDI Core version">[<abbr class="abbrev">XDICore</abbr>]</a>, and afterwards, incorporation of a <em class="glossterm">Signature Block</em> in a manner not disruptive to validators.</p>
+      <p>XdiFlatSerialization is the only serialization format used for signature creation and validation. Implementations that choose to transfer XDI messages in another serialization format MUST serialize the message in XdiFlatSerialization prior to attempting validation.</p>
+      <div class="section" title="Canonicalization Process"><div class="titlepage"><div><div><h4 class="title"><a name="d6e126"></a>Canonicalization Process</h4></div></div></div>
+        
+        <p>The following steps MUST be performed in this order to produce the <em class="glossterm">Normalized Graph</em>. 
+          These requirements apply to message senders as well as message recipients.</p>
+        <p>
+          </p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Ensure the sub-graph is UTF-8 encoded and formatted as defined in XdiFlatSerialization.</p></li><li class="listitem"><p>All unquoted white space and new lines MUST be removed (TODO: better clarify white space. should this go into XdiFlatSerialization?)</p></li><li class="listitem"><p>All JSON <a class="xref" href="#rfc4627" title="The application/json Media Type for JavaScript Object Notation (JSON)">[<abbr class="abbrev">RFC 4627</abbr>]</a>keys in the unsigned graph MUST be sorted in UTF-8 byte-order.</p></li></ol></div><p>
+        </p>
+      </div>
+    </div>
+    <div class="section" title="Graph Signatures"><div class="titlepage"><div><div><h3 class="title"><a name="d6e139"></a>Graph Signatures</h3></div></div></div>
+      
+      <p></p>
+    </div>
+    <div class="section" title="Message Signatures"><div class="titlepage"><div><div><h3 class="title"><a name="d6e142"></a>Message Signatures</h3></div></div></div>
+      
+      <p></p>
+    </div>
+  </div>
+  <div class="section" title="Algorithms"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d6e145"></a>Algorithms</h2></div></div></div>
+    
+    <p></p>
+  </div>
+  <div class="section" title="Security Considerations"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d6e148"></a>Security Considerations</h2></div></div></div>
+    
+    <p></p>
+  </div>
+  <div class="section" title="Normative References"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s.biblio"></a>Normative References</h2></div></div></div>
+    
+    <div class="bibliolist"><div class="bibliomixed" title="Key words for use in RFCs to Indicate Requirement Levels"><a name="rfc2119"></a><p class="bibliomixed" title="Key words for use in RFCs to Indicate Requirement Levels">[<abbr class="abbrev">RFC 2119</abbr>] 
+            
+            <span class="title">Key words for use in RFCs to Indicate Requirement Levels</span>, <span class="date">March
+                1997. </span>
+            <span class="author">
+                <span class="firstname">S. </span>
+                <span class="surname">Bradner</span>
+            </span>. <span class="releaseinfo">IETF (Internet Engineering Task Force) RFC 2119, </span>
+            <span class="citetitle"><em class="citetitle"><a class="ulink" href="http://www.ietf.org/rfc/rfc2119.txt" target="_top">http://www.ietf.org/rfc/rfc2119.txt</a></em></span>
+        </p></div><div class="bibliomixed" title="The application/json Media Type for JavaScript Object Notation (JSON)"><a name="rfc4627"></a><p class="bibliomixed" title="The application/json Media Type for JavaScript Object Notation (JSON)">[<abbr class="abbrev">RFC 4627</abbr>] 
+            
+            <span class="title">The application/json Media Type for JavaScript Object Notation (JSON)</span>, <span class="date">July
+                2006. </span>
+            <span class="author">
+                <span class="firstname">D. </span>
+                <span class="surname">Crockford</span>
+            </span>. <span class="releaseinfo">IETF (Internet Engineering Task Force) RFC 4627, </span>
+            <span class="citetitle"><em class="citetitle"><a class="ulink" href="http://www.ietf.org/rfc/rfc4627.txt" target="_top">http://www.ietf.org/rfc/rfc4627.txt</a></em></span>
+        </p></div><div class="bibliomixed" title="XDI Core version"><a name="XDICore"></a><p class="bibliomixed" title="XDI Core version">[<abbr class="abbrev">XDICore</abbr>] 
+            
+            <span class="title">XDI Core version </span>, <span class="date">June 2014</span>
+            <span class="editor">
+                <span class="firstname">Drummond</span>
+                <span class="surname">Reed</span>
+            </span>. 
+            <span class="publisher">
+                <span class="publishername">OASIS</span>
+            </span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a class="ulink" href="" target="_top"></a>XDICore</em></span>
+        </p></div><div class="bibliomixed" title="XDI Messaging version"><a name="XDIMsg"></a><p class="bibliomixed" title="XDI Messaging version">[<abbr class="abbrev">XDIMsg</abbr>] 
+            
+            <span class="title">XDI Messaging version </span>, <span class="date">June 2014</span>
+            <span class="editor">
+                <span class="firstname">Drummond</span>
+                <span class="surname">Reed</span>
+            </span>. 
+            <span class="publisher">
+                <span class="publishername">OASIS</span>
+            </span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a class="ulink" href="" target="_top"></a>XDIMsg</em></span>
+        </p></div><div class="bibliomixed" title="XDI Discovery version"><a name="XDIDisc"></a><p class="bibliomixed" title="XDI Discovery version">[<abbr class="abbrev">XDIDisc</abbr>] 
+            
+            <span class="title">XDI Discovery version </span>, <span class="date">June 2014</span>
+            <span class="editor">
+                <span class="firstname">Drummond</span>
+                <span class="surname">Reed</span>
+            </span>. 
+            <span class="publisher">
+                <span class="publishername">OASIS</span>
+            </span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a class="ulink" href="" target="_top"></a>XDIDisc</em></span>
+        </p></div><div class="bibliomixed" title="XDI Policy version"><a name="XDIPolicy"></a><p class="bibliomixed" title="XDI Policy version">[<abbr class="abbrev">XDIPolicy</abbr>] 
+            
+            <span class="title">XDI Policy version </span>, <span class="date">June 2014</span>
+            <span class="editor">
+                <span class="firstname">Drummond</span>
+                <span class="surname">Reed</span>
+            </span>. 
+            <span class="publisher">
+                <span class="publishername">OASIS</span>
+            </span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a class="ulink" href="" target="_top"></a>XDIPolicy</em></span>
+        </p></div><div class="bibliomixed" title="XDI Security Mechanisms version"><a name="XDISec"></a><p class="bibliomixed" title="XDI Security Mechanisms version">[<abbr class="abbrev">XDISec</abbr>] 
+            
+            <span class="title">XDI Security Mechanisms version </span>, <span class="date">June 2014</span>
+            <span class="editor">
+                <span class="firstname">Peter</span>
+                <span class="surname">Davis</span>
+            </span>. 
+            <span class="publisher">
+                <span class="publishername">OASIS</span>
+            </span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a class="ulink" href="" target="_top"></a>XDISec</em></span>
+        </p></div><div class="bibliomixed" title="XDI Privacy version"><a name="XDIPriv"></a><p class="bibliomixed" title="XDI Privacy version">[<abbr class="abbrev">XDIPriv</abbr>] 
+            
+            <span class="title">XDI Privacy version </span>, <span class="date">June 2014</span>
+            <span class="editor">
+                <span class="firstname">Peter</span>
+                <span class="surname">Davis</span>
+            </span>. 
+            <span class="publisher">
+                <span class="publishername">OASIS</span>
+            </span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a class="ulink" href="" target="_top"></a>XDIPriv</em></span>
+        </p></div><div class="bibliomixed" title="XDI Dictionary version"><a name="XDIDictionary"></a><p class="bibliomixed" title="XDI Dictionary version">[<abbr class="abbrev">XDIDictionary</abbr>] 
+            
+            <span class="title">XDI Dictionary version </span>, <span class="date">June 2014</span>
+            <span class="editor">
+                <span class="firstname">Drummond</span>
+                <span class="surname">Reed</span>
+            </span>. 
+            <span class="publisher">
+                <span class="publishername">OASIS</span>
+            </span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a class="ulink" href="" target="_top"></a>XDIDictionary</em></span>
+        </p></div><div class="bibliomixed" title="XDI Signatures version"><a name="XDIDisc"></a><p class="bibliomixed" title="XDI Signatures version">[<abbr class="abbrev">XDISig</abbr>] 
+            
+            <span class="title">XDI Signatures version </span>, <span class="date">June 2014</span>
+            <span class="editor">
+                <span class="firstname">Peter</span>
+                <span class="surname">Davis</span>
+            </span>. 
+            <span class="publisher">
+                <span class="publishername">OASIS</span>
+            </span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a class="ulink" href="" target="_top"></a>XDISig</em></span>
+        </p></div></div>
+
+</div> 
+<div class="appendix" title="A.&nbsp;Examples"><h2 class="title" style="clear: both"><a name="d6e270"></a>A.&nbsp;Examples</h2>
+  
+  <div class="section" title="Graph Signature Examples"><div class="titlepage"><div><div><h3 class="title"><a name="d6e272"></a>Graph Signature Examples</h3></div></div></div>
+    
+  </div>
+  <div class="section" title="Message Signature Examples"><div class="titlepage"><div><div><h3 class="title"><a name="d6e274"></a>Message Signature Examples</h3></div></div></div>
+    
+  </div>
+</div>
+</div></body></html>
