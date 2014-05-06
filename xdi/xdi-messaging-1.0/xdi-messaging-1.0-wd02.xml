@@ -1,0 +1,1302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" 
+href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "https://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+[
+<!ENTITY title "XDI Messaging V&version;"> <!ENTITY name "xdi-core"> <!ENTITY pversion "0.1"> <!ENTITY version "1.0">
+<!ENTITY pubdate "2 May 2014"> <!ENTITY stage "wd02"> <!ENTITY standard "Working Draft 02">
+<!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;"> <!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;"> <!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
+]>
+
+<!--DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "https://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"-->
+<!--DOCTYPE article PUBLIC "-//OASIS//DTD DocBook SVG Module V1.1CR1//EN" "http://www.oasis-open.org/docbook/xml/svg/1.1CR1/dbsvg.dtd"-->
+
+<article status="&standard;" xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en">
+<articleinfo>
+<title>&title;</title>
+<productname>&name;</productname>
+<productnumber>&version;-&stage;</productnumber>
+<releaseinfo role="track">Standards Track Work Product</releaseinfo>
+<releaseinfo role="OASIS-specification-this-authoritative">&this-loc;/&name;-&version;-&stage;.xml</releaseinfo>
+<releaseinfo role="OASIS-specification-this">&this-loc;/&name;-&version;-&stage;.pdf</releaseinfo>
+<releaseinfo role="OASIS-specification-this">&this-loc;/&name;-&version;-&stage;.html</releaseinfo>
+<releaseinfo role="OASIS-specification-previous-authoritative">&previous-loc;/&name;-&pversion;.xml</releaseinfo>
+<releaseinfo role="OASIS-specification-previous">&previous-loc;/&name;-&pversion;.pdf</releaseinfo>
+<releaseinfo role="OASIS-specification-previous">&previous-loc;/&name;-&pversion;.html</releaseinfo>
+<releaseinfo role="OASIS-specification-latest-authoritative">&latest-loc;/&name;.xml</releaseinfo>
+<releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.pdf</releaseinfo>
+<releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.html</releaseinfo>
+<releaseinfo role="committee"><ulink url="http://www.oasis-open.org/committees/xdi">OASIS XDI TC</ulink></releaseinfo>
+<authorgroup>
+  <editor> <firstname>Joseph</firstname><surname>Boyle</surname>
+    <affiliation><orgname>Planetwork</orgname></affiliation>
+    <email>joseph@planetwork.net</email> </editor>
+  <editor> <firstname>Drummond</firstname><surname>Reed</surname>
+    <affiliation><orgname>XDI.org</orgname></affiliation>
+    <email>drummond.reed@xdi.org</email> </editor>
+  <editor> <firstname>Markus</firstname><surname>Sabadello</surname>
+    <affiliation><orgname>XDI.org</orgname></affiliation>
+    <email>markus.sabadello@xdi.org</email> </editor>
+</authorgroup>
+<pubdate>&pubdate;</pubdate>
+<copyright><year>2014</year>
+<holder>OASIS Open, Inc. All Rights Reserved.</holder></copyright>
+ <legalnotice role="additional"><title>Additional artifacts</title>
+ <para>This prose specification is one component of a Work Product which also includes:</para>
+ <itemizedlist spacing="compact"> <listitem><para>
+publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this-loc;/&name;-&version;-&stage;.zip</ulink></para>
+ </listitem> </itemizedlist>
+</legalnotice>
+<legalnotice role="related"><title>Related work</title>
+  <para>This document is primarily based on a set of proposals that had been collected by the OASIS XDI TC on its associated wiki at <ulink url="https://wiki.oasis-open.org/xdi/">https://wiki.oasis-open.org/xdi/</ulink>.</para>
+</legalnotice>
+
+<abstract><title>Abstract</title>
+  <para>This working draft specifies the abstract pattern for all XDI messaging together with the binding to the http/https protocol for performing XDI operations using XDI messages.</para>
+</abstract>
+
+<!--legalnotice role="status"><title>Status</title>
+<para>This is a work in progress contributed to the OASIS TC administration 
+and does not at this time represent the consensus of any particular OASIS Technical Committee.
+There are no plans to make this a formal Committee Specification as it is merely an internal
+document made available to committee members to support the publishing process.</para>
+</legalnotice-->
+<legalnotice role="citation"><title>Citation format</title>
+<para>When referencing this specification the following citation format should be used:</para>
+<bibliolist> <bibliomixed>
+  <abbrev>OASIS-XDI-Messaging-V1.0</abbrev>
+  <title>OASIS XDI Messaging V1.0</title>
+  <date>&pubdate;. </date>
+  <releaseinfo>OASIS &standard;. </releaseinfo>
+  <citetitle><ulink url="&latest-loc;/&name;.html">&latest-loc;/&name;.html</ulink>.</citetitle>
+</bibliomixed> </bibliolist>
+</legalnotice>
+<legalnotice role="notices"><title>Notices</title>
+<para>Copyright &#169; OASIS&#174; Open 2013. All Rights Reserved.  </para>
+<para>All capitalized terms in the following text have the meanings assigned to them in the OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full Policy may be found at <ulink  url="http://www.oasis-open.org/who/intellectualproperty.php">http://www.oasis-open.org/who/intellectualproperty.php</ulink>.</para>
+<para>This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to OASIS, except as needed for the purpose of developing any document or deliverable produced by an OASIS Technical Committee (in which case the rules applicable to copyrights, as set forth in the OASIS IPR Policy, must be followed) or as required to translate it into languages other than English.</para> 
+<para>The limited permissions granted above are perpetual and will not be revoked by OASIS or its successors or assigns.</para>
+<para>This document and the information contained herein is provided on an "AS IS" basis and OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</para> 
+<para>OASIS requests that any OASIS Party or any other party that believes it has patent claims that would necessarily be infringed by implementations of this OASIS Committee Specification or OASIS Standard, to notify OASIS TC Administrator and provide an indication of its willingness to grant patent licenses to such patent claims in a manner consistent with the IPR Mode of the OASIS Technical Committee that produced this specification.</para>
+<para>OASIS invites any party to contact the OASIS TC Administrator if it is aware of a claim of ownership of any patent claims that would necessarily be infringed by implementations of this specification by a patent holder that is not willing to provide a license to such patent claims in a manner consistent with the IPR Mode of the OASIS Technical Committee that produced this specification. OASIS may include such claims on its website, but disclaims any obligation to do so.</para>
+<para>OASIS takes no position regarding the validity or scope of any intellectual property or other rights that might be claimed to pertain to the implementation or use of the technology described in this document or the extent to which any license under such rights might or might not be available; neither does it represent that it has made any effort to identify any such rights. Information on OASIS' procedures with respect to rights in any document or deliverable produced by an OASIS Technical Committee can be found on the OASIS website. Copies of claims of rights made available for publication and any assurances of licenses to be made available, or the result of an attempt made to obtain a general license or permission for the use of such proprietary rights by implementers or users of this OASIS Committee Specification or OASIS Standard, can be obtained from the OASIS TC Administrator. OASIS makes no representation that any information or list of intellectual property rights will at any time be complete, or that any claims in such list are, in fact, Essential Claims.</para>
+<para>The name "OASIS" is a trademark of <ulink url="http://www.oasis-open.org">OASIS</ulink>, the owner and developer of this specification, and should be used only to refer to the organization and its official outputs. OASIS welcomes reference to, and implementation and use of, specifications, while reserving the right to enforce its marks against misleading uses. Please see <ulink url="http://www.oasis-open.org/who/trademark.php">http://www.oasis-open.org/who/trademark.php</ulink> for above guidance.</para>
+</legalnotice> </articleinfo>
+<section id="s.introduction"> <title>Introduction</title>
+  <para>This working draft specifies the abstract pattern for all XDI messaging together with the binding to the http/https protocol for performing XDI operations using XDI messages..</para>
+
+ 
+  <para>This working draft specifies the XDI messaging protocol.</para>
+  <para>This working draft builds on <xref linkend="xdi-core-1.0"/>.</para>
+
+  <section> <title> Key words</title>
+    <para>The key words <glossterm>must</glossterm>, <glossterm>must not</glossterm>, <glossterm>required</glossterm>,
+      <glossterm>shall</glossterm>, <glossterm>shall not</glossterm>, <glossterm>should</glossterm>, <glossterm>should not</glossterm>,
+      <glossterm>recommended</glossterm>, <glossterm>may</glossterm>, and <glossterm>optional</glossterm> are to be
+      interpreted as described in <xref linkend="rfc2119"/>. Note that for reasons of style, these words are not capitalized in this
+      document.</para>
+  </section> <section> <title>Normative References</title>
+    <bibliolist> <bibliomixed id="xdi-core-1.0">
+      <abbrev>OASIS-XDI-Core-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-core-1.0/xdi-core-1.0-wd01.xml">OASIS XDI 1.0 Core Specification</ulink></title>
+      <author><firstname>Joseph </firstname> <surname>Boyle</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>. 
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-core.html">&latest-loc;/xdi-core.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="xdi-discovery-1.0">
+      <abbrev>OASIS-XDI-Discovery-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-discovery-1.0/xdi-discovery-1.0-wd01.xml">OASIS XDI 1.0 Discovery Specification</ulink></title>
+      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-discovery.html">&latest-loc;/xdi-discovery.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="xdi-policy-1.0">
+      <abbrev>OASIS-XDI-Policy-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-policy-1.0/xdi-policy-1.0-wd01.xml">OASIS XDI 1.0 Policy Specification</ulink></title>
+      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-policy.html">&latest-loc;/xdi-privacy.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="xdi-security-1.0">
+      <abbrev>OASIS-XDI-Security-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-security-1.0/xdi-security-1.0-wd01.xml">OASIS XDI 1.0 Security Mechanisms Specification</ulink></title>
+      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-security.html">&latest-loc;/xdi-security.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="xdi-privacy-1.0">
+      <abbrev>OASIS-XDI-Privacy-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-privacy-1.0/xdi-privacy-1.0-wd01.xml">OASIS XDI 1.0 Privacy Mechanisms Specification</ulink></title>
+      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-privacy.html">&latest-loc;/xdi-privacy.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="rfc2119">
+      <abbrev>RFC 2119</abbrev><date>March 1997</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc2119.txt">Key words for use in RFCs to Indicate Requirement Levels</ulink></title>
+      <author><firstname>S. </firstname> <surname>Bradner</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="rfc2234">
+      <abbrev>RFC 2234</abbrev><date>November 1997</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc2234.txt">Augmented BNF for Syntax Specifications: ABNF</ulink></title>
+      <author><firstname>D. </firstname> <surname>Crocker</surname></author>,
+      <author><firstname>P. </firstname> <surname>Overell</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="rfc4627">
+      <abbrev>RFC 4627</abbrev><date>July 2006</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc4627.txt">The application/json Media Type for JavaScript Object Notation (JSON)</ulink></title>
+      <author><firstname>D. </firstname> <surname>Crockford</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="rfc4122">
+      <abbrev>RFC 4122</abbrev><date>July 2005</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc4122.txt">A Universally Unique IDentifier (UUID) URN Namespace</ulink></title>
+      <author><firstname>D. </firstname> <surname>Crockford</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="rfc5952">
+      <abbrev>RFC 5952</abbrev><date>August 2010</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc5952.txt">A Recommendation for IPv6 Address Text Representation</ulink></title>
+      <author><firstname>S. </firstname> <surname>Kawamura</surname></author>, 
+      <author><firstname>M. </firstname> <surname>Kawashima</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="rfc6749">
+      <abbrev>RFC 6749</abbrev><date>October 2012</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc6749.txt">The OAuth 2.0 Authorization Framework</ulink></title>
+      <author><firstname>D. </firstname> <surname>Hardt </surname></author>, 
+       <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="rfc6750">
+      <abbrev>RFC 6750</abbrev><date>October 2012</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc6750.txt">The OAuth 2.0 Authorization Framework: Bearer Token Usage</ulink></title>
+      <author><firstname>M. </firstname> <surname>Jones</surname></author>. 
+      <author><firstname>D. </firstname> <surname>Hardt</surname></author>, 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="ecma-404">
+      <abbrev>ECMA-404</abbrev><date>October 2013</date>
+      <title><ulink url="http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf">The JSON Data Interchange Format</ulink></title>
+      <author><firstname>S. </firstname> <surname>Kawamura</surname></author>,
+      <author><firstname>M. </firstname> <surname>Kawashima</surname></author>.
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="fips180-4">
+      <abbrev>FIPS 180-4</abbrev><date>March 2012</date>
+      <title><ulink url="http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf">Secure Hash Standard (SHS)</ulink></title>
+      <author><firstname></firstname> <surname></surname></author>
+      <releaseinfo>Federal Information Processing Standards Publication (FIPS), NIST</releaseinfo>
+    </bibliomixed>
+  </bibliolist>
+</section> <section> <title>Non-Normative References</title>
+  <bibliolist>
+    <bibliomixed id="erm">
+      <abbrev>erm</abbrev><date>1976</date>
+      <title><ulink url="https://en.wikiversity.org/wiki/1976/Chen">The Entity-Relationship Model: Toward a Unified View of Data</ulink></title>
+      <author><firstname>Peter </firstname> <surname>Chen</surname></author>.
+      <releaseinfo>ACM Transactions on Database Systems 1(1): 9–36. doi:10.1145/320434.320440</releaseinfo>
+    </bibliomixed> <bibliomixed id="webarch">
+      <abbrev>webarch</abbrev><date>15 December 2004</date>
+      <title><ulink url="http://www.w3.org/TR/webarch/#id-resources">Architecture of the World Wide Web, Volume One</ulink></title>
+      <author><firstname>Ian </firstname> <surname>Jacobs</surname></author>,
+      <author><firstname>Norman </firstname> <surname>Walsh</surname></author>.
+      <releaseinfo>W3C Recommendation</releaseinfo>
+    </bibliomixed> <bibliomixed id="reification">
+      <abbrev>reification</abbrev>
+      <title><ulink url="http://en.wikipedia.org/wiki/Reification_(computer_science)">Reification (computer science)</ulink></title>
+      <releaseinfo>Wikipedia</releaseinfo>
+    </bibliomixed> <bibliomixed id="json-ld">
+      <abbrev>json-ld</abbrev><date>04 October 2013</date>
+      <title><ulink url="http://json-ld.org/spec/latest/json-ld">JSON-LD: A JSON-based Serialization for Linked Data</ulink></title>
+      <author><firstname>Gregg </firstname> <surname>Kellogg</surname></author>,
+      <author><firstname>Markus </firstname> <surname>Lanthaler</surname></author>,
+      <author><firstname>Niklaus </firstname> <surname>Lindström</surname></author>,
+      <author><firstname>Dave </firstname> <surname>Longley</surname></author>,
+      <author><firstname>Manu </firstname> <surname>Sporny</surname></author>. 
+      <releaseinfo>W3C Editor's Draft 04 October 2013 </releaseinfo>
+    </bibliomixed>
+  </bibliolist>
+</section>
+
+</section>
+  <!--section><title>Design Goals</title><para>This section communicates the design goals that have guided the development of XDI.</para>
+    <section id="addressability"><title>100% Addressability of All Graph Nodes</title>
+      <para>To perform semantic data interchange with precise control over every data element, the first requirement of the XDI TC was that every node of every XDI graph be uniquely addressable. This architecture essentially mirrors that of the W3C in the Architecture of the World Wide Web, where it states:</para>
+
+<quote>"To benefit from and increase the value of the World Wide Web, agents should provide URIs as identifiers for resources."</quote>
+
+      <para>This requirement is one reason that the XDI TC does not use the term “XDI document” or compare XDI graphs to documents. A document metaphor suggests a natural division between addressing of the document and addressing of nodes inside the document. In Web URI architecture, this is reflected by the # fragment, which represents an address local to the current resource, vs. an address outside this resource.</para>
+
+      <para>The XDI graph model does not have this distinction because every node of every XDI graph is equally addressable. Or, as members of the XDI TC have put it, “It’s turtles all the way down.”</para>
+
+      <para>Note that XDI addressing stops once you reach an XDI literal node—the ultimate leaf nodes of an XDI graph which contain the literal data values. If a client needs to address within a literal data value, it must switch from an XDI address to an address in the native addressing syntax of the literal data (e.g., a JSON path for a JSON document, an XML path for an XML document, a fragment for an HTML document, etc.) Such addresses are out of scope for XDI.</para>
+
+      <para>This requirement is perhaps the most significant difference between XDI and RDF, because unique addressability of RDF graph nodes was not part of the RDF problem domain. Appendix A contains a short analysis of how the RDF and XDI graph models treat addressability differently.</para></section>
+    <section id="heterarchical"><title>Heterarchical — No Central Authority</title>
+      <para>A second major design goal of XDI architecture is to support heterarchy, i.e., to not assume or rely on a central authority. This meant designing a fundamentally peer-to-peer model in which any group of peers may cooperate to create an addressing and interchange space for its community. This addressing space may make use of existing resolvable identifiers for those peers, or it may extend those existing addresses, or it may be an entirely new addressing space. In all cases XDI can standardize discovery of peers and peer addresses, including both public and private discovery. This “radically P2P” architecture supports any deployment topology, from highly centralized to highly decentralized, and imposes the fewest pre-existing policy assumptions or restrictions on communities of XDI users.</para>
+
+      <para>Note: for more about this aspect of XDI, see the XDI Discovery specification. <xref linkend='xdi-discovery-1.0'/></para></section>
+    <section><title id="contextual">Contextual Identification</title>
+      <para>It is a mantra in digital identity that “identity is contextual”, i.e., that both the requirements for identification and the uniqueness of identifiers is relative to the context in which identification is required. Even “global” or “absolute” identifiers like telephone numbers, email addresses, or URIs are still relative to a particular addressing context.</para>
+
+<para>It is also a maxim in the privacy community that “privacy is contextual”, and thus a data authority must be able to control the data being shared and permissions being granted in any identification context.</para>
+
+<para>This primacy of context means that a third core XDI design goal is that it support the ability to model context at any degree of granularity and enable XDI authorities to control the sharing of identity and data by context.</para>
+
+<para>Again, we note that modeling of context was not a requirement of the RDF problem domain, so this is not an aspect of digital identity or data sharing addressed by the RDF graph model.</para></section>
+    <section id="persistent"><title>Persistent Identification</title>
+      <para>A second core quality of identification is whether it is persistent (immutable) or reassignable (mutable). In the former case, an identifier (or other means of identification) is bound to the resource being identified in such a way that this association will not change over time—ideally forever. In the latter case, an identifier bound to one resource at one point in time (such as an IP address assigned to one computer, or a domain name registered to one owner) may subsequently be bound to a different resource at another point in time (such as when an IP address is reassigned to a new computer, or when the domain name is transferred to a new owner).</para>
+
+      <para>In the context of digital identity and secure data sharing, persistent identification is a requirement for one core reason: if an XDI authority with a particular identifier has been granted a particular set of permissions, and the XDI authority identified by that identifier changes, then the permissions now belong to (and can be exercised by) a different authority.</para>
+
+      <para>Persistent identification is also important for portability (see below), because if an identifier (or other means of identification) needs to change when the location of an XDI graph changes, the XDI relations described in that XDI graph will break. For these reasons, it is critical that XDI support a class of identifiers that are assigned once to a resource and never be reassigned to another resource.</para>
+
+      <para>At the same time, it is widely acknowledged that persistent identification is a nightmare from a usability standpoint. The human brain is wired to use simple, memorable natural language identifiers for our cognition and communication, and to subconsciously adjust the mappings of those identifiers over time as we learn, grow, and evolve. For example, the person you first think of by the name “Tom” today may be different from the person you first thought of by that name when you were a child.</para>
+
+      <para>So a key design goal of XDI is to support the requirements of both persistent and reassignable forms of identification; to provide precise means to map between them; and to make it syntactically unambiguous which form is being used in which context.</para></section>
+    <section id="serialization"><title>Serialization Independence</title>
+      <para>Another goal is for the XDI graph model to be a precise logical abstract model that is independent of any specified serialization format. For example, in the XDI 1.0 specifications, several JSON serialization forms are specified. In addition the XDI TC plans to specify at least one XML serialization format. All these formats transmit 100% of the information in an XDI graph, and all are losslessly convertible into the others.</para></section>
+    <section id="portability"><title>Portability and Location Independence</title>
+      <para>Since XDI graphs may be used to describe the data associated with any entity, including people and businesses that are constantly changing contexts, attributes, service providers, and endpoints on the network, another design goal is for the semantics expressed in an XDI graph to be portable, i.e., location-independent. This means an XDI graph can be moved to any location (endpoint) on a network without breaking any of the descriptions or relations described in the graph.</para>
+
+      <para>This design goal is particularly important for XDI graphs representing individuals, as it supports the ability for an individual to maintain ongoing, sustainable control of his/her personal data and relationships independent of any particular service provider or network location.</para>
+
+      <para>Note: the specialized use of the XDI protocol to provide wide-area location independence is defined in the XDI Discovery specification. <xref linkend='xdi-discovery-1.0'/></para></section>
+    <section id="expression"><title>Protocol Expression and Transport Independence</title>
+      <para>To make semantic data interchange as simple and extensible as possible, another XDI design goal is to define the XDI semantic data interchange protocol in XDI itself. This means all XDI messages must be valid XDI graphs, and all XDI data sharing operations are XDI graph merge operations.</para>
+
+      <para>This design goal also achieves transport independence, i.e., as a logical protocol for the exchange of data between any two systems, the XDI protocol can be independent of any specific transport protocol (e.g., TCP/IP, HTTP(S), XMPP, SMTP, etc.), with bindings defined to such transport protocols as needed.</para>
+
+      <para>Note: The logical XDI protocol and its binding to HTTP(S) is defined in the XDI Messaging specification. <xref linkend='xdi-messaging-1.0'/></para></section>
+    <section id="authorization"><title>Authorization and Policy Expression</title>
+      <para>To meet the security and privacy requirements of XDI authorities, the XDI protocol must enable them to precisely describe the rights pertaining to any shared data. And in order for these rights to be enforced uniformly by the all XDI authorities to which they are granted, XDI authorization must be able to be fully described in XDI itself. This includes the ability to express any policy governing authorization and the ability for such policies to reference data, variables, relations, and other statements in the relevant XDI graphs.</para>
+
+      <para>Note: the primary XDI data structure that fulfills this design goal is called a link contract and is defined in the XDI Policy specification. <xref linkend='xdi-policy-1.0'/></para></section>
+    <section id="schema"><title>Schema and Ontology Expression</title>
+      <para>The core difference between markup languages and semantic data interchange is that an express goal of the latter is to solve the problem of interoperable data semantics, i.e., to provide the infrastructure necessary to map semantics between widely disparate systems with the precision necessary for digital data to automatically flow between them. To do that, it is a design goal of XDI to enable definition of schemas and ontologies for XDI data in XDI.</para>
+
+      <para>Note: XDI schema and ontology definition is defined in the XDI Dictionary specification. <xref linkend='xdi-dictionary-1.0'/></para></section>
+    <section id="extensibility"><title>Extensibility</title>
+      <para>A final design goal (and the reason for the “X” in “XDI”) is for any XDI authority to be able to extend XDI semantics without permission from any other XDI authority. This includes the ability to establish new XDI addressing spaces, to define new XDI dictionary vocabulary, and to create specializations of the XDI protocol for specific types of semantic data interchange.</para></section>
+  </section-->
+
+
+
+
+
+<section><title>XDI Messaging</title>
+<para>XDI messaging is the standard mechanism for sending or receiving XDI data from an XDI endpoint. XDI messages are themselves XDI graphs, so they can be addressed, stored, shared, and controlled like any other XDI data (particularly useful for auditing). The graph of the message is also known as the message envelope. The receiver replies with a (possibly empty) message result, which is also an XDI graph.</para>
+
+<para>XDI messaging is peer-to-peer between any XDI client and any XDI endpoint, or between any two XDI endpoints. The endpoint URIs of XDI endpoints can be discovered using the XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol, which is itself an application of XDI messaging.</para>
+</section><section><title>XDI Message Pattern Rules</title>
+<para>Following is the standard template for an XDI message (shown in XDI display format). Labels in <code>&lt;--this-form--></code> represent template variables. Since an XDI message is itself an XDI graph, it consists of a set of XDI statements. Messages are entity members within an entity collection identified by <code>[$msg]</code>.
+An XDI message MUST conform to the statements in this template. 
+All statements except the OPERATION statement are OPTIONAL for certain types of XDI messages (this is still under discussion by the TC).
+</para>
+
+<programlisting>#1:  FROM                  &lt;--from-peer-->/$set/&lt;--from-->[$msg]&lt;--msg-id-->
+#2:  TO                    &lt;--from-->[$msg]&lt;--msg-id-->/$is()/&lt;--to-peer-->
+#3:  MESSAGE TYPE          &lt;--from-->[$msg]&lt;--msg-id-->/$is#/&lt;--message-type-->[$v]&lt;--version-number-->$xdi[$v]@1$msg
+#4:  TIMESTAMP             &lt;--from-->[$msg]&lt;--msg-id-->&lt;$t>&amp;/&amp;/&lt;--timestamp-->
+#5:  AUTHENTICATION TOKEN  &lt;--from-->[$msg]&lt;--msg-id-->&lt;--token-type-->&lt;$token>&amp;/&amp;/&lt;--token-->
+#6:  AUTHENTICATION SIG    &lt;--from-->[$msg]&lt;--msg-id-->&lt;--signature-type-->&lt;$sig>&amp;/&amp;/&lt;--signature-->
+#7:  AUTHORIZATION         &lt;--from-->[$msg]&lt;--msg-id-->/$do/&lt;--link-contract-id-->
+#8:  OPERATION             &lt;--from-->[$msg]&lt;--msg-id-->$do/&lt;--operation-->/&lt;--object-graph-->
+#9:  CONDITION             &lt;--from-->[$msg]&lt;--msg-id-->$do$if&lt;--boolean-context-->/&lt;--operator-->/&lt;--condition-->
+#10: PARAMETERS            &lt;--from-->[$msg]&lt;--msg-id-->&lt;--operation-->&lt;--parameter-->&amp;/&amp;/&lt;--parameter-value-->
+</programlisting>
+
+
+
+<table><tgroup cols="5" frame="none" colsep="1" rowsep="1" cellpadding="0"><thead>
+<row><entry>Order</entry><entry>Statement Type</entry><entry>Subject</entry><entry>Predicate</entry><entry>Object</entry></row>
+</thead><tbody>
+<row><entry>1</entry><entry>  From       </entry><entry> <code>from-peer</code></entry><entry>$set</entry><entry><code>from</code>[$msg]<code>msg-id</code> </entry></row>
+<row><entry>2</entry><entry>  To         </entry><entry> <code>from</code>[$msg]<code>msg-id</code></entry><entry>$is()</entry><entry><code>to-peer</code> </entry></row>
+<row><entry>3</entry><entry>  Message Type</entry><entry><code>from</code>[$msg]<code>msg-id</code></entry><entry>$is</entry><entry><code>message-type</code>[$v]<code>version-number</code>$xdi[$v]@1$msg </entry></row>
+<row><entry>4</entry><entry>  Timestamp  </entry><entry> <code>from</code>[$msg]<code>msg-id</code>&lt;$t>&amp;</entry><entry>&amp;</entry><entry><code>timestamp</code> </entry></row>
+<row><entry>5</entry><entry>  Authentication Token</entry><entry> <code>from</code>[$msg]<code>msg-id</code><code>token-type</code>&lt;$token>&amp;</entry><entry>&amp;</entry><entry><code>token</code> </entry></row>
+<row><entry>6</entry><entry>  Authentication Signature</entry><entry> <code>from</code>[$msg]<code>msg-id</code><code>signature-type</code>&lt;$sig>&amp;</entry><entry>&amp;</entry><entry><code>signature</code> </entry></row>
+<row><entry>7</entry><entry>  Authorization</entry><entry> <code>from</code>[$msg]<code>msg-id</code></entry><entry>$do</entry><entry><code>link-contract-id</code> </entry></row>
+<row><entry>8</entry><entry>  Operation  </entry><entry> <code>from</code>[$msg]<code>msg-id</code>$do</entry><entry><code>operation</code></entry><entry><code>object-graph</code> </entry></row>
+<row><entry>9</entry><entry>  Condition  </entry><entry> <code>from</code>[$msg]<code>msg-id</code>$do$if<code>boolean-context</code></entry><entry><code>operator</code></entry><entry><code>condition</code> </entry></row>
+<row><entry>10</entry><entry> Parameters </entry><entry> <code>from</code>[$msg]<code>msg-id</code><code>operation</code><code>parameter</code>&amp;</entry><entry>&amp;</entry><entry><code>parameter-value</code> </entry></row>
+</tbody></tgroup></table>
+
+
+
+Where:
+<orderedlist>
+<listitem><code>&lt;--from-peer--></code> is the XDI address of the peer root node of the XDI graph originating the message. This is expressed as an XDI cross-reference (i.e., in parentheses).</listitem> 
+<listitem><code>&lt;--from--></code> is the XDI address of the sender (the XDI authority originating the message) which may or may not be the same as the XDI address inside the <code>&lt;--from-peer--></code> cross-reference.</listitem>
+<listitem><code>&lt;--msg-id--></code> is an entity instance that is the unique ID of the message in the context of this sender. See the ''Message ID Rules'' section below.</listitem>
+<listitem><code>&lt;--to-peer--></code> is the XDI address of the XDI peer root for the recipient. This is always expressed as an XDI cross-reference (i.e., in parentheses). It is the XDI address on which Xdi Discovery is performed to discover the XDI endpoint URI. For a message to multiple recipients, there will be one TO statement per recipient.</listitem> 
+<listitem><code>&lt;--message-type--></code> is an optional XDI context defining the XDI message type.</listitem>
+<listitem><code>&lt;--version-number--></code> is the message type version, expressed as an ordered instance <code>@x</code> where x is a non-negative integer.</listitem>
+<listitem><code>&lt;--timestamp--></code> is the timestamp of the message in XML datetime format.</listitem>
+<listitem><code>&lt;--token-type--></code> is the context defining the type of token provided for message authentication.</listitem>
+<listitem><code>&lt;--token--></code> is the literal token value provided for authentication as required by the referenced link contract.</listitem>
+<listitem><code>&lt;--signature-type--></code> is the context defining the type of signature provided for authentication.</listitem>
+<listitem><code>&lt;--signature--></code> is the literal signature value provided for authentication as required by the referenced link contract.</listitem>
+<listitem><code>&lt;--link-contract-id--></code> is the XDI address of the root node of the link contract authorizing the requested operation on the requested object graph. This MUST be either: a) a <code>$do</code> entity singleton or: b) a <code>[$do]</code> entity class followed by an entity instance. See the XDI Policy specification: <xref linkend='xdi-policy-1.0'/>.</listitem>
+<listitem><code>&lt;--operation--></code> is the requested XDI operation (<code>$get, $set, $del, $copy, $move</code>), plus subcontexts (if any). There may be one or more operation statements in a message.</listitem>
+<listitem><code>&lt;--object-graph--></code> is the XDI address or statement that is the target of the operation.</listitem> 
+<listitem><code>&lt;--boolean-context--></code> is defined in <xref linkend='xdi-policy-1.0'/>.</listitem>
+<listitem><code>&lt;--operator--></code> is defined in <xref linkend='xdi-policy-1.0'/>.</listitem> 
+<listitem><code>&lt;--condition--></code> is defined in <xref linkend='xdi-policy-1.0'/>.</listitem>
+<listitem><code>&lt;--parameter--></code> is an XDI message protocol parameter. See the ''Parameter Rules'' section below.</listitem>
+<listitem><code>&lt;--parameter-value--></code> is the value of a message parameter. See the ''Parameter Rules'' section below.</listitem>
+</orderedlist>
+</section>
+
+
+<section><title>Message Envelope Rules</title>
+The entire XDI graph containing one or more XDI messages is called the XDI message envelope.
+<orderedlist>
+<listitem>A message envelope MAY contain more than one message subgraph.</listitem>
+<listitem>A message MAY contain more than one operation statement.</listitem>
+<listitem>An XDI endpoint MUST execute all messages in a message envelope.</listitem>
+<listitem>An XDI endpoint MUST execute all operation statements within a message.</listitem>
+</orderedlist>
+
+</section>
+
+
+<section><title>Statement Ordering Rules</title>
+In the XDI graph model as a whole, XDI statements are unordered. 
+<orderedlist>
+<listitem>Messages within a message envelope (i.e., within the <code>&lt;--from-->[$msg]</code> collection) MAY be explicitly ordered by appending the <code>@&lt;--digit--></code>ordering context to the <code>&lt;--from-->[$msg]!&lt;--id--></code> context.</listitem>
+<listitem>Operation statements within a message (i.e., as objects of the <code>&lt;--operation--></code> predicate) MAY be explicitly ordered by appending the <code>@&lt;--digit--></code> ordering context to the <code>&lt;--operation--></code> predicate.</listitem>
+<listitem>Explicit ordering of messages and operations is OPTIONAL for an XDI client.</listitem>
+<listitem>Support for explicit ordering of messages and operations is REQUIRED for an XDI endpoint.</listitem>
+<listitem>If explicit ordering of messages and operations is not used, then an XDI endpoint MUST NOT make guarantees about the order in which messages in a message envelope are executed, or about the order in which operations in a message are executed.</listitem>
+<listitem>An XDI endpoint MUST guarantee that all operations in one message are executed before operations in another message are executed.</listitem>
+</orderedlist>
+
+</section>
+
+
+<section><title>Sender Rules</title>
+If an XDI message is required to include a FROM statement, the following rules apply:
+
+<orderedlist>
+<listitem><code>&lt;--from-peer--></code> MUST be the peer root address of the XDI endpoint originating the message. (Note that the <code>&lt;--from-peer--></code> for XDI client that does not function as an XDI endpoint may be an XDI cross-reference to its current network endpoint or some other client identifier acceptable to the receiving XDI endpoint.)</listitem>
+<listitem><code>&lt;--from--></code> MUST be the XDI address representing the XDI authority (e.g., person, organization, device, service, etc.) originating the message.</listitem>
+</orderedlist>
+
+</section>
+
+
+<section><title>Message ID Rules</title>
+<orderedlist>
+<listitem>Like any XDI subgraph, the value of the <code>&lt;--id--></code> variable representing the message ID MUST be unique within the scope of the <code>[$msg]</code> collection of messages sent by the sender. The <code>&lt;--id--></code> value may be sequential, or based on timestamps, or a UUID, or use any other algorithm that provides uniqueness in this context.</listitem>
+<listitem>An XDI client MUST use a different message ID for every message.</listitem>
+<listitem>An XDI endpoint MAY enforce uniqueness of message IDs.</listitem>
+</orderedlist>
+
+</section>
+
+
+<section><title>Recipient Rules</title>
+<para>If an XDI message is required to include a TO statement, the following rules apply:</para>
+<orderedlist>
+<listitem><code>&lt;--to-peer--></code> MUST be the peer root address of the XDI endpoint to which the message is sent.</listitem>
+<listitem>This peer root address SHOULD be discoverable using XDI Discovery.</listitem>
+<listitem>An XDI message MAY include multiple TO statements in order to deliver the message to multiple recipients.</listitem>
+</orderedlist></section>
+
+
+<section><title>Timestamp Rules</title>
+<para>If an XDI message is required to include a TIMESTAMP statement, the following rules apply:</para>
+<orderedlist>
+<listitem><code>&lt;--timestamp--></code> MUST be an XML datetime as specified by the '''$t''' entry in the XDI $ Dictionary.</listitem>
+<listitem>?An XDI endpoint MAY enforce server-side policy requiring the message <code>&lt;timestamp></code> value to be within a certain tolerance of the server timestamp.</listitem>
+</orderedlist></section>
+
+
+<section><title>Authentication Rules</title>
+  <section><title>Token-Based Authentication</title>
+A message MAY be authenticated with a token as defined in section 1.4 of <xref linkend="rfc6749"/>.
+
+Supported token types and token authentication requirements will defined in separate specifications. The token types currently planned to be supported by the XDI TC include:
+<orderedlist>
+<listitem><code>$secret</code> for shared secrets. Any valid XDI literal value may be used as a shared secret.</listitem>
+<listitem><code>$bearer</code> for bearer tokens as defined by <xref linkend="rfc6750"/>.</listitem>
+<listitem>Other token types as registered with the IANA OAuth Access Token Types Registry defined in section 11.1 of <xref linkend="rfc6749"/>.</listitem>
+</orderedlist></section>
+
+<section><title>Signature-Based Authentication</title>
+XDI messages MAY be signed for authentication. See <xref linkend="xdi-signature1.0"/>.</section>
+</section>
+
+
+<section><title>Authorization Rules</title>
+<orderedlist>
+<listitem>Each XDI message MUST include a <code>&lt;--link-contract--></code> reference to the XDI link contract authorizing that message. See the [[Link Contract Pattern]]. Requiring the <code>&lt;--link-contract--></code> reference in an XDI message makes it much more efficient for XDI servers to perform authentication and authorization, because they know which link contract to evaluate. (For a public link contract, the value of <code>&lt;--link-contract--></code> is <code>$public$do</code>.)</listitem>
+<listitem>The message MUST be executed only if the [[XdiPolicyExpression|link contract policies]] evaluates to true.</listitem>
+</orderedlist></section>
+
+
+<section><title>Operation Rules</title>
+Operations constitute the body of an XDI message.
+<orderedlist>
+<listitem>An XDI message MUST contain at least one operation statement.</listitem>
+<listitem>To successfully complete execution of an XDI message, an XDI endpoint MUST complete execution of each operation requested in each operation statement in the message.</listitem>
+</orderedlist>
+
+Depending on: a) the operation, and b) whether the operation target is an XDI address or a statement, the following results are possible:
+
+<table><tgroup cols="5"><thead>
+<row><entry></entry><entry>on XDI address</entry><entry>on contextual statement</entry><entry>on literal statement</entry><entry>on relational statement</entry></row>
+</thead><tbody>
+<row><entry>GetOperation (<code>$get</code>)</entry><entry>retrieves graph/subgraph</entry><entry>retrieves graph/subgraph</entry><entry>retrieves literal</entry><entry>retrieves relation</entry></row>
+<row><entry>SetOperation (<code>$set</code>)</entry><entry>writes context node(s)</entry><entry>writes context node(s)</entry><entry>writes literal value</entry><entry>writes relation</entry></row>
+<row><entry>DelOperation (<code>$del</code>)</entry><entry>deletes graph/subgraph</entry><entry>deletes graph/subgraph</entry><entry>deletes literal</entry><entry>deletes relation</entry></row>
+</tbody></tgroup></table>
+Note: AddOperation and ModOperation are proposed to be deprecated.
+
+<section><title><code>$get</code> operation</title><para>On an address, the result is the part of the target graph at the targeted address, or dependent on the node there. Applied to a single statement, it returns that one statement if it exists in the target graph, or empty otherwise.</para></section>
+<section><title><code>$set</code> operation</title><para>The set operation can be on a target address, or on a target statement. Any nodes and arcs necessary to establish the new address or statement in the receiver's graph are automatically added to the receiver's graph. If it already exists, this is not considered an error.</para></section>
+<section><title><code>$del</code> operation</title><para>The target address is deleted along with any nodes and arcs dependent on it. If the target address does not exist in the target graph, this is not considered an error.</para></section>
+</section>
+
+
+<section><title>Conditional Execution Rules</title>
+<orderedlist>
+<listitem>An XDI message MAY also include condition statements to govern their execution at an XDI endpoint.</listitem>
+<listitem>If an XDI message includes a <code>&lt;--from-->[$msg]&lt;--id-->$do$if</code> sub context, the set of message policy statements in this context MUST be evaluated by the XDI endpoint.</listitem>
+<listitem>Message policy evaluation MUST follow the same rules as link contract policy evaluation. (see <xref linkend="xdi-policy-1.0"/>)</listitem>
+<listitem>For privacy reasons, a message policy may only access parts of the target graph which it has <code>$get</code> access to under the link contract referenced in the message.</listitem>
+</orderedlist>
+
+</section><section><title>Parameter Rules</title>
+<orderedlist>
+<listitem>An XDI message MAY include one or more parameters that govern how an XDI endpoint processes an XDI message.</listitem>
+<listitem>A parameter MUST apply only to the XDI message and the XDI message operation that contains it.</listitem>
+</orderedlist>
+
+Currently, parameters are only defined for the XDI <code>$get</code> operation.
+
+<section><title>$get Parameters</title>
+<orderedlist>
+<listitem>The <code>$deref</code> parameter is defined in [[EquivalenceRelations]]. It governs whether the XDI endpoint automatically dereferences <code>$ref</code> statements in a response graph.</listitem>
+<listitem>The <code>$proxy</code> parameter is defined in <xref linkend='xdi-discovery-1.0'/>. It governs whether the XDI endpoint serves as a proxy to complete discovery of an XDI resource for which the XDI endpoint is not itself authoritative.</listitem>
+</orderedlist>
+</section>
+</section><section><title>Error Handling Rules</title>
+The template for an error message is:
+<programlisting>#1: ERROR TIMESTAMP      $error&lt;$t>&amp;/&amp;/&lt;--timestamp-->
+#2: ERROR CODES         $error/$do/&lt;--error-code-->
+</programlisting>
+
+<code>&lt;error-statement></code> is an inner graph of error statements pertaining to the message.
+
+The dictionary for XDI error code statements is still being defined. See MessagingErrorCode.
+
+<section><title>Error Codes</title>
+<para></para>
+
+<informaltable><tgroup cols="3"><thead>
+<row><entry>Name</entry><entry>Code</entry><entry>Explanation</entry></row>
+</thead><tbody>
+<row><entry>Request unknown</entry><entry><code>$false/$error/$request$unknown</code></entry><entry>Request format is unknown. (E.g. request does not contain operation xdi statement.)</entry></row>
+<row><entry>Multiple operations</entry><entry><code>$false/$error/$multiple$operations</code></entry><entry>Request contains operations of different types.</entry></row>
+<row><entry>Duplicate operations</entry><entry><code>$false/$error/$duplicate$operations</code></entry><entry>Request contains operations duplication</entry></row>
+<row><entry>Can't process request</entry><entry><code>$false/$error/$request$cant$process</code></entry><entry>General error, such as internal exception, db connection failure, or other not described by another error.</entry></row>
+<row><entry>Request forbidden</entry><entry><code>$false/$error/$request$forbidden</code></entry><entry>Operations in request are not allowed by link contract sent by client.</entry></row>
+<row><entry>Supported auth type</entry><entry><code>$false/$error/$supported$auth$type$AUTHTYPE</code></entry><entry>Request was denied together with $request$forbidden error code with supported auth types must be returned to let client know, maybe it used wrong auth type.</entry></row>
+<row><entry>Authorization data invalid</entry><entry><code>$false/$error/$auth$data$invalid</code></entry><entry>E.g. OpenID token is expired or invalid.</entry></row>
+<row><entry>Node does not have child</entry><entry><code>$false/$error/$node$does$not$have$child</code></entry><entry>$get operation requested node that does not have child, so nothing to return.</entry></row>
+<row><entry>Graph not found</entry><entry><code>$false/$error/$graph$not$found</code></entry><entry>Graph with specified id was not found on XDI Server.</entry></row>
+</tbody></tgroup></informaltable>
+
+
+<section><title>Request unknown</title>
+
+<code>$false/$error/$request$unknown</code>
+Send in case request format is unknown. (E.g. request does not contain operation xdi statement.)
+<para>Sample request:</para>
+<programlisting>@!9999!8888$msg!1234/$()/(@!1111!2222)</programlisting>
+</section>
+<section><title>Multiple operations</title>
+
+<code>$false/$error/$multiple$operations</code>
+Send in case request contains operations of different types.
+
+<para>Sample request:</para>
+<programlisting>@!9999!8888$msg!1234/$()/(@!1111!2222)
+@!9999!8888$msg!1234/$d!/(data:,2011-04-10T22:22:22Z)
+@!9999!8888$msg!1234$do/$get/=!1111!2222!3
+@!9999!8888$msg!1234$do/$add/(sdf/sdf/sdf)</programlisting>
+</section>
+<section><title>Duplicate operations</title>
+
+<code>$false/$error/$duplicate$operations</code>
+Send in case request contains operation duplication.
+
+<para>Sample request:</para>
+<programlisting>@!9999!8888$msg!1234/$()/(@!1111!2222)
+@!9999!8888$msg!1234/$d!/(data:,2011-04-10T22:22:22Z)
+@!9999!8888$msg!1234$do/$get/=!1111!2222!3
+@!9999!8888$msg!1234$do/$get/=!1111!2222!3</programlisting>
+</section>
+<section><title>Can't process request</title>
+
+<code>$false/$error/$request$cant$process</code>
+Send in case request is not processed. General error, there can be different reasons, some internal exception, db connection failure or whatever which is not described by another errors.
+
+</section>
+<section><title>Request forbidden</title>
+
+<code>$false/$error/$request$forbidden</code>
+Send in case operations in request is not allowed by link contract sent by client.
+
+</section>
+<section><title>Supported auth type</title>
+
+<code>$false/$error/$supported$auth$type$AUTHTYPE</code>
+In case request was denied together with $request$forbidden error code with supported auth types must be returns to let client know, maybe it use wrong auth type.
+
+Example
+
+<code>$false/$error/$supported$auth$type$openidconnect-1.1</code>
+</section>
+<section><title>Authorization data invalid</title>
+
+<code>$false/$error/$auth$data$invalid</code>
+Send in case authorization data is invalid. (E.g. openid token is expired or invalid.)
+
+</section>
+<section><title>Node does not have child</title>
+
+<code>$false/$error/$node$does$not$have$child</code>
+Send in case $get operation request node that does not have child (nothing to return).
+
+</section>
+<section><title>Graph not found</title>
+
+<code>$false/$error/$graph$not$found</code>
+Send in case graph with specified id was not found on XDI Server.
+</section>
+</section>
+
+</section><section><title>Transactional Integrity</title>
+The XDI TC has discussed [[https://en.wikipedia.org/wiki/Database_transaction|transactional integrity]], including <a href="https://en.wikipedia.org/wiki/ACID">ACID</a> and <a href="https://en.wikipedia.org/wiki/Eventual_consistency">BASE</a>, but has not yet determined the requirements that XDI messaging will need to support.
+</section>
+
+
+
+  <!--section><title>The XDI Graph Model</title>
+   <para>Given the design goals above, the XDI TC has developed the semantic graph model defined in this section. Figure 1 shows a high-level taxonomy of the XDI graph model. 
+   <figure float="true"><title>XDI Node Types: Below node type name, XDI graph notation symbols are listed in black, XDI syntax in red.</title>
+    <mediaobject><imageobject>
+     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="200" style="float:right">
+       <defs>
+         <style type="text/css"><![CDATA[
+           path { stroke: black; stroke-width: 2; }
+           rect.layer { stroke: none; fill: #bcdeff; }
+           text { dominant-baseline: middle; }
+           text.syntax { font-family: monospace; font-size: 16px; fill: #e40; }
+           circle { stroke-width: 2 }
+         ]]></style>
+       </defs>
+       <g transform="translate(0,10)" text-anchor="middle" dominant-baseline="middle">
+           <g transform="translate(250,00)">
+             <rect class="layer" x="-250" y="-8" width="500" height="35"/>
+             <text>Node</text>
+           </g> <g transform="translate(220,50)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-220" y="-8" width="440" height="35"/>
+             <text>Context</text>
+           </g> <g transform="translate(470,150)">
+             <path d="M 0 -8 v -115"/>
+             <rect class="layer" x="-30" y="-8" width="60" height="35"/>
+             <text>Literal</text>
+           </g> <g transform="translate(400,150)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-30" y="-8" width="60" height="35"/>
+             <text>Variable</text>
+             <text x="11" y="18" class="syntax">{&#8212;}</text>
+           </g>
+
+           <g transform="translate(85,100)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-85" y="-8" width="170" height="35"/>
+             <text>Graph Root</text>
+             <circle cx="-0" cy="16" r="7" stroke="black" fill="none"/>
+           </g> <g transform="translate(33,150)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-33" y="-8" width="66" height="35"/>
+             <text>Common</text>
+           </g> <g transform="translate(95,150)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-22" y="-8" width="44" height="35"/>
+             <text>Peer</text>
+             <text y="18" class="syntax">(&#8212;)</text>
+           </g> <g transform="translate(147,150)"> <path d="M -0 -8 v -15"/>
+             <rect class="layer" x="-25" y="-8" width="50" height="35"/>
+             <text>Inner</text>
+             <text y="18" class="syntax">(&#8212;/&#8212;)</text>
+           </g>
+
+           <g transform="translate(310,100)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-125" y="-8" width="250" height="35"/>
+             <text>Subgraph</text>
+           </g> <g transform="translate(340,150)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-25" y="-8" width="50" height="35"/>
+             <text>Value</text>
+             <text x="14" y="18" class="syntax">&amp;</text>
+             <path d="M -11 10 l 11 7 l -11 7 l -11 -7 Z" fill="none"/>
+           </g> <g transform="translate(210,150)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-25" y="-8" width="50" height="35"/> 
+             <text>Entity</text>
+             <circle cx="-11" cy="18" r="7" stroke="black" fill="black"/>
+           </g> <g transform="translate(275,150)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-35" y="-8" width="70" height="35"/>
+             <text>Attribute</text>
+             <text x="17" y="18" class="syntax">&lt;&#8212;&gt;</text>
+             <path d="M -17 10 l 11 7 l -11 7 l -11 -7 Z"/>
+           </g>
+        </g>
+     </svg>
+
+     <imagedata fileref="xdi-nodes.png"/>
+    </imageobject>
+      <textobject><phrase>XDI Node Types</phrase></textobject>
+    </mediaobject></figure>
+        The Entity-Attribute-Value (EAV) data model dates back at least to the 1970’s<xref linkend='erm'/> and forms the basis for semantic description logics such as RDF.  XDI uses a Graph-Entity-Attribute-Value (GEAV) model adding one more dimension enabling EAV statements to be relative to the graph in which they are contained.</para>
+
+      <para>The XDI graph is a directed acyclic graph with nodes connected by arcs. An XDI path is a connected chain of successive arcs; it forms an address designating the node at the end of the arc chain.</para>
+
+
+  <section><title>Node Types</title>
+
+     <figure><title>XDI Entity/Attribute Node Types (Detailed): Entity syntax on left, Attribute syntax on right</title>
+     <mediaobject><imageobject>
+     <svg width="500" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg" style="float:right">
+       <defs>
+         <style type="text/css"><![CDATA[
+           path { stroke: black; stroke-width: 2; }
+           rect.layer { stroke: none; fill: lightblue; }
+           text { dominant-baseline: middle; }
+           text.syntax { font-family: monospace; font-size: 16px; fill: red; }
+           circle { stroke-width: 2 }
+         ]]></style>
+       </defs>
+       <g transform="translate(250,10)" text-anchor="middle" dominant-baseline="middle">
+           <g transform="translate(0,00)">
+             <rect class="layer" x="-250" y="-8" width="500" height="35"/>
+             <text y="18">subgraph</text><text>Entity or &lt;Attribute&gt;</text>
+           </g> <g transform="translate(-200,50)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-50" y="-8" width="100" height="35"/>
+             <text>Definition</text>
+             <text y="18" class="syntax">|&#8212;| |&lt;&#8212;&gt;|</text>
+           </g> <g transform="translate(-70,50)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-75" y="-8" width="150" height="35"/>
+             <text>Singleton</text>
+           </g>
+           <g transform="translate(70,50)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-50" y="-8" width="100" height="35"/>
+             <text>Collection</text>
+             <text y="18" class="syntax">[&#8212;] [&lt;&#8212;&gt;]</text>
+           </g>
+
+           <g transform="translate(-160,100)"> <path d="M 30 -8 v -15"/>
+             <rect class="layer" x="-90" y="-8" width="185" height="35"/>
+             <text>Authority</text>
+             <text y="15">(real-world identity)</text>
+           </g> <g transform="translate(-220,150)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-35" y="-8" width="70" height="35"/>
+             <text>Personal</text>
+             <text y="18" class="syntax">= &lt;=&gt;</text>
+           </g> <g transform="translate(-155,150)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-25" y="-8" width="50" height="35"/>
+             <text>Legal</text>
+             <text y="18" class="syntax">+ &lt;+&gt;</text>
+           </g> <g transform="translate(-95,150)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-30" y="-8" width="60" height="35"/>
+             <text>General</text>
+             <text y="18" class="syntax">* &lt;*&gt;</text>
+           </g>
+
+           <g transform="translate(20,100)"> <path d="M -30 -8 v -15"/>
+             <rect class="layer" x="-75" y="-8" width="155" height="35"/>
+             <text>Class</text>
+           </g> <g transform="translate(-20,150)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-35" y="-8" width="70" height="35"/>
+             <text>Reserved</text>
+             <text y="18" class="syntax">$ &lt;$&gt;</text>
+           </g> <g transform="translate(60,150)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-40" y="-8" width="80" height="35"/>
+             <text>Unreserved</text>
+             <text y="18" class="syntax"># &lt;#&gt;</text>
+           </g>
+
+           <g transform="translate(190,50)"> <path d="M 0 -8 v -15"/>
+             <rect class="layer" x="-60" y="-8" width="120" height="35"/>
+             <text>Member (index</text>
+             <text y="15">into collection)</text>
+           </g> <g transform="translate(150,150)"> <path d="M 0 -8 v -65"/>
+             <rect class="layer" x="-35" y="-8" width="70" height="35"/>
+             <text>Unordered</text>
+             <text y="18" class="syntax">! &lt;!&gt;</text>
+           </g> <g transform="translate(220,150)"> <path d="M 0 -8 v -65"/>
+             <rect class="layer" x="-30" y="-8" width="60" height="35"/>
+             <text>Ordered</text>
+             <text y="18" class="syntax">@ &lt;@&gt;</text>
+           </g>
+        </g>
+     </svg>
+      <imagedata fileref="xdi-nodes-detailed.png"/></imageobject>
+      <textobject><phrase>XDI Node Types (Detailed)</phrase></textobject>
+     </mediaobject></figure>
+    </section>
+    <section><title>Literals</title>
+      <para>As in RDF, the final leaf nodes of an XDI graph — the nodes containing the raw data values described by the graph — are called <firstterm>literals</firstterm>. In the abstract graph model, there is no constraint on the data type of an XDI literal. XDI natively supports the six data types defined by JSON:
+        <orderedlist>
+      <listitem>Number (double-precision floating-point format in JavaScript)</listitem>
+      <listitem>String (double-quoted Unicode, with backslash escaping)</listitem>
+      <listitem>Boolean (<code>true</code> or <code>false</code>)</listitem>
+      <listitem>Array (an ordered, comma-separated sequence of values enclosed in square brackets; the values do not need to be of the same type)</listitem>
+      <listitem>Object (an unordered, comma-separated collection of key:value pairs enclosed in curly braces, with the '<code>:</code>' character separating the key and the value)</listitem>
+      <listitem><code>null</code> (empty) </listitem></orderedlist>
+      Literals of these data types, when serialized in an XDI JSON serialization format, do not require an XDI type statement. Literals of any other data type MAY be described using an XDI type statement.</para></section>
+      <section><title>Contexts</title><para>All other nodes in the XDI graph model provide context for the literal data nodes and are called <firstterm>context</firstterm> nodes. Context nodes MAY contain other context nodes as defined by the XDI ABNF rules. This nesting of context nodes is represented by contextual arcs. In this specification, the term <firstterm>contains</firstterm> means that there is a directed contextual arc from the containing node to the contained node. This is how the XDI graph model fulfills the <firstterm>Contextual Identification</firstterm> design goal of <xref linkend="contextual"/>.</para>
+      <para>The term <firstterm>XDI context</firstterm> may apply to any of the context node types described in the following sections. Certain XDI context node types have an associated <firstterm>context symbol</firstterm>—a single symbol character that denotes an instance of that context type.</para></section>
+    <section><title>Graph Root Nodes</title>
+      <para>An XDI graph is an abstract logical resource that serves as a container of XDI statements. From an XDI addressing standpoint, the starting point for every contextual statement within an XDI graph is called the <firstterm>root node</firstterm> of the graph. Three important points about XDI graphs and their root nodes:</para>
+      <orderedlist>
+      <listitem>The relationship of multiple independent XDI graphs is heterarchical. Although the context nodes within each XDI graph form a directed acyclic graph (a tree), of which the graph root node is the starting point, the root nodes of all independent XDI graphs are peers at the same level, and any peer may form the starting point for discovery of relationships with any other peer. This architecture is how the XDI graph model fulfills the <firstterm>No Central Authority</firstterm> design goal of <xref linkend="heterarchy"/>.</listitem>
+      <listitem>The root node of an XDI graph by itself never identifies or represents anything but the XDI graph itself. As a pure logical data structure, the XDI graph is what the Architecture of the World Wide Web calls an “information resource”.<xref linkend='webarch'/> This means the attributes of a graph root node are strictly the attributes of the graph itself; for example, its network location (the <code>&lt;$uri&gt;</code> attribute) or its timestamp (the <code>&lt;$t&gt;</code> attribute).</listitem>
+      <listitem>Every graph root node restarts the XDI addressing space. This means that when traversing from peer to peer across a set of the root nodes of independent XDI graphs, each node begins a new set of XDI addresses rooted in that node. This concept is critical to XDI discovery.</listitem> 
+      </orderedlist>
+      <para>There are three types of XDI graph root nodes.</para>
+      <section><title>The Common Root Node</title>
+        <para>Every XDI graph has exactly one <firstterm>common root node</firstterm>. It is called the common root because it the one logical node shared by all XDI graphs. To use the analogy of trees in a forest, if every tree represents an XDI graph, the common root node of all the trees is the earth.</para>
+        <para>The XDI address of the common root node is the <firstterm>empty address</firstterm>. Thus any XDI statement that does not begin with a peer root address or an inner root address is by definition relative to the common root node.</para></section>
+      <section><title>Peer Root Nodes</title>
+        <para>An XDI graph MAY describe zero or more <firstterm>peer graphs</firstterm>, each with its own <firstterm>peer root node</firstterm>. A peer root node represents an independent XDI graph with its own XDI address. In most cases this XDI address will be at a different network endpoint that the current XDI graph. However the common root node of an XDI graph may also describe its own XDI address by virtue of an XDI reference statement to a peer root node.</para>
+        <para>The XDI address of a peer root node MUST consist of only an single XDI address segment (representing an XDI subject) enclosed in parentheses. This address MUST NOT be preceded by an XDI context symbol. Examples:</para>
+        <code>(=example)</code>
+        <para><code>([=]!:uuid:f81d4fae-7dec-11d0-a765-00a0c91e0001)</code></para>
+        <para><code>(+example.company)</code></para>
+        <para><code>([+]!:uuid:9ce739f0-7665-11e2-bcfd-0800200c0002)</code></para>
+        <code>([+]!:uuid:9ce739f0-7665-11e2-bcfd-0800200c0002#sales)</code>
+        <para>An example of an XDI reference statement asserting the peer root address of its own common root node:</para>
+        <para><code>([=]!:uuid:f81d4fae-7dec-11d0-a765-00a0c91e0001)/$ref/</code></para>
+        <para>Note that the object of the statement (the third segment of the address) is empty—this is the XDI address of the common root node.</para>
+      </section>
+      <section><title>Inner Root Nodes</title>
+        <para>An <firstterm>inner graph</firstterm> is a graph-within-a-graph. Unlike a peer root graph, an inner root graph represents the set of XDI statements that are the object of another XDI statement. In RDF this is known as reification.<xref linkend='reification'/></para>
+        <para>The XDI address of an <firstterm>inner root node</firstterm> MUST consist of two XDI address segments—an XDI subject followed by an XDI relational predicate—enclosed in parentheses. This XDI address MUST NOT be preceeded by an XDI context symbol. Examples:</para>
+        <para><code>(=example.1/#nominated)</code></para>
+        <para><code>(+company.1/#acquired)</code></para>
+        <para>Examples of XDI statements that begin with these peer root addresses:</para>
+        <para><code>(=example.1/#nominated)=example.2/#chair/(=example.1/+nominated)#school#board</code></para>
+        <para><code>(+company.1/#acquired)+company.2&lt;$t&gt;&amp;/&amp;/”2013-11-30Z”</code></para>
+        <para>Because an inner graph represents the object(s) of an XDI relational statement, it differs from a peer graph in one key respect: the XDI statements contained by an inner graph are relative only to that particular inner root node and cannot be copied to another XDI graph without copying that same inner root node.</para></section>
+    </section>
+      <section><title>Subgraphs</title>
+        <para>A <firstterm>subgraph</firstterm> is a branch of an XDI graph that does not begin with a root node. A subgraph MUST begin with an entity, attribute, or value node. See the definitions of these node types below.</para>
+      <section><title>Variables</title> 
+        <para>A <firstterm>variable</firstterm> is a node serves as a template or a query for other XDI graphs. A variable node MUST represent a set of zero or more nodes in the instance graph. A variable MAY represent any type of XDI graph node. A variable MAY be typed by containing the XDI address of a class. If a variable is typed, a valid instance of that variable MUST be a valid instance of that class.</para></section>
+      <section><title>Entities</title><para>An <firstterm>entity</firstterm> node represents the digital identity of any independent physical or logical resource other than an XDI graph. An entity MUST be either an authority, an entity class, or an instance of an entity class. An entity MAY contain another entity (a <firstterm>subentity</firstterm>) or an attribute. An entity MUST NOT contain a value.</para></section>
+      <section><title>Attributes</title><para>An <firstterm>attribute node</firstterm> represents a property of its parent graph, entity, or attribute. An attribute MAY contain another attribute (a <firstterm>subattribute</firstterm>). An attribute MAY contain exactly one value node. Note that only attributes may contain value nodes. An XDI graph root node or entity node MUST NOT contain a value node directly, only attribute nodes that have value nodes.</para>
+      <para>The XDI address of an attribute node MUST be contained in chevrons (angle brackets) “<code>&lt;</code>” and “<code>&gt;</code>”. (An attribute definition or collection has additional containing syntax—see the ABNF section.)</para></section>
+      <section><title>Values</title>
+      <para>A <firstterm>value</firstterm> node represents the abstract XDI address of the literal value of an XDI attribute. A value node MUST be a singleton node (see below). Because an attribute node can only have one value node, and because that value node is always relative to its containing attribute node, all XDI value nodes MUST be identified using a single XDI context symbol: the ampersand character “<code>&amp;</code>”.</para>
+      <para>An attribute node is NOT REQUIRED to have a value node. A value node MAY have exactly one literal node describe by one XDI literal arc. A value node is NOT REQUIRED to have a literal node.</para>
+      <para>If an attribute node does not have a value node, the literal value of the attribute SHOULD be in indeterminate.</para>
+      <para>If an attribute node has a value node, but the value node does not have a literal node, the literal value of the attribute SHOULD be indeterminate.</para>
+      <para>If an attribute node has a value node, and value node has a literal node, the literal value of the attribute MUST be an XDI literal data type. The literal value MAY be the XDI data type representing a null value. In the JSON serialization, this is the JSON <code>null</code> value.</para></section>
+    </section>
+    <section><title>Definitions</title><para>A <firstterm>definition</firstterm> node represents the start of a subgraph defining or qualifying the definition of an XDI entity or attribute. Definitions are how XDI meets the <firstterm>Schema and Ontology Expression</firstterm> design goal of <xref linkend="schema"/>.</para>
+      <para>The XDI address of a definition node MUST be enclosed in pipe characters “<code>|</code>” and “<code>|</code>”. The entity and attribute vocabulary used by XDI definitions will be specified in the XDI Dictionary specification.</para>
+    </section>
+    <section><title>Singletons</title><para>A <firstterm>singleton</firstterm> node represents a single instance of an XDI entity or attribute that is not a collection and does not have any members. A singleton is the default form of an XDI address and does not have any special syntax.</para>
+    </section>
+    <section><title>Collections</title><para>A <firstterm>collection</firstterm> node represents a set of XDI entities or attributes of the same type. A collection MAY have zero or more members. The XDI address of a collection node MUST be enclosed in square bracket characters “<code>[</code>” and “<code>]</code>”. The type of the members of the collection is specified by the XDI address contained in the square brackets.</para></section>
+    <section><title>Members</title>
+      <para>A <firstterm>member</firstterm> node represents an XDI entity or attribute that is a member of a collection. A member node MUST have a containing collection.
+There are two types of member nodes.</para>
+      <section><title>Ordered</title><para>An <firstterm>ordered</firstterm> member node represents an ordered member of a collection. The XDI address of an ordered member node MUST begin with the context symbol “<code>@</code>” and MUST be followed by one or more digits representing the order of the member in the collection. Ordering of members in collections MUST begin with zero. Zero MUST NOT be the leading digit unless it is the only digit.
+[TODO – Must ordering be consecutive?]
+The XDI address of an ordered member MUST NOT be interpreted as an immutable address of that entity or attribute.</para></section>
+      <section><title>Unordered</title><para>An unordered member node represents an member of a collection that is not ordered. The XDI address of an unordered member node MUST begin with the context symbol “<code>!</code>”.
+The XDI address of an unordered member MUST be interpreted as an immutable address of that entity or attribute.</para>
+
+</section>
+    </section>
+    <section><title>Authorities</title>
+      <para>An <firstterm>authority</firstterm> is an XDI entity representing the digital identity of a real-world entity that is authoritative for its XDI subgraph.
+There are three types of XDI authorities forming supersets of each other as shown in Figure 3.</para>
+  <figure float="true"><title>XDI Authority Types</title>
+   <mediaobject>
+    <imageobject>
+     <svg width="500" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg" style="float:right">
+       <g transform="translate(100,100)">
+       <circle stroke="black" r="90" fill="none"/>
+       <circle stroke="blue" r="65" fill="none"/>
+       <circle stroke="red" r="35" fill="none"/>
+       </g>
+       <g transform="translate(72,90)">
+       <text y="10">Personal</text>
+       <text y="55" x="10">Legal</text>
+       <text y="85">General</text>
+       </g>
+     </svg>
+     <imagedata fileref="xdi-authorities.png"/>
+    </imageobject>
+      <textobject><phrase>XDI Authority Types</phrase></textobject>
+    </mediaobject></figure>
+
+      <section><title>Personal</title>
+        <para>A <firstterm>personal</firstterm> authority is an XDI entity representing the digital identity of a natural person. The XDI address of a personal authority MUST begin with the context symbol “<code>=</code>”.</para></section>
+      <section><title>Legal</title>
+        <para>A <firstterm>legal</firstterm> authority is an XDI entity representing the digital identity of a legal entity that is not required to be a natural person. Examples include groups, sole proprietorships, partnerships, associations, corporations, governments or government agencies of any kind, and trademarks. The XDI address of a legal authority MUST begin with the context symbol “<code>+</code>”.</para></section>
+      <section><title>General</title>
+        <para>A <firstterm>general</firstterm> authority is an XDI entity representing the digital identity of an entity that is not required to be a legal entity. Examples include physical objects or assets, locations, devices, applications, databases, and network endpoints. The XDI address of a general authority MUST begin with the context symbol “<code>*</code>”.</para></section>
+    </section>
+    <section><title>Classes</title><para>A <firstterm>class</firstterm> is an XDI entity or attribute representing a defined set of subentities, attributes, relations, or literal datatypes. The semantics of an XDI class are specified by its XDI definition, typically in an XDI dictionary (see above).
+Each of the three XDI authority context symbols, when used by itself, represents a class.
+The class of all people is represented by the context symbol “<code>=</code>” alone. The collection of all members of this class is represented by “<code>[=]</code>”.
+The class of all legal entities is represented by the context symbol “<code>+</code>” alone. The collection of all members of this class is represented by “<code>[+]</code>”.
+The class of all entities regardless of legal status is represented by the context symbol “*” alone. The collection of all members of this class is represented by “<code>[*]</code>”.
+There are two other types of XDI classes.</para>
+      <section><title>Reserved</title>
+        <para>The <firstterm>reserved</firstterm> class is the set of XDI classes specified by the OASIS XDI Technical Committee to define the universal grammar of XDI. The XDI address of a reserved class MUST begin with the context symbol “<code>$</code>”. For this reason they are also called <firstterm>dollar words</firstterm> or <firstterm>XDI keywords</firstterm>. Examples:</para>
+<simplelist type='horiz' columns='6'>
+  <member>$uri</member>
+  <member>$do</member>
+  <member>$and</member>
+  <member>$or</member>
+  <member>$not</member>
+  <member>$public</member>
+</simplelist>
+<para>An reserved class name MUST be interpreted as an immutable XDI address.</para>
+<para>A reserved class name MUST be defined in a specification from the OASIS XDI Technical Committee (including this specification) or by another OASIS Technical Committee or another standards body specified by the OASIS XDI Technical Committee.</para></section>
+      <section><title>Unreserved #</title>
+        <para>The <firstterm>unreserved</firstterm> class is the set of XDI classes defined by other XDI authorities. The XDI address of an unreserved class MUST begin with the context symbol “<code>#</code>”. Unreserved class names are typically defined in XDI dictionaries. For this reason they are also called <firstterm>hash words</firstterm> or <firstterm>dictionary words</firstterm>. Examples:</para>
+<simplelist type='horiz' columns='6'>
+  <member>#tel</member>
+  <member>#home</member>
+  <member>#work</member>
+  <member>#friend</member>
+  <member>#enemy</member>
+</simplelist>
+<para>An <firstterm>unreserved</firstterm> class name MUST be interpreted as an immutable XDI address.</para>
+<para>Dictionary words MAY be defined by any XDI authority in any context. Dictionary words whose semantics are intended to be defined by one XDI authority in a specific set of contexts SHOULD be defined in that authority’s own context. Dictionary words that are intended to be generic, i.e., to share the same semantics in all XDI graphs, SHOULD be defined directly in the context of the common root node.</para>
+<para>This begs the question of authority for generic XDI dictionary words. Since they represent a community consensus about shared semantics, it is RECOMMENDED that generic XDI dictionary words be specified in XDI community dictionaries cooperatively maintained by the set of XDI authorities who wish to contribute to the community. This is the model popularized (and proven to scale) by Wikipedia for human-readable encyclopedia articles.</para>
+<para>XDI.org is one example of a non-profit community organization whose mission includes the cooperative development of XDI dictionaries.</para></section></section>
+    </section>
+  <section><title>Statement Types</title><para>As with an RDF graph, an XDI graph consists of a set of one or more <firstterm>XDI statements</firstterm>. Each XDI statement MUST have a <firstterm>subject</firstterm>, <firstterm>predicate</firstterm>, and <firstterm>object</firstterm> (even if one or more of these is the empty address). Every XDI statement MUST represent exactly one arc in the XDI graph model, and every arc in the XDI graph model MUST represent exactly one XDI statement.</para>
+      <para>In XDI display format (see below), the XDI addresses for the subject, predicate, and object of the statement are separated by the forward slash character “<code>/</code>”, so each component is called a <firstterm>segment</firstterm>.</para>
+      <para>There are three types of XDI statements.</para>
+    <section><title>Literal Statements</title>
+      <para>A <firstterm>literal statement</firstterm> represents exactly one <firstterm>literal arc</firstterm> in the XDI graph model. It specifies the literal value of an XDI attribute. In a literal statement:</para>
+<orderedlist><listitem>The XDI address of the subject MUST end in an attribute singleton or a member of an attribute collection followed by an ampersand character “<code>&amp;</code>”.</listitem> 
+<listitem>The XDI address of the predicate by the ampersand character “<code>&amp;</code>”.</listitem>
+<listitem>The XDI address of the object MUST be the literal data value as specified by the serialization format.</listitem></orderedlist>
+<para>There is no inverse of a literal statement. Example:</para>
+<para><code>=forrest.gump&lt;#email&gt;&amp;/&amp;/”forrest.gump@example.com”</code></para></section>
+    <section><title>Relational Statements</title>
+      <para>A <firstterm>relational</firstterm> statement represents exactly one <firstterm>relational arc</firstterm> in the XDI graph model. It specifies the relationship of two XDI context nodes. In a relational statement:</para>
+<orderedlist><listitem>The XDI address of the subject MAY be any XDI context node.</listitem>
+<listitem>The XDI address of the predicate MAY be any XDI relation for which the subject node is a valid domain. Reserved classes are used for a small set of universally defined XDI relations. (See the Equivalent Relations section below.)</listitem>
+<listitem>The XDI address of the object MUST be another XDI context node. The object node MUST be in the valid range for the specified relation.</listitem></orderedlist>
+<para>The inverse of any relational statement MAY be asserted by: a) reversing the subject and object components, and b) putting the XDI address of the relation in the <code>$is</code> context. Example:</para>
+<para><code>=forrest.gump/#mother/=mama.gump</code></para>
+<para><code>=mama.gump/$is#mother/=forrest.gump</code></para></section>
+    <section><title>Contextual Statements</title>
+      <para>A <firstterm>contextual statement</firstterm> represents exactly one <firstterm>contextual arc</firstterm> in the XDI graph model. It specifies the relationship of two XDI context nodes. In a relational statement:</para>
+      <orderedlist>
+        <listitem>The XDI address of the subject MAY be any XDI context node except a value node (since value nodes are the leaf nodes of an XDI context tree). If the subject is the common root node, the XDI address is empty.</listitem>
+        <listitem>The XDI address of the predicate MUST be the empty address.</listitem>
+        <listitem>The XDI address of the object MUST be the contained XDI context node. In addition, the concatenation of the XDI address of the subject of the contextual statement and the object of the contextual statement MUST produce a valid XDI address according to the rules of the XDI ABNF (below).</listitem>
+      </orderedlist>
+The inverse of any contextual statement MAY be asserted by: a) reversing the subject and object components, and b) using the <code>$is()</code> predicate. Example:
+<para><code>=forrest.gump//&lt;#email&gt;</code></para>
+<para><code>&lt;#email&gt;/$is()/=forrest.gump</code></para></section>
+  </section>
+  <section><title>XDI Graph and Statement Grammars</title>
+    <para>Grammars are given in Augmented Backus-Naur Form as defined in <xref linkend="rfc2234"/>. Slash / is alternation, parentheses are grouping, * means zero or more of following, 1* means one or more of following, brackets [] mean zero or one of following, i.e. optional.</para>
+    <para>XDI values are JSON values, and the JSON grammar is included for non-normative reference.</para>
+    <section><title>Delimiter Grammar</title>
+    <para>XDI statements' grammar is defined on a level independent of serialization, using generic delimiter symbols. In the following section, each specific statement serialization is then defined by adding a small grammar defining its delimiters. These symbols in all capital letters are the generic delimiters:.</para>
+<programlisting>
+STMTSL,R: Before and after a list of statements
+STMTSN:   Between statements in a list of statements
+STMTL,R:  Before and after a statement
+OBJSL,R:  Before and after a list of objects, for serializations allowing multiple objects for one subject/predicate
+OBJSN:    Between objects in a list of objects
+S-P, P-O: Between subject, predicate, and object of a statement
+C-I:      Between a context symbol and the following identifier
+</programlisting>
+
+    </section>
+    <section><title>Statement Grammar</title>
+      <para>Three types of statements are defined here: contextual statements, relational statements, and literal statements. </para>
+      <para>Contextual statements assert a relative address (the statement's object) starting from a given node (the statement's subject) The statement can only be valid if the concatenation of the subject and object (or object and subject, for an inverse contextual statement) is a valid XDI path according to the Path Grammar below: proceeding from peer roots to inner roots, then entities, then attributes, then optionally to value. Also, if the object starts with a member specifier, then the subject must end with a collection specifier. </para>
+      <para>Direct contextual statements have the empty string as their predicate, so therefore appear as subject//object.  The concatenated address can be constructed simply by removing the //. Put another way, given an XDI address, we can cut it placing // between two of its arcs, and get a contextual statement asserting the second part's existence as a relative address starting at the context node definid by the first part. </para>
+      <para>Currently only contextual statements are allowed to have multiple objects in the multiple-object serializations. (Check assumption that relational statements cannot have multiple objects)</para>
+
+<programlisting>
+xdi-statement-list   = STMTSL [ xdi-statement *( STMTSN xdi-statement ) ] STMTSR
+xdi-statement        = STMTL ( contextual-statement / relational-statement / literal-statement ) STMTR
+contextual-statement = direct-contextual / inverse-contextual
+relational-statement = direct-relational / inverse-relational
+direct-contextual    =   xdi-address S-P                     P-O   xdi-addresses
+inverse-contextual   =   xdi-address S-P "$is" "()"          P-O   xdi-addresses
+direct-relational    =   xdi-address S-P       xdi-address   P-O xrefs-addresses
+inverse-relational   =  xref-address S-P "$is" xdi-address   P-O   xdi-address
+literal-statement    = value-address S-P       "&amp;"       P-O  json-value
+</programlisting>
+   <para>XDI values are JSON values with JSON syntax; the JSON grammar is included at the end of this sectionfor non-normative reference.</para>
+      <para>Here inverse-relational statements appear to be a subset of direct-relational statements, because we are not strongly constraining predicates yet</para>
+    </section>
+
+    <section><title>Predicate Grammar</title>
+      <para>Most relational predicates will be described in more detail in following specs.</para>
+<programlisting>
+xdi-predicate   = xdi-equivalence / xdi-operation / xdi-boolean / xdi-condition
+xdi-equivalence = $is / [ $is ] $ref / [ $is ] $rep
+xdi-boolean     = $true / $false / $and / $or / $not
+xdi-operation   = $get / $set / $del / $copy / $move / ( $do [ do-extension ] )
+do-extension    = $signal 
+xdi-event       = $domain 
+xdi-condition   = $equals / $greater / $lesser
+</programlisting>
+    </section>
+    
+    <section><title>Address Grammar</title>
+      <para>An XDI address can contain peer roots (cross-references), then inner roots, then entities, then attributes, then literal (value), in that order. Each of those elements is optional, except that a value must be preceded by an attribute singleton or attribute member.</para>
+      <para>xdi-addresses is used when multiple objects per subject/predicate pair are used in multiple-line display format or in JSON serialization. For the non-multiple-object serializations, simply use xdi-addresses = xdi-address instead.</para>
+
+<programlisting>
+xdi-addresses   = OBJSL [  xdi-address *( OBJSN  xdi-address ) ] OBJSR 
+xrefs-addresses = OBJSL [ xref-address *( OBJSN xref-address ) ] OBJSR 
+xref-address    = xdi-address / xref
+xdi-address     = *xref *inner-root *entity-node *attrib-node [ attrib-value ]
+value-address   = *xref *inner-root *entity-node *attrib-node   attrib-value
+entity-node     = ( entity-singleton / ( entity-collection [ entity-member ] ) )
+attrib-node     = ( attrib-singleton / ( attrib-collection [ attrib-member ] ) ) 
+attrib-value    = ( attrib-singleton / ( attrib-collection   attrib-member   ) ) value-arc
+</programlisting>
+      <para></para>
+<programlisting>
+</programlisting>
+      <para>Peer roots (xrefs) must occur before inner roots in a xdi-address. (and all roots precede entities, attributes, and values)</para>
+<programlisting>
+xref        = "(" ( xdi-address / xdi-iri / xdi-name ) ")"
+inner-root  = "("   xdi-address S-P xdi-address ")"
+</programlisting>
+    <para>A root may contain a subject-predicate pair (inner root), or a single XDI path; or a single XDI identifier with no context symbols; or an IRI.</para>
+    <para>A root may also contain a triple. Syntactically, the triple is equivalent to a statement, but in the graph model, it is considered simply a shorthand for a construction with inner roots.</para>
+    </section>
+
+    <section><title>Entity Arc Grammar</title>
+      <para>These describe an individual directed edge in the XDI graph.</para>
+      <para>First, entity definitions:</para>
+<programlisting>
+entity-singleton     = authority-singleton / class-singleton 
+authority-singleton  = person-singleton / legal-singleton / general-singleton
+class-singleton      = unreserved-class / reserved-class
+person-singleton     = "=" C-I ( xdi-name / xref / xdi-scheme )
+legal-singleton      = "+" C-I ( xdi-name / xref / xdi-scheme )
+general-singleton    = "*" C-I ( xdi-name / xref / xdi-scheme )
+unreserved-type      = "#" C-I ( xdi-name / xref / xdi-scheme )
+reserved-type        = "$" C-I   xdi-name
+
+entity-collection    = authority-collection / class-collection 
+authority-collection = person-collection    / legal-collection / general-collection
+class-collection     = reserved-collection  / unreserved-collection
+person-collection    = COLL              "=" COLR 
+legal-collection     = COLL              "+" COLR 
+general-collection   = COLL              "*" COLR 
+reserved-collection  = COLL   reserved-class COLR
+unreserved-collection= COLL unreserved-class COLR
+
+entity-member        = member 
+member               = ordered-member / unordered-member
+ordered-member       = "@" C-I ( ( %x31-39 DIGIT ) / "0" )
+unordered-member     = "!" C-I ( xdi-name / xref / xdi-scheme )
+</programlisting>
+      <para>Member indexes are positive integers without leading zeroes, except for 0 itself.</para>
+    </section>
+
+    <section><title>Non-Entity Arc Grammar</title>
+      <para>Other arc types include attributes, definitions, and variables.</para>  
+      <para>Attributes are constructed by enclosing the corresponding entity in attribute delimiters, outside everything but collection delimiters:</para>  
+<programlisting>
+attrib-singleton  = ATTL C-I class-singleton ATTR
+attrib-collection = COLL    attrib-singleton COLR
+attrib-member     = ATTL C-I          member ATTR 
+
+definition           = authority-definition / class-definition
+class-definition     = entity-definition / attrib-definition
+entity-definition    = DEFL C-I  class-singleton DEFR
+attrib-definition    = DEFL C-I attrib-singleton DEFR
+authority-definition = DEFL C-I   authority-node DEFR
+authority-node       = ( authority-singleton / ( authority-collection [ member ] ) )
+
+variable             = VARL [ xdi-address ] VARR
+value-arc            = "&amp;"
+</programlisting>
+      <para>Bracketing delimiters used are:</para>  
+<programlisting>
+COLL     = "[" 
+COLR     = "]"
+ATTL     = "&lt;" 
+ATTR     = "&gt;" 
+DEFL     = "|"
+DEFR     = "|"
+VARL     = "{" 
+VARR     = "}"
+</programlisting>
+    </section>
+    
+    <section><title>XDI Scheme Grammar</title>
+      <para>XDI schemes define canonical forms of certain classes of XDI identifiers.</para>
+      <para>SHA-256, SHA-384, SHA-512 are commonly used to identify SHA-2 digests of those lengths. NIST's definition of SHA-3 is still in progress.</para>
+      <para>The canonical form for UUID identifiers follows the canonical form of <xref linkend="rfc4122"/>.</para>
+      <para>The canonical form for IPv6 identifiers follows the canonical form of <xref linkend="rfc5952"/>, except that :: compression is not used.</para>
+<programlisting>
+xdi-scheme   =   xdi-sha-256 / xdi-sha-384 / xdi-sha-512 / xdi-uuid / xdi-ipv6
+xdi-sha-256  = ":sha-256:"  64HEX 
+xdi-sha-384  = ":sha-384:"  96HEX 
+xdi-sha-512  = ":sha-512:" 128HEX 
+xdi-uuid     = ":uuid:"      8HEX 4*( "-" 4HEX ) 8HEX
+xdi-ipv6     = ":ipv6:"      4HEX 7*( ":" 4HEX )  
+</programlisting>
+    </section>
+    <section><title>Identifier Grammar</title>
+      <para>A simple IRI grammar is a lightweight parsing alternative to the full IRI grammar in <xref linkend="rfc4627"/>. An XDI processor MAY check for full compliance with IRI syntax, which may not be necessary unless about to dereference or analyze the IRI. </para>
+      <para>Paired "(" and ")" are allowed in IRI body to accomodate IRI schemes like tel: and sms:. </para>
+<programlisting>
+xdi-iri    = iri-scheme ":" *iri-body
+iri-scheme = LOWER *( LOWER / DIGIT ) 
+iri-body   = ( "(" iri-body ")" ) / *iri-char
+iri-char   = xdi-name-char / context-symbol / iri-delim
+iri-delim  = "/" / "?" / "#" / "[" / "]" / "'" / ","
+
+xdi-name   = *xdi-name-char    ; Note: Includes any JSON numbers
+</programlisting>
+    </section>
+
+    <section><title>Character Class Grammar</title>
+      <para>This contains definitions of character classes and endline. </para>
+<programlisting>
+xdi-name-char  = UPPER / LOWER / DIGIT / "-" / "." / "_" / %x80-EFFFD      ; ISSUE - is there a way to leave high end open?
+context-symbol = "!" / "*" / "=" / "#" / "+" / "$"
+
+LOWER          = %x61-7A
+UPPER          = %x41-5A
+HEX            = DIGIT / %x61-66
+DIGIT          = %x30-39
+NZDIG          = %x31-39
+QUOTE          = %x22
+ENDLINE        = %x0D / %x0A / ( %x0D %x0A )
+</programlisting>
+      <para>Hex digits in ipv6, uuid are lowercase; only the exponent prefix E in JSON numbers is uppercase.</para>
+      <para>Policy on unicode characters.</para>
+    </section>
+
+    <section><title>JSON Grammar</title>
+      <para>Based on <xref linkend="rfc4627"/> syntax diagrams (no actual grammar rules found there) restricted for canonical form (add reference) canonicality restrictions: no + signs, no leading zeros, no trailing zeros on fraction</para>
+      <para>We use JSON values, i.e. a value may be a single string, number, true, false, or null, not necessarily a JSON array or object, as is required by "JSON text" in the JSON MIME type specification.</para>
+      <para>XDI processors SHOULD accept non-canonical JSON values as input.</para>
+      <para>XDI processors MAY output partly, fully, or not at all canonicalized versions of JSON values that clients have input, for example by removing spaces.</para>
+      <para>XDI processors SHOULD fully canonicalize JSON values that are results and not user input.</para>
+      <para>Canonical form includes:</para>
+      <para>No unnecessary whitespace</para>
+      <para>Nonzero numbers have no leading zeros or preceding + sign in either fraction or exponent</para>
+      <para>An exponent is preceded by uppercase E</para>
+      <para>Hex in \u character escapes should be lowercase</para>
+<programlisting>
+json-value  = json-object / json-array / json-string / json-number / "true" / "false" / "null"
+json-object = "{" [ json-string ":" json-value *( "," json-string ":" json-value ) ] "}"
+json-array  = "[" [                 json-value *( ","                 json-value ) ] "]"
+json-string = QUOTE *( " " / "!" / %x23-5B  / %x5D-EFFFD / json-escape )    QUOTE
+json-escape = "\"    ("\" / "/" / "b" / "f" / "n" / "r" / "t" / QUOTE / ( "u" 4HEX ) )
+json-number = ( "0" / [ "-" ] noleading ) [ "." notrailing ] [ "E" [ "-" ] noleading ]
+noleading   = %x31-39 *DIGIT
+notrailing  = *DIGIT  %x31-39
+</programlisting>
+    </section>
+
+
+  </section>
+  <section><title>Serialization Grammars</title>
+      <para>The previous sections used these symbols as generic delimiters; a serialization is defined by how these delimiters are concretely represented.</para>
+      <para>STMTSL,R,N: Before, after, and between items of, a list of statements</para>
+      <para>OBJSL,R,N:  Before, after, and between items of, a list of objects, for serializations allowing multiple objects for one subject/predicate</para>
+      <para>STMTL,R:    Before and after a statement</para>
+      <para>S-P, P-O:   Between subject, predicate, and object of a statement</para>
+      <para>C-I:        Between a context symbol and the following identifier</para>
+<para>Each serialization format has an associated MIME type.</para>
+    <section><title>Display Format Statement Serialization Grammar</title>
+      <para>XDI Display Format is a compact human-readable representation of XDI paths and statements using a minimum of delimiters, but is not in a standard data interchange format such as JSON. Each statement is on a separate line, and the subject/predicate/object of a triple are separated by the slash /.</para>
+      <para>Multiline XDI Display Format allows a subject/predicate pair to by followed by multiple objects, indicated by indentation.</para>
+<programlisting>
+STMTSL = ""
+STMTSN = ENDLINE
+STMTSR = ""
+OBJSL  = ""
+OBJSN  = ENDLINE %x09
+OBJSR  = ""
+STMTL  = ""
+STMTR  = ""
+S-P    = "/"
+P-O    = "/"
+C-I    = ""
+</programlisting>
+        <para>Example:</para>
+<screen>
+[=]!:uuid:1111#profiles[&lt;#work&gt;]&lt;!:uuid:5555&gt;/$ref/[=]!:uuid:1111#first&lt;#name&gt;
+</screen>
+    </section>
+
+    <section><title>Flat JSON Statement Serialization Grammar</title>
+      <para>The JSON serializations may have extra whitespace when prettyprinted, but XDI processors SHOULD generate JSON with no extraneous whitespace, as wire format in normal operation.</para>
+      <para>In the Flat JSON statement list serialization, the statement list is a JSON object of key-value pairs where each key is a subject/predicate pair (strings joined by a slash) and each value is a JSON array of objects; except in the case of the value statement where the value is simply the value.</para>
+<programlisting>
+STMTSL = "{" 
+STMTSN = QUOTE "," QUOTE
+STMTSR = "}"
+OBJSL  = "["
+OBJSN  = ","
+OBJSR  = "]"
+STMTL  = "{" QUOTE
+STMTR  = QUOTE "}"
+S-P    = "/"
+P-O    = QUOTE ":" QUOTE
+C-I    = ""
+</programlisting>
+        <para>Example: (prettyprinted with whitespace that is not significant)</para>
+<screen>
+{
+  "[=]!:uuid:1111#profiles[&lt;#work&gt;]&lt;!:uuid:5555&gt;/$ref": [
+    "[=]!:uuid:1111#first&lt;#name&gt;"
+  ]
+}
+</screen>
+    </section>
+
+    <section><title>Parsed JSON Statement Serialization Grammar</title>
+      <para>In the Parsed JSON statement list serialization, the statement list is a JSON array, of statements which are each a JSON array of 3 addresses, which are each JSON array of arcs, each of which is a JSON object with context symbol (or left delimiter) as key and identifier as value. When there are multiple symbols and operators, the first symbol is a key, whose value is a JSON object representing the remainder of the arc.</para>
+<programlisting>
+STMTSL = "["
+STMTSN = QUOTE "," QUOTE
+STMTSR = "]"
+OBJSL  = "["
+OBJSN  = ","
+OBJSR  = "]"
+STMTL  = "[" QUOTE
+STMTR  = QUOTE "]"
+S-P    = QUOTE "," QUOTE
+P-O    = QUOTE "," QUOTE
+C-I    = QUOTE "," QUOTE
+</programlisting>
+        <para>Example: (prettyprinted with whitespace that is not significant)</para>
+<screen>
+[
+  [
+    [
+      {
+        "[": "="
+      },
+      {
+        "!": ":uuid:1111"
+      },
+      {
+        "#": "profiles"
+      },
+      {
+        "[": {
+          "&lt;": {
+            "#": "work"
+          }
+        }
+      },
+      {
+        "&lt;": {
+          "!": ":uuid:5555"
+        }
+      }
+    ],
+    {
+      "$": "ref"
+    },
+    [
+      {
+        "[": "="
+      },
+      {
+        "!": ":uuid:1111"
+      },
+      {
+        "#": "first"
+      },
+      {
+        "&lt;": {
+          "#": "name"
+        }
+      }
+    ]
+  ]
+]
+
+
+</screen>
+
+    </section>
+
+    <section><title>Graph Tree Serialization Grammar</title>
+      <para>Unlike the previous serializations, this directly represents a (sub)graph, rather than a list of statements that build up a (sub)graph; therefore it cannot be constructed from the statement grammar simply by plugging in delimiters.</para>
+      <para>Strings represent single arcs between context nodes, which obviates the need for long addresses; except in the case of the object of a relational statement, which is still represented by a single address string.</para>
+      <para>A context node is represented as a JSON object, whose keys are the labels of the outgoing arcs, and whose values are the target nodes, either more context nodes, or terminal value nodes which are objects with key "&amp;". Relational statements are in a list under the special key "/"..</para>
+<programlisting>
+node            = context-node / literal-node
+context-node    = "{" node *( "," node ) "}"
+literal-node    = "{" QUOTE "&amp;" QUOTE ":" json-value "}"
+arc             = contextual-arc / relational-arcs
+contextual-arc  = QUOTE singleton QUOTE ":" context-node
+relational-arcs = "{" QUOTE "/" QUOTE ":" relation *( "," relation ) "}"
+relation        = "{" QUOTE pred QUOTE ":" "[" xdi-address *( "," xdi-address ) "]" "}"
+</programlisting>
+        <para>Example:</para>
+<screen>
+{
+  "[=]": {
+    "!:uuid:1111": {
+      "#profiles": {
+        "[&lt;#work&gt;]": {
+          "&lt;!:uuid:5555&gt;": {
+            "/": {
+              "$ref": [
+                "[=]!:uuid:1111#first&lt;#name&gt;"
+              ]
+            }
+          }
+        }
+      },
+      "#first": {}
+    }
+  }
+}
+</screen>
+    </section>
+
+
+
+  </section-->
+
+
+<appendix id="s.acknowledgements" role="non-normative">
+  <title>Acknowledgements</title>
+
+  <para>This specification was written with the generous and appreciated assistance of</para>
+</appendix>
+  
+<appendix id="a.dollarwords" role="non-normative">
+  <title>Dollar Words</title>
+  
+  <para>This appendix contains formal definitions of the XDI dollar words introduced by this specification.</para>
+</appendix>
+  
+<appendix id="a.examples" role="non-normative">
+  <title>Examples</title>
+  
+  <para>This appendix contains XDI messaging examples.</para>
+</appendix>
+
+</article>
