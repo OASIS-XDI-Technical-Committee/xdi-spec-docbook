@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" 
-href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
+href="../../../DocBook/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "https://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
 [
 <!ENTITY title "XDI Messaging V&version;"> <!ENTITY name "xdi-core"> <!ENTITY pversion "0.1"> <!ENTITY version "1.0">
@@ -16,7 +16,7 @@ href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
 <title>&title;</title>
 <productname>&name;</productname>
 <productnumber>&version;-&stage;</productnumber>
-<releaseinfo role="track">Standards Track Work Product</releaseinfo>
+<!--releaseinfo role="track">Standards Track Work Product</releaseinfo>
 <releaseinfo role="OASIS-specification-this-authoritative">&this-loc;/&name;-&version;-&stage;.xml</releaseinfo>
 <releaseinfo role="OASIS-specification-this">&this-loc;/&name;-&version;-&stage;.pdf</releaseinfo>
 <releaseinfo role="OASIS-specification-this">&this-loc;/&name;-&version;-&stage;.html</releaseinfo>
@@ -25,7 +25,7 @@ href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
 <releaseinfo role="OASIS-specification-previous">&previous-loc;/&name;-&pversion;.html</releaseinfo>
 <releaseinfo role="OASIS-specification-latest-authoritative">&latest-loc;/&name;.xml</releaseinfo>
 <releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.pdf</releaseinfo>
-<releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.html</releaseinfo>
+<releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.html</releaseinfo-->
 <releaseinfo role="committee"><ulink url="http://www.oasis-open.org/committees/xdi">OASIS XDI TC</ulink></releaseinfo>
 <authorgroup>
   <editor> <firstname>Joseph</firstname><surname>Boyle</surname>
@@ -43,9 +43,9 @@ href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
 <holder>OASIS Open, Inc. All Rights Reserved.</holder></copyright>
  <legalnotice role="additional"><title>Additional artifacts</title>
  <para>This prose specification is one component of a Work Product which also includes:</para>
- <itemizedlist spacing="compact"> <listitem><para>
+ <!--itemizedlist spacing="compact"> <listitem><para>
 publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this-loc;/&name;-&version;-&stage;.zip</ulink></para>
- </listitem> </itemizedlist>
+ </listitem> </itemizedlist-->
 </legalnotice>
 <legalnotice role="related"><title>Related work</title>
   <para>This document is primarily based on a set of proposals that had been collected by the OASIS XDI TC on its associated wiki at <ulink url="https://wiki.oasis-open.org/xdi/">https://wiki.oasis-open.org/xdi/</ulink>.</para>
@@ -63,13 +63,13 @@ document made available to committee members to support the publishing process.<
 </legalnotice-->
 <legalnotice role="citation"><title>Citation format</title>
 <para>When referencing this specification the following citation format should be used:</para>
-<bibliolist> <bibliomixed>
+<!--bibliolist> <bibliomixed>
   <abbrev>OASIS-XDI-Messaging-V1.0</abbrev>
   <title>OASIS XDI Messaging V1.0</title>
   <date>&pubdate;. </date>
   <releaseinfo>OASIS &standard;. </releaseinfo>
   <citetitle><ulink url="&latest-loc;/&name;.html">&latest-loc;/&name;.html</ulink>.</citetitle>
-</bibliomixed> </bibliolist>
+</bibliomixed> </bibliolist-->
 </legalnotice>
 <legalnotice role="notices"><title>Notices</title>
 <para>Copyright &#169; OASIS&#174; Open 2013. All Rights Reserved.  </para>
