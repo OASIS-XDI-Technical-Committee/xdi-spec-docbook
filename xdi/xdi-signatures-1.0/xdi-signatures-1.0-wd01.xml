@@ -23,12 +23,16 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
          "file:///c:/oasis/spec-0.6/docbook/docbookx.dtd" 
 -->
+
 <?xml-stylesheet type="text/xsl" href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html-offline.xsl"?>
+<!--
+<?xml-stylesheet type="text/xsl" href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-fo-us.xsl"?>
+-->
 <!DOCTYPE article
   PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
          "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
 [
-<!ENTITY name "oasis-specification">
+<!ENTITY name "xdi-signatures">
 <!ENTITY pversion "0.0">
 <!ENTITY version "1.0">
 <!ENTITY stage "wd01">
@@ -36,7 +40,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <!ENTITY this-loc "http://docs.oasis-open.org/templates/DocBook/spec-&version;">
 <!ENTITY previous-loc "http://docs.oasis-open.org/templates/DocBook/spec-&pversion;">
 <!ENTITY latest-loc "http://docs.oasis-open.org/templates/DocBook/oasis-specification">
-<!ENTITY pubdate "25 July 2013">
+<!ENTITY pubdate "23 May 2014">
 <!ENTITY title "XDI Signatures V&version;">
 <!ENTITY % xinclude SYSTEM "/Applications/oxygen-13.2/frameworks/docbook/4.4/dtd/xinclude.mod">
 %xinclude;
@@ -104,19 +108,40 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 
     <legalnotice role="additional">
       <title>Additional artifacts</title>
-      <para>This specification is one component of a suite of specifications which includes:</para>
-      <itemizedlist spacing="compact">
-        <listitem>
-          <para/>
-        </listitem>
-      </itemizedlist>
+      <para>This &standard; is part of a broader suite of specifications collectively referred to as
+        XDI &version;. The following specifications constitute the complete suite: <itemizedlist>
+          <listitem>
+            <para>XDI Core <xref linkend="XDICore"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Messaging <xref linkend="XDIMsg"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Discovery <xref linkend="XDIDisco"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Policy <xref linkend="XDIPolicy"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Security Mechanisms <xref linkend="XDISec"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Privacy <xref linkend="XDIPriv"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Dictionary <xref linkend="XDIDictionary"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Signature <xref linkend="XDISig"/></para>
+          </listitem>
+        </itemizedlist>
+      </para>
     </legalnotice>
 
     <abstract>
       <title>Abstract</title>
-      <para>This working draft describes an environment for writing and publishing an OASIS
-        specification using DocBook XML. It is an internal OASIS support document and not the basis
-        of an OASIS specification in and of itself.</para>
+      <para>This &standard; specifies methods to create and validate cryptographic signatures for
+          <glossterm>XDI</glossterm> statements, subgraphs and protocol messages.</para>
     </abstract>
 
 
@@ -177,95 +202,312 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 
   <section id="s.intro">
     <title>Introduction</title>
-    <para></para>
+    <para>Signatures for XDI can be applied to individual statements (triples), subgraphs and XDI
+      protocol messages. XDI Security Mechanisms <xref linkend="XDISec"/> requires that XDI messages
+      should incorporate methods to authenticate message originators, as well as methods to ensure
+      message integrity. XDI Signatures provides one such method. </para>
     <section>
       <title>Related Publications</title>
-      <para>This &standard; is part of a broadre suite of specifications collectively referred to as XDI &version;. The following specifications constitute the complete suite:
-      <itemizedlist>
-        <listitem><para>XDI Core <xref linkend="XDICore"/></para></listitem>
-      </itemizedlist>
+      <para>This &standard; is part of a broader suite of specifications collectively referred to as
+        XDI &version;. The following specifications constitute the complete suite: <itemizedlist>
+          <listitem>
+            <para>XDI Core <xref linkend="XDICore"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Messaging <xref linkend="XDIMsg"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Discovery <xref linkend="XDIDisco"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Policy <xref linkend="XDIPolicy"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Security Mechanisms <xref linkend="XDISec"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Privacy <xref linkend="XDIPriv"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Dictionary <xref linkend="XDIDictionary"/></para>
+          </listitem>
+          <listitem>
+            <para>XDI Signature <xref linkend="XDISig"/></para>
+          </listitem>
+        </itemizedlist>
       </para>
     </section>
-    
+
     <section>
-      <title>Terminology</title>
+      <title>Terminology and Notation Conventions</title>
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../xdi-docbook-util/rfc2119.xml"/>
+      <!-- import normative lang -->
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+        href="../xdi-docbook-util/xdi-glossary-wd01.xml"/>
+      <!-- import notation -->
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../xdi-docbook-util/notation.xml"/>
+      <!-- import normative lang -->
     </section>
-      <section>
-        <title>Key words</title>
-        <para>The key words <glossterm>MUST</glossterm>, <glossterm>MUST NOT</glossterm>,
-            <glossterm>REQUIRED</glossterm>, <glossterm>SHALL</glossterm>, <glossterm>SHALL NOT</glossterm>, <glossterm>SHOULD</glossterm>, <glossterm>SHOULD NOT</glossterm>,
-            <glossterm>RECOMMENDED</glossterm>, <glossterm>MAY</glossterm>, and
-            <glossterm>OPTIONAL</glossterm> are to be interpreted as described in <xref
-            linkend="rfc2119"/>.</para>
-      </section>
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../xdi-docbook-util/xdi-glossary-wd01.xml"/> <!-- import glossary -->
+    <section id="s.design">
+      <title>Design Requirements</title>
+      <para>
+        <emphasis role="bold">Requirements for signatures:</emphasis>
+        <orderedlist>
+          <listitem>
+            <para>A graph must be able to describe specific charateristics of cryptograph material
+              netadata.</para>
+          </listitem>
+          <listitem>
+            <para>A graph subject must be able to sign specific subgraphs. (e.g.
+                <code>(=example/#friend)</code>).</para>
+          </listitem>
+          <listitem>
+            <para>A graph subject signs a specific triple found in her graph (e.g.
+                <code>=example&lt;#email>&amp;/&amp;/"me@example.com"</code>).</para>
+          </listitem>
+          <listitem>
+            <para>A third party creates a signature over a subgraph (or single triple) to place in
+              another entities graph (e.g.
+                <code>=example&lt;#email>&lt;#work>&amp;/&amp;/"person@example.org"</code> signed by
+                <code>@example</code>).</para>
+          </listitem>
+          <listitem>
+            <para>Determine what is (and is not) signed in a specific graph by direct analysis of
+              the signature triple.</para>
+          </listitem>
+          <listitem>
+            <para>Ability to validate a signature made by the graph subject or a third party</para>
+          </listitem>
+        </orderedlist>
+        <emphasis role="bold">Requirements for encryption: </emphasis><orderedlist>
+          <listitem>
+            <para>it must be possible to encrypt literals in the graph</para>
+          </listitem>
+          <listitem>
+            <para>it must be possible to encrypt a single statement in the graph</para>
+          </listitem>
+          <listitem>
+            <para>it must be possible to encrypt sub graphs in the graph</para>
+          </listitem>
+          <listitem>
+            <para>methods must be provided to address statements and sub graphs that are
+              encrypted</para>
+          </listitem>
+          <listitem>
+            <para>it must be possible to signal when encrypted data must be stored in its' encrypted
+              form (or not)</para>
+          </listitem>
+        </orderedlist>
+      </para>
+    </section>
   </section>
 
   <section id="s.usage">
     <title>Usage</title>
-    <para>XDI requests and responses SHOULD be signed, to ensure message integrity and authenticity. <xref linkend="XDISec"/> defines other mechanisms to achieve integrity and authenticity. This specification defines signatures that require SHA-256 or greater hashing, and allows for HMAC, RSA and ECDSA algorithms. In the future, additional hashing and encryption algorithms may be added.</para>
-    <para>Signatures over sub-graphs are established in a manner such that the signature may be included in the graph.</para>
-    <para>Recipients of signed XDI messages SHOULD validate all signatures present.</para>
-  </section>
+    <para><xref linkend="XDISec"/> recommends that XDI messages should incorporate mechanisms for
+      confidentiality, integrity and authenticity. This specification defines the manner in which
+      cryptograph material, including certain metadata, can be included in a graph. It also defines
+      methods for establishing signatures for XDI messages, the syntax for expressing these
+      signatures as a sequence of triples suitable for storage in a graph. Lastly, it specifies
+      methods for encrypting literals, triples, subgraphs and whole messages.</para>
+    <para>Since both encryption and signatures require cryptographic key material (semetric or
+      asymetric), certain characteristics of the key material must be described. This metadata is
+      defined in <xref linkend="s.keymeta"/>.</para>
+    <para>XDI Signatures consist of several characteristics: Algorythm information, Hashing
+      information, and The signature itself. Processing instructions for the creation and validation
+      of XDI signatures are provided in section <xref linkend="s.sigproccess"/>. </para>
+    <para>There are several applications for XDI signatures. For XDI messages, they may be used to
+      fufill the requirements in <xref linkend="XDISec"/> for message integrity and authenticity.
+      For graph representations, signatures can indicate that the signer is asserting specific
+      statements in the graph (for example, the graph subject is asserting a list of friends
+      addressed by the inner root (<code>=example/#friend</code>) ). Signatures can also be placed
+      in a third parties graph, indicating that the signer is asserting one or more statements about
+      the graph subject (e.g. a subject's emlployer asserts the work email address of the
+      subject).</para>
+    <para>The encryption mechanisms defined in this document are ssufficient to fullfill the
+      confidentiality requirements defined in <xref linkend="XDISec"/>. The mecahnics of encrypting
+      information in the graph, as well as the neccesary encryption metadata are defined in <xref
+        linkend="s.encprocess"/></para>
 
-  <section>
-    <title> Key Material Representations</title>
-    <para>TBD</para>
+
   </section>
-  
-  <section>
-    <title>Signature Metadata</title>
-    <para>To construct the <glossterm>Signature Block</glossterm>, the following statements MUST be added to the <glossterm>Normalized Graph</glossterm>:
-    </para>
-    <orderedlist numeration="arabic">
-      <listitem><para></para></listitem>
-    </orderedlist>
+  <section id="s.cryptmeta">
+    <title>Cryptography Metadata</title>
+
+    <section id="s.keymeta">
+      <title>Key Metadata</title>
+      <para>Key material expressed in a graph require descirptive charateristics of the key for
+        proper application of cryptographic operations. The following dictionary terms are used to
+        describe symetric and asymetric keys.</para>
+      <section>
+        <title>Key Data Type</title>
+        <para>
+          <xi:include href="../xdi-dictionary-1.0/xdi-dictionary-1.0-wd01.xml" xpointer="d.key"/>
+        </para>
+      </section>
+      <section>
+        <title>Key Value Encodings</title>
+        <para/>
+      </section>
+      <section>
+        <title>x509 Key</title>
+        <para>URL only</para>
+      </section>
+      <section>
+        <title>Key Identifier</title>
+        <para>keyid <note>
+            <para>(is this needed if we just rely on graph addresses?)</para>
+          </note></para>
+      </section>
+      <section>
+        <title>EncryptedKey</title>
+        <para/>
+      </section>
+    </section>
+    <section id="s.sigmeta">
+      <title>Signature Metadata</title>
+      <para>To construct the <glossterm>Signature Block</glossterm>, the following statements MUST
+        be added to the <glossterm>Normalized Graph</glossterm>: </para>
+      <section>
+        <title>Signature Algorithm</title>
+        <para>The Algorithm <glossterm>Signature Block</glossterm> statement identifies the
+          cryptographic algorithm used to secure the signature.</para>
+        <example id="e.alg">
+          <title>Signature Algorithm Example</title>
+          <programlisting/>
+          <para/>
+        </example>
+      </section>
+      <section>
+        <title>Canonicalization Method</title>
+        <para/>
+      </section>
+      <section>
+        <title>Digest Method</title>
+        <para/>
+      </section>
+    </section>
+    <section>
+      <title>Encryption Metadata</title>
+      <para/>
+
+      <section>
+        <title>MimeType</title>
+        <para/>
+      </section>
+      <section>
+        <title>Encoding</title>
+        <para/>
+      </section>
+      <section>
+        <title>EncyptionMethod</title>
+        <para/>
+      </section>
+      <section>
+        <title>CypherText</title>
+        <para/>
+      </section>
+    </section>
   </section>
-  <section>
+  <section id="s.sigproccess">
     <title>Signature Processing Rules</title>
-    <para></para>
+    <para>Notes:</para>
+    <para>signatures that require SHA-256 <xref linkend="SHA"/> or greater hashing, and allows for
+      HMAC <xref linkend="RFC2104"/>, RSA <xref linkend="RFC3447"/> and ECDSA <xref linkend="TBD"/>
+      algorithms. In the future, additional hashing and encryption algorithms may be added.</para>
+    <para>Signatures over sub-graphs are established in a manner such that the signature may be
+      included in the graph. The signature covers the entire XDI subgraph rooted in that context
+      node at that point in time. In some cases, the signature was made with a key not rooted in the
+      graph from which the signature was obtained.</para>
+    <para>Recipients of signed XDI messages SHOULD validate all signatures present in the
+      response.</para>
+
     <section>
       <title>Canonical Representation</title>
-      <para>Signing XDI messages involves first normalizing to the XdiFlatSerialization as defined in <xref linkend="XDICore"/>, and afterwards, incorporation of a <glossterm>Signature Block</glossterm> in a manner not disruptive to validators.</para>
-      <para>XdiFlatSerialization is the only serialization format used for signature creation and validation. Implementations that choose to transfer XDI messages in another serialization format MUST serialize the message in XdiFlatSerialization prior to attempting validation.</para>
+      <para>Signing XDI messages involves first normalizing to the XDI Flat Serialization as defined
+        in <xref linkend="XDICore"/>, and afterwards, incorporation of a <glossterm>Signature
+          Block</glossterm> in a manner not disruptive to validators.</para>
+      <para>XDI Flat Serialization is the only serialization format used for signature creation and
+        validation. Implementations that choose to transfer XDI messages in another serialization
+        format MUST serialize the message in XdiFlatSerialization prior to attempting
+        validation.</para>
       <section>
         <title>Canonicalization Process</title>
-        <para>The following steps MUST be performed in this order to produce the <glossterm>Normalized Graph</glossterm>. 
-          These requirements apply to message senders as well as message recipients.</para>
+        <para>The following steps MUST be performed in this order to produce the
+            <glossterm>Normalized Graph</glossterm>. These requirements apply to message senders as
+          well as message recipients.</para>
         <para>
           <orderedlist numeration="arabic">
-            <listitem><para>Ensure the sub-graph is UTF-8 encoded and formatted as defined in XdiFlatSerialization.</para></listitem>
-            <listitem><para>All unquoted white space and new lines MUST be removed (TODO: better clarify white space. should this go into XdiFlatSerialization?)</para></listitem>
-            <listitem><para>All JSON <xref linkend="rfc4627"/>keys in the unsigned graph MUST be sorted in UTF-8 byte-order.</para></listitem>
+            <listitem>
+              <para>Ensure the sub-graph is UTF-8 encoded and formatted as defined in XDI Flat
+                Serialization defined in <xref linkend="XDICore"/>.</para>
+            </listitem>
+            <listitem>
+              <para>All unquoted white space and new lines MUST be removed (TODO: better clarify
+                white space. should this go into XdiFlatSerialization?)</para>
+            </listitem>
+            <listitem>
+              <para>All JSON <xref linkend="rfc4627"/> keys in the unsigned graph MUST be sorted in
+                UTF-8 <xref linkend="RFC3629"/> byte-order.</para>
+            </listitem>
           </orderedlist>
         </para>
       </section>
     </section>
+    <section id="s.alg">
+      <title>Algorithms</title>
+      <para/>
+    </section>
     <section>
       <title>Graph Signatures</title>
-      <para></para>
+      <para/>
     </section>
     <section>
       <title>Message Signatures</title>
-      <para></para>
+      <para/>
     </section>
   </section>
-  <section>
-    <title>Algorithms</title>
-    <para></para>
+  <section id="s.encprocess">
+    <title>Encryption Processing Rules</title>
+    <para>TODO: encrypt literals, encrypt single statement, encrypt sub graph. how to address hidden
+      statements</para>
   </section>
-  <section>
+  <section id="s.seccon">
     <title>Security Considerations</title>
-    <para></para>
+    <para/>
   </section>
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../xdi-docbook-util/xdi-biblio-wd01.xml"/> <!-- import biblio -->
-<appendix>
-  <title>Examples</title>
-  <section>
-    <title>Graph Signature Examples</title>
-  </section>
-  <section>
-    <title>Message Signature Examples</title>
-  </section>
-</appendix>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="../xdi-docbook-util/xdi-biblio-wd01.xml"/>
+  <!-- import biblio -->
+  <appendix id="s.examples">
+    <title>Examples</title>
+    <section>
+      <title>Graph Signature Examples</title>
+      <para/>
+    </section>
+    <section>
+      <title>Message Signature Examples</title>
+      <para/>
+    </section>
+  </appendix>
+  <appendix id="s.revhist">
+    <title>Revision History</title>
+    <para>
+      <revhistory>
+        <revision>
+          <revnumber>wd1</revnumber>
+          <date>23 May 2014</date>
+          <authorinitials>pcd</authorinitials>
+          <revremark>Initial draft incorporating general outline, and initial proposed signing
+            processing rules.</revremark>
+        </revision>
+        <revision>
+          <revnumber>wd1</revnumber>
+          <date>29 May</date>
+          <authorinitials>pcd</authorinitials>
+          <revremark>Reorganization to allow the document to describe gerneralized cryptographic operations. Added distinct metadata sections for keys, signatures and encryption.</revremark>
+        </revision>
+      </revhistory>
+    </para>
+  </appendix>
 </article>
