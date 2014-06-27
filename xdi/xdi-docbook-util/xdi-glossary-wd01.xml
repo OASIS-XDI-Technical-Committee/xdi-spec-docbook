@@ -30,6 +30,10 @@
             <glossentry>
                 <glossterm>Signature Block</glossterm><glossdef><para>a collection of XDI statements describing metadata about the signature sufficient to ensure successful validation, and the signature itself.</para></glossdef>
             </glossentry>
+            <glossentry>
+                <glossterm>XDI Flat Serialization</glossterm>
+                <glossdef><para>Serialization of an XDI graph in JSON format <xref linkend="RFC7159"/>using a key-value structure</para></glossdef>
+            </glossentry>
         </glosslist>
     </para>
 </section>

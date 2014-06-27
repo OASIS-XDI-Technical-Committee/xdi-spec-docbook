@@ -1,0 +1,162 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>XDI Security Mechanisms V1.0</title><link rel="stylesheet" href="file:/Users/pdavis/projects/SDO/oasis/XDI-TC/XDI-1.0/xdi-spec-docbook/htmlruntime/spec-0.6/css/oasis-spec.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"><meta name="description" content="Abstract This Working Draft 01 addresses operational and protocol security requirements for the storage&#xA;        and transport of XDI graph information as a set of conformance profiles. In addition, it&#xA;        defines a template for the creation of additional profiles."><meta name="cvsinfo" content="Id: oasis-specification-0.6-wd04.xml,v 1.2 2012/06/14 01:57:23 admin&#xA;      Exp "></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article" lang="en"><div class="titlepage"><div><p class="logo"><a href="http://www.oasis-open.org/"><img src="file:/Users/pdavis/projects/SDO/oasis/XDI-TC/XDI-1.0/xdi-spec-docbook/htmlruntime/spec-0.6/OASISLogo.jpg" alt="OASIS" border="0"></a></p><div><hr style="margin-bottom:0pt"><h1 class="title"><a name="d0e3"></a>XDI Security Mechanisms V1.0</h1></div><div><h2>Working Draft 01</h2><h2>25 July 2013</h2></div><div></div><div><!--  $Id: oasis-specification-0.6-wd04.xml,v 1.2 2012/06/14 01:57:23 admin
+      Exp $  --></div><div><dl><dt><span class="uri-heading">
+          Specification URIs
+        </span></dt></dl><dl><dt><span class="loc-heading">This version:</span></dt><dd><a href="http://docs.oasis-open.org/templates/DocBook/spec-1.0/oasis-specification-1.0-wd01.html">http://docs.oasis-open.org/templates/DocBook/spec-1.0/oasis-specification-1.0-wd01.html</a>
+                  (Authoritative)
+                <br><a href="http://docs.oasis-open.org/templates/DocBook/spec-1.0/oasis-specification-1.0-wd01.pdf">http://docs.oasis-open.org/templates/DocBook/spec-1.0/oasis-specification-1.0-wd01.pdf</a><br><a href="http://docs.oasis-open.org/templates/DocBook/spec-1.0/oasis-specification-1.0-wd01.xml">http://docs.oasis-open.org/templates/DocBook/spec-1.0/oasis-specification-1.0-wd01.xml</a><br></dd></dl><dl><dt><span class="loc-heading">Previous version:</span></dt><dd><a href="http://docs.oasis-open.org/templates/DocBook/spec-0.0/oasis-specification-0.0.html">http://docs.oasis-open.org/templates/DocBook/spec-0.0/oasis-specification-0.0.html</a>
+                  (Authoritative)
+                <br><a href="http://docs.oasis-open.org/templates/DocBook/spec-0.0/oasis-specification-0.0.pdf">http://docs.oasis-open.org/templates/DocBook/spec-0.0/oasis-specification-0.0.pdf</a><br><a href="http://docs.oasis-open.org/templates/DocBook/spec-0.0/oasis-specification-0.0.xml">http://docs.oasis-open.org/templates/DocBook/spec-0.0/oasis-specification-0.0.xml</a><br></dd></dl><dl><dt><span class="loc-heading">Latest version:</span></dt><dd><a href="http://docs.oasis-open.org/templates/DocBook/oasis-specification/oasis-specification.html">http://docs.oasis-open.org/templates/DocBook/oasis-specification/oasis-specification.html</a>
+                  (Authoritative)
+                <br><a href="http://docs.oasis-open.org/templates/DocBook/oasis-specification/oasis-specification.pdf">http://docs.oasis-open.org/templates/DocBook/oasis-specification/oasis-specification.pdf</a><br><a href="http://docs.oasis-open.org/templates/DocBook/oasis-specification/oasis-specification.xml">http://docs.oasis-open.org/templates/DocBook/oasis-specification/oasis-specification.xml</a><br></dd></dl></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div><dl><dt><span class="loc-heading">Technical Committee:</span></dt><dd><a href="https://www.oasis-open.org/apps/org/workgroup/xdi/" target="_top">OASIS XRI Data Interchange (XDI) TC</a></dd></dl></div><div><dl><dt><span class="editor-heading">Editors:</span></dt><dd><span class="firstname">Peter</span> <span class="surname">Davis</span> (<a href="mailto:peter.davis@neustar.biz">peter.davis@neustar.biz</a>), Neustar, Inc.<br><span class="firstname">Dan</span> <span class="surname">Blum</span>, Respect Network Corp.</dd></dl></div><div><dl><dt><a name="d0e81"></a><span class="status-heading">Additional artifacts:</span></dt><dd><p>This Working Draft 01 is part of a broader suite of specifications collectively referred to as
+        XDI 1.0. The following specifications constitute the complete suite: </p><div class="itemizedlist"><ul type="disc"><li><p>XDI Core [<a href="#XDICore" title="[XDICore]"><b><span class="abbrev">XDICore</span></b></a>]</p></li><li><p>XDI Messaging [<a href="#XDIMsg" title="[XDIMsg]"><b><span class="abbrev">XDIMsg</span></b></a>]</p></li><li><p>XDI Discovery [<a href="#XDIDisc" title="[XDIDisc]"><b><span class="abbrev">XDIDisc</span></b></a>]</p></li><li><p>XDI Policy [<a href="#XDIPolicy" title="[XDIPolicy]"><b><span class="abbrev">XDIPolicy</span></b></a>]</p></li><li><p>XDI Security Mechanisms [<a href="#XDISec" title="[XDISec]"><b><span class="abbrev">XDISec</span></b></a>]</p></li><li><p>XDI Privacy [<a href="#XDIPriv" title="[XDIPriv]"><b><span class="abbrev">XDIPriv</span></b></a>]</p></li><li><p>XDI Dictionary [<a href="#XDIDictionary" title="[XDIDictionary]"><b><span class="abbrev">XDIDictionary</span></b></a>]</p></li><li><p>XDI Signature [<a href="#XDISig" title="[XDISig]"><b><span class="abbrev">XDISig</span></b></a>]</p></li></ul></div><p>
+      </p></dd></dl></div><div><dl><dt><a name="d0e121"></a><span class="abstract-heading">Abstract:</span></dt><dd><p>This Working Draft 01 addresses operational and protocol security requirements for the storage
+        and transport of XDI graph information as a set of conformance profiles. In addition, it
+        defines a template for the creation of additional profiles.</p></dd></dl></div><div><hr><h2 class="notices-heading">Notices</h2><p>Copyright &copy; OASIS&reg; Open 2012. All Rights Reserved. </p><p>All capitalized terms in the following text have the meanings assigned to them in the
+        OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full Policy may be
+        found at <a href="http://www.oasis-open.org/who/intellectualproperty.php" target="_top">http://www.oasis-open.org/who/intellectualproperty.php</a>.</p><p>This document and translations of it may be copied and furnished to others, and
+        derivative works that comment on or otherwise explain it or assist in its implementation may
+        be prepared, copied, published, and distributed, in whole or in part, without restriction of
+        any kind, provided that the above copyright notice and this section are included on all such
+        copies and derivative works. However, this document itself may not be modified in any way,
+        including by removing the copyright notice or references to OASIS, except as needed for the
+        purpose of developing any document or deliverable produced by an OASIS Technical Committee
+        (in which case the rules applicable to copyrights, as set forth in the OASIS IPR Policy,
+        must be followed) or as required to translate it into languages other than English.</p><p>The limited permissions granted above are perpetual and will not be revoked by OASIS or
+        its successors or assigns.</p><p>This document and the information contained herein is provided on an "AS IS" basis and
+        OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY
+        WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR
+        ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</p><p>OASIS requests that any OASIS Party or any other party that believes it has patent
+        claims that would necessarily be infringed by implementations of this OASIS Committee
+        Specification or OASIS Standard, to notify OASIS TC Administrator and provide an indication
+        of its willingness to grant patent licenses to such patent claims in a manner consistent
+        with the IPR Mode of the OASIS Technical Committee that produced this specification.</p><p>OASIS invites any party to contact the OASIS TC Administrator if it is aware of a claim
+        of ownership of any patent claims that would necessarily be infringed by implementations of
+        this specification by a patent holder that is not willing to provide a license to such
+        patent claims in a manner consistent with the IPR Mode of the OASIS Technical Committee that
+        produced this specification. OASIS may include such claims on its website, but disclaims any
+        obligation to do so.</p><p>OASIS takes no position regarding the validity or scope of any intellectual property or
+        other rights that might be claimed to pertain to the implementation or use of the technology
+        described in this document or the extent to which any license under such rights might or
+        might not be available; neither does it represent that it has made any effort to identify
+        any such rights. Information on OASIS' procedures with respect to rights in any document or
+        deliverable produced by an OASIS Technical Committee can be found on the OASIS website.
+        Copies of claims of rights made available for publication and any assurances of licenses to
+        be made available, or the result of an attempt made to obtain a general license or
+        permission for the use of such proprietary rights by implementers or users of this OASIS
+        Committee Specification or OASIS Standard, can be obtained from the OASIS TC Administrator.
+        OASIS makes no representation that any information or list of intellectual property rights
+        will at any time be complete, or that any claims in such list are, in fact, Essential
+        Claims.</p><p>The name "OASIS" is a trademark of <a href="http://www.oasis-open.org" target="_top">OASIS</a>,
+        the owner and developer of this specification, and should be used only to refer to the
+        organization and its official outputs. OASIS welcomes reference to, and implementation and
+        use of, specifications, while reserving the right to enforce its marks against misleading
+        uses. Please see <a href="http://www.oasis-open.org/who/trademark.php" target="_top">http://www.oasis-open.org/who/trademark.php</a> for above guidance.</p></div></div><hr></div><div class="toc"><h2>Table of Contents</h2><dl><dt><span class="section"><a href="#s.intro">1 Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#s.related">1.1 Related Publications</a></span></dt><dt><span class="section"><a href="#s.terms">1.2 Terminology</a></span></dt><dd><dl><dt><span class="section"><a href="#d0e204">1.2.1 Key words</a></span></dt><dt><span class="section"><a href="#s.glossary">1.2.2 Glossary of Terms</a></span></dt></dl></dd></dl></dd><dt><span class="section"><a href="#s.secrq">2 Common Security Requirements</a></span></dt><dd><dl><dt><span class="section"><a href="#s.scopereq">2.1 Scope of Requirements</a></span></dt><dt><span class="section"><a href="#s.confreq">2.2 Confidentiality Requirements</a></span></dt><dt><span class="section"><a href="#s.integreq">2.3 Integrity Protection Requirements</a></span></dt><dt><span class="section"><a href="#s.authn">2.4 Message Authentication Requirements</a></span></dt><dt><span class="section"><a href="#s.authz">2.5 Message Authorization Requirements</a></span></dt></dl></dd><dt><span class="section"><a href="#s.cryptmd">3 Cryptographic Metadata Requirements</a></span></dt><dd><dl><dt><span class="section"><a href="#s.keymd">3.1 Key Material Metadata for Graphs</a></span></dt><dt><span class="section"><a href="#s.sigmd">3.2 Signature Metadata for Graphs</a></span></dt></dl></dd><dt><span class="section"><a href="#s.trust">4 Trust Processing Requirements for Relying Parties</a></span></dt><dt><span class="section"><a href="#s.conform">5 Conformance Profiles</a></span></dt><dd><dl><dt><span class="section"><a href="#d0e312">5.1 Standard Conformance Profile</a></span></dt></dl></dd><dt><span class="section"><a href="#s.seccon">6 Security Considerations</a></span></dt><dt><span class="section"><a href="#s.biblio">7 Normative References</a></span></dt></dl><h3>Appendixes</h3><dl><dt><span class="appendix"><a href="#d0e713">A Security Profile Template Requirements</a></span></dt><dd><dl><dt><span class="section"><a href="#d0e716">A.1 Conformance Profile Template</a></span></dt></dl></dd></dl></div><hr><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s.intro"></a>1 Introduction</h2></div></div></div><p></p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="s.related"></a>1.1 Related Publications</h3></div></div></div><p>This Working Draft 01 is part of a broader suite of specifications collectively referred to as
+        XDI 1.0. The following specifications constitute the complete suite: </p><div class="itemizedlist"><ul type="disc"><li><p>XDI Core [<a href="#XDICore" title="[XDICore]"><b><span class="abbrev">XDICore</span></b></a>]</p></li><li><p>XDI Messaging [<a href="#XDIMsg" title="[XDIMsg]"><b><span class="abbrev">XDIMsg</span></b></a>]</p></li><li><p>XDI Discovery [<a href="#XDIDisc" title="[XDIDisc]"><b><span class="abbrev">XDIDisc</span></b></a>]</p></li><li><p>XDI Policy [<a href="#XDIPolicy" title="[XDIPolicy]"><b><span class="abbrev">XDIPolicy</span></b></a>]</p></li><li><p>XDI Security Mechanisms [<a href="#XDISec" title="[XDISec]"><b><span class="abbrev">XDISec</span></b></a>]</p></li><li><p>XDI Privacy [<a href="#XDIPriv" title="[XDIPriv]"><b><span class="abbrev">XDIPriv</span></b></a>]</p></li><li><p>XDI Dictionary [<a href="#XDIDictionary" title="[XDIDictionary]"><b><span class="abbrev">XDIDictionary</span></b></a>]</p></li><li><p>XDI Signature [<a href="#XDISig" title="[XDISig]"><b><span class="abbrev">XDISig</span></b></a>]</p></li></ul></div><p>
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="s.terms"></a>1.2 Terminology</h3></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e204"></a>1.2.1 Key words</h4></div></div></div><p>The key words <em class="glossterm">MUST</em>, <em class="glossterm">MUST NOT</em>,
+        <em class="glossterm">REQUIRED</em>, <em class="glossterm">SHALL</em>, <em class="glossterm">SHALL
+            NOT</em>, <em class="glossterm">SHOULD</em>, <em class="glossterm">SHOULD NOT</em>,
+        <em class="glossterm">RECOMMENDED</em>, <em class="glossterm">MAY</em>, and
+        <em class="glossterm">OPTIONAL</em> are to be interpreted as described in [<a href="#rfc2119" title="[RFC 2119]"><b><span class="abbrev">RFC 2119</span></b></a>].</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="s.glossary"></a>1.2.2 Glossary of Terms</h4></div></div></div><p>
+        </p><div class="glosslist"><dl><dt>XDI</dt><dd><p>XRI Data Interchange</p></dd><dt>Normalized Graph</dt><dd><p>the canonical form of the graph, necessary to ensure successful signature validation.</p></dd><dt>Signature Block</dt><dd><p>a collection of XDI statements describing metadata about the signature sufficient to ensure successful validation, and the signature itself.</p></dd></dl></div><p>
+    </p></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s.secrq"></a>2 Common Security Requirements</h2></div></div></div><p></p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="s.scopereq"></a>2.1 Scope of Requirements</h3></div></div></div><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="s.confreq"></a>2.2 Confidentiality Requirements</h3></div></div></div><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="s.integreq"></a>2.3 Integrity Protection Requirements</h3></div></div></div><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="s.authn"></a>2.4 Message Authentication Requirements</h3></div></div></div><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="s.authz"></a>2.5 Message Authorization Requirements</h3></div></div></div><p></p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s.cryptmd"></a>3 Cryptographic Metadata Requirements</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="s.keymd"></a>3.1 Key Material Metadata for Graphs</h3></div></div></div><p>TBD</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="s.sigmd"></a>3.2 Signature Metadata for Graphs</h3></div></div></div><p></p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s.trust"></a>4 Trust Processing Requirements for Relying Parties</h2></div></div></div><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s.conform"></a>5 Conformance Profiles</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e312"></a>5.1 Standard Conformance Profile</h3></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>[ed: not entirely happy with the section title, if folks have a recommendation...]</p></div><p></p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s.seccon"></a>6 Security Considerations</h2></div></div></div><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="s.biblio"></a>7 Normative References</h2></div></div></div><div class="bibliomixed"><a name="rfc2119"></a><p class="bibliomixed">[<b><span class="abbrev">RFC 2119</span></b>] 
+            
+            <i>Key words for use in RFCs to Indicate Requirement Levels</i>, <span class="date">March
+                1997. </span>
+            <span class="author"><span class="firstname">S. </span><span class="surname">Bradner</span></span>. <span class="releaseinfo">IETF (Internet Engineering Task Force) RFC 2119, </span>
+            <span class="citetitle"><em class="citetitle"><a href="http://www.ietf.org/rfc/rfc2119.txt" target="_top">http://www.ietf.org/rfc/rfc2119.txt</a></em></span>
+        </p></div><div class="bibliomixed"><a name="rfc4627"></a><p class="bibliomixed">[<b><span class="abbrev">RFC 4627</span></b>] 
+            
+            <i>The application/json Media Type for JavaScript Object Notation (JSON)</i>, <span class="date">July
+                2006. </span>
+            <span class="author"><span class="firstname">D. </span><span class="surname">Crockford</span></span>. <span class="releaseinfo">IETF (Internet Engineering Task Force) RFC 4627, </span>
+            <span class="citetitle"><em class="citetitle"><a href="http://www.ietf.org/rfc/rfc4627.txt" target="_top">http://www.ietf.org/rfc/rfc4627.txt</a></em></span>
+        </p></div><div class="bibliomixed"><a name="XDICore"></a><p class="bibliomixed">[<b><span class="abbrev">XDICore</span></b>] 
+            
+            <i>XDI Core version </i>, <span class="date">June 2014</span>
+            <span class="editor"><span class="firstname">Drummond</span><span class="surname">Reed</span></span>. 
+            <span class="publisher"><span class="publishername">OASIS</span></span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a href="" target="_top"></a>XDICore</em></span>
+        </p></div><div class="bibliomixed"><a name="XDIMsg"></a><p class="bibliomixed">[<b><span class="abbrev">XDIMsg</span></b>] 
+            
+            <i>XDI Messaging version </i>, <span class="date">June 2014</span>
+            <span class="editor"><span class="firstname">Drummond</span><span class="surname">Reed</span></span>. 
+            <span class="publisher"><span class="publishername">OASIS</span></span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a href="" target="_top"></a>XDIMsg</em></span>
+        </p></div><div class="bibliomixed"><a name="XDIDisc"></a><p class="bibliomixed">[<b><span class="abbrev">XDIDisc</span></b>] 
+            
+            <i>XDI Discovery version </i>, <span class="date">June 2014</span>
+            <span class="editor"><span class="firstname">Drummond</span><span class="surname">Reed</span></span>. 
+            <span class="publisher"><span class="publishername">OASIS</span></span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a href="" target="_top"></a>XDIDisc</em></span>
+        </p></div><div class="bibliomixed"><a name="XDIPolicy"></a><p class="bibliomixed">[<b><span class="abbrev">XDIPolicy</span></b>] 
+            
+            <i>XDI Policy version </i>, <span class="date">June 2014</span>
+            <span class="editor"><span class="firstname">Drummond</span><span class="surname">Reed</span></span>. 
+            <span class="publisher"><span class="publishername">OASIS</span></span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a href="" target="_top"></a>XDIPolicy</em></span>
+        </p></div><div class="bibliomixed"><a name="XDISec"></a><p class="bibliomixed">[<b><span class="abbrev">XDISec</span></b>] 
+            
+            <i>XDI Security Mechanisms version </i>, <span class="date">June 2014</span>
+            <span class="editor"><span class="firstname">Peter</span><span class="surname">Davis</span></span>. 
+            <span class="publisher"><span class="publishername">OASIS</span></span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a href="" target="_top"></a>XDISec</em></span>
+        </p></div><div class="bibliomixed"><a name="XDIPriv"></a><p class="bibliomixed">[<b><span class="abbrev">XDIPriv</span></b>] 
+            
+            <i>XDI Privacy version </i>, <span class="date">June 2014</span>
+            <span class="editor"><span class="firstname">Peter</span><span class="surname">Davis</span></span>. 
+            <span class="publisher"><span class="publishername">OASIS</span></span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a href="" target="_top"></a>XDIPriv</em></span>
+        </p></div><div class="bibliomixed"><a name="XDIDictionary"></a><p class="bibliomixed">[<b><span class="abbrev">XDIDictionary</span></b>] 
+            
+            <i>XDI Dictionary version </i>, <span class="date">June 2014</span>
+            <span class="editor"><span class="firstname">Drummond</span><span class="surname">Reed</span></span>. 
+            <span class="publisher"><span class="publishername">OASIS</span></span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a href="" target="_top"></a>XDIDictionary</em></span>
+        </p></div><div class="bibliomixed"><a name="XDISig"></a><p class="bibliomixed">[<b><span class="abbrev">XDISig</span></b>] 
+            
+            <i>XDI Signatures version </i>, <span class="date">June 2014</span>
+            <span class="editor"><span class="firstname">Peter</span><span class="surname">Davis</span></span>. 
+            <span class="publisher"><span class="publishername">OASIS</span></span>
+            <span class="releaseinfo"></span>
+            <span class="citetitle"><em class="citetitle"><a href="" target="_top"></a>XDISig</em></span>
+        </p></div><div class="bibliomixed"><a name="RFC3629"></a><p class="bibliomixed">[<b><span class="abbrev">RFC3629</span></b>] 
+            
+            <i>UTF-8, a transformation format of ISO 10646</i>
+            <span class="date">November 2003</span>
+            <span class="editor"><span class="firstname">F.</span><span class="surname">Yergeau</span></span>
+            <span class="publisher"><span class="publishername">IETF</span></span>
+        </p></div><div class="bibliomixed"><a name="RFC2104"></a><p class="bibliomixed">[<b><span class="abbrev">RFC2104</span></b>] 
+            
+            <i>HMAC: Keyed-Hashing for Message Authentication</i>
+            <span class="date">February 1997</span>
+            <span class="editor"><span class="firstname">H.</span><span class="surname">Krawczyk</span></span>
+            <span class="editor"><span class="firstname">M.</span><span class="surname">Bellare</span></span>
+            <span class="editor"><span class="firstname">R.</span><span class="surname">Canetti</span></span>
+            <span class="publisher"><span class="publishername">IETF</span></span>
+        </p></div><div class="bibliomixed"><a name="RFC3447"></a><p class="bibliomixed">[<b><span class="abbrev">RFC3447</span></b>] 
+            
+            <i>Public-Key Cryptography Standards (PKCS) #1: RSA Cryptography
+                Specifications Version 2.1</i>
+            <span class="date">February 2003</span>
+            <span class="editor"><span class="firstname">J.</span><span class="surname">Jonsson</span></span>
+            <span class="editor"><span class="firstname">B.</span><span class="surname">Kaliski</span></span>
+            <span class="publisher"><span class="publishername">IETF</span></span>
+        </p></div><div class="bibliomixed"><a name="SHA"></a><p class="bibliomixed">[<b><span class="abbrev">SHA</span></b>] 
+            
+            <i>Secure Hash Standard</i>
+            <span class="productnumber">NIST FIPS PUB 180-4</span>
+            <span class="date">March 2012</span>
+            <span class="editor"><span class="firstname">F.</span><span class="surname">Yergeau</span></span>
+            <span class="publisher"><span class="publishername">National
+                    Institute of Standards and Technology, U.S. Department of
+                    Commerce</span></span>
+        </p></div></div><div class="appendix" lang="en"><h2 class="title" style="clear: both"><a name="d0e713"></a>Appendix A Security Profile Template Requirements</h2><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e716"></a>A.1 Conformance Profile Template</h3></div></div></div><p></p></div></div></div><table style="font-size:80%" width="100%"><tr><td>oasis-specification-1.0-wd01<br>Standards Track Work Product</td><td style="text-align:center"><br>Copyright &copy; OASIS 2014. All rights reserved.</td><td style="text-align:right">25 July 2013</td></tr></table></body></html>

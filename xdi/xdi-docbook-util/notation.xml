@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section
+  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+         "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
+[
+<!--the document properties-->
+]>
+<section>
+    <title>Document Convensions</title>
+    <para>Terms defined to have a specific meaning within this specification will be capitalized,
+        for example, “Normalized Graph”, and should be interpreted with their general meaning if not
+        capitalized. Normative key words are written in all caps, for example, “SHALL”.</para>
+    <para id="test">
+        XDI notations use the XDI Single Line Display format as defined in <xref linkend="XDICore"/>. In some cases, other serializations may be used, in which case, the serialization form used will be indicated. Multiple statements will appear as follows:
+        <programlisting><![CDATA[([=]!1111)/$ref/
+=example<#name>&/&/"Example Subject"
+=example<#email>&/&/"subject@example.org"
+=example/#friend/=alice
+=example/#friend/=bob
+/$is$ref/([=]!1111)]]></programlisting>
+        Inidividual statements may be used inline, in which case they will appear in fixed width Serif: <code><![CDATA[=example<#name>&/&/"Example Subject"]]></code>.
+    </para>
+</section>

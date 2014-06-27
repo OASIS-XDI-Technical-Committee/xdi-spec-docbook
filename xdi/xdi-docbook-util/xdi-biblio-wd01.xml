@@ -4,6 +4,7 @@
          "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
 [
 <!--the document properties-->
+<!ENTITY version "1.0">
 ]>
 <!--
     this biblio can be included in any XDI document by:
@@ -55,6 +56,19 @@
             <releaseinfo/>
             <citetitle><ulink url=""/>XDICore</citetitle>
         </bibliomixed>
+        <bibliomixed id="XDIDisco">
+            <abbrev>XDIDisco</abbrev>
+            <title>XDI Discovery version &version;</title>, <date>June 2014</date>
+            <editor>
+                <firstname>Drummond</firstname>
+                <surname>Reed</surname>
+            </editor>. 
+            <publisher>
+                <publishername>OASIS</publishername>
+            </publisher>
+            <releaseinfo/>
+            <citetitle><ulink url=""/>XDIDisco</citetitle>
+        </bibliomixed>
         <bibliomixed id="XDIMsg">
             <abbrev>XDIMsg</abbrev>
             <title>XDI Messaging version &version;</title>, <date>June 2014</date>
@@ -68,19 +82,7 @@
             <releaseinfo/>
             <citetitle><ulink url=""/>XDIMsg</citetitle>
         </bibliomixed>
-        <bibliomixed id="XDIDisc">
-            <abbrev>XDIDisc</abbrev>
-            <title>XDI Discovery version &version;</title>, <date>June 2014</date>
-            <editor>
-                <firstname>Drummond</firstname>
-                <surname>Reed</surname>
-            </editor>. 
-            <publisher>
-                <publishername>OASIS</publishername>
-            </publisher>
-            <releaseinfo/>
-            <citetitle><ulink url=""/>XDIDisc</citetitle>
-        </bibliomixed>
+        
         <bibliomixed id="XDIPolicy">
             <abbrev>XDIPolicy</abbrev>
             <title>XDI Policy version &version;</title>, <date>June 2014</date>
@@ -133,7 +135,7 @@
             <releaseinfo/>
             <citetitle><ulink url=""/>XDIDictionary</citetitle>
         </bibliomixed>
-        <bibliomixed id="XDIDisc">
+        <bibliomixed id="XDISig">
             <abbrev>XDISig</abbrev>
             <title>XDI Signatures version &version;</title>, <date>June 2014</date>
             <editor>
@@ -146,6 +148,84 @@
             <releaseinfo/>
             <citetitle><ulink url=""/>XDISig</citetitle>
         </bibliomixed>
+        <bibliomixed id="RFC3629">
+            <abbrev>RFC3629</abbrev>
+            <title>UTF-8, a transformation format of ISO 10646</title>
+            <date>November 2003</date>
+            <editor>
+                <firstname>F.</firstname>
+                <surname>Yergeau</surname>
+            </editor>
+            <publisher>
+                <publishername>IETF</publishername>
+            </publisher>
+        </bibliomixed>
+        <bibliomixed id="RFC2104">
+            <abbrev>RFC2104</abbrev>
+            <title>HMAC: Keyed-Hashing for Message Authentication</title>
+            <date>February 1997</date>
+            <editor>
+                <firstname>H.</firstname>
+                <surname>Krawczyk</surname>
+            </editor>
+            <editor>
+                <firstname>M.</firstname>
+                <surname>Bellare</surname>
+            </editor>
+            <editor>
+                <firstname>R.</firstname>
+                <surname>Canetti</surname>
+            </editor>
+            <publisher>
+                <publishername>IETF (Internet Engineering Task Force)</publishername>
+            </publisher>
+        </bibliomixed>
+        <bibliomixed id="RFC7159">
+            <abbrev>RFC7159</abbrev>
+            <title>The JavaScript Object Notation (JSON) Data Interchange Format</title>
+            <date>March 2014</date>
+            <editor>
+                <firstname>T.</firstname>
+                <surname>Bray</surname>
+            </editor>
+            <citetitle><ulink url="http://tools.ietf.org/rfc/rfc7159.txt">http://tools.ietf.org/rfc/rfc7159.txt</ulink></citetitle>
+            <publisher>
+                <publishername>IETF (Internet Engineering Task Force)</publishername>
+            </publisher>
+        </bibliomixed>
+        <bibliomixed id="RFC3447">
+            <abbrev>RFC3447</abbrev>
+            <title>Public-Key Cryptography Standards (PKCS) #1: RSA Cryptography
+                Specifications Version 2.1</title>
+            <date>February 2003</date>
+            <editor>
+                <firstname>J.</firstname>
+                <surname>Jonsson</surname>
+            </editor>
+            <editor>
+                <firstname>B.</firstname>
+                <surname>Kaliski</surname>
+            </editor>
+            <publisher>
+                <publishername>IETF</publishername>
+            </publisher>
+        </bibliomixed>
+        <bibliomixed id="SHA">
+            <abbrev>SHA</abbrev>
+            <title>Secure Hash Standard</title>
+            <productnumber>NIST FIPS PUB 180-4</productnumber>
+            <date>March 2012</date>
+            <editor>
+                <firstname>F.</firstname>
+                <surname>Yergeau</surname>
+            </editor>
+            <publisher>
+                <publishername>National
+                    Institute of Standards and Technology, U.S. Department of
+                    Commerce</publishername>
+            </publisher>
+        </bibliomixed>
+        
     </bibliolist>
 
 </section>
