@@ -141,7 +141,8 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
     <abstract>
       <title>Abstract</title>
       <para>This &standard; specifies methods to create and validate cryptographic signatures for
-          <glossterm>XDI</glossterm> statements, subgraphs and protocol messages.</para>
+          <glossterm linkend="g.xdi">XDI</glossterm> statements, subgraphs and protocol
+        messages.</para>
     </abstract>
 
 
@@ -328,41 +329,24 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
       confidentiality requirements defined in <xref linkend="XDISec"/>. The mecahnics of encrypting
       information in the graph, as well as the neccesary encryption metadata are defined in <xref
         linkend="s.encprocess"/></para>
-
+    <para><xref linkend="schema"/></para>
 
   </section>
   <section id="s.cryptmeta">
     <title>Cryptography Metadata</title>
-
+    <para>Performing cryptographic operations on graphs, subgraphs and messages requires message
+      recipients to posses select information about the algorythms and keys in order to reverse or
+      reproduce the operations. The metadata defined in this section is also incorporated in <xref
+        linkend="XDIDictionary"/> for reference.</para>
     <section id="s.keymeta">
       <title>Key Metadata</title>
       <para>Key material expressed in a graph require descirptive charateristics of the key for
         proper application of cryptographic operations. The following dictionary terms are used to
         describe symetric and asymetric keys.</para>
-      <section>
-        <title>Key Data Type</title>
-        <para>
-          <xi:include href="../xdi-dictionary-1.0/xdi-dictionary-1.0-wd01.xml" xpointer="d.key"/>
-        </para>
-      </section>
-      <section>
-        <title>Key Value Encodings</title>
-        <para/>
-      </section>
-      <section>
-        <title>x509 Key</title>
-        <para>URL only</para>
-      </section>
-      <section>
-        <title>Key Identifier</title>
-        <para>keyid <note>
-            <para>(is this needed if we just rely on graph addresses?)</para>
-          </note></para>
-      </section>
-      <section>
-        <title>EncryptedKey</title>
-        <para/>
-      </section>
+      <xi:include href="../xdi-dictionary-1.0/xdi-dictionary-1.0-wd01.xml" xpointer="d.key"/>
+      <xi:include href="../xdi-dictionary-1.0/xdi-dictionary-1.0-wd01.xml" xpointer="d.x509"/>
+      <xi:include href="../xdi-dictionary-1.0/xdi-dictionary-1.0-wd01.xml" xpointer="d.keyencode"/>
+
     </section>
     <section id="s.sigmeta">
       <title>Signature Metadata</title>
@@ -387,10 +371,11 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
         <para/>
       </section>
     </section>
-    <section>
+    <section id="s.encmeta">
       <title>Encryption Metadata</title>
+      <xi:include href="../xdi-dictionary-1.0/xdi-dictionary-1.0-wd01.xml" xpointer="d.encrypted"/>
       <para/>
-
+      <xi:include href="../xdi-dictionary-1.0/xdi-dictionary-1.0-wd01.xml" xpointer="d.mime"/>
       <section>
         <title>MimeType</title>
         <para/>
@@ -410,7 +395,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
     </section>
   </section>
   <section id="s.sigproccess">
-    <title>Signature Processing Rules</title>
+    <title>XDI Signatures</title>
     <para>Notes:</para>
     <para>signatures that require SHA-256 <xref linkend="SHA"/> or greater hashing, and allows for
       HMAC <xref linkend="RFC2104"/>, RSA <xref linkend="RFC3447"/> and ECDSA <xref linkend="TBD"/>
@@ -421,12 +406,16 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
       graph from which the signature was obtained.</para>
     <para>Recipients of signed XDI messages SHOULD validate all signatures present in the
       response.</para>
+    <section>
+      <title>Signature Processing Rules</title>
+      <para/>
+    </section>
 
     <section>
       <title>Canonical Representation</title>
-      <para>Signing XDI messages involves first normalizing to the XDI Flat Serialization as defined
-        in <xref linkend="XDICore"/>, and afterwards, incorporation of a <glossterm>Signature
-          Block</glossterm> in a manner not disruptive to validators.</para>
+      <para>Signing XDI statements and messages involves first normalizing to the XDI Flat
+        Serialization as defined in <xref linkend="XDICore"/>, and afterwards, incorporation of a
+          <glossterm>Signature Block</glossterm> in a manner not disruptive to validators.</para>
       <para>XDI Flat Serialization is the only serialization format used for signature creation and
         validation. Implementations that choose to transfer XDI messages in another serialization
         format MUST serialize the message in XdiFlatSerialization prior to attempting
@@ -505,7 +494,9 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
           <revnumber>wd1</revnumber>
           <date>29 May</date>
           <authorinitials>pcd</authorinitials>
-          <revremark>Reorganization to allow the document to describe gerneralized cryptographic operations. Added distinct metadata sections for keys, signatures and encryption.</revremark>
+          <revremark>Reorganization to allow the document to describe gerneralized cryptographic
+            operations. Added distinct metadata sections for keys, signatures and
+            encryption.</revremark>
         </revision>
       </revhistory>
     </para>
