@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" 
 href="../../../DocBook/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "https://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+<!--DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "https://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"-->
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook SVG Module V1.1CR1//EN" "http://www.oasis-open.org/docbook/xml/svg/1.1CR1/dbsvg.dtd"
 [
 <!ENTITY title "XDI Core V&version;"> <!ENTITY name "xdi-core"> <!ENTITY pversion "0.1"> <!ENTITY version "1.0">
 <!ENTITY pubdate "2 March 2014"> <!ENTITY stage "wd02"> <!ENTITY standard "Working Draft 02">
 <!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;"> <!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;"> <!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
 ]>
 
-<!--DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "https://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"-->
-<!--DOCTYPE article PUBLIC "-//OASIS//DTD DocBook SVG Module V1.1CR1//EN" "http://www.oasis-open.org/docbook/xml/svg/1.1CR1/dbsvg.dtd"-->
+<!--!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "https://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"?-->
+<!--!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook SVG Module V1.1CR1//EN" "http://www.oasis-open.org/docbook/xml/svg/1.1CR1/dbsvg.dtd"?-->
 
 <article status="&standard;" xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en">
 <articleinfo>
@@ -459,7 +460,7 @@ document made available to committee members to support the publishing process.<
       </orderedlist>
       <para>There are three types of XDI graph root nodes.</para>
       <section><title>The Common Root Node</title>
-        <para>Every XDI graph has exactly one <firstterm>common root node</firstterm>. It is called the common root because it the one logical node shared by all XDI graphs. To use the analogy of trees in a forest, if every tree represents an XDI graph, the common root node of all the trees is the earth.</para>
+        <para>Every XDI graph has exactly one <firstterm>common root node</firstterm>. It is called the common root because it is the one logical node shared by all XDI graphs. To use the analogy of trees in a forest, if every tree represents an XDI graph, the common root node of all the trees is the earth.</para>
         <para>The XDI address of the common root node is the <firstterm>empty address</firstterm>. Thus any XDI statement that does not begin with a peer root address or an inner root address is by definition relative to the common root node.</para></section>
       <section><title>Peer Root Nodes</title>
         <para>An XDI graph MAY describe zero or more <firstterm>peer graphs</firstterm>, each with its own <firstterm>peer root node</firstterm>. A peer root node represents an independent XDI graph with its own XDI address. In most cases this XDI address will be at a different network endpoint that the current XDI graph. However the common root node of an XDI graph may also describe its own XDI address by virtue of an XDI reference statement to a peer root node.</para>
@@ -475,7 +476,7 @@ document made available to committee members to support the publishing process.<
       </section>
       <section><title>Inner Root Nodes</title>
         <para>An <firstterm>inner graph</firstterm> is a graph-within-a-graph. Unlike a peer root graph, an inner root graph represents the set of XDI statements that are the object of another XDI statement. In RDF this is known as reification.<xref linkend='reification'/></para>
-        <para>The XDI address of an <firstterm>inner root node</firstterm> MUST consist of two XDI address segments—an XDI subject followed by an XDI relational predicate—enclosed in parentheses. This XDI address MUST NOT be preceeded by an XDI context symbol. Examples:</para>
+        <para>The XDI address of an <firstterm>inner root node</firstterm> MUST consist of two XDI address segments—an XDI subject followed by an XDI relational predicate—enclosed in parentheses. This XDI address MUST NOT be preceded by an XDI context symbol. Examples:</para>
         <para><code>(=example.1/#nominated)</code></para>
         <para><code>(+company.1/#acquired)</code></para>
         <para>Examples of XDI statements that begin with these peer root addresses:</para>
@@ -486,13 +487,13 @@ document made available to committee members to support the publishing process.<
       <section><title>Subgraphs</title>
         <para>A <firstterm>subgraph</firstterm> is a branch of an XDI graph that does not begin with a root node. A subgraph MUST begin with an entity, attribute, or value node. See the definitions of these node types below.</para>
       <section><title>Variables</title> 
-        <para>A <firstterm>variable</firstterm> is a node serves as a template or a query for other XDI graphs. A variable node MUST represent a set of zero or more nodes in the instance graph. A variable MAY represent any type of XDI graph node. A variable MAY be typed by containing the XDI address of a class. If a variable is typed, a valid instance of that variable MUST be a valid instance of that class.</para></section>
+        <para>A <firstterm>variable</firstterm> is a node that serves as a template or a query for other XDI graphs. A variable node MUST represent a set of zero or more nodes in the instance graph. A variable MAY represent any type of XDI graph node. A variable MAY be typed by containing the XDI address of a class. If a variable is typed, a valid instance of that variable MUST be a valid instance of that class.</para></section>
       <section><title>Entities</title><para>An <firstterm>entity</firstterm> node represents the digital identity of any independent physical or logical resource other than an XDI graph. An entity MUST be either an authority, an entity class, or an instance of an entity class. An entity MAY contain another entity (a <firstterm>subentity</firstterm>) or an attribute. An entity MUST NOT contain a value.</para></section>
       <section><title>Attributes</title><para>An <firstterm>attribute node</firstterm> represents a property of its parent graph, entity, or attribute. An attribute MAY contain another attribute (a <firstterm>subattribute</firstterm>). An attribute MAY contain exactly one value node. Note that only attributes may contain value nodes. An XDI graph root node or entity node MUST NOT contain a value node directly, only attribute nodes that have value nodes.</para>
       <para>The XDI address of an attribute node MUST be contained in chevrons (angle brackets) “<code>&lt;</code>” and “<code>&gt;</code>”. (An attribute definition or collection has additional containing syntax—see the ABNF section.)</para></section>
       <section><title>Values</title>
       <para>A <firstterm>value</firstterm> node represents the abstract XDI address of the literal value of an XDI attribute. A value node MUST be a singleton node (see below). Because an attribute node can only have one value node, and because that value node is always relative to its containing attribute node, all XDI value nodes MUST be identified using a single XDI context symbol: the ampersand character “<code>&amp;</code>”.</para>
-      <para>An attribute node is NOT REQUIRED to have a value node. A value node MAY have exactly one literal node describe by one XDI literal arc. A value node is NOT REQUIRED to have a literal node.</para>
+      <para>An attribute node is NOT REQUIRED to have a value node. A value node MAY have exactly one literal node described by one XDI literal arc. A value node is NOT REQUIRED to have a literal node.</para>
       <para>If an attribute node does not have a value node, the literal value of the attribute SHOULD be in indeterminate.</para>
       <para>If an attribute node has a value node, but the value node does not have a literal node, the literal value of the attribute SHOULD be indeterminate.</para>
       <para>If an attribute node has a value node, and value node has a literal node, the literal value of the attribute MUST be an XDI literal data type. The literal value MAY be the XDI data type representing a null value. In the JSON serialization, this is the JSON <code>null</code> value.</para></section>
@@ -560,7 +561,7 @@ There are two other types of XDI classes.</para>
   <member>$not</member>
   <member>$public</member>
 </simplelist>
-<para>An reserved class name MUST be interpreted as an immutable XDI address.</para>
+<para>A reserved class name MUST be interpreted as an immutable XDI address.</para>
 <para>A reserved class name MUST be defined in a specification from the OASIS XDI Technical Committee (including this specification) or by another OASIS Technical Committee or another standards body specified by the OASIS XDI Technical Committee.</para></section>
       <section><title>Unreserved #</title>
         <para>The <firstterm>unreserved</firstterm> class is the set of XDI classes defined by other XDI authorities. The XDI address of an unreserved class MUST begin with the context symbol “<code>#</code>”. Unreserved class names are typically defined in XDI dictionaries. For this reason they are also called <firstterm>hash words</firstterm> or <firstterm>dictionary words</firstterm>. Examples:</para>
@@ -582,7 +583,7 @@ There are two other types of XDI classes.</para>
     <section><title>Literal Statements</title>
       <para>A <firstterm>literal statement</firstterm> represents exactly one <firstterm>literal arc</firstterm> in the XDI graph model. It specifies the literal value of an XDI attribute. In a literal statement:</para>
 <orderedlist><listitem>The XDI address of the subject MUST end in an attribute singleton or a member of an attribute collection followed by an ampersand character “<code>&amp;</code>”.</listitem> 
-<listitem>The XDI address of the predicate by the ampersand character “<code>&amp;</code>”.</listitem>
+<listitem>The XDI address of the predicate is the ampersand character “<code>&amp;</code>”.</listitem>
 <listitem>The XDI address of the object MUST be the literal data value as specified by the serialization format.</listitem></orderedlist>
 <para>There is no inverse of a literal statement. Example:</para>
 <para><code>=forrest.gump&lt;#email&gt;&amp;/&amp;/”forrest.gump@example.com”</code></para></section>
