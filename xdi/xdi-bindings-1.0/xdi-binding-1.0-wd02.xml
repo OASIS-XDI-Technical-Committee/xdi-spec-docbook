@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+For use when a committee document points at the OASIS web site for publishing:
+<?xml-stylesheet type="text/xsl" 
+href="http://docs.oasis-open.org/templates/DocBook/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
+<!DOCTYPE article
+  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+         "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
+
+For use when a committee document points to an embedded runtime installation:
+<?xml-stylesheet type="text/xsl" 
+         href="htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
+<!DOCTYPE article
+ PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" 
+        "htmlruntime/spec-0.6/docbook/docbookx.dtd" 
+
+For use when a committee document is published in a local environment only
+(note the instructions for local publishing require adjusting the stylesheet
+ and DocBook directories in these declarations):
+<?xml-stylesheet type="text/xsl" 
+href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl"?>
+<!DOCTYPE article
+  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+         "file:///c:/oasis/spec-0.6/docbook/docbookx.dtd" 
+-->
+<?xml-stylesheet type="text/xsl" href="http://xdi.org/xdi-spec-docbook/htmlruntime/spec-0.6/stylesheets/oasis-specification-html-offline.xsl"?>
+
+<!DOCTYPE article
+  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+         "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
+[
+<!--the document properties-->
+<!ENTITY name "xdi-binding">
+<!ENTITY pversion "0.1">
+<!ENTITY version "1.0">
+<!ENTITY stage "wd02">
+<!ENTITY standard "Working Draft 02">
+<!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;">
+<!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
+<!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
+<!ENTITY pubdate "29 May 2014">
+<!ENTITY title "XDI bindings V&version;">
+]>
+
+<article status="&standard;">
+  <articleinfo>
+    <title>&title;</title>
+    <releaseinfo role="cvs">
+      $Id: oasis-specification-0.6-wd04.xml,v 1.2 2012/06/14 01:57:23 admin Exp $
+    </releaseinfo>
+    <productname>&name;</productname>
+    <productnumber>&version;-&stage;</productnumber>
+    <releaseinfo role="track">Standards Track Work Product</releaseinfo>
+    <releaseinfo role="OASIS-specification-this-authoritative"
+      >&this-loc;/&name;-&version;-&stage;.xml</releaseinfo>
+    <releaseinfo role="OASIS-specification-this"
+      >&this-loc;/&name;-&version;-&stage;.pdf</releaseinfo>
+    <releaseinfo role="OASIS-specification-this"
+      >&this-loc;/&name;-&version;-&stage;.html</releaseinfo>
+    <releaseinfo role="OASIS-specification-previous-authoritative"
+      >&previous-loc;/&name;-&pversion;.xml</releaseinfo>
+    <releaseinfo role="OASIS-specification-previous"
+      >&previous-loc;/&name;-&pversion;.pdf</releaseinfo>
+    <releaseinfo role="OASIS-specification-previous"
+      >&previous-loc;/&name;-&pversion;.html</releaseinfo>
+    <releaseinfo role="OASIS-specification-latest-authoritative"
+      >&latest-loc;/&name;.xml</releaseinfo>
+    <releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.pdf</releaseinfo>
+    <releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.html</releaseinfo>
+    <releaseinfo role="committee"><ulink url="http://www.oasis-open.org/committees/xdi">OASIS XDI
+        TC</ulink></releaseinfo>
+    <authorgroup>
+      <editor>
+        <firstname>Hubert</firstname>
+        <surname>Le Van Gong</surname>
+        <affiliation>
+          <orgname>Neustar</orgname>
+        </affiliation>
+        <email>hubert.levangong@neustar.biz</email>
+      </editor>
+      <editor>
+        <firstname>Markus</firstname>
+        <surname>Sabadello</surname>
+        <affiliation>
+          <orgname>Project Danube</orgname>
+        </affiliation>
+        <email>sabadello@projectdanube.org</email>
+      </editor>
+      <editor>
+        <firstname>Drummond</firstname>
+        <surname>Reed</surname>
+        <affiliation>
+          <orgname>Respect Network</orgname>
+        </affiliation>
+        <email>drummond@respectnetwork.net</email>
+      </editor>
+      <editor>
+        <firstname>Joseph</firstname>
+        <surname>Boyle</surname>
+        <affiliation>
+          <orgname>XDI.org</orgname>
+        </affiliation>
+        <email>firstname at orgname</email>
+      </editor>
+    </authorgroup>
+    <pubdate>&pubdate;</pubdate>
+    <copyright>
+      <year>2014</year>
+      <holder>OASIS Open, Inc. All Rights Reserved.</holder>
+    </copyright>
+    <legalnotice role="additional">
+      <title>Additional artifacts</title>
+      <para>This prose specification is one component of a Work Product which also includes:</para>
+      <itemizedlist spacing="compact">
+        <listitem>
+          <para> publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip"
+              >&this-loc;/&name;-&version;-&stage;.zip</ulink></para>
+        </listitem>
+      </itemizedlist>
+    </legalnotice>
+    <legalnotice role="related">
+      <title>Related work</title>
+      <para>This document is primarily based on a set of proposals that had been collected by the
+        OASIS XDI TC on its associated wiki at <ulink url="https://wiki.oasis-open.org/xdi/"
+          >https://wiki.oasis-open.org/xdi/</ulink>.</para>
+    </legalnotice>
+    <abstract>
+      <title>Abstract</title>
+      <para>This document specifies the XDI protocol bindings for the exchange of XDI messages.</para>
+    </abstract>
+    <legalnotice role="status">
+      <title>Status</title>
+      <para>This is a work in progress contributed to the OASIS TC administration and does not at
+        this time represent the consensus of any particular OASIS Technical Committee. There are no
+        plans to make this a formal Committee Specification as it is merely an internal document
+        made available to committee members to support the publishing process.</para>
+    </legalnotice>
+    <legalnotice role="citation">
+      <title>Citation format</title>
+      <para>When referencing this specification the following citation format should be used:</para>
+      <bibliolist>
+        <bibliomixed>
+          <abbrev>OASIS-XDI-BINDINGS-V1.0</abbrev>
+          <title>OASIS XDI BINDINGS V1.0</title>
+          <date>&pubdate;. </date>
+          <releaseinfo>OASIS &standard;. </releaseinfo>
+          <citetitle><ulink url="&latest-loc;/&name;.html"
+            >&latest-loc;/&name;.html</ulink>.</citetitle>
+        </bibliomixed>
+      </bibliolist>
+    </legalnotice>
+    <legalnotice role="notices">
+      <title>Notices</title>
+      <para>Copyright &#169; OASIS&#174; Open 2013. All Rights Reserved. </para>
+      <para>All capitalized terms in the following text have the meanings assigned to them in the
+        OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full Policy may be
+        found at <ulink url="http://www.oasis-open.org/who/intellectualproperty.php"
+          >http://www.oasis-open.org/who/intellectualproperty.php</ulink>.</para>
+      <para>This document and translations of it may be copied and furnished to others, and
+        derivative works that comment on or otherwise explain it or assist in its implementation may
+        be prepared, copied, published, and distributed, in whole or in part, without restriction of
+        any kind, provided that the above copyright notice and this section are included on all such
+        copies and derivative works. However, this document itself may not be modified in any way,
+        including by removing the copyright notice or references to OASIS, except as needed for the
+        purpose of developing any document or deliverable produced by an OASIS Technical Committee
+        (in which case the rules applicable to copyrights, as set forth in the OASIS IPR Policy,
+        must be followed) or as required to translate it into languages other than English.</para>
+      <para>The limited permissions granted above are perpetual and will not be revoked by OASIS or
+        its successors or assigns.</para>
+      <para>This document and the information contained herein is provided on an "AS IS" basis and
+        OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY
+        WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR
+        ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</para>
+      <para>OASIS requests that any OASIS Party or any other party that believes it has patent
+        claims that would necessarily be infringed by implementations of this OASIS Committee
+        Specification or OASIS Standard, to notify OASIS TC Administrator and provide an indication
+        of its willingness to grant patent licenses to such patent claims in a manner consistent
+        with the IPR Mode of the OASIS Technical Committee that produced this specification.</para>
+      <para>OASIS invites any party to contact the OASIS TC Administrator if it is aware of a claim
+        of ownership of any patent claims that would necessarily be infringed by implementations of
+        this specification by a patent holder that is not willing to provide a license to such
+        patent claims in a manner consistent with the IPR Mode of the OASIS Technical Committee that
+        produced this specification. OASIS may include such claims on its website, but disclaims any
+        obligation to do so.</para>
+      <para>OASIS takes no position regarding the validity or scope of any intellectual property or
+        other rights that might be claimed to pertain to the implementation or use of the technology
+        described in this document or the extent to which any license under such rights might or
+        might not be available; neither does it represent that it has made any effort to identify
+        any such rights. Information on OASIS' procedures with respect to rights in any document or
+        deliverable produced by an OASIS Technical Committee can be found on the OASIS website.
+        Copies of claims of rights made available for publication and any assurances of licenses to
+        be made available, or the result of an attempt made to obtain a general license or
+        permission for the use of such proprietary rights by implementers or users of this OASIS
+        Committee Specification or OASIS Standard, can be obtained from the OASIS TC Administrator.
+        OASIS makes no representation that any information or list of intellectual property rights
+        will at any time be complete, or that any claims in such list are, in fact, Essential
+        Claims.</para>
+      <para>The name "OASIS" is a trademark of <ulink url="http://www.oasis-open.org">OASIS</ulink>,
+        the owner and developer of this specification, and should be used only to refer to the
+        organization and its official outputs. OASIS welcomes reference to, and implementation and
+        use of, specifications, while reserving the right to enforce its marks against misleading
+        uses. Please see <ulink url="http://www.oasis-open.org/who/trademark.php"
+          >http://www.oasis-open.org/who/trademark.php</ulink> for above guidance.</para>
+    </legalnotice>
+  </articleinfo>
+  <section id="s.introduction">
+    <title>Introduction</title>
+    <para>This document specifies the XDI protocol bindings for the exchange of operations on XDI graphs
+      via XDI messages.
+      The XDI 1.0 Core specification <xref linkend="xdi-core-1.0"/> defines the XDI graphs and the XDI
+      Messaging specification <xref linkend="xdi-messaging-1.0"/> defines the messaging patterns and the messages
+      themselves.
+    </para>
+    <para>Transport bindings may be based on a client/server model or on other network topologies.
+      They may be synchronous or asynchronous. The XDI Messaging concepts of "target graph",
+      "message", "message result", as well as the logic performed by the XDI processor, remain
+      constant and independent of a transport binding.
+    </para>
+    <section>
+      <title>Terminology</title>
+      <section>
+        <title> Key words</title>
+        <para>The key words <glossterm>must</glossterm>, <glossterm>must not</glossterm>,
+            <glossterm>required</glossterm>, <glossterm>shall</glossterm>, <glossterm>shall
+            not</glossterm>, <glossterm>should</glossterm>, <glossterm>should not</glossterm>,
+            <glossterm>recommended</glossterm>, <glossterm>may</glossterm>, and
+            <glossterm>optional</glossterm> are to be interpreted as described in <xref
+            linkend="RFC2119"/>. Note that for reasons of style, these words are not capitalized in
+          this document.</para>
+      </section>
+    </section>
+    <section>
+      <title>Normative References</title>
+      <bibliolist>
+        <bibliomixed id="xdi-core-1.0">
+          <abbrev>OASIS-XDI-Core-V1.0</abbrev>
+          <date>&pubdate; </date>
+          <title>
+            <ulink url="../../xdi-core-1.0/xdi-core-1.0-wd01.xml">OASIS XDI 1.0 Core Specification</ulink>
+          </title>
+          <author>
+            <firstname>Joseph </firstname>
+            <surname>Boyle</surname></author>,
+          <author>
+            <firstname>Drummond </firstname>
+            <surname>Reed</surname></author>. 
+          <releaseinfo>OASIS &standard;. </releaseinfo>
+          <citetitle>
+            <ulink url="&latest-loc;/xdi-core.html">&latest-loc;/xdi-core.html</ulink>.
+          </citetitle>
+        </bibliomixed>
+        <bibliomixed id="xdi-messaging-1.0">
+          <abbrev>OASIS-XDI-Messaging-V1.0</abbrev>
+          <date>&pubdate; </date>
+          <title>
+            <ulink url="../../xdi-messaging-1.0/xdi-messaging-1.0-wd01.xml">OASIS XDI 1.0 Messaging Specification</ulink>
+          </title>
+          <author>
+            <firstname>Joseph </firstname>
+            <surname>Boyle</surname></author>,
+          <author>
+            <firstname>Drummond </firstname>
+            <surname>Reed</surname></author>. 
+          <releaseinfo>OASIS &standard;. </releaseinfo>
+          <citetitle>
+            <ulink url="&latest-loc;/xdi-messaging.html">&latest-loc;/xdi-messaging.html</ulink>.
+          </citetitle>
+        </bibliomixed>
+        <bibliomixed id="xdi-signatures-1.0">
+          <abbrev>OASIS-XDI-Signatures-V1.0</abbrev>
+          <date>&pubdate; </date>
+          <title>
+            <ulink url="../../xdi-signatures-1.0/xdi-signatures-1.0-wd01.xml">OASIS XDI 1.0 Signatures Specification</ulink>
+          </title>
+          <author>
+            <firstname>Peter </firstname>
+            <surname>Davis</surname></author>.
+          <releaseinfo>OASIS &standard;. </releaseinfo>
+          <citetitle>
+            <ulink url="&latest-loc;/xdi-signatures.html">&latest-loc;/xdi-signatures.html</ulink>.
+          </citetitle>
+        </bibliomixed>
+        <bibliomixed id="xdi-security-mechanisms-1.0">
+          <abbrev>OASIS-XDI-Security-Mechanisms-V1.0</abbrev>
+          <date>&pubdate; </date>
+          <title>
+            <ulink url="../../xdi-security-mechanisms-1.0/xdi-security-mechanisms-1.0-wd01.xml">OASIS XDI 1.0 Security Mechanisms Specification</ulink>
+          </title>
+          <author>
+            <firstname>Peter </firstname>
+            <surname>Davis</surname></author>.
+          <releaseinfo>OASIS &standard;. </releaseinfo>
+          <citetitle>
+            <ulink url="&latest-loc;/xdi-security-mechanisms.html">&latest-loc;/xdi-security-mechanisms.html</ulink>.
+          </citetitle>
+        </bibliomixed>
+        <bibliomixed id="RFC4346">
+          <abbrev>RFC4346</abbrev>
+          <date>April 2006</date>
+          <title>
+            <ulink url="http://tools.ietf.org/html/rfc4346">
+              The Transport Layer Security (TLS) Protocol Version 1.1
+            </ulink>
+          </title>
+          <author>
+            <firstname>T.</firstname>
+            <surname>Dierks</surname>
+          </author>,
+          <author>
+            <firstname>E.</firstname>
+            <surname>Rescorla</surname>
+          </author>. 
+          <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+        </bibliomixed>
+        <bibliomixed id="RFC5246">
+          <abbrev>RFC5246</abbrev>
+          <date>August 2008</date>
+          <title>
+            <ulink url="http://tools.ietf.org/html/rfc5246">
+              The Transport Layer Security (TLS) Protocol Version 1.2
+            </ulink>
+          </title>
+          <author>
+            <firstname>T.</firstname>
+            <surname>Dierks</surname>
+          </author>,
+          <author>
+            <firstname>E.</firstname>
+            <surname>Rescorla</surname>
+          </author>. 
+          <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+        </bibliomixed>
+        <bibliomixed id="RFC2616">
+          <abbrev>RFC2616</abbrev>
+          <date>June 1999</date>
+          <title>
+            <ulink url="http://www.w3.org/Protocols/rfc2616/rfc2616.html">
+              Hypertext Transfer Protocol -- HTTP/1.1
+            </ulink>
+          </title>
+          <author>
+            <firstname>R.</firstname>
+            <surname>Fielding</surname>
+          </author>,
+          <author>
+            <firstname>J.</firstname>
+            <surname>Gettys</surname>
+          </author>, 
+          <author>
+            <firstname>J.</firstname>
+            <surname>Mogul</surname>
+          </author>, 
+          <author>
+            <firstname>H.</firstname>
+            <surname>Frystyk</surname>
+          </author>, 
+          <author>
+            <firstname>L.</firstname>
+            <surname>Masinter</surname>
+          </author>, 
+          <author>
+            <firstname>P.</firstname>
+            <surname>Leach</surname>
+          </author>, 
+          <author>
+            <firstname>T.</firstname>
+            <surname>Berners-Lee</surname>
+          </author>.
+          <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+        </bibliomixed>
+        <bibliomixed id="RFC2119">
+          <abbrev>RFC 2119</abbrev>
+          <title>Key words for use in RFCs to Indicate Requirement Levels</title>, <date>March 1997. </date>
+          <author>
+            <firstname>S. </firstname>
+            <surname>Bradner</surname>
+          </author>. <releaseinfo>IETF (Internet Engineering Task Force) RFC 2119, </releaseinfo>
+          <citetitle><ulink url="http://www.ietf.org/rfc/rfc2119.txt"
+            >http://www.ietf.org/rfc/rfc2119.txt</ulink></citetitle>
+        </bibliomixed>
+      </bibliolist>
+    </section>
+    <section>
+      <title>Non-Normative References</title>
+      <bibliolist>
+        <bibliomixed id="json-ld">
+          <abbrev>json-ld</abbrev> W3C Editor's Draft 20 August 2013, <title><ulink
+            url="http://json-ld.org/spec/latest/json-ld">JSON-LD: A JSON-based Serialization for
+            Linked Data</ulink></title> , W3C 20 August 2013 </bibliomixed>
+      </bibliolist>
+    </section>
+  </section>
+
+  <section>
+    <title>HTTP POST Binding</title>
+    <para>
+      The HTTP POST binding defines a mechanism by which XDI requests are transmitted using HTTP POST messages.
+    </para>
+    <section>
+      <title>HTTP Considerations</title>
+      <para>
+        When exchanging XDI messages using HTTP 1.1, HTTP headers should be used to ensure both requester and responder
+      </para>
+      <section>
+        <title>Serialization</title>
+        <para>
+          The XDI Core specification <xref linkend="xdi-core-1.0"/> defines several serialization formats for XDI messages.
+          It is thus important for requesters and responders to agree on a common serialization format when exchanging a
+          set of XDI messages.
+        </para>
+        <para>
+          The following rules apply:
+          <itemizedlist>
+            <listitem><para>Both HTTP requesters and responders SHOULD set the <code>Content-Type</code> HTTP header
+              to indicate the serialization format used for the XDI message.</para></listitem>
+            <listitem><para>The XDI/JSON serialization format (MIME type: <code>application/xdi+json</code>) MUST be
+              supported by both requesters and responders. Other serialization formats MAY be supported.</para></listitem>
+            <listitem><para>An HTTP requester MAY set the <code>Accept</code> header to indicate what serialization formats
+              it would prefer the HTTP responder uses.</para></listitem>
+          </itemizedlist>
+        </para>
+      </section>
+      <section>
+        <title>Other</title>      
+        <para>
+          Beyond serialization, the following rules apply:
+        </para>
+        <itemizedlist>
+          <listitem><para>An HTTP requester SHOULD set the <code>Content-Length</code> HTTP header to indicate the length
+            of the serialized XDI message contained in the request. This is especially useful if the HTTP requester
+            does not support HTTP 1.1. </para></listitem>
+          <listitem><para>HTTP 1.1 requesters SHOULD use the chunked transfer encoding mechanism
+            (<code>Transfer-Encoding: chunked</code>). Note that even if this mechanism is used, it is recommended
+            to also include the <code>Content-Length</code> HTTP header.</para></listitem>
+        </itemizedlist>
+      </section>
+    </section>
+    <section>
+      <title>Security Considerations</title>
+      <para>
+        This binding relies on message-level integrity protection via signing of the XDI messages as defined in
+        the XDI Signatures specification <xref linkend="xdi-signatures-1.0"/>.
+        
+        Additionally, the Security Mechanisms specification <xref linkend="xdi-security-mechanisms-1.0"/> protection of XDI messages in transit between requester and responder .
+      </para>
+    </section>
+    <section>
+      <title>Error Reporting</title>
+      <para>In addition to the status codes defined in HTTP 1.1 <xref linkend="RFC2616"/>, an HTTP responder
+        SHOULD convey second-level error in the body of the message.</para>
+    </section>
+    <section>
+      <title>Example of an XDI Message Exchange Using HTTP POST</title>
+      <para>
+        The following is an example of an XDI request message.
+        <programlisting>
+          POST /xdi/ HTTP/1.1
+          Host: demo.xdi.org
+          Content-Type: application/xdi+json; charset=utf-8
+          Content-Length: 267
+        
+          &lt;&lt; XDI/JSON serialized request here &gt;&gt;
+        </programlisting>
+      </para>
+      <para>
+        The following is an example of an XDI response message (success case).
+        <programlisting>
+          HTTP/1.1 200 OK
+          Content-Type: application/xdi+json
+          Content-Length: 202
+        
+          &lt;&lt; XDI/JSON serialized response here &gt;&gt;
+        </programlisting>
+      </para>
+    </section>
+  </section>
+ 
+  <section>
+    <title>Browser Binding</title>
+    <para>
+      The browser binding defines a mechanism by which XDI requests are transmitted using a browser and an HTML Form.
+    </para>
+  </section>
+
+  <section>
+    <title>Artifact Binding</title>
+    <para>
+      The artifact binding defines a mechanism by which XDI requests are transmitted using an artifact.
+    </para>
+  </section>
+  
+  <appendix id="a.acknowledgments" role="non-normative">
+    <title>Acknowledgments</title>
+    <para>This specification was written with the generous and appreciated assistance of XXXXX. We
+      also acknowledge the following original members of the XDI TC: YYYYY</para>
+  </appendix>
+
+  <appendix id="a.examples" role="non-normative">
+    <title>Examples</title>
+    <para>This appendix contains examples of XDI messaging over HTTP.</para>
+  </appendix>
+</article>
