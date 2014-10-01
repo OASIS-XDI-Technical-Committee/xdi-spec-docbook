@@ -12,5 +12,5 @@
             NOT</glossterm>, <glossterm>SHOULD</glossterm>, <glossterm>SHOULD NOT</glossterm>,
         <glossterm>RECOMMENDED</glossterm>, <glossterm>MAY</glossterm>, and
         <glossterm>OPTIONAL</glossterm> are to be interpreted as described in <xref
-            linkend="rfc2119"/>.</para>
+            linkend="RFC2119"/>.</para>
 </section>
