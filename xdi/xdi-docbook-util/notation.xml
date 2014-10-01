@@ -6,7 +6,7 @@
 <!--the document properties-->
 ]>
 <section>
-    <title>Document Convensions</title>
+    <title>Document Conventions</title>
     <para>Terms defined to have a specific meaning within this specification will be capitalized,
         for example, “Normalized Graph”, and should be interpreted with their general meaning if not
         capitalized. Normative key words are written in all caps, for example, “SHALL”.</para>

@@ -135,9 +135,9 @@
             <releaseinfo/>
             <citetitle><ulink url=""/>XDIDictionary</citetitle>
         </bibliomixed>
-        <bibliomixed id="XDISig">
-            <abbrev>XDISig</abbrev>
-            <title>XDI Signatures version &version;</title>, <date>June 2014</date>
+        <bibliomixed id="XDICrypto">
+            <abbrev>XDICrypto</abbrev>
+            <title>XDI Cryptographic Profiles version &version;</title>, <date>June 2014</date>
             <editor>
                 <firstname>Peter</firstname>
                 <surname>Davis</surname>
@@ -146,7 +146,7 @@
                 <publishername>OASIS</publishername>
             </publisher>
             <releaseinfo/>
-            <citetitle><ulink url=""/>XDISig</citetitle>
+            <citetitle><ulink url=""/>XDICrypto</citetitle>
         </bibliomixed>
         <bibliomixed id="RFC3629">
             <abbrev>RFC3629</abbrev>

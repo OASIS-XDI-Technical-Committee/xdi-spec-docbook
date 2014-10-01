@@ -132,7 +132,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
             <para>XDI Dictionary <xref linkend="XDIDictionary"/></para>
           </listitem>
           <listitem>
-            <para>XDI Signature <xref linkend="XDISig"/></para>
+            <para>XDI Cryptographic Profiles <xref linkend="XDICrypto"/></para>
           </listitem>
         </itemizedlist>
       </para>
@@ -140,8 +140,9 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 
     <abstract>
       <title>Abstract</title>
-      <para>This &standard; specifies methods to create and validate cryptographic signatures for
-          <glossterm>XDI</glossterm> statements, subgraphs and protocol messages.</para>
+      <para>This &standard; specifies methods to create and validate cryptographic signatures and
+        methods for encrypting <glossterm>XDI</glossterm> statements, subgraphs and protocol
+        messages.</para>
     </abstract>
 
 
@@ -254,8 +255,8 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
         <emphasis role="bold">Requirements for signatures:</emphasis>
         <orderedlist>
           <listitem>
-            <para>A graph must be able to describe specific charateristics of cryptograph material
-              netadata.</para>
+            <para>A graph must be able to describe specific characteristics of cryptographic
+              material metadata.</para>
           </listitem>
           <listitem>
             <para>A graph subject must be able to sign specific subgraphs. (e.g.
