@@ -21,7 +21,7 @@
 <section id="s.biblio">
     <title>Normative References</title>
     <bibliolist>
-        <bibliomixed id="rfc2119">
+        <bibliomixed id="RFC2119">
             <abbrev>RFC 2119</abbrev>
             <title>Key words for use in RFCs to Indicate Requirement Levels</title>, <date>March
                 1997. </date>
@@ -32,7 +32,7 @@
             <citetitle><ulink url="http://www.ietf.org/rfc/rfc2119.txt"
                     >http://www.ietf.org/rfc/rfc2119.txt</ulink></citetitle>
         </bibliomixed>
-        <bibliomixed id="rfc4627">
+        <bibliomixed id="RFC4627">
             <abbrev>RFC 4627</abbrev>
             <title>The application/json Media Type for JavaScript Object Notation (JSON)</title>, <date>July
                 2006. </date>
