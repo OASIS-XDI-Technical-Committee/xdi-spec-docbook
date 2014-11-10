@@ -712,7 +712,6 @@ The dictionary for XDI error code statements is still being defined. See Messagi
 <row><entry>Name</entry><entry>Code</entry><entry>Explanation</entry></row>
 </thead><tbody>
 <row><entry>Request unknown</entry><entry><code>$false/$error/$request$unknown</code></entry><entry>Request format is unknown. (E.g. request does not contain operation xdi statement.)</entry></row>
-<row><entry>Multiple operations</entry><entry><code>$false/$error/$multiple$operations</code></entry><entry>Request contains operations of different types.</entry></row>
 <row><entry>Duplicate operations</entry><entry><code>$false/$error/$duplicate$operations</code></entry><entry>Request contains operations duplication</entry></row>
 <row><entry>Can't process request</entry><entry><code>$false/$error/$request$cant$process</code></entry><entry>General error, such as internal exception, db connection failure, or other not described by another error.</entry></row>
 <row><entry>Request forbidden</entry><entry><code>$false/$error/$request$forbidden</code></entry><entry>Operations in request are not allowed by link contract sent by client.</entry></row>
@@ -729,17 +728,6 @@ The dictionary for XDI error code statements is still being defined. See Messagi
 Send in case request format is unknown. (E.g. request does not contain operation xdi statement.)
 <para>Sample request:</para>
 <programlisting>@!9999!8888$msg!1234/$()/(@!1111!2222)</programlisting>
-</section>
-<section><title>Multiple operations</title>
-
-<code>$false/$error/$multiple$operations</code>
-Send in case request contains operations of different types.
-
-<para>Sample request:</para>
-<programlisting>@!9999!8888$msg!1234/$()/(@!1111!2222)
-@!9999!8888$msg!1234/$d!/(data:,2011-04-10T22:22:22Z)
-@!9999!8888$msg!1234$do/$get/=!1111!2222!3
-@!9999!8888$msg!1234$do/$add/(sdf/sdf/sdf)</programlisting>
 </section>
 <section><title>Duplicate operations</title>
 
