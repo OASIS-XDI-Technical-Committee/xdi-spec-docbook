@@ -336,16 +336,16 @@ All statements except the OPERATION statement are OPTIONAL for certain types of 
 <table><tgroup cols="5" frame="none" colsep="1" rowsep="1" cellpadding="0"><thead>
 <row><entry>Order</entry><entry>Statement Type</entry><entry>Subject</entry><entry>Predicate</entry><entry>Object</entry></row>
 </thead><tbody>
-<row><entry>1</entry><entry>  From       </entry><entry> <code>from-peer</code></entry><entry>$set</entry><entry><code>from</code>[$msg]<code>msg-id</code> </entry></row>
-<row><entry>2</entry><entry>  To         </entry><entry> <code>from</code>[$msg]<code>msg-id</code></entry><entry>$is()</entry><entry><code>to-peer</code> </entry></row>
-<row><entry>3</entry><entry>  Message Type</entry><entry><code>from</code>[$msg]<code>msg-id</code></entry><entry>$is</entry><entry><code>message-type</code>[$v]<code>version-number</code>$xdi[$v]@1$msg </entry></row>
-<row><entry>4</entry><entry>  Timestamp  </entry><entry> <code>from</code>[$msg]<code>msg-id</code>&lt;$t>&amp;</entry><entry>&amp;</entry><entry><code>timestamp</code> </entry></row>
-<row><entry>5</entry><entry>  Authentication Token</entry><entry> <code>from</code>[$msg]<code>msg-id</code><code>token-type</code>&lt;$token>&amp;</entry><entry>&amp;</entry><entry><code>token</code> </entry></row>
-<row><entry>6</entry><entry>  Authentication Signature</entry><entry> <code>from</code>[$msg]<code>msg-id</code><code>signature-type</code>&lt;$sig>&amp;</entry><entry>&amp;</entry><entry><code>signature</code> </entry></row>
-<row><entry>7</entry><entry>  Authorization</entry><entry> <code>from</code>[$msg]<code>msg-id</code></entry><entry>$do</entry><entry><code>link-contract-id</code> </entry></row>
-<row><entry>8</entry><entry>  Operation  </entry><entry> <code>from</code>[$msg]<code>msg-id</code>$do</entry><entry><code>operation</code></entry><entry><code>object-graph</code> </entry></row>
-<row><entry>9</entry><entry>  Condition  </entry><entry> <code>from</code>[$msg]<code>msg-id</code>$do$if<code>boolean-context</code></entry><entry><code>operator</code></entry><entry><code>condition</code> </entry></row>
-<row><entry>10</entry><entry> Parameters </entry><entry> <code>from</code>[$msg]<code>msg-id</code><code>operation</code><code>parameter</code>&amp;</entry><entry>&amp;</entry><entry><code>parameter-value</code> </entry></row>
+<row><entry>1</entry><entry>  From       </entry><entry> <code>&lt;--from-peer--></code></entry><entry><code>$set</code></entry><entry><code>&lt;--from-->[$msg]&lt;--msg-id--></code></entry></row>
+<row><entry>2</entry><entry>  To         </entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id--></code></entry><entry><code>$is()</code></entry><entry><code>&lt;--to-peer--></code></entry></row>
+<row><entry>3</entry><entry>  Message Type</entry><entry><code>&lt;--from-->[$msg]&lt;--msg-id--></code></entry><entry><code>$is</code></entry><entry><code>&lt;--message-type-->[$v]&lt;--version-number-->$xdi[$v]@1$msg</code></entry></row>
+<row><entry>4</entry><entry>  Timestamp  </entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id-->&lt;$t></code></entry><entry><code>&amp;</code></entry><entry><code>&lt;--timestamp--></code></entry></row>
+<row><entry>5</entry><entry>  Authentication Token</entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id-->&lt;--token-type-->&lt;$token></code></entry><entry><code>&amp;</code></entry><entry><code>&lt;--token--></code></entry></row>
+<row><entry>6</entry><entry>  Authentication Signature</entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id-->&lt;--signature-type-->&lt;$sig></code></entry><entry><code>&amp;</code></entry><entry><code>&lt;--signature--></code></entry></row>
+<row><entry>7</entry><entry>  Authorization</entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id--></code></entry><entry><code>$do</code></entry><entry><code>&lt;--link-contract-id--></code></entry></row>
+<row><entry>8</entry><entry>  Operation  </entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id-->$do</code></entry><entry><code>operation</code></entry><entry><code>&lt;--object-graph--></code></entry></row>
+<row><entry>9</entry><entry>  Condition  </entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id-->$do$ifboolean-context</code></entry><entry><code>operator</code></entry><entry><code>&lt;--condition--></code></entry></row>
+<row><entry>10</entry><entry> Parameters </entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id-->&lt;--operation-->&lt;--parameter--></code></entry><entry><code>&amp;</code></entry><entry><code>&lt;--parameter-value--></code></entry></row>
 </tbody></tgroup></table>
 
 
