@@ -486,8 +486,8 @@ Depending on: a) the operation, and b) whether the operation target is an XDI ad
 <para>This operation retrieves data from a target graph and does not make changes to that graph.</para>
 
 <section><title><code>$get</code> applied to an address</title></section>
-<para>The operation result contains the subgraph at the target address if it exists.
-If the target address does not exist, the operation result is empty.</para>
+<para>The message result contains the subgraph at the target address if it exists.
+If the target address does not exist, the message result is empty.</para>
 <para>Example: Given the following target graph:</para>
 <programlisting>//+acme
 =alice&lt;#email>/&amp;/"alice@email.com"
@@ -496,14 +496,14 @@ If the target address does not exist, the operation result is empty.</para>
 <para>And the following <code>$get</code> operation on target address <code>=alice</code>:</para>
 <programlisting>=bob[$msg]!:uuid:4378$do/$get/=alice
 </programlisting>
-<para>The operation result will be:</para>
+<para>The message result will be:</para>
 <programlisting>=alice&lt;#email>/&amp;/"alice@email.com"
 =alice/#friend/=bob
 </programlisting>
 
 <section><title><code>$get</code> applied to a statement</title></section>
 <para>The message result contains the target statement if it exists.
-If the target statement does not exist, the operation result is empty.</para>
+If the target statement does not exist, the message result is empty.</para>
 <para>Example: Given the following target graph:</para>
 <programlisting>//+acme
 =alice&lt;#email>/&amp;/"alice@email.com"
@@ -512,13 +512,13 @@ If the target statement does not exist, the operation result is empty.</para>
 <para>And the following <code>$get</code> operation on target statement <code>=alice/#friend/=bob</code>:</para>
 <programlisting>(=bob[$msg]!:uuid:4378$do/$get)=alice/#friend/=bob
 </programlisting>
-<para>The operation result will be:</para>
+<para>The message result will be:</para>
 <programlisting>=alice/#friend/=bob
 </programlisting>
 </section>
 
 <section><title><code>$set</code> operation</title>
-<para>This operation creates or modifies data in a target graph. Unless an error occurs, the operation result is the empty graph.</para>
+<para>This operation creates or modifies data in a target graph. Unless an error occurs, the message result is the empty graph.</para>
 
 <section><title><code>$set</code> applied to an address</title></section>
 <para>This operation creates a context node at the target address, as well as any parent context node(s) as needed.
@@ -554,7 +554,7 @@ If the target statement exists already, the operation has no effect (this is not
 </section>
 
 <section><title><code>$del</code> operation</title>
-<para>This operation deletes data from a target graph. Unless an error occurs, the operation result is the empty graph.</para>
+<para>This operation deletes data from a target graph. Unless an error occurs, the message result is the empty graph.</para>
 
 <section><title><code>$del</code> applied to an address</title></section>
 <para>This operation deletes a context node at the target address, as well as its entire subgraph.
@@ -592,7 +592,7 @@ If the target statement does not exist, the operation has no effect (this is not
 </section>
 
 <section><title><code>$add</code> operation</title>
-<para>This operation creates data in a target graph. Unless an error occurs, the operation result is the empty graph.
+<para>This operation creates data in a target graph. Unless an error occurs, the message result is the empty graph.
 If the operation is applied to data which already exists, it generates an error
 (this is what distinguishes <code>$add</code> from <code>$set</code>).</para>
 
@@ -630,7 +630,7 @@ If the target statement exists already, the operation generates an error.</para>
 </section>
 
 <section><title><code>$mod</code> operation</title>
-<para>This operation modifies data in a target graph. Unless an error occurs, the operation result is the empty graph.
+<para>This operation modifies data in a target graph. Unless an error occurs, the message result is the empty graph.
 If the operation is applied to data which does not exist, it generates an error
 (this is what distinguishes <code>$mod</code> from <code>$set</code>).</para>
 
