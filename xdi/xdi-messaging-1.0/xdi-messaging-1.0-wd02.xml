@@ -322,13 +322,13 @@ All statements except the OPERATION statement are OPTIONAL for certain types of 
 <programlisting>#1:  FROM                  &lt;--from-peer-->/$set/&lt;--from-->[$msg]&lt;--msg-id-->
 #2:  TO                    &lt;--from-->[$msg]&lt;--msg-id-->/$is()/&lt;--to-peer-->
 #3:  MESSAGE TYPE          &lt;--from-->[$msg]&lt;--msg-id-->/$is#/&lt;--message-type-->[$v]&lt;--version-number-->$xdi[$v]@1$msg
-#4:  TIMESTAMP             &lt;--from-->[$msg]&lt;--msg-id-->&lt;$t>&amp;/&amp;/&lt;--timestamp-->
-#5:  AUTHENTICATION TOKEN  &lt;--from-->[$msg]&lt;--msg-id-->&lt;--token-type-->&lt;$token>&amp;/&amp;/&lt;--token-->
-#6:  AUTHENTICATION SIG    &lt;--from-->[$msg]&lt;--msg-id-->&lt;--signature-type-->&lt;$sig>&amp;/&amp;/&lt;--signature-->
+#4:  TIMESTAMP             &lt;--from-->[$msg]&lt;--msg-id-->&lt;$t>/&amp;/&lt;--timestamp-->
+#5:  AUTHENTICATION TOKEN  &lt;--from-->[$msg]&lt;--msg-id-->&lt;--token-type-->&lt;$token>/&amp;/&lt;--token-->
+#6:  AUTHENTICATION SIG    &lt;--from-->[$msg]&lt;--msg-id-->&lt;--signature-type-->&lt;$sig>/&amp;/&lt;--signature-->
 #7:  AUTHORIZATION         &lt;--from-->[$msg]&lt;--msg-id-->/$do/&lt;--link-contract-id-->
 #8:  OPERATION             &lt;--from-->[$msg]&lt;--msg-id-->$do/&lt;--operation-->/&lt;--object-graph-->
 #9:  CONDITION             &lt;--from-->[$msg]&lt;--msg-id-->$do$if&lt;--boolean-context-->/&lt;--operator-->/&lt;--condition-->
-#10: PARAMETERS            &lt;--from-->[$msg]&lt;--msg-id-->&lt;--operation-->&lt;--parameter-->&amp;/&amp;/&lt;--parameter-value-->
+#10: PARAMETERS            &lt;--from-->[$msg]&lt;--msg-id-->&lt;--operation-->&lt;--parameter-->/&amp;/&lt;--parameter-value-->
 </programlisting>
 
 
@@ -697,7 +697,7 @@ Currently, parameters are only defined for the XDI <code>$get</code> operation.
 
 </section><section><title>Error Handling Rules</title>
 The template for an error message is:
-<programlisting>#1: ERROR TIMESTAMP      $error&lt;$t>&amp;/&amp;/&lt;--timestamp-->
+<programlisting>#1: ERROR TIMESTAMP      $error&lt;$t>/&amp;/&lt;--timestamp-->
 #2: ERROR CODES         $error/$do/&lt;--error-code-->
 </programlisting>
 
