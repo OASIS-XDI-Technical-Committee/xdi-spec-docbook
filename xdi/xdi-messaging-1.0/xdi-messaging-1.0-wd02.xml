@@ -364,7 +364,7 @@ Where:
 <listitem><code>&lt;--signature-type--></code> is the context defining the type of signature provided for authentication.</listitem>
 <listitem><code>&lt;--signature--></code> is the literal signature value provided for authentication as required by the referenced link contract.</listitem>
 <listitem><code>&lt;--link-contract-id--></code> is the XDI address of the root node of the link contract authorizing the requested operation on the requested object graph. This MUST be either: a) a <code>$do</code> entity singleton or: b) a <code>[$do]</code> entity class followed by an entity instance. See the XDI Policy specification: <xref linkend='xdi-policy-1.0'/>.</listitem>
-<listitem><code>&lt;--operation--></code> is the requested XDI operation (<code>$get, $set, $del, $copy, $move</code>), plus subcontexts (if any). There may be one or more operation statements in a message.</listitem>
+<listitem><code>&lt;--operation--></code> is the requested XDI operation (<code>$get, $set, $del, $add, $mod, $do</code>), plus subcontexts (if any). There may be one or more operation statements in a message.</listitem>
 <listitem><code>&lt;--object-graph--></code> is the XDI address or statement that is the target of the operation.</listitem> 
 <listitem><code>&lt;--boolean-context--></code> is defined in <xref linkend='xdi-policy-1.0'/>.</listitem>
 <listitem><code>&lt;--operator--></code> is defined in <xref linkend='xdi-policy-1.0'/>.</listitem> 
@@ -479,8 +479,6 @@ Depending on: a) the operation, and b) whether the operation target is an XDI ad
 <row><entry><code>$del</code></entry><entry>deletes context node and subgraph</entry><entry>deletes contextual statement and subgraph</entry><entry>deletes literal statement</entry><entry>deletes relational statement</entry></row>
 <row><entry><code>$add</code></entry><entry>creates new context node and parent context node(s)</entry><entry>creates new contextual statement and parent context node(s)</entry><entry>creates new literal statement and parent context node(s)</entry><entry>creates new relational statement and parent context node(s)</entry></row>
 <row><entry><code>$mod</code></entry><entry>(invalid)</entry><entry>(invalid)</entry><entry>modifies existing literal statement</entry><entry>(invalid)</entry></row>
-<row><entry><code>$copy</code></entry><entry>(invalid)</entry><entry>(invalid)</entry><entry>(invalid)</entry><entry>copies subgraph under one context node to another context node</entry></row>
-<row><entry><code>$move</code></entry><entry>(invalid)</entry><entry>(invalid)</entry><entry>(invalid)</entry><entry>moves subgraph under one context node to another context node</entry></row>
 <row><entry><code>$do</code></entry><entry>(unspecified)</entry><entry>(unspecified)</entry><entry>(unspecified)</entry><entry>(unspecified)</entry></row>
 </tbody></tgroup></table>
 
@@ -653,63 +651,6 @@ If the context node that contains the literal does not exist, the operation gene
 </programlisting>
 <para>The target graph after the operation will be:</para>
 <programlisting>=alice&lt;#email>/&amp;/"alice@new.com"
-</programlisting>
-</section>
-
-<section><title><code>$copy</code> operation</title>
-<para>This operation copies data from one subgraph to another subgraph. Unless an error occurs, the operation result is the empty graph.</para>
-
-<section><title><code>$copy</code> applied to an address</title></section>
-<para>This operation on a target address is not defined and generates an error.</para>
-
-<section><title><code>$copy</code> applied to a statement</title></section>
-<para>This operation is only defined on a relational statement with predicate <code>$to</code> and generates an error otherwise.
-It copies the subgraph under the source context node of the relation to the target context node of the relation.
-If the source context node does not exist, the operation has no effect (this is not considered an error).
-If the source context node exists, but the target context node does not exist, it is created.
-If the source context node and target context node are the same, the operation has no effect (this is not considered an error).
-The source context node may be a parent of the target context node, or vice versa.</para>
-<para>Example: Given the following target graph:</para>
-<programlisting>//+acme
-=alice&lt;#email>/&amp;/"alice@email.com"
-=alice/#friend/=bob
-</programlisting>
-<para>And the following <code>$copy</code> operation on target statement <code>=alice/$to/+acme</code>:</para>
-<programlisting>(=bob[$msg]!:uuid:4378$do/$copy)=alice/$to/+acme
-</programlisting>
-<para>The target graph after the operation will be:</para>
-<programlisting>+acme&lt;#email>/&amp;/"alice@email.com"
-+acme/#friend/=bob
-=alice&lt;#email>/&amp;/"alice@email.com"
-=alice/#friend/=bob
-</programlisting>
-</section>
-
-<section><title><code>$move</code> operation</title>
-<para>This operation moves data from one subgraph to another subgraph. Unless an error occurs, the operation result is the empty graph.</para>
-
-<section><title><code>$move</code> applied to an address</title></section>
-<para>This operation on a target address is not defined and generates an error.</para>
-
-<section><title><code>$move</code> applied to a statement</title></section>
-<para>This operation is only defined on a relational statement with predicate <code>$to</code> and generates an error otherwise.
-It moves the subgraph under the source context node of the relation to the target context node of the relation.
-If the source context node does not exist, the operation has no effect (this is not considered an error).
-If the source context node exists, but the target context node does not exist, it is created.
-If the source context node and target context node are the same, the operation has no effect (this is not considered an error).
-The source context node may be a parent of the target context node, or vice versa.</para>
-<para>Example: Given the following target graph:</para>
-<programlisting>//+acme
-=alice&lt;#email>/&amp;/"alice@email.com"
-=alice/#friend/=bob
-</programlisting>
-<para>And the following <code>$move</code> operation on target statement <code>=alice/$to/+acme</code>:</para>
-<programlisting>(=bob[$msg]!:uuid:4378$do/$move)=alice/$to/+acme
-</programlisting>
-<para>The target graph after the operation will be:</para>
-<programlisting>+acme&lt;#email>/&amp;/"alice@email.com"
-+acme/#friend/=bob
-//=alice
 </programlisting>
 </section>
 
