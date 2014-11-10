@@ -66,8 +66,8 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
     <affiliation><orgname>XDI.org</orgname></affiliation>
     <email>drummond.reed@xdi.org</email> </editor>
   <editor> <firstname>Markus</firstname><surname>Sabadello</surname>
-    <affiliation><orgname>XDI.org</orgname></affiliation>
-    <email>markus.sabadello@xdi.org</email> </editor>
+    <affiliation><orgname>Project Danube</orgname></affiliation>
+    <email>markus@projectdanube.org</email> </editor>
 </authorgroup>
 <pubdate>&pubdate;</pubdate>
 <copyright><year>2014</year>
