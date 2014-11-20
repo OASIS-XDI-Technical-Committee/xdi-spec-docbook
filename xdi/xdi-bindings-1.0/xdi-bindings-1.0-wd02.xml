@@ -311,7 +311,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
           </author>. 
           <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
         </bibliomixed>
-        <bibliomixed id="RFC4346">
+        <bibliomixed id="CORS">
           <abbrev>CORS</abbrev>
           <date>January 2014</date>
           <title>
@@ -460,7 +460,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
           <listitem><para>HTTP 1.1 requesters SHOULD use the chunked transfer encoding mechanism
             (<code>Transfer-Encoding: chunked</code>). Note that even if this mechanism is used, it is recommended
             to also include the <code>Content-Length</code> HTTP header.</para></listitem>
-          <listitem><para>HTTP responders SHOULD set HTTP headers for Cross-Origin Resource Sharing (CORS).</para></listitem>
+          <listitem><para>HTTP responders SHOULD set HTTP headers for Cross-Origin Resource Sharing <xref linkend="CORS"/>.</para></listitem>
         </itemizedlist>
       </section>
     </section>
