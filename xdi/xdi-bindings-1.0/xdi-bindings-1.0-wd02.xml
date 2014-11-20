@@ -212,9 +212,8 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
       themselves.
     </para>
     <para>Transport bindings may be based on a client/server model or on other network topologies.
-      They may be synchronous or asynchronous. The XDI Messaging concepts of "target graph",
-      "message", "message result", as well as the logic performed by the XDI processor, remain
-      constant and independent of a transport binding.
+      The XDI Messaging concepts of "target graph", "message envelope", "message", "operation",
+      as well as the logic performed by the XDI processor, remain independent of a transport binding.
     </para>
     <section>
       <title>Terminology</title>
@@ -392,9 +391,10 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   </section>
 
   <section>
-    <title>HTTP POST Binding</title>
+    <title>XDI Direct Binding</title>
     <para>
-      The HTTP POST binding defines a mechanism by which XDI requests are transmitted using HTTP POST messages.
+      The XDI Direct Binding defines a mechanism by which XDI message envelopes are transmitted using 
+      HTTP POST messages.
     </para>
     <section>
       <title>HTTP Considerations</title>
@@ -450,7 +450,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
         SHOULD convey second-level error in the body of the message.</para>
     </section>
     <section>
-      <title>Example of an XDI Message Exchange Using HTTP POST</title>
+      <title>Example of an XDI Message Exchange Using the XDI Direct Binding</title>
       <para>
         The following is an example of an XDI request message.
         <programlisting>
@@ -476,14 +476,14 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   </section>
  
   <section>
-    <title>Browser Binding</title>
+    <title>XDI Browser Binding</title>
     <para>
       The browser binding defines a mechanism by which XDI requests are transmitted using a browser and an HTML Form.
     </para>
   </section>
 
   <section>
-    <title>Artifact Binding</title>
+    <title>XDI Artifact Binding</title>
     <para>
       The artifact binding defines a mechanism by which XDI requests are transmitted using an artifact.
     </para>
