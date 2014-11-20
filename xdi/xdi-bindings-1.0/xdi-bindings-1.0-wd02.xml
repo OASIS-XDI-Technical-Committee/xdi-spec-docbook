@@ -39,7 +39,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
 <!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
 <!ENTITY pubdate "29 May 2014">
-<!ENTITY title "XDI bindings V&version;">
+<!ENTITY title "XDI Bindings V&version;">
 ]>
 
 <article status="&standard;">
