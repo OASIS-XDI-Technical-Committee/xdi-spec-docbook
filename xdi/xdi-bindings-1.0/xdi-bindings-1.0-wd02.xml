@@ -311,7 +311,6 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
           </author>. 
           <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
         </bibliomixed>
-        
         <bibliomixed id="RFC4346">
           <abbrev>CORS</abbrev>
           <date>January 2014</date>
@@ -326,8 +325,20 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
           </author>.
           <releaseinfo>W3C</releaseinfo>
         </bibliomixed>
-        
-        
+        <bibliomixed id="MICRODATA">
+          <abbrev>MICRODATA</abbrev>
+          <date>October 2013</date>
+          <title>
+            <ulink url="http://www.w3.org/TR/2013/NOTE-microdata-20131029/">
+              HTML Microdata
+            </ulink>
+          </title>
+          <author>
+            <firstname>I.</firstname>
+            <surname>Hickson</surname>
+          </author>.
+          <releaseinfo>W3C</releaseinfo>
+        </bibliomixed>
         <bibliomixed id="RFC5246">
           <abbrev>RFC5246</abbrev>
           <date>August 2008</date>
@@ -496,8 +507,21 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   <section>
     <title>XDI Browser Binding</title>
     <para>
-      The browser binding defines a mechanism by which XDI requests are transmitted using a browser and an HTML Form.
+      The XDI Browser Binding defines a mechanism by which an XDI request message envelope is
+      transmitted using an HTML Form and a web browser.
     </para>
+    <section>
+      <title>HTML Form</title>
+      <para>
+        An HTML Form for the XDI Browser Binding MUST have the following characteristics:
+	     </para>
+        <itemizedlist>
+          <listitem><para>The "method" for form submission MUST be "POST"</para></listitem>
+          <listitem><para>The form MUST contain a hidden field with the name "xdiMessageEnvelope". The
+          value of the field MUST be a request message envelope, as described in section ...</para></listitem>
+          <listitem><para>The form MAY contain the HTML microdata <xref linkend="MICRODATA"/> attributes <code>itemscope</code> and <code>itemtype="$xdi$msg"</code>.</para></listitem>
+        </itemizedlist>
+    </section>
   </section>
 
   <section>
