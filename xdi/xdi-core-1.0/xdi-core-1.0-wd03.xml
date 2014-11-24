@@ -5,7 +5,7 @@ href="../../../DocBook/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook SVG Module V1.1CR1//EN" "http://www.oasis-open.org/docbook/xml/svg/1.1CR1/dbsvg.dtd"
 [
 <!ENTITY title "XDI Core V&version;"> <!ENTITY name "xdi-core"> <!ENTITY pversion "0.1"> <!ENTITY version "1.0">
-<!ENTITY pubdate "2 March 2014"> <!ENTITY stage "wd02"> <!ENTITY standard "Working Draft 02">
+<!ENTITY pubdate "2 November 2014"> <!ENTITY stage "wd03"> <!ENTITY standard "Working Draft 03">
 <!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;"> <!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;"> <!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
 ]>
 
@@ -263,84 +263,101 @@ document made available to committee members to support the publishing process.<
 
   <section><title>The XDI Graph Model</title>
    <para>Given the design goals above, the XDI TC has developed the semantic graph model defined in this section. Figure 1 shows a high-level taxonomy of the XDI graph model. The diagram shows the hierarchy of node types; the diagram is not an XDI graph.
-   <figure xml:id="nodetypes1" float="true"><title>XDI Node Types: Below node type name, XDI graph notation symbols are listed in black, XDI syntax in red.</title>
+   <figure xml:id="nodetypes1" float="true"><title>XDI Node Types: Below node type name, XDI graph notation symbols are listed in black, XDI syntax in red. Node types in green can be made into variables by adding {curly brackets}.</title>
     <mediaobject><imageobject>
-     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="200" style="float:right">
+     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="320" height="280" style="float:right">
        <defs>
          <style type="text/css"><![CDATA[
            path { stroke: black; stroke-width: 2; }
            rect.layer { stroke: none; fill: #bcdeff; }
+           rect.varia { stroke: none; fill: #bcffde; }
            text { dominant-baseline: middle; }
            text.syntax { font-family: monospace; font-size: 16px; fill: #e40; }
            circle { stroke-width: 2 }
          ]]></style>
          <circle id="root"   cx="0" cy="0" r="7"  stroke="black" fill="none" viewBox="-10 -10 10 10"/>
+         <circle id="branch" cx="0" cy="0" r="5"  stroke="black" fill="none" viewBox="-10 -10 10 10"/>
          <circle id="entity" cx="0" cy="0" r="7"  stroke="black" fill="black" viewBox="-10 -10 10 10"/>
          <path   id="attrib" d="M -0 -7 l 11 7 l -11 7 l -11 -7 Z" fill="black" viewBox="-10 -10 10 10"/>
+         <path  id="literal" d="M -0 -7 l 11 7 l -11 7 l -11 -7 Z" fill="none" viewBox="-10 -10 10 10"/>
          <path   id="value"  d="M -0 -7 l 11 7 l -11 7 l -11 -7 Z" fill="none" viewBox="-10 -10 10 10"/>
-         <path  id="literal" d="M -17 11 l 14 0 l 0 14 l -14 0 Z" fill="none" viewBox="-10 -10 10 10" />
+         <path   id="box"    d="M -17 11 l 14 0 l 0 14 l -14 0 Z" fill="none" viewBox="-10 -10 10 10" />
        </defs>
        <g transform="translate(0,10)" text-anchor="middle" dominant-baseline="middle">
-           <g transform="translate(250,00)">
-             <rect class="layer" x="-250" y="-8" width="500" height="35"/>
-             <text>Node</text>
-           </g> <g transform="translate(220,50)"> <path d="M 0 -8 v -15"/>
-             <rect class="layer" x="-220" y="-8" width="440" height="35"/>
-             <text>Context</text>
-           </g> <g transform="translate(470,150)">
-             <path d="M 0 -8 v -115"/>
-             <rect class="layer" x="-30" y="-8" width="60" height="35"/>
-             <text>Literal</text>
+           <g transform="translate(150,00)">
+             <rect class="layer" x="-40" y="-8" width="80" height="25"/>
+             <text y="5">Graph Node</text>
+           </g> <g transform="translate(60,10)"> <path d="M 47 -2 l 5 -5"/>
+             <rect class="layer" x="-47" y="-8" width="94" height="25"/>
+             <text y="5">Context Node</text>
+           </g> <g transform="translate(240,10)">
+             <path d="M -45 -1 l -5 -5"/>
+             <rect class="layer" x="-45" y="-8" width="90" height="35"/>
+             <text y="2">Literal Node</text>
              <!--path d="M -17 11 l 14 0 l 0 14 l -14 0 Z" fill="none"/-->
-             <use x="10" y="0" xlink:href="#literal"/>
-           </g> <g transform="translate(400,150)"> <path d="M 0 -8 v -15"/>
-             <rect class="layer" x="-30" y="-8" width="60" height="35"/>
-             <text>Variable</text>
-             <text x="11" y="18" class="syntax">{&#8212;}</text>
+             <use x="-15" y="15" xlink:href="#literal"/>
+             <text x="17" y="18" class="syntax">&amp;</text>
            </g>
 
-           <g transform="translate(85,100)"> <path d="M 0 -8 v -15"/>
-             <rect class="layer" x="-85" y="-8" width="170" height="35"/>
-             <text>Graph Root</text>
+           <g transform="translate(65,40)"> <path d="M 5 -8 l 0 -5"/>
+             <rect class="layer" x="-65" y="-8" width="130" height="35"/>
+             <text y="2">Root Context Node</text>
              <use x="0" y="15" xlink:href="#root"/>
              <circle cx="-0" cy="16" r="7" stroke="black" fill="none"/>
-           </g> <g transform="translate(33,150)"> <path d="M 0 -8 v -15"/>
+           </g> <g transform="translate(33,230)"> <path d="M -29 -8 v -155"/>
              <rect class="layer" x="-33" y="-8" width="66" height="35"/>
-             <text>Common</text>
-           </g> <g transform="translate(95,150)"> <path d="M 0 -8 v -15"/>
-             <rect class="layer" x="-22" y="-8" width="44" height="35"/>
-             <text>Peer</text>
-             <text y="18" class="syntax">(&#8212;)</text>
-           </g> <g transform="translate(147,150)"> <path d="M -0 -8 v -15"/>
-             <rect class="layer" x="-25" y="-8" width="50" height="35"/>
-             <text>Inner</text>
+             <text>Common</text> <text y="18">Root</text>
+           </g> <g transform="translate(32,165)"> <path d="M -20 -8 v -90"/>
+             <rect class="layer" x="-22" y="-8" width="44" height="55"/>
+             <text y="2">Peer</text>
+             <text y="22">Root</text>
+             <text y="38" class="syntax">(&#8212;)</text>
+           </g> <g transform="translate(53,80)"> <path d="M -0 -8 l -0 -5"/>
+             <rect class="layer" x="-35" y="-8" width="70" height="35"/>
+             <text y="2">Inner Root</text>
              <text y="18" class="syntax">(&#8212;/&#8212;)</text>
            </g>
 
-           <g transform="translate(310,100)"> <path d="M 0 -8 v -15"/>
-             <rect class="layer" x="-125" y="-8" width="250" height="35"/>
-             <text>Subgraph</text>
-           </g> <!--g transform="translate(340,150)"> <path d="M 0 -8 v -15"/>
-             <rect class="layer" x="-25" y="-8" width="50" height="35"/>
-             <text>Value</text>
-             <text x="14" y="18" class="syntax">&amp;</text>
-             <use x="-10" y="17" xlink:href="#value"/>
-           </g--> <g transform="translate(210,150)"> <path d="M 0 -8 v -15"/>
-             <rect class="layer" x="-25" y="-8" width="50" height="35"/> 
-             <text>Entity</text>
-             <!--circle cx="-11" cy="18" r="7" stroke="black" fill="black"/-->
-             <use x="-10" y="17" xlink:href="#entity"/>
-           </g> <g transform="translate(275,150)"> <path d="M 0 -8 v -15"/>
-             <rect class="layer" x="-35" y="-8" width="70" height="35"/>
-             <text>Attribute</text>
-             <text x="17" y="18" class="syntax">&lt;&#8212;&gt;</text>
-             <path d="M -17 10 l 11 7 l -11 7 l -11 -7 Z"/>
-             <use x="-17" y="17" xlink:href="#attrib"/>
+           <g transform="translate(220,50)"> <path d="M -50 -8 l -65 -20"/>
+             <rect class="layer" x="-70" y="-8" width="140" height="35"/>
+             <text y="2">Branch Context Node</text>
+             <use x="0" y="15" xlink:href="#branch"/>
+             <path d="M -5 15 h -25"/>
+           </g> <g transform="translate(75,120)"> <path d="M 10 -8 l 60 -55"/>
+             <rect class="varia" x="-30" y="-8" width="60" height="35"/> 
+             <text y="2">Authority</text>
+             <text x="1" y="18" class="syntax">= + *</text>
+           </g> <g transform="translate(150,100)"> <path d="M 20 -8 l 0 -25"/>
+             <rect class="varia" x="-40" y="-8" width="80" height="55"/>
+             <text y="2">Class</text>
+             <text x="1" y="18" class="syntax">$x &lt;$x&gt;</text>
+             <text x="1" y="38" class="syntax">#x &lt;#x&gt;</text>
+           </g> <g transform="translate(250,120)"> <path d="M -48 -8 l -0 -45"/>
+             <rect class="layer" x="-55" y="-8" width="110" height="55"/>
+             <text y="2">Member (index)</text>
+             <text x="-1" y="18" class="syntax">!x &lt;!x&gt;</text>
+             <text x="-1" y="38" class="syntax">@x &lt;@x&gt;</text>
+           </g>
+
+           <g transform="translate(112,160)"> <path d="M -45 -8 l 0 -5"/>
+             <rect class="varia" x="-55" y="-8" width="110" height="55"/>
+             <text y="2">Authority</text>
+             <text y="22">Collection</text>
+             <text x="1" y="38" class="syntax">[=] [+] [*]</text>
+           </g> <g transform="translate(240,180)"> <path d="M -52 -8 l 0 -25"/>
+             <rect class="varia" x="-55" y="-8" width="110" height="55"/>
+             <text y="2">Class Collection</text>
+             <text x="1" y="18" class="syntax">[$x] [&lt;$x&gt;]</text>
+             <text x="1" y="38" class="syntax">[#x] [&lt;#x&gt;]</text>
+           </g> <g transform="translate(127,220)"> <path d="M 45 -8 l -0 -65"/>
+             <rect class="layer" x="-55" y="-8" width="110" height="55"/>
+             <text y="2">Class Definition</text>
+             <text x="-1" y="18" class="syntax">|$x| |&lt;$x&gt;|</text>
+             <text x="-1" y="38" class="syntax">|#x| |&lt;#x&gt;|</text>
            </g>
         </g>
      </svg>
 
-     <!--imagedata fileref="xdi-nodes.png"/-->
     </imageobject>
       <textobject><phrase>XDI Node Types</phrase></textobject>
     </mediaobject></figure>
@@ -360,7 +377,7 @@ document made available to committee members to support the publishing process.<
 
   <section><title>Node Types</title>
     <!--para>This section defines each of the node types in the XDI graph model. The complete taxonomy of node types, together with a key to the XDI syntax used for each, is shown in Figure 2.</para-->
-     <figure xml:id="nodetypes2"><title>XDI Entity/Attribute Node Types (Detailed): Entity syntax on left, Attribute syntax on right</title>
+     <!--figure xml:id="nodetypes2"><title>XDI Entity/Attribute Node Types (Detailed): Entity syntax on left, Attribute syntax on right</title>
      <mediaobject><imageobject>
      <svg width="500" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg" style="float:right">
        <!--defs>
@@ -371,15 +388,11 @@ document made available to committee members to support the publishing process.<
            text.syntax { font-family: monospace; font-size: 16px; fill: red; }
            circle { stroke-width: 2 }
          ]]></style>
-       </defs-->
+       </defs>
        <g transform="translate(250,10)" text-anchor="middle" dominant-baseline="middle">
            <g transform="translate(0,00)">
              <rect class="layer" x="-250" y="-8" width="500" height="35"/>
-             <text y="18">subgraph</text><text>Entity or &lt;Attribute&gt;</text>
-           </g> <g transform="translate(-200,50)"> <path d="M 0 -8 v -15"/>
-             <rect class="layer" x="-50" y="-8" width="100" height="35"/>
-             <text>Definition</text>
-             <text y="18" class="syntax">|&#8212;| |&lt;&#8212;&gt;|</text>
+             <text y="18">non-root context node</text><text>Entity or &lt;Attribute&gt;</text>
            </g> <g transform="translate(-70,50)"> <path d="M 0 -8 v -15"/>
              <rect class="layer" x="-75" y="-8" width="150" height="35"/>
              <text>Singleton</text>
@@ -436,9 +449,8 @@ document made available to committee members to support the publishing process.<
            </g>
         </g>
      </svg>
-      <!--imagedata fileref="xdi-nodes-detailed.png"/--></imageobject>
       <textobject><phrase>XDI Node Types (Detailed)</phrase></textobject>
-     </mediaobject></figure>
+     </mediaobject></figure-->
     </section>
     <section><title>Literals</title>
       <para>As in RDF, the final leaf nodes of an XDI graph — the nodes containing the raw data values described by the graph — are called <firstterm>literals</firstterm>. In the abstract graph model, there is no constraint on the data type of an XDI literal. XDI natively supports the six data types defined by JSON:
@@ -465,7 +477,7 @@ document made available to committee members to support the publishing process.<
         <para>The XDI address of the common root node is the <firstterm>empty address</firstterm>. Thus any XDI statement that does not begin with a peer root address or an inner root address is by definition relative to the common root node.</para></section>
       <section><title>Peer Root Nodes</title>
         <para>An XDI graph MAY describe zero or more <firstterm>peer graphs</firstterm>, each with its own <firstterm>peer root node</firstterm>. A peer root node represents an independent XDI graph with its own XDI address. In most cases this XDI address will be at a different network endpoint that the current XDI graph. However the common root node of an XDI graph may also describe its own XDI address by virtue of an XDI reference statement to a peer root node.</para>
-        <para>The XDI address of a peer root node MUST consist of only an single XDI address segment (representing an XDI subject) enclosed in parentheses. This address MUST NOT be preceded by an XDI context symbol. Examples:</para>
+        <para>The XDI address of a peer root node MUST consist of only an single XDI address (representing an XDI subject) enclosed in parentheses. This address MUST NOT be preceded by an XDI context symbol. Examples:</para>
         <code>(=example)</code>
         <para><code>([=]!:uuid:f81d4fae-7dec-11d0-a765-00a0c91e0001)</code></para>
         <para><code>(+example.company)</code></para>
@@ -473,11 +485,11 @@ document made available to committee members to support the publishing process.<
         <code>([+]!:uuid:9ce739f0-7665-11e2-bcfd-0800200c0002#sales)</code>
         <para>An example of an XDI reference statement asserting the peer root address of its own common root node:</para>
         <para><code>([=]!:uuid:f81d4fae-7dec-11d0-a765-00a0c91e0001)/$ref/</code></para>
-        <para>Note that the object of the statement (the third segment of the address) is empty—this is the XDI address of the common root node.</para>
+        <para>Note that the object of the statement (the third part of the statement) is empty—this is the XDI address of the common root node.</para>
       </section>
       <section><title>Inner Root Nodes</title>
-        <para>An <firstterm>inner graph</firstterm> is a graph-within-a-graph. Unlike a peer root graph, an inner root graph represents the set of XDI statements that are the object of another XDI statement. In RDF this is known as reification.<xref linkend='reification'/></para>
-        <para>The XDI address of an <firstterm>inner root node</firstterm> consists of parentheses containing two XDI address segments (an XDI subject followed by an XDI relational predicate) separated by a slash. The parentheses are not preceded by an XDI context symbol. Examples:</para>
+        <para>An <firstterm>inner graph</firstterm> represents the set of XDI statements that are the object of another XDI statement. In RDF this is known as reification.<xref linkend='reification'/></para>
+        <para>The XDI address of an <firstterm>inner root node</firstterm> consists of parentheses containing two XDI addresses (an XDI subject followed by an XDI relational predicate) separated by a slash. The parentheses are not preceded by an XDI context symbol. Examples:</para>
         <para><code>(=example.1/#nominated)</code></para>
         <para><code>(+company.1/#acquired)</code></para>
         <para>Examples of XDI statements that begin with these peer root addresses:</para>
@@ -485,8 +497,8 @@ document made available to committee members to support the publishing process.<
         <para><code>(+company.1/#acquired)+company.2&lt;$t&gt;&amp;/&amp;/”2013-11-30Z”</code></para>
         <para>Because an inner graph represents the object(s) of an XDI relational statement, it differs from a peer graph in one key respect: the XDI statements contained by an inner graph are relative only to that particular inner root node and cannot be copied to another XDI graph without copying that same inner root node.</para></section>
     </section>
-      <section><title>Subgraphs</title>
-        <para>A <firstterm>subgraph</firstterm> is a branch of an XDI graph that does not begin with a root node. A subgraph MUST begin with an entity or attribute node. See the definitions of these node types below.</para>
+      <section><title>Child nodes types</title>
+        <para><firstterm>Child</firstterm> node covers all context nodes that are not roots.</para>
       <section><title>Variables</title> 
         <para>A <firstterm>variable</firstterm> is a node that serves as a template or a query for other XDI graphs. A variable node MUST represent a set of zero or more nodes in the instance graph. A variable MAY represent any type of XDI graph node. A variable MAY be typed by containing the XDI address of a class. If a variable is typed, a valid instance of that variable MUST be a valid instance of that class.</para></section>
       <section><title>Entities</title><para>An <firstterm>entity</firstterm> node represents the digital identity of any independent physical or logical resource other than an XDI graph. An entity MUST be either an authority, an entity class, or an instance of an entity class. (See <xref linkend="nodetypes2"/>) An entity MAY contain another entity (a <firstterm>subentity</firstterm>) or an attribute. An entity MUST NOT contain a literal.</para></section>
@@ -577,7 +589,7 @@ There are two other types of XDI classes.</para>
     </section>
   <section><title>Statement Types</title><para>As with an RDF graph, an XDI graph consists of a set of one or more <firstterm>XDI statements</firstterm>. Each XDI statement MUST have a <firstterm>subject</firstterm>, <firstterm>predicate</firstterm>, and <firstterm>object</firstterm> which are each (possibly empty) XDI addresses, except for the object of a literal statement.</para>
       <para>An XDI statement uniquely represents an arc (including the addreses of its starting and ending nodes) possible in the XDI graph model, and every arc in the XDI graph model is uniquely represented by one XDI statement.</para>
-      <para>In XDI display format (see below), the XDI addresses for the subject, predicate, and object of the statement are separated by the forward slash character “<code>/</code>”, so each component is called a <firstterm>segment</firstterm>.</para>
+      <para>In XDI display format (see below), the XDI addresses for the subject, predicate, and object of the statement are separated by the forward slash character “<code>/</code>”, so each component is called a <firstterm>part</firstterm> of the statement.</para>
       <para>There are three types of XDI statements:</para>
     <section><title>Literal Statements</title>
       <para>A <firstterm>literal statement</firstterm> represents exactly one <firstterm>literal arc</firstterm> in the XDI graph model. It specifies the literal value of an XDI attribute. In a literal statement:</para>
@@ -679,8 +691,8 @@ attrib-value    = ( attrib-singleton / ( attrib-collection   attrib-member   ) )
 </programlisting>
       <para>Peer roots (xrefs) must occur before inner roots in a xdi-address. (and all roots precede entities, attributes, and values)</para>
 <programlisting>
-xref        = "(" ( xdi-address / xdi-iri / xdi-name ) ")"
-inner-root  = "("   xdi-address S-P xdi-address ")"
+xref        = "(" ( common-address / xdi-iri / xdi-name ) ")"
+inner-root  = "("   common-address S-P common-address ")"
 </programlisting>
     <para>A root may contain a subject-predicate pair (inner root), or a single XDI path; or a single XDI identifier with no context symbols; or an IRI.</para>
     <para>A root may also contain a triple. Syntactically, the triple is equivalent to a statement, but in the graph model, it is considered simply a shorthand for a construction with inner roots.</para>
