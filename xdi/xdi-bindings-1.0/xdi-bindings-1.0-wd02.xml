@@ -23,7 +23,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
          "file:///c:/oasis/spec-0.6/docbook/docbookx.dtd" 
 -->
-<?xml-stylesheet type="text/xsl" href="http://xdi.org/xdi-spec-docbook/htmlruntime/spec-0.6/stylesheets/oasis-specification-html-offline.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html-offline.xsl"?>
 
 <!DOCTYPE article
   PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
