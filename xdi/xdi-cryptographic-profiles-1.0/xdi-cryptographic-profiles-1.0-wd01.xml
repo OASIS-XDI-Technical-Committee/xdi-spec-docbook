@@ -23,7 +23,6 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
          "file:///c:/oasis/spec-0.6/docbook/docbookx.dtd" 
 -->
-
 <?xml-stylesheet type="text/xsl" href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html-offline.xsl"?>
 <!--
 <?xml-stylesheet type="text/xsl" href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-fo-us.xsl"?>
@@ -45,42 +44,32 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <!ENTITY % xinclude SYSTEM "/Applications/oxygen-13.2/frameworks/docbook/4.4/dtd/xinclude.mod">
 %xinclude;
 ]>
-
-
 <article status="&standard;">
-
   <articleinfo>
     <title>&title;</title>
-
     <releaseinfo role="cvs"> $Id: oasis-specification-0.6-wd04.xml,v 1.2 2012/06/14 01:57:23 admin
       Exp $ </releaseinfo>
-
     <productname>&name;</productname>
     <productnumber>&version;-&stage;</productnumber>
     <releaseinfo role="track">Standards Track Work Product</releaseinfo>
-
     <releaseinfo role="OASIS-specification-this-authoritative"
       >&this-loc;/&name;-&version;-&stage;.html</releaseinfo>
     <releaseinfo role="OASIS-specification-this"
       >&this-loc;/&name;-&version;-&stage;.pdf</releaseinfo>
     <releaseinfo role="OASIS-specification-this"
       >&this-loc;/&name;-&version;-&stage;.xml</releaseinfo>
-
     <releaseinfo role="OASIS-specification-previous-authoritative"
       >&previous-loc;/&name;-&pversion;.html</releaseinfo>
     <releaseinfo role="OASIS-specification-previous"
       >&previous-loc;/&name;-&pversion;.pdf</releaseinfo>
     <releaseinfo role="OASIS-specification-previous"
       >&previous-loc;/&name;-&pversion;.xml</releaseinfo>
-
     <releaseinfo role="OASIS-specification-latest-authoritative"
       >&latest-loc;/&name;.html</releaseinfo>
     <releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.pdf</releaseinfo>
     <releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.xml</releaseinfo>
-
     <releaseinfo role="committee"><ulink url="https://www.oasis-open.org/apps/org/workgroup/xdi/"
         >OASIS XRI Data Interchange (XDI) TC</ulink></releaseinfo>
-
     <authorgroup>
       <editor>
         <firstname>Peter</firstname>
@@ -98,14 +87,11 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
         </affiliation>
       </editor>
     </authorgroup>
-
     <pubdate>&pubdate;</pubdate>
-
     <copyright>
       <year>2014</year>
       <holder>OASIS Open, Inc. All Rights Reserved.</holder>
     </copyright>
-
     <legalnotice role="additional">
       <title>Additional artifacts</title>
       <para>This &standard; is part of a broader suite of specifications collectively referred to as
@@ -132,19 +118,22 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
             <para>XDI Dictionary <xref linkend="XDIDictionary"/></para>
           </listitem>
           <listitem>
-            <para>XDI Signature <xref linkend="XDISig"/></para>
+            <para>XDI Cryptographic Profiles <xref linkend="XDICrypto"/></para>
           </listitem>
         </itemizedlist>
       </para>
     </legalnotice>
-
     <abstract>
       <title>Abstract</title>
+<<<<<<< HEAD:xdi/xdi-cryptographic-profiles-1.0/xdi-cryptographic-profiles-1.0-wd01.xml
+      <para>This &standard; specifies methods to create and validate cryptographic signatures and
+        methods for encrypting <glossterm>XDI</glossterm> statements, subgraphs and protocol
+=======
       <para>This &standard; specifies methods to create and validate cryptographic signatures for
-          <glossterm>XDI</glossterm> statements, subgraphs and protocol messages.</para>
+          <glossterm linkend="g.xdi">XDI</glossterm> statements, subgraphs and protocol
+>>>>>>> security:xdi/xdi-signatures-1.0/xdi-signatures-1.0-wd01.xml
+        messages.</para>
     </abstract>
-
-
     <legalnotice role="notices">
       <title>Notices</title>
       <para>Copyright &#169; OASIS&#174; Open 2012. All Rights Reserved. </para>
@@ -199,7 +188,6 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
           >http://www.oasis-open.org/who/trademark.php</ulink> for above guidance.</para>
     </legalnotice>
   </articleinfo>
-
   <section id="s.intro">
     <title>Introduction</title>
     <para>Signatures for XDI can be applied to individual statements (triples), subgraphs and XDI
@@ -237,7 +225,6 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
         </itemizedlist>
       </para>
     </section>
-
     <section>
       <title>Terminology and Notation Conventions</title>
       <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../xdi-docbook-util/rfc2119.xml"/>
@@ -254,8 +241,8 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
         <emphasis role="bold">Requirements for signatures:</emphasis>
         <orderedlist>
           <listitem>
-            <para>A graph must be able to describe specific charateristics of cryptograph material
-              netadata.</para>
+            <para>A graph must be able to describe specific characteristics of cryptographic
+              material metadata.</para>
           </listitem>
           <listitem>
             <para>A graph subject must be able to sign specific subgraphs. (e.g.
@@ -301,7 +288,6 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
       </para>
     </section>
   </section>
-
   <section id="s.usage">
     <title>Usage</title>
     <para><xref linkend="XDISec"/> recommends that XDI messages should incorporate mechanisms for
@@ -328,41 +314,22 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
       confidentiality requirements defined in <xref linkend="XDISec"/>. The mecahnics of encrypting
       information in the graph, as well as the neccesary encryption metadata are defined in <xref
         linkend="s.encprocess"/></para>
-
-
+    <para><xref linkend="schema"/></para>
   </section>
   <section id="s.cryptmeta">
     <title>Cryptography Metadata</title>
-
+    <para>Performing cryptographic operations on graphs, subgraphs and messages requires message
+      recipients to posses select information about the algorythms and keys in order to reverse or
+      reproduce the operations. The metadata defined in this section is also incorporated in <xref
+        linkend="XDIDictionary"/> for reference.</para>
     <section id="s.keymeta">
       <title>Key Metadata</title>
       <para>Key material expressed in a graph require descirptive charateristics of the key for
         proper application of cryptographic operations. The following dictionary terms are used to
         describe symetric and asymetric keys.</para>
-      <section>
-        <title>Key Data Type</title>
-        <para>
-          <xi:include href="../xdi-dictionary-1.0/xdi-dictionary-1.0-wd01.xml" xpointer="d.key"/>
-        </para>
-      </section>
-      <section>
-        <title>Key Value Encodings</title>
-        <para/>
-      </section>
-      <section>
-        <title>x509 Key</title>
-        <para>URL only</para>
-      </section>
-      <section>
-        <title>Key Identifier</title>
-        <para>keyid <note>
-            <para>(is this needed if we just rely on graph addresses?)</para>
-          </note></para>
-      </section>
-      <section>
-        <title>EncryptedKey</title>
-        <para/>
-      </section>
+      <xi:include href="../xdi-dictionary-1.0/xdi-dictionary-1.0-wd01.xml" xpointer="d.key"/>
+      <xi:include href="../xdi-dictionary-1.0/xdi-dictionary-1.0-wd01.xml" xpointer="d.x509"/>
+      <xi:include href="../xdi-dictionary-1.0/xdi-dictionary-1.0-wd01.xml" xpointer="d.keyencode"/>
     </section>
     <section id="s.sigmeta">
       <title>Signature Metadata</title>
@@ -387,10 +354,11 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
         <para/>
       </section>
     </section>
-    <section>
+    <section id="s.encmeta">
       <title>Encryption Metadata</title>
+      <xi:include href="../xdi-dictionary-1.0/xdi-dictionary-1.0-wd01.xml" xpointer="d.encrypted"/>
       <para/>
-
+      <xi:include href="../xdi-dictionary-1.0/xdi-dictionary-1.0-wd01.xml" xpointer="d.mime"/>
       <section>
         <title>MimeType</title>
         <para/>
@@ -410,26 +378,31 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
     </section>
   </section>
   <section id="s.sigproccess">
-    <title>Signature Processing Rules</title>
+    <title>XDI Signatures</title>
     <para>Notes:</para>
     <para>signatures that require SHA-256 <xref linkend="SHA"/> or greater hashing, and allows for
       HMAC <xref linkend="RFC2104"/>, RSA <xref linkend="RFC3447"/> and ECDSA <xref linkend="TBD"/>
       algorithms. In the future, additional hashing and encryption algorithms may be added.</para>
     <para>Signatures over sub-graphs are established in a manner such that the signature may be
-      included in the graph. The signature covers the entire XDI subgraph rooted in that context
-      node at that point in time. In some cases, the signature was made with a key not rooted in the
-      graph from which the signature was obtained.</para>
+      included in the graph. This includes signatures over XDI Messages defined in <xref
+        linkend="XDIMsg"/>. The signature covers the entire XDI subgraph rooted in that context node
+      at that point in time. Signature may be made with a signing key rooted in the same graph as
+      the graph from which the signature and signed content was obtained, or the signing key may be
+      located in a different graph altogether.</para>
     <para>Recipients of signed XDI messages SHOULD validate all signatures present in the
       response.</para>
-
+    <section>
+      <title>Signature Processing Rules</title>
+      <para/>
+    </section>
     <section>
       <title>Canonical Representation</title>
-      <para>Signing XDI messages involves first normalizing to the XDI Flat Serialization as defined
-        in <xref linkend="XDICore"/>, and afterwards, incorporation of a <glossterm>Signature
-          Block</glossterm> in a manner not disruptive to validators.</para>
+      <para>Signing XDI statements and messages involves first normalizing to the XDI Flat
+        Serialization as defined in <xref linkend="XDICore"/>, and afterwards, incorporation of a
+          <glossterm>Signature Block</glossterm> in a manner not disruptive to validators.</para>
       <para>XDI Flat Serialization is the only serialization format used for signature creation and
         validation. Implementations that choose to transfer XDI messages in another serialization
-        format MUST serialize the message in XdiFlatSerialization prior to attempting
+        format MUST serialize the message in XDI Flat Serialization prior to attempting
         validation.</para>
       <section>
         <title>Canonicalization Process</title>
@@ -447,7 +420,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
                 white space. should this go into XdiFlatSerialization?)</para>
             </listitem>
             <listitem>
-              <para>All JSON <xref linkend="rfc4627"/> keys in the unsigned graph MUST be sorted in
+              <para>All JSON <xref linkend="RFC4627"/> keys in the unsigned graph MUST be sorted in
                 UTF-8 <xref linkend="RFC3629"/> byte-order.</para>
             </listitem>
           </orderedlist>
@@ -461,6 +434,14 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
     <section>
       <title>Graph Signatures</title>
       <para/>
+      <section>
+        <title>Link Contract Considerations for Signatures</title>
+        <para>Signature authors, may need to establish a specific <glossterm>Link
+            Contract</glossterm> associated with the signature, especially when the signature is
+          placed in a remote graph from the signed <glossterm>XDI subgraph</glossterm> or
+            <glossterm>XDI Statement</glossterm>. Signatures need not be publicly available, but
+          SHOULD be made available to anticipated relying parties.</para>
+      </section>
     </section>
     <section>
       <title>Message Signatures</title>
@@ -505,7 +486,9 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
           <revnumber>wd1</revnumber>
           <date>29 May</date>
           <authorinitials>pcd</authorinitials>
-          <revremark>Reorganization to allow the document to describe gerneralized cryptographic operations. Added distinct metadata sections for keys, signatures and encryption.</revremark>
+          <revremark>Reorganization to allow the document to describe gerneralized cryptographic
+            operations. Added distinct metadata sections for keys, signatures and
+            encryption.</revremark>
         </revision>
       </revhistory>
     </para>

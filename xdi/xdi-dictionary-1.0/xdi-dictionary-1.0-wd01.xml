@@ -208,22 +208,51 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
     <title>Introduction</title>
     <para/>
   </section>
-  <section>
+  <section id="s.reservedterms">
     <title>XDI Reserved terms</title>
     <para>The following are dictionary terms that are formally defined in other XDI specifications,
       but are collected here for reference.</para>
 
-    <glosslist>
-      <glossentry id="d.key">
-        <glossterm><emphasis role="bold">$key</emphasis></glossterm>
-        <glossdef>
-          <para>The <code>$key</code> reserved term is used to declare a literal is a cryptographic
-            key.</para>
-        </glossdef>
-      </glossentry>
-    </glosslist>
-
-  </section>
+    <section id="d.key">
+      <title>$key Reserved Dictionary Term</title>
+      <para>The <code>$key</code> reserved term is used to declare a literal is a cryptographic
+        key.</para>
+    </section>
+<section id="d.mime">
+  <title>$mime Reserved Dictionary Term</title>
+  <para>The $mime term is a requied property when encrypting literals in XDI messages. $mime is used to inform a message recipient the type of media that has been encrpyted (for example, image/png). Valid values for the $mime term as described in [rfc????] and as registered with [IANA]. Use of proprietary mime types is discoraged, as this may result in message recipients in ability to process the message completely. Clients which do not support the stated media type MUST NOT decrypt the value of a literal.</para>
+</section>
+    
+    <section id="d.x509">
+      <title>$x509 Reserved Dictionary Term</title>
+      <para>The <code>$x509</code> term indicates that the corresponding literal is either a URL
+        refering to a PEM or DER encoded x509 certificate, or that the PEM or DER encoded
+        certificate is included in the subject graph.</para>
+    </section>
+    <section id="d.keyencode">
+      <title>Key Encoding Reserved Dictionary Terms</title>
+      <section>
+        <title>$pem Reserved Dictionary Term</title>
+        <para>The <code>$pem</code> term indicates a key located in the graph is PEM encoded <xref linkend="PEM"/>.</para>
+      </section>
+      <section>
+        <title>$der Key Encoding</title>
+        <para>The <code>$der</code> term indicates a key located in the graph is DER encoded <xref linkend="DER"/>.</para>
+      </section>
+    </section>
+    <section id="d.url">
+      <title>$url Reserved Dictionary Term</title>
+      <para>The <code>$url</code>...</para>
+    </section>
+    <section id="d.encrypted">
+      <title>$encrypted Reserved Dictionary Term</title>
+      <para>The <code>$encrypted</code> reserver term indicates that the referenced literal, sub graph or sub graph has been encrypted. Key metadata discussed in <xref linkend="s.keymeta"/> provides additional information about key metadata and encryption metadata.</para>
+    </section>
+    <section id="d.sigalg">
+      <title>$sigalg Reserved Dictionary Term</title>
+      <para>rsa,ec,hmac + sha/</para>
+    </section>
+  </section><!-- end reserved terms section -->
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
     href="../xdi-docbook-util/xdi-biblio-wd01.xml"/>
   <!-- import biblio -->

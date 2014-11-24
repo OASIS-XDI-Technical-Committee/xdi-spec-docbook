@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" 
+<<<<<<< HEAD
 href="../../../DocBook/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
 <!--DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "https://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"-->
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook SVG Module V1.1CR1//EN" "http://www.oasis-open.org/docbook/xml/svg/1.1CR1/dbsvg.dtd"
+=======
+href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html-offline.xsl"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "https://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+>>>>>>> security
 [
 <!ENTITY title "XDI Core V&version;"> <!ENTITY name "xdi-core"> <!ENTITY pversion "0.1"> <!ENTITY version "1.0">
 <!ENTITY pubdate "2 March 2014"> <!ENTITY stage "wd02"> <!ENTITY standard "Working Draft 02">

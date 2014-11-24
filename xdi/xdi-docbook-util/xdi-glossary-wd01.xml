@@ -21,7 +21,7 @@
     <title>Glossary of Terms</title>
     <para>
         <glosslist>
-            <glossentry>
+            <glossentry id="g.xdi">
                 <glossterm>XDI</glossterm><glossdef><para>XRI Data Interchange</para></glossdef>
             </glossentry>
             <glossentry>
