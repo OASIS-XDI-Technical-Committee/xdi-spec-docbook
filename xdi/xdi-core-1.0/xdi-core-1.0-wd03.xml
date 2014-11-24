@@ -380,7 +380,7 @@ document made available to committee members to support the publishing process.<
      <!--figure xml:id="nodetypes2"><title>XDI Entity/Attribute Node Types (Detailed): Entity syntax on left, Attribute syntax on right</title>
      <mediaobject><imageobject>
      <svg width="500" height="200" version="1.1" xmlns="http://www.w3.org/2000/svg" style="float:right">
-       <!--defs>
+       <defs>
          <style type="text/css"><![CDATA[
            path { stroke: black; stroke-width: 2; }
            rect.layer { stroke: none; fill: lightblue; }
