@@ -39,7 +39,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
 <!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
 <!ENTITY pubdate "29 May 2014">
-<!ENTITY title "XDI bindings V&version;">
+<!ENTITY title "XDI Bindings V&version;">
 ]>
 
 <article status="&standard;">
@@ -84,7 +84,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
         <affiliation>
           <orgname>Project Danube</orgname>
         </affiliation>
-        <email>sabadello@projectdanube.org</email>
+        <email>markus@projectdanube.org</email>
       </editor>
       <editor>
         <firstname>Drummond</firstname>
@@ -212,9 +212,8 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
       themselves.
     </para>
     <para>Transport bindings may be based on a client/server model or on other network topologies.
-      They may be synchronous or asynchronous. The XDI Messaging concepts of "target graph",
-      "message", "message result", as well as the logic performed by the XDI processor, remain
-      constant and independent of a transport binding.
+      The XDI Messaging concepts of "target graph", "message envelope", "message", "operation",
+      as well as the logic performed by the XDI processor, remain independent of a transport binding.
     </para>
     <section>
       <title>Terminology</title>
@@ -312,6 +311,34 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
           </author>. 
           <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
         </bibliomixed>
+        <bibliomixed id="CORS">
+          <abbrev>CORS</abbrev>
+          <date>January 2014</date>
+          <title>
+            <ulink url="http://www.w3.org/TR/cors/">
+              Cross-Origin Resource Sharing
+            </ulink>
+          </title>
+          <author>
+            <firstname>A.</firstname>
+            <surname>van Kesteren</surname>
+          </author>.
+          <releaseinfo>W3C</releaseinfo>
+        </bibliomixed>
+        <bibliomixed id="MICRODATA">
+          <abbrev>MICRODATA</abbrev>
+          <date>October 2013</date>
+          <title>
+            <ulink url="http://www.w3.org/TR/2013/NOTE-microdata-20131029/">
+              HTML Microdata
+            </ulink>
+          </title>
+          <author>
+            <firstname>I.</firstname>
+            <surname>Hickson</surname>
+          </author>.
+          <releaseinfo>W3C</releaseinfo>
+        </bibliomixed>
         <bibliomixed id="RFC5246">
           <abbrev>RFC5246</abbrev>
           <date>August 2008</date>
@@ -392,9 +419,10 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   </section>
 
   <section>
-    <title>HTTP POST Binding</title>
+    <title>XDI Direct Binding</title>
     <para>
-      The HTTP POST binding defines a mechanism by which XDI requests are transmitted using HTTP POST messages.
+      The XDI Direct Binding defines a mechanism by which XDI message envelopes are transmitted using 
+      HTTP POST messages.
     </para>
     <section>
       <title>HTTP Considerations</title>
@@ -432,6 +460,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
           <listitem><para>HTTP 1.1 requesters SHOULD use the chunked transfer encoding mechanism
             (<code>Transfer-Encoding: chunked</code>). Note that even if this mechanism is used, it is recommended
             to also include the <code>Content-Length</code> HTTP header.</para></listitem>
+          <listitem><para>HTTP responders SHOULD set HTTP headers for Cross-Origin Resource Sharing <xref linkend="CORS"/>.</para></listitem>
         </itemizedlist>
       </section>
     </section>
@@ -450,7 +479,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
         SHOULD convey second-level error in the body of the message.</para>
     </section>
     <section>
-      <title>Example of an XDI Message Exchange Using HTTP POST</title>
+      <title>Example of an XDI Message Exchange Using the XDI Direct Binding</title>
       <para>
         The following is an example of an XDI request message.
         <programlisting>
@@ -476,14 +505,168 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   </section>
  
   <section>
-    <title>Browser Binding</title>
+    <title>XDI Browser Binding</title>
     <para>
-      The browser binding defines a mechanism by which XDI requests are transmitted using a browser and an HTML Form.
+      The XDI Browser Binding defines a mechanism by which an XDI request message envelope is
+      transmitted from a requester to a responder using a web browser and an HTML form on a web page.
+      Transmission of the request message envelope is triggered by
+      a user initiating an action on the web page, usually by clicking on a button that submits the
+      HTML form. The XDI authority associated with the web page is the requester. The XDI authority
+      associated with the user is the responder.
     </para>
+    <section>
+      <title>HTML form (request)</title>
+      <para>
+        The HTML form is not submitted directly to an XDI endpoint. Instead,
+        it is submitted to an XDI endpoint's "authorization service" (see next section). 
+      </para>
+      <para>
+        The HTML form containing the request message envelope MUST have the following characteristics:
+      </para>
+      <itemizedlist>
+        <listitem><para>The value of the "METHOD" attribute of the HTML form MUST be "POST".</para></listitem>
+        <listitem><para>If the responder is known at the time the HTML form is constructed, the
+        value of the "ACTION" attribute MUST be the URI of the target XDI endpoint's authorization service.
+        </para></listitem>
+        <listitem><para>If the responder is not known at the time the HTML form is constructed, the
+        value of the "ACTION" attribute MAY be the URI of a connect service, or it may be empty (see
+        next section). 
+        </para></listitem>
+        <listitem><para>The form MUST contain a hidden field with the name "xdiMessageEnvelope". The
+        value of the field is the request message envelope to be transmitted to the responder.</para></listitem>
+        <listitem><para>The form MAY contain the HTML microdata <xref linkend="MICRODATA"/> attributes
+        <code>itemscope</code> and <code>itemtype="$xdi$msg"</code>, to assist user agents with native
+        support for the XDI Browser Binding to recognize the HTML form.</para></listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Authorization service</title>
+      <para>
+      The "authorization service" is a web application that receives and processes the HTML form
+      that contains the request message envelope. It has privileged
+      access to the target graph and MAY interact with the user by presenting a web-based user interface, for
+      authentication and/or authorization purposes. After this user interaction step, the request message
+      envelope is transmitted to the target XDI endpoint.
+      </para>
+      <para>The
+      authorization service MAY use cookies to reduce the number of steps in subsequent transmissions.
+      </para>
+    </section>
+    <section>
+      <title>Discovering the authorization service</title>
+      <para>
+      The responder and therefore the target XDI endpoint's authorization service may not be known at the 
+      time the HTML form is constructed and displayed in the user's web browser. In order to find the
+      authorization service, XDI discovery is performed on the user's discovery key, using the service
+      type <code>&lt;$https&gt;&lt;$connect&gt;&lt;$xdi&gt;</code>. This may happen in one of three ways:
+      </para>
+      <section>
+      <title>Discovery via connect service</title>
+      <para>The HTML form may be submitted to a well-known "connect service", which interacts with
+      the user by presenting a web-based user interface. The user submits a discovery key to the connect service, which
+      uses it to discover the URI of the authorization service. The request message envelope is then forwarded
+      to the authorization service without modification, using an HTML form equivalent to the one
+      on the original requester web page. This HTML form may be auto-submitted using JavaScript.</para>
+      <para>The
+      connect service MAY use cookies to reduce the number of steps in subsequent transmissions.</para>
+      </section>
+      <section>
+      <title>Discovery via user agent</title>
+      <para>The user agent (web browser), possibly via a plugin, may natively support the XDI Browser
+      Binding. In this case, the user submits a discovery key to the user agent, which uses it to
+      discover the URI of the authorization service. The HTML form is then submitted to the discovered authorization
+      service.</para>
+      <para>The user's discovery key and/or authorization service MAY be permanantly stored or cached
+      by the user agent.</para>
+      </section>
+      <section>
+      <title>Discovery via widget</title>
+      <para>The HTML form may contain special scripting code which interacts with the user by
+      presenting a widget. The user submits a discovery key to the widget, which uses it to discover
+      the URI of the authorization service. Except for the XDI discovery process itself, this interaction
+      happens purely within the user agent (web browser). The HTML form is then dynamically modified
+      by the scripting code and submitted to the discovered authorization service.</para>
+      </section>
+    </section>
+    <section>
+      <title>HTML form (response)</title>
+      <para>
+        After the request message envelope is received by the target XDI endpoint and processed, a
+        response is generated and returned to the requester web page via an HTML form.</para>
+      <para>The HTML form containing the response MUST have the following characteristics:
+      </para>
+      <itemizedlist>
+        <listitem><para>The value of the "METHOD" attribute of the HTML form MUST be "POST".</para></listitem>
+        <listitem><para>The value of the "ACTION" attribute MUST be the requester's return URI.
+        </para></listitem>
+        <listitem><para>The form MUST contain a hidden field with the name "xdiResponse". The
+        value of the field is the response to be transmitted to the requester.</para></listitem>
+        <listitem><para>The form MAY contain the HTML microdata <xref linkend="MICRODATA"/> attributes
+        <code>itemscope</code> and <code>itemtype="$xdi$msg"</code>, to assist user agents with native
+        support for the XDI Browser Binding to recognize the HTML form.</para></listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>Request message envelope requirements</title>
+      <para>
+        The request message envelope SHOULD contain a return URI in the form
+        of a message attribute <code>&lt;#return&gt;&lt;$uri&gt;</code>, or otherwise the return URI
+        MUST be established out-of-band before the XDI Browser Binding can be used.
+      </para>
+      <para>
+        If the responder is not known at the time the HTML form is constructed, the variable
+        <code>{$to}</code> may be used to construct the request message envelope.
+      </para>
+    </section>
+    <section>
+      <title>Correlation of request messages and response messages</title>
+      <para>
+      In the XDI Browser Binding, Request messages and response messages may be implicitly
+      correlated by means of a cookie-based session that may exist between the user and the web page.</para>
+      <para>If stronger
+      correlation and/or additional security is desired, an asynchronous response SHOULD be forced
+      as described in <xref linkend="xdi-messaging-1.0"/>.
+      </para>
+    </section>
+    <section>
+      <title>Example of an XDI Message Exchange Using the XDI Browser Binding</title>
+      <para>
+        The following is an example of a request message envelope. It illustrates how to 
+        specify a responder that is not known at the time the HTML form is constructed. It also illustrates the use of the <code>&lt;#return&gt;&lt;$uri&gt;</code>
+        message parameter.
+        <programlisting>
+          [+]!:uuid:8888[$msg]@0/$is()/({$to})
+          [+]!:uuid:8888[$msg]@0/$do/({$to}/[+]!:uuid:8888)$do
+          [+]!:uuid:8888[$msg]@0$do/$get/{$to}&lt;#email&gt;
+          [+]!:uuid:8888[$msg]@0&lt;$sig&gt;/&amp;/"&lt;&lt; signature &gt;&gt;"
+          [+]!:uuid:8888[$msg]@0&lt;$sig&gt;/$is#/$sha$256$rsa$2048
+          [+]!:uuid:8888[$msg]@0&lt;#return&gt;&lt;$uri&gt;/&amp;/"https://acmenews.projectdanube.org/acmenews-return"
+        </programlisting>
+      </para>
+      <para>
+        The following is an example of an HTML form that contains a request message envelope.
+        In this case, a connect service is used to find the authorization service.
+        <programlisting>
+          &lt;form itemscope itemtype="$connect$request" action="https://connect-service.projectdanube.org/connect" method="post"&gt;
+          &lt;input type="hidden" name="xdiMessageEnvelope" value="&lt;&lt; XDI/JSON serialized request here &gt;&gt;"&gt;	
+          &lt;input type="submit" value="Send request message envelope"&gt;
+          &lt;/form&gt;
+        </programlisting>
+      </para>
+      <para>
+        The following is an example of an HTML form that contains a synchronous response with a result XDI statement.
+        <programlisting>
+          &lt;form action="https://acmenews.projectdanube.org/acmenews-return" method="post"&gt;
+          &lt;input type="hidden" name="xdiResponse" value="&lt;&lt; XDI/JSON serialized response here &gt;&gt;"&gt;
+          &lt;input type="submit" value="Return to requester web page"&gt;
+          &lt;/form&gt;
+        </programlisting>
+      </para>
+    </section>
   </section>
 
   <section>
-    <title>Artifact Binding</title>
+    <title>XDI Artifact Binding</title>
     <para>
       The artifact binding defines a mechanism by which XDI requests are transmitted using an artifact.
     </para>
