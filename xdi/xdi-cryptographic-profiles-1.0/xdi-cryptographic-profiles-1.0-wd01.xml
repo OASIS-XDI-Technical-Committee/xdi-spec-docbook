@@ -125,13 +125,8 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
     </legalnotice>
     <abstract>
       <title>Abstract</title>
-<<<<<<< HEAD:xdi/xdi-cryptographic-profiles-1.0/xdi-cryptographic-profiles-1.0-wd01.xml
-      <para>This &standard; specifies methods to create and validate cryptographic signatures and
-        methods for encrypting <glossterm>XDI</glossterm> statements, subgraphs and protocol
-=======
       <para>This &standard; specifies methods to create and validate cryptographic signatures for
           <glossterm linkend="g.xdi">XDI</glossterm> statements, subgraphs and protocol
->>>>>>> security:xdi/xdi-signatures-1.0/xdi-signatures-1.0-wd01.xml
         messages.</para>
     </abstract>
     <legalnotice role="notices">
