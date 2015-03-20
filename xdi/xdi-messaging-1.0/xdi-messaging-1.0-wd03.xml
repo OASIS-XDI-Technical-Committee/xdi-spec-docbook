@@ -61,15 +61,15 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.html</releaseinfo>
 <releaseinfo role="committee"><ulink url="http://www.oasis-open.org/committees/xdi">OASIS XDI TC</ulink></releaseinfo>
 <authorgroup>
-  <editor> <firstname>Joseph</firstname><surname>Boyle</surname>
-    <affiliation><orgname>Planetwork</orgname></affiliation>
-    <email>joseph@planetwork.net</email> </editor>
-  <editor> <firstname>Drummond</firstname><surname>Reed</surname>
-    <affiliation><orgname>XDI.org</orgname></affiliation>
-    <email>drummond.reed@xdi.org</email> </editor>
   <editor> <firstname>Markus</firstname><surname>Sabadello</surname>
     <affiliation><orgname>Project Danube</orgname></affiliation>
     <email>markus@projectdanube.org</email> </editor>
+  <editor> <firstname>Drummond</firstname><surname>Reed</surname>
+    <affiliation><orgname>XDI.org</orgname></affiliation>
+    <email>drummond.reed@xdi.org</email> </editor>
+  <editor> <firstname>Joseph</firstname><surname>Boyle</surname>
+    <affiliation><orgname>Planetwork</orgname></affiliation>
+    <email>joseph@planetwork.net</email> </editor>
 </authorgroup>
 <pubdate>&pubdate;</pubdate>
 <copyright><year>2014</year>
@@ -150,6 +150,13 @@ document made available to committee members to support the publishing process.<
       <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
       <releaseinfo>OASIS &standard;. </releaseinfo>
       <citetitle><ulink url="&latest-loc;/xdi-discovery.html">&latest-loc;/xdi-discovery.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="xdi-bindings-1.0">
+      <abbrev>OASIS-XDI-Bindings-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-bindings-1.0/xdi-bindings-1.0-wd01.xml">OASIS XDI 1.0 Bindings Specification</ulink></title>
+      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-bindings.html">&latest-loc;/xdi-bindings.html</ulink>.</citetitle>
     </bibliomixed> <bibliomixed id="xdi-policy-1.0">
       <abbrev>OASIS-XDI-Policy-V1.0</abbrev> <date>&pubdate; </date>
       <title><ulink url="../../xdi-policy-1.0/xdi-policy-1.0-wd01.xml">OASIS XDI 1.0 Policy Specification</ulink></title>
@@ -261,21 +268,29 @@ document made available to committee members to support the publishing process.<
 
 <section><title>XDI Messaging</title>
 
-<para>XDI messaging is the mechanism for transmitting requests and responses
-between
-
-
-. XDI messages are themselves XDI graphs, so they can be addressed, stored,
-shared, and controlled like any other XDI data (particularly useful for auditing). The
-graph of the message is also known as the message envelope. The receiver replies with a
-(possibly empty) message result, which is also an XDI graph.</para>
-<para>The XDI Bindings specification defines three bindings for XDI messaging:</para>
+<para>XDI messaging is the mechanism for transmitting <firstterm>request messages</firstterm> and 
+<firstterm>response messages</firstterm>
+between two authorities. An authority sending a request message is called <firstterm>requester</firstterm>. An
+authority sending a response message is called <firstterm>responder</firstterm>.</para>
+<para>A <firstterm>message</firstterm> is itself a context node in a graph, so it can be addressed, serialized, stored,
+shared, and controlled by link contracts. A graph containing one or more messages is also
+called a <firstterm>message envelope</firstterm>.</para>
+<para>A request message contains one or more <firstterm>request operations</firstterm>, which can perform
+queries and/or apply modifications to a graph for which the responder is authoritative. This graph is called
+the <firstterm>target graph</firstterm>.</para>
+<para>A response message contains a <firstterm>result graph</firstterm>, which represents the result of the request operations.
+The result graph MAY be empty.
+</para>
+<para>
+XDI messaging is defined in an abstract way and does not depend on any specific network topology.
+The XDI Bindings <xref linkend='xdi-bindings-1.0'/> specification defines
+three concrete ways how messages can be transmitted over a network:</para>
 <orderedlist>
-<listitem><para>XDI Direct Binding: XDI request and response messages are transmitted between the requester and the responder via HTTP POST operations.</para></listitem>
-<listitem><para>XDI Browser Binding: XDI request and response messages are transmitted between the requester and the responder via a sequence of HTML form elements and HTTP form submit operations.</para></listitem>
-<listitem><para>XDI Websocket Binding: XDI request and response messages are transmitted between the requester and the responder via Websocket sessions.</para></listitem>
+<listitem><para>XDI Direct Binding: Request and response messages are transmitted between the requester and the responder via HTTP POST operations.</para></listitem>
+<listitem><para>XDI Browser Binding: Request and response messages are transmitted between the requester and the responder via a sequence of HTML form elements and HTTP form submit operations.</para></listitem>
+<listitem><para>XDI Websocket Binding: Request and response messages are transmitted between the requester and the responder via Websocket sessions.</para></listitem>
 </orderedlist>
-<para>XDI messaging is peer-to-peer between any XDI client and any XDI endpoint, or between any two XDI endpoints. The endpoint URIs of XDI endpoints can be discovered using the XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol, which is itself an application of XDI messaging.</para>
+<para>Certain bindings MAY require the use of endpoint URIs on a network, which can be discovered using the XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol, which is itself an application of XDI messaging.</para>
 
 </section>
 
@@ -469,8 +484,8 @@ a statement, the following operations and behaviors are possible:</para>
 
 <section><title><code>$get</code> applied to an address</title>
 
-<para>The message result contains the subgraph at the target address if it exists.
-If the target address does not exist, the message result is empty.</para>
+<para>The result graph contains the subgraph at the target address if it exists.
+If the target address does not exist, the result graph is empty.</para>
 <para>Example: Given the following target graph:</para>
 <programlisting>//+acme
 =alice&lt;#email>/&amp;/"alice@email.com"
@@ -479,7 +494,7 @@ If the target address does not exist, the message result is empty.</para>
 <para>And the following <code>$get</code> operation on target address <code>=alice</code>:</para>
 <programlisting>=bob[$msg]!:uuid:4378$do/$get/=alice
 </programlisting>
-<para>The message result will be:</para>
+<para>The result graph will be:</para>
 <programlisting>=alice&lt;#email>/&amp;/"alice@email.com"
 =alice/#friend/=bob
 </programlisting>
@@ -488,8 +503,8 @@ If the target address does not exist, the message result is empty.</para>
 
 <section><title><code>$get</code> applied to a statement</title>
 
-<para>The message result contains the target statement if it exists.
-If the target statement does not exist, the message result is empty.</para>
+<para>The result graph contains the target statement if it exists.
+If the target statement does not exist, the result graph is empty.</para>
 <para>Example: Given the following target graph:</para>
 <programlisting>//+acme
 =alice&lt;#email>/&amp;/"alice@email.com"
@@ -498,7 +513,7 @@ If the target statement does not exist, the message result is empty.</para>
 <para>And the following <code>$get</code> operation on target statement <code>=alice/#friend/=bob</code>:</para>
 <programlisting>(=bob[$msg]!:uuid:4378$do/$get)=alice/#friend/=bob
 </programlisting>
-<para>The message result will be:</para>
+<para>The result graph will be:</para>
 <programlisting>=alice/#friend/=bob
 </programlisting>
 
@@ -508,7 +523,7 @@ If the target statement does not exist, the message result is empty.</para>
 
 <section><title><code>$set</code> operation</title>
 
-<para>This operation creates or modifies data in a target graph. Unless an error occurs, the message result is the empty graph.</para>
+<para>This operation creates or modifies data in a target graph. Unless an error occurs, the result graph is the empty graph.</para>
 
 <section><title><code>$set</code> applied to an address</title>
 
@@ -552,7 +567,7 @@ If the target statement exists already, the operation has no effect (this is not
 
 <section><title><code>$del</code> operation</title>
 
-<para>This operation deletes data from a target graph. Unless an error occurs, the message result is the empty graph.</para>
+<para>This operation deletes data from a target graph. Unless an error occurs, the result graph is the empty graph.</para>
 
 <section><title><code>$del</code> applied to an address</title>
 
@@ -598,7 +613,7 @@ If the target statement does not exist, the operation has no effect (this is not
 
 <section><title><code>$add</code> operation</title>
 
-<para>This operation creates data in a target graph. Unless an error occurs, the message result is the empty graph.
+<para>This operation creates data in a target graph. Unless an error occurs, the result graph is the empty graph.
 If the operation is applied to data which already exists, it generates an error
 (this is what distinguishes <code>$add</code> from <code>$set</code>).</para>
 
@@ -644,7 +659,7 @@ If the target statement exists already, the operation generates an error.</para>
 
 <section><title><code>$mod</code> operation</title>
 
-<para>This operation modifies data in a target graph. Unless an error occurs, the message result is the empty graph.
+<para>This operation modifies data in a target graph. Unless an error occurs, the result graph is the empty graph.
 If the operation is applied to data which does not exist, it generates an error
 (this is what distinguishes <code>$mod</code> from <code>$set</code>).</para>
 
