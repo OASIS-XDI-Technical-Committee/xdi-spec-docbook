@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+For use when a committee document points at the OASIS web site for publishing:
+<?xml-stylesheet type="text/xsl" 
+href="http://docs.oasis-open.org/templates/DocBook/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
+<!DOCTYPE article
+  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+         "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
+
+For use when a committee document points to an embedded runtime installation:
+<?xml-stylesheet type="text/xsl" 
+         href="htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
+<!DOCTYPE article
+ PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" 
+        "htmlruntime/spec-0.6/docbook/docbookx.dtd" 
+
+For use when a committee document is published in a local environment only
+(note the instructions for local publishing require adjusting the stylesheet
+ and DocBook directories in these declarations):
+<?xml-stylesheet type="text/xsl" 
+href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl"?>
+<!DOCTYPE article
+  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+         "file:///c:/oasis/spec-0.6/docbook/docbookx.dtd" 
+-->
+<?xml-stylesheet type="text/xsl" 
+         href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
+<!DOCTYPE article
+ PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" 
+        "../../htmlruntime/spec-0.6/docbook/docbookx.dtd" 
+[
+<!--the document properties-->
+<!ENTITY name "xdi-messaging">
+<!ENTITY pversion "0.1">
+<!ENTITY version "1.0">
+<!ENTITY stage "wd02">
+<!ENTITY standard "Working Draft 03">
+<!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;">
+<!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
+<!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
+<!ENTITY pubdate "24 March 2015">
+<!ENTITY title "XDI Messaging V&version;">
+]>
+
+<article status="&standard;">
+
+<articleinfo>
+
+<title>&title;</title>
+<productname>&name;</productname>
+<productnumber>&version;-&stage;</productnumber>
+<releaseinfo role="track">Standards Track Work Product</releaseinfo>
+<releaseinfo role="OASIS-specification-this-authoritative">&this-loc;/&name;-&version;-&stage;.xml</releaseinfo>
+<releaseinfo role="OASIS-specification-this">&this-loc;/&name;-&version;-&stage;.pdf</releaseinfo>
+<releaseinfo role="OASIS-specification-this">&this-loc;/&name;-&version;-&stage;.html</releaseinfo>
+<releaseinfo role="OASIS-specification-previous-authoritative">&previous-loc;/&name;-&pversion;.xml</releaseinfo>
+<releaseinfo role="OASIS-specification-previous">&previous-loc;/&name;-&pversion;.pdf</releaseinfo>
+<releaseinfo role="OASIS-specification-previous">&previous-loc;/&name;-&pversion;.html</releaseinfo>
+<releaseinfo role="OASIS-specification-latest-authoritative">&latest-loc;/&name;.xml</releaseinfo>
+<releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.pdf</releaseinfo>
+<releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.html</releaseinfo>
+<releaseinfo role="committee"><ulink url="http://www.oasis-open.org/committees/xdi">OASIS XDI TC</ulink></releaseinfo>
+<authorgroup>
+  <editor> <firstname>Joseph</firstname><surname>Boyle</surname>
+    <affiliation><orgname>Planetwork</orgname></affiliation>
+    <email>joseph@planetwork.net</email> </editor>
+  <editor> <firstname>Drummond</firstname><surname>Reed</surname>
+    <affiliation><orgname>XDI.org</orgname></affiliation>
+    <email>drummond.reed@xdi.org</email> </editor>
+  <editor> <firstname>Markus</firstname><surname>Sabadello</surname>
+    <affiliation><orgname>Project Danube</orgname></affiliation>
+    <email>markus@projectdanube.org</email> </editor>
+</authorgroup>
+<pubdate>&pubdate;</pubdate>
+<copyright><year>2014</year>
+<holder>OASIS Open, Inc. All Rights Reserved.</holder></copyright>
+ <legalnotice role="additional"><title>Additional artifacts</title>
+ <para>This prose specification is one component of a Work Product which also includes:</para>
+ <!--itemizedlist spacing="compact"> <listitem><para>
+publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this-loc;/&name;-&version;-&stage;.zip</ulink></para>
+ </listitem> </itemizedlist-->
+</legalnotice>
+<legalnotice role="related"><title>Related work</title>
+  <para>This document is primarily based on a set of proposals that had been collected by the OASIS XDI TC on its associated wiki at <ulink url="https://wiki.oasis-open.org/xdi/">https://wiki.oasis-open.org/xdi/</ulink>.</para>
+</legalnotice>
+
+<abstract><title>Abstract</title>
+  <para>This working draft specifies the abstract pattern for all XDI messaging together with the binding to the http/https protocol for performing XDI operations using XDI messages.</para>
+</abstract>
+
+<!--legalnotice role="status"><title>Status</title>
+<para>This is a work in progress contributed to the OASIS TC administration 
+and does not at this time represent the consensus of any particular OASIS Technical Committee.
+There are no plans to make this a formal Committee Specification as it is merely an internal
+document made available to committee members to support the publishing process.</para>
+</legalnotice-->
+<legalnotice role="citation"><title>Citation format</title>
+<para>When referencing this specification the following citation format should be used:</para>
+<!--bibliolist> <bibliomixed>
+  <abbrev>OASIS-XDI-Messaging-V1.0</abbrev>
+  <title>OASIS XDI Messaging V1.0</title>
+  <date>&pubdate;. </date>
+  <releaseinfo>OASIS &standard;. </releaseinfo>
+  <citetitle><ulink url="&latest-loc;/&name;.html">&latest-loc;/&name;.html</ulink>.</citetitle>
+</bibliomixed> </bibliolist-->
+</legalnotice>
+<legalnotice role="notices"><title>Notices</title>
+<para>Copyright &#169; OASIS&#174; Open 2013. All Rights Reserved.  </para>
+<para>All capitalized terms in the following text have the meanings assigned to them in the OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full Policy may be found at <ulink  url="http://www.oasis-open.org/who/intellectualproperty.php">http://www.oasis-open.org/who/intellectualproperty.php</ulink>.</para>
+<para>This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to OASIS, except as needed for the purpose of developing any document or deliverable produced by an OASIS Technical Committee (in which case the rules applicable to copyrights, as set forth in the OASIS IPR Policy, must be followed) or as required to translate it into languages other than English.</para> 
+<para>The limited permissions granted above are perpetual and will not be revoked by OASIS or its successors or assigns.</para>
+<para>This document and the information contained herein is provided on an "AS IS" basis and OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</para> 
+<para>OASIS requests that any OASIS Party or any other party that believes it has patent claims that would necessarily be infringed by implementations of this OASIS Committee Specification or OASIS Standard, to notify OASIS TC Administrator and provide an indication of its willingness to grant patent licenses to such patent claims in a manner consistent with the IPR Mode of the OASIS Technical Committee that produced this specification.</para>
+<para>OASIS invites any party to contact the OASIS TC Administrator if it is aware of a claim of ownership of any patent claims that would necessarily be infringed by implementations of this specification by a patent holder that is not willing to provide a license to such patent claims in a manner consistent with the IPR Mode of the OASIS Technical Committee that produced this specification. OASIS may include such claims on its website, but disclaims any obligation to do so.</para>
+<para>OASIS takes no position regarding the validity or scope of any intellectual property or other rights that might be claimed to pertain to the implementation or use of the technology described in this document or the extent to which any license under such rights might or might not be available; neither does it represent that it has made any effort to identify any such rights. Information on OASIS' procedures with respect to rights in any document or deliverable produced by an OASIS Technical Committee can be found on the OASIS website. Copies of claims of rights made available for publication and any assurances of licenses to be made available, or the result of an attempt made to obtain a general license or permission for the use of such proprietary rights by implementers or users of this OASIS Committee Specification or OASIS Standard, can be obtained from the OASIS TC Administrator. OASIS makes no representation that any information or list of intellectual property rights will at any time be complete, or that any claims in such list are, in fact, Essential Claims.</para>
+<para>The name "OASIS" is a trademark of <ulink url="http://www.oasis-open.org">OASIS</ulink>, the owner and developer of this specification, and should be used only to refer to the organization and its official outputs. OASIS welcomes reference to, and implementation and use of, specifications, while reserving the right to enforce its marks against misleading uses. Please see <ulink url="http://www.oasis-open.org/who/trademark.php">http://www.oasis-open.org/who/trademark.php</ulink> for above guidance.</para>
+</legalnotice>
+
+</articleinfo>
+
+<section id="s.introduction"> <title>Introduction</title>
+
+  <para>This working draft specifies the abstract pattern for all XDI messaging together with the binding to the http/https protocol for performing XDI operations using XDI messages..</para>
+  <para>This working draft specifies the XDI messaging protocol.</para>
+  <para>This working draft builds on <xref linkend="xdi-core-1.0"/>.</para>
+
+  <section><title> Key words</title>
+
+    <para>The key words <glossterm>must</glossterm>, <glossterm>must not</glossterm>, <glossterm>required</glossterm>,
+      <glossterm>shall</glossterm>, <glossterm>shall not</glossterm>, <glossterm>should</glossterm>, <glossterm>should not</glossterm>,
+      <glossterm>recommended</glossterm>, <glossterm>may</glossterm>, and <glossterm>optional</glossterm> are to be
+      interpreted as described in <xref linkend="rfc2119"/>. Note that for reasons of style, these words are not capitalized in this
+      document.</para>
+
+  </section>
+  
+  <section><title>Normative References</title>
+
+    <bibliolist> <bibliomixed id="xdi-core-1.0">
+      <abbrev>OASIS-XDI-Core-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-core-1.0/xdi-core-1.0-wd01.xml">OASIS XDI 1.0 Core Specification</ulink></title>
+      <author><firstname>Joseph </firstname> <surname>Boyle</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>. 
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-core.html">&latest-loc;/xdi-core.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="xdi-discovery-1.0">
+      <abbrev>OASIS-XDI-Discovery-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-discovery-1.0/xdi-discovery-1.0-wd01.xml">OASIS XDI 1.0 Discovery Specification</ulink></title>
+      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-discovery.html">&latest-loc;/xdi-discovery.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="xdi-policy-1.0">
+      <abbrev>OASIS-XDI-Policy-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-policy-1.0/xdi-policy-1.0-wd01.xml">OASIS XDI 1.0 Policy Specification</ulink></title>
+      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-policy.html">&latest-loc;/xdi-privacy.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="xdi-security-1.0">
+      <abbrev>OASIS-XDI-Security-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-security-1.0/xdi-security-1.0-wd01.xml">OASIS XDI 1.0 Security Mechanisms Specification</ulink></title>
+      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-security.html">&latest-loc;/xdi-security.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="xdi-privacy-1.0">
+      <abbrev>OASIS-XDI-Privacy-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-privacy-1.0/xdi-privacy-1.0-wd01.xml">OASIS XDI 1.0 Privacy Mechanisms Specification</ulink></title>
+      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-privacy.html">&latest-loc;/xdi-privacy.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="rfc2119">
+      <abbrev>RFC 2119</abbrev><date>March 1997</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc2119.txt">Key words for use in RFCs to Indicate Requirement Levels</ulink></title>
+      <author><firstname>S. </firstname> <surname>Bradner</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="rfc2234">
+      <abbrev>RFC 2234</abbrev><date>November 1997</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc2234.txt">Augmented BNF for Syntax Specifications: ABNF</ulink></title>
+      <author><firstname>D. </firstname> <surname>Crocker</surname></author>,
+      <author><firstname>P. </firstname> <surname>Overell</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="rfc4627">
+      <abbrev>RFC 4627</abbrev><date>July 2006</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc4627.txt">The application/json Media Type for JavaScript Object Notation (JSON)</ulink></title>
+      <author><firstname>D. </firstname> <surname>Crockford</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="rfc4122">
+      <abbrev>RFC 4122</abbrev><date>July 2005</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc4122.txt">A Universally Unique IDentifier (UUID) URN Namespace</ulink></title>
+      <author><firstname>D. </firstname> <surname>Crockford</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="rfc5952">
+      <abbrev>RFC 5952</abbrev><date>August 2010</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc5952.txt">A Recommendation for IPv6 Address Text Representation</ulink></title>
+      <author><firstname>S. </firstname> <surname>Kawamura</surname></author>, 
+      <author><firstname>M. </firstname> <surname>Kawashima</surname></author>. 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="rfc6749">
+      <abbrev>RFC 6749</abbrev><date>October 2012</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc6749.txt">The OAuth 2.0 Authorization Framework</ulink></title>
+      <author><firstname>D. </firstname> <surname>Hardt </surname></author>, 
+       <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="rfc6750">
+      <abbrev>RFC 6750</abbrev><date>October 2012</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc6750.txt">The OAuth 2.0 Authorization Framework: Bearer Token Usage</ulink></title>
+      <author><firstname>M. </firstname> <surname>Jones</surname></author>. 
+      <author><firstname>D. </firstname> <surname>Hardt</surname></author>, 
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="ecma-404">
+      <abbrev>ECMA-404</abbrev><date>October 2013</date>
+      <title><ulink url="http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf">The JSON Data Interchange Format</ulink></title>
+      <author><firstname>S. </firstname> <surname>Kawamura</surname></author>,
+      <author><firstname>M. </firstname> <surname>Kawashima</surname></author>.
+      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+    </bibliomixed> <bibliomixed id="fips180-4">
+      <abbrev>FIPS 180-4</abbrev><date>March 2012</date>
+      <title><ulink url="http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf">Secure Hash Standard (SHS)</ulink></title>
+      <author><firstname></firstname> <surname></surname></author>
+      <releaseinfo>Federal Information Processing Standards Publication (FIPS), NIST</releaseinfo>
+    </bibliomixed>
+  </bibliolist>
+
+</section>
+
+<section><title>Non-Normative References</title>
+
+  <bibliolist>
+    <bibliomixed id="erm">
+      <abbrev>erm</abbrev><date>1976</date>
+      <title><ulink url="https://en.wikiversity.org/wiki/1976/Chen">The Entity-Relationship Model: Toward a Unified View of Data</ulink></title>
+      <author><firstname>Peter </firstname> <surname>Chen</surname></author>.
+      <releaseinfo>ACM Transactions on Database Systems 1(1): 9–36. doi:10.1145/320434.320440</releaseinfo>
+    </bibliomixed> <bibliomixed id="webarch">
+      <abbrev>webarch</abbrev><date>15 December 2004</date>
+      <title><ulink url="http://www.w3.org/TR/webarch/#id-resources">Architecture of the World Wide Web, Volume One</ulink></title>
+      <author><firstname>Ian </firstname> <surname>Jacobs</surname></author>,
+      <author><firstname>Norman </firstname> <surname>Walsh</surname></author>.
+      <releaseinfo>W3C Recommendation</releaseinfo>
+    </bibliomixed> <bibliomixed id="reification">
+      <abbrev>reification</abbrev>
+      <title><ulink url="http://en.wikipedia.org/wiki/Reification_(computer_science)">Reification (computer science)</ulink></title>
+      <releaseinfo>Wikipedia</releaseinfo>
+    </bibliomixed> <bibliomixed id="json-ld">
+      <abbrev>json-ld</abbrev><date>04 October 2013</date>
+      <title><ulink url="http://json-ld.org/spec/latest/json-ld">JSON-LD: A JSON-based Serialization for Linked Data</ulink></title>
+      <author><firstname>Gregg </firstname> <surname>Kellogg</surname></author>,
+      <author><firstname>Markus </firstname> <surname>Lanthaler</surname></author>,
+      <author><firstname>Niklaus </firstname> <surname>Lindström</surname></author>,
+      <author><firstname>Dave </firstname> <surname>Longley</surname></author>,
+      <author><firstname>Manu </firstname> <surname>Sporny</surname></author>. 
+      <releaseinfo>W3C Editor's Draft 04 October 2013 </releaseinfo>
+    </bibliomixed>
+  </bibliolist>
+
+</section>
+
+</section>
+
+<section><title>XDI Messaging</title>
+
+<para>XDI messaging is the mechanism for transmitting requests and responses
+between
+
+
+. XDI messages are themselves XDI graphs, so they can be addressed, stored,
+shared, and controlled like any other XDI data (particularly useful for auditing). The
+graph of the message is also known as the message envelope. The receiver replies with a
+(possibly empty) message result, which is also an XDI graph.</para>
+<para>The XDI Bindings specification defines three bindings for XDI messaging:</para>
+<orderedlist>
+<listitem><para>XDI Direct Binding: XDI request and response messages are transmitted between the requester and the responder via HTTP POST operations.</para></listitem>
+<listitem><para>XDI Browser Binding: XDI request and response messages are transmitted between the requester and the responder via a sequence of HTML form elements and HTTP form submit operations.</para></listitem>
+<listitem><para>XDI Websocket Binding: XDI request and response messages are transmitted between the requester and the responder via Websocket sessions.</para></listitem>
+</orderedlist>
+<para>XDI messaging is peer-to-peer between any XDI client and any XDI endpoint, or between any two XDI endpoints. The endpoint URIs of XDI endpoints can be discovered using the XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol, which is itself an application of XDI messaging.</para>
+
+</section>
+
+<section><title>Message Patterns</title>
+
+<para>Following is the pattern for an XDI message (shown in XDI display format). Labels
+in <code>&lt;--this-form--></code> represent template variables. Since an XDI message is itself an XDI graph,
+it consists of a set of XDI statements. Messages are entity members within an entity collection identified
+by <code>[$msg]</code>. An XDI message MUST conform to the statements in this template. 
+All statements except the OPERATION statement are OPTIONAL for certain types of XDI messages (this is still under
+discussion by the TC).
+</para>
+<programlisting>#1:  FROM                  &lt;--from-peer-->/$set/&lt;--from-->[$msg]&lt;--msg-id-->
+#2:  TO                    &lt;--from-->[$msg]&lt;--msg-id-->/$is()/&lt;--to-peer-->
+#3:  MESSAGE TYPE          &lt;--from-->[$msg]&lt;--msg-id-->/$is#/&lt;--message-type-->[$v]&lt;--version-number-->$xdi[$v]@1$msg
+#4:  TIMESTAMP             &lt;--from-->[$msg]&lt;--msg-id-->&lt;$t>/&amp;/&lt;--timestamp-->
+#5:  AUTHENTICATION TOKEN  &lt;--from-->[$msg]&lt;--msg-id-->&lt;--token-type-->&lt;$token>/&amp;/&lt;--token-->
+#6:  AUTHENTICATION SIG    &lt;--from-->[$msg]&lt;--msg-id-->&lt;--signature-type-->&lt;$sig>/&amp;/&lt;--signature-->
+#7:  AUTHORIZATION         &lt;--from-->[$msg]&lt;--msg-id-->/$do/&lt;--link-contract-id-->
+#8:  OPERATION             &lt;--from-->[$msg]&lt;--msg-id-->$do/&lt;--operation-->/&lt;--object-graph-->
+#9:  CONDITION             &lt;--from-->[$msg]&lt;--msg-id-->$do$if&lt;--boolean-context-->/&lt;--operator-->/&lt;--condition-->
+#10: PARAMETERS            &lt;--from-->[$msg]&lt;--msg-id-->&lt;--operation-->&lt;--parameter-->/&amp;/&lt;--parameter-value-->
+</programlisting>
+
+<table><tgroup cols="5" colsep="1" rowsep="1"><thead>
+<row><entry>Order</entry><entry>Statement Type</entry><entry>Subject</entry><entry>Predicate</entry><entry>Object</entry></row>
+</thead><tbody>
+<row><entry>1</entry><entry>  From       </entry><entry> <code>&lt;--from-peer--></code></entry><entry><code>$set</code></entry><entry><code>&lt;--from-->[$msg]&lt;--msg-id--></code></entry></row>
+<row><entry>2</entry><entry>  To         </entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id--></code></entry><entry><code>$is()</code></entry><entry><code>&lt;--to-peer--></code></entry></row>
+<row><entry>3</entry><entry>  Message Type</entry><entry><code>&lt;--from-->[$msg]&lt;--msg-id--></code></entry><entry><code>$is</code></entry><entry><code>&lt;--message-type-->[$v]&lt;--version-number-->$xdi[$v]@1$msg</code></entry></row>
+<row><entry>4</entry><entry>  Timestamp  </entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id-->&lt;$t></code></entry><entry><code>&amp;</code></entry><entry><code>&lt;--timestamp--></code></entry></row>
+<row><entry>5</entry><entry>  Authentication Token</entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id-->&lt;--token-type-->&lt;$token></code></entry><entry><code>&amp;</code></entry><entry><code>&lt;--token--></code></entry></row>
+<row><entry>6</entry><entry>  Authentication Signature</entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id-->&lt;--signature-type-->&lt;$sig></code></entry><entry><code>&amp;</code></entry><entry><code>&lt;--signature--></code></entry></row>
+<row><entry>7</entry><entry>  Authorization</entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id--></code></entry><entry><code>$do</code></entry><entry><code>&lt;--link-contract-id--></code></entry></row>
+<row><entry>8</entry><entry>  Operation  </entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id-->$do</code></entry><entry><code>operation</code></entry><entry><code>&lt;--object-graph--></code></entry></row>
+<row><entry>9</entry><entry>  Condition  </entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id-->$do$ifboolean-context</code></entry><entry><code>operator</code></entry><entry><code>&lt;--condition--></code></entry></row>
+<row><entry>10</entry><entry> Parameters </entry><entry> <code>&lt;--from-->[$msg]&lt;--msg-id-->&lt;--operation-->&lt;--parameter--></code></entry><entry><code>&amp;</code></entry><entry><code>&lt;--parameter-value--></code></entry></row>
+</tbody></tgroup></table>
+<para>Where:</para>
+<orderedlist>
+<listitem><para><code>&lt;--from-peer--></code> is the XDI address of the peer root node of the XDI graph originating the message. This is expressed as an XDI cross-reference (i.e., in parentheses).</para></listitem> 
+<listitem><para><code>&lt;--from--></code> is the XDI address of the sender (the XDI authority originating the message) which may or may not be the same as the XDI address inside the <code>&lt;--from-peer--></code> cross-reference.</para></listitem>
+<listitem><para><code>&lt;--msg-id--></code> is an entity instance that is the unique ID of the message in the context of this sender. See the ''Message ID Rules'' section below.</para></listitem>
+<listitem><para><code>&lt;--to-peer--></code> is the XDI address of the XDI peer root for the recipient. This is always expressed as an XDI cross-reference (i.e., in parentheses). It is the XDI address on which Xdi Discovery is performed to discover the XDI endpoint URI. For a message to multiple recipients, there will be one TO statement per recipient.</para></listitem> 
+<listitem><para><code>&lt;--message-type--></code> is an optional XDI context defining the XDI message type.</para></listitem>
+<listitem><para><code>&lt;--version-number--></code> is the message type version, expressed as an ordered instance <code>@x</code> where x is a non-negative integer.</para></listitem>
+<listitem><para><code>&lt;--timestamp--></code> is the timestamp of the message in XML datetime format.</para></listitem>
+<listitem><para><code>&lt;--token-type--></code> is the context defining the type of token provided for message authentication.</para></listitem>
+<listitem><para><code>&lt;--token--></code> is the literal token value provided for authentication as required by the referenced link contract.</para></listitem>
+<listitem><para><code>&lt;--signature-type--></code> is the context defining the type of signature provided for authentication.</para></listitem>
+<listitem><para><code>&lt;--signature--></code> is the literal signature value provided for authentication as required by the referenced link contract.</para></listitem>
+<listitem><para><code>&lt;--link-contract-id--></code> is the XDI address of the root node of the link contract authorizing the requested operation on the requested object graph. This MUST be either: a) a <code>$do</code> entity singleton or: b) a <code>[$do]</code> entity class followed by an entity instance. See the XDI Policy specification: <xref linkend='xdi-policy-1.0'/>.</para></listitem>
+<listitem><para><code>&lt;--operation--></code> is the requested XDI operation (<code>$get, $set, $del, $add, $mod, $do</code>), plus subcontexts (if any). There may be one or more operation statements in a message.</para></listitem>
+<listitem><para><code>&lt;--object-graph--></code> is the XDI address or statement that is the target of the operation.</para></listitem> 
+<listitem><para><code>&lt;--boolean-context--></code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem>
+<listitem><para><code>&lt;--operator--></code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem> 
+<listitem><para><code>&lt;--condition--></code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem>
+<listitem><para><code>&lt;--parameter--></code> is an XDI message protocol parameter. See the ''Parameter Rules'' section below.</para></listitem>
+<listitem><para><code>&lt;--parameter-value--></code> is the value of a message parameter. See the ''Parameter Rules'' section below.</para></listitem>
+</orderedlist>
+
+<section><title>Message Envelope Rules</title>
+
+<para>The entire XDI graph containing one or more XDI messages is called the XDI message envelope.</para>
+<orderedlist>
+<listitem><para>A message envelope MAY contain more than one message subgraph.</para></listitem>
+<listitem><para>A message MAY contain more than one operation statement.</para></listitem>
+<listitem><para>An XDI endpoint MUST execute all messages in a message envelope.</para></listitem>
+<listitem><para>An XDI endpoint MUST execute all operation statements within a message.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Statement Ordering Rules</title>
+
+<para>In the XDI graph model as a whole, XDI statements are unordered.</para>
+
+<orderedlist>
+<listitem><para>Messages within a message envelope (i.e., within the <code>&lt;--from-->[$msg]</code> collection) MAY be explicitly ordered by appending the <code>@&lt;--digit--></code>ordering context to the <code>&lt;--from-->[$msg]!&lt;--id--></code> context.</para></listitem>
+<listitem><para>Operation statements within a message (i.e., as objects of the <code>&lt;--operation--></code> predicate) MAY be explicitly ordered by appending the <code>@&lt;--digit--></code> ordering context to the <code>&lt;--operation--></code> predicate.</para></listitem>
+<listitem><para>Explicit ordering of messages and operations is OPTIONAL for an XDI client.</para></listitem>
+<listitem><para>Support for explicit ordering of messages and operations is REQUIRED for an XDI endpoint.</para></listitem>
+<listitem><para>If explicit ordering of messages and operations is not used, then an XDI endpoint MUST NOT make guarantees about the order in which messages in a message envelope are executed, or about the order in which operations in a message are executed.</para></listitem>
+<listitem><para>An XDI endpoint MUST guarantee that all operations in one message are executed before operations in another message are executed.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Sender Rules</title>
+
+<para>If an XDI message is required to include a FROM statement, the following rules apply:</para>
+<orderedlist>
+<listitem><para><code>&lt;--from-peer--></code> MUST be the peer root address of the XDI endpoint originating the message. (Note that the <code>&lt;--from-peer--></code> for XDI client that does not function as an XDI endpoint may be an XDI cross-reference to its current network endpoint or some other client identifier acceptable to the receiving XDI endpoint.)</para></listitem>
+<listitem><para><code>&lt;--from--></code> MUST be the XDI address representing the XDI authority (e.g., person, organization, device, service, etc.) originating the message.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Message ID Rules</title>
+
+<orderedlist>
+<listitem><para>Like any XDI subgraph, the value of the <code>&lt;--id--></code> variable representing the message ID MUST be unique within the scope of the <code>[$msg]</code> collection of messages sent by the sender. The <code>&lt;--id--></code> value may be sequential, or based on timestamps, or a UUID, or use any other algorithm that provides uniqueness in this context.</para></listitem>
+<listitem><para>An XDI client MUST use a different message ID for every message.</para></listitem>
+<listitem><para>An XDI endpoint MAY enforce uniqueness of message IDs.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Recipient Rules</title>
+
+<para>If an XDI message is required to include a TO statement, the following rules apply:</para>
+<orderedlist>
+<listitem><para><code>&lt;--to-peer--></code> MUST be the peer root address of the XDI endpoint to which the message is sent.</para></listitem>
+<listitem><para>This peer root address SHOULD be discoverable using XDI Discovery.</para></listitem>
+<listitem><para>An XDI message MAY include multiple TO statements in order to deliver the message to multiple recipients.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Timestamp Rules</title>
+
+<para>If an XDI message is required to include a TIMESTAMP statement, the following rules apply:</para>
+<orderedlist>
+<listitem><para><code>&lt;--timestamp--></code> MUST be an XML datetime as specified by the '''$t''' entry in the XDI $ Dictionary.</para></listitem>
+<listitem><para>?An XDI endpoint MAY enforce server-side policy requiring the message <code>&lt;timestamp></code> value to be within a certain tolerance of the server timestamp.</para></listitem>
+</orderedlist>
+
+</section>
+
+</section>
+
+<section><title>Request Messages</title>
+
+<section><title>Authentication Rules</title>
+
+<section><title>Token-Based Authentication</title>
+
+<para>A message MAY be authenticated with a token as defined in section 1.4 of <xref linkend="rfc6749"/>.</para>
+<para>Supported token types and token authentication requirements will defined in separate specifications. The
+token types currently planned to be supported by the XDI TC include:</para>
+<orderedlist>
+<listitem><para><code>$secret</code> for shared secrets. Any valid XDI literal value may be used as a shared secret.</para></listitem>
+<listitem><para><code>$bearer</code> for bearer tokens as defined by <xref linkend="rfc6750"/>.</para></listitem>
+<listitem><para>Other token types as registered with the IANA OAuth Access Token Types Registry defined in section 11.1 of <xref linkend="rfc6749"/>.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Signature-Based Authentication</title>
+
+<para>XDI messages MAY be signed for authentication. See <xref linkend="xdi-signature1.0"/>.</para>
+
+</section>
+
+</section>
+
+<section><title>Authorization Rules</title>
+
+<orderedlist>
+<listitem><para>Each XDI message MUST include a <code>&lt;--link-contract--></code> reference to the XDI link contract authorizing that message. See the [[Link Contract Pattern]]. Requiring the <code>&lt;--link-contract--></code> reference in an XDI message makes it much more efficient for XDI servers to perform authentication and authorization, because they know which link contract to evaluate. (For a public link contract, the value of <code>&lt;--link-contract--></code> is <code>$public$do</code>.)</para></listitem>
+<listitem><para>The message MUST be executed only if the [[XdiPolicyExpression|link contract policies]] evaluates to true.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Operation Rules</title>
+
+<para>Operations constitute the body of an XDI message.</para>
+<orderedlist>
+<listitem><para>An XDI message MUST contain at least one operation statement.</para></listitem>
+<listitem><para>To successfully complete execution of an XDI message, an XDI endpoint MUST complete execution of each operation requested in each operation statement in the message.</para></listitem>
+</orderedlist>
+
+<para>Depending on: a) the operation, and b) whether the operation target is an XDI address or
+a statement, the following operations and behaviors are possible:</para>
+
+<table><tgroup cols="5"><thead>
+<row><entry></entry><entry>on address</entry><entry>on contextual statement</entry><entry>on literal statement</entry><entry>on relational statement</entry></row>
+</thead><tbody>
+<row><entry><code>$get</code></entry><entry>retrieves graph/subgraph</entry><entry>retrieves contextual statement</entry><entry>retrieves literal statement</entry><entry>retrieves relational statement</entry></row>
+<row><entry><code>$set</code></entry><entry>creates context node and parent context node(s)</entry><entry>creates contextual statement and parent context node(s)</entry><entry>creates literal statement and parent context node(s), or modifies existing literal statement</entry><entry>creates relational statement and parent context node(s)</entry></row>
+<row><entry><code>$del</code></entry><entry>deletes context node and subgraph</entry><entry>deletes contextual statement and subgraph</entry><entry>deletes literal statement</entry><entry>deletes relational statement</entry></row>
+<row><entry><code>$add</code></entry><entry>creates new context node and parent context node(s)</entry><entry>creates new contextual statement and parent context node(s)</entry><entry>creates new literal statement and parent context node(s)</entry><entry>creates new relational statement and parent context node(s)</entry></row>
+<row><entry><code>$mod</code></entry><entry>(invalid)</entry><entry>(invalid)</entry><entry>modifies existing literal statement</entry><entry>(invalid)</entry></row>
+<row><entry><code>$do</code></entry><entry>(unspecified)</entry><entry>(unspecified)</entry><entry>(unspecified)</entry><entry>(unspecified)</entry></row>
+</tbody></tgroup></table>
+
+<section><title><code>$get</code> operation</title>
+
+<para>This operation retrieves data from a target graph and does not make changes to that graph.</para>
+
+<section><title><code>$get</code> applied to an address</title>
+
+<para>The message result contains the subgraph at the target address if it exists.
+If the target address does not exist, the message result is empty.</para>
+<para>Example: Given the following target graph:</para>
+<programlisting>//+acme
+=alice&lt;#email>/&amp;/"alice@email.com"
+=alice/#friend/=bob
+</programlisting>
+<para>And the following <code>$get</code> operation on target address <code>=alice</code>:</para>
+<programlisting>=bob[$msg]!:uuid:4378$do/$get/=alice
+</programlisting>
+<para>The message result will be:</para>
+<programlisting>=alice&lt;#email>/&amp;/"alice@email.com"
+=alice/#friend/=bob
+</programlisting>
+
+</section>
+
+<section><title><code>$get</code> applied to a statement</title>
+
+<para>The message result contains the target statement if it exists.
+If the target statement does not exist, the message result is empty.</para>
+<para>Example: Given the following target graph:</para>
+<programlisting>//+acme
+=alice&lt;#email>/&amp;/"alice@email.com"
+=alice/#friend/=bob
+</programlisting>
+<para>And the following <code>$get</code> operation on target statement <code>=alice/#friend/=bob</code>:</para>
+<programlisting>(=bob[$msg]!:uuid:4378$do/$get)=alice/#friend/=bob
+</programlisting>
+<para>The message result will be:</para>
+<programlisting>=alice/#friend/=bob
+</programlisting>
+
+</section>
+
+</section>
+
+<section><title><code>$set</code> operation</title>
+
+<para>This operation creates or modifies data in a target graph. Unless an error occurs, the message result is the empty graph.</para>
+
+<section><title><code>$set</code> applied to an address</title>
+
+<para>This operation creates a context node at the target address, as well as any parent context node(s) as needed.
+If the target address exists already, the operation has no effect (this is not considered an error).</para>
+<para>Example: Given the following target graph:</para>
+<programlisting>//+acme
+//=alice
+</programlisting>
+<para>And the following <code>$set</code> operation on target address <code>=alice&lt;#email></code>:</para>
+<programlisting>=bob[$msg]!:uuid:4378$do/$set/=alice&lt;#email>
+</programlisting>
+<para>The target graph after the operation will be:</para>
+<programlisting>//+acme
+=alice//&lt;#email>
+</programlisting>
+
+</section>
+
+<section><title><code>$set</code> applied to a statement</title>
+
+<para>This operation creates the target statement, as well as any parent context nodes(s) as needed.
+If the target statement exists already, the operation has no effect (this is not considered an error).</para>
+<para>Example: Given the following target graph:</para>
+<programlisting>//+acme
+=alice&lt;//#email>
+</programlisting>
+<para>And the following <code>$set</code> operation on target statements <code>=alice&lt;#email>/&amp;/"alice@email.com"</code> and <code>=alice/#friend/=bob</code>:</para>
+<programlisting>(=bob[$msg]!:uuid:4378$do/$set)=alice&lt;#email>/&amp;/"alice@email.com"
+(=bob[$msg]!:uuid:4378$do/$set)=alice/#friend/=bob 
+</programlisting>
+<para>The target graph after the operation will be:</para>
+<programlisting>//+acme
+=alice&lt;#email>/&amp;/"alice@email.com"
+=alice/#friend/=bob
+</programlisting>
+
+</section>
+
+</section>
+
+<section><title><code>$del</code> operation</title>
+
+<para>This operation deletes data from a target graph. Unless an error occurs, the message result is the empty graph.</para>
+
+<section><title><code>$del</code> applied to an address</title>
+
+<para>This operation deletes a context node at the target address, as well as its entire subgraph.
+If the target address does not exist, the operation has no effect (this is not considered an error).</para>
+<para>Example: Given the following target graph:</para>
+<programlisting>//+acme
+=alice&lt;#email>/&amp;/"alice@email.com"
+=alice/#friend/=bob
+</programlisting>
+<para>And the following <code>$del</code> operation on target address <code>=alice&lt;#email></code>:</para>
+<programlisting>=bob[$msg]!:uuid:4378$do/$del/=alice&lt;#email>
+</programlisting>
+<para>The target graph after the operation will be:</para>
+<programlisting>//+acme
+=alice/#friend/=bob
+</programlisting>
+
+</section>
+
+<section><title><code>$del</code> applied to a statement</title>
+
+<para>This operation deletes a target statement.
+If it is a contextual statement, the operation also deletes the entire subgraph of the context node.
+If it is a relational statement, the operation deletes neither the source context node nor the target context node, only the relation itself.
+If the target statement does not exist, the operation has no effect (this is not considered an error).</para>
+<para>Example: Given the following target graph:</para>
+<programlisting>//+acme
+=alice/#friend/=bob
+</programlisting>
+<para>And the following <code>$del</code> operation on target statement <code>=alice/#friend/=bob</code>:</para>
+<programlisting>(=bob[$msg]!:uuid:4378$do/$del)=alice/#friend/=bob
+</programlisting>
+<para>The target graph after the operation will be:</para>
+<programlisting>//+acme
+//=alice
+//=bob
+</programlisting>
+
+</section>
+
+</section>
+
+<section><title><code>$add</code> operation</title>
+
+<para>This operation creates data in a target graph. Unless an error occurs, the message result is the empty graph.
+If the operation is applied to data which already exists, it generates an error
+(this is what distinguishes <code>$add</code> from <code>$set</code>).</para>
+
+<section><title><code>$add</code> applied to an address</title>
+
+<para>This operation creates a context node at the target address, as well as any parent context node(s) as needed.
+If the target address exists already, the operation generates an error.</para>
+<para>Example: Given the following target graph:</para>
+<programlisting>//+acme
+//=alice
+</programlisting>
+<para>And the following <code>$add</code> operation on target address <code>=alice&lt;#email></code>:</para>
+<programlisting>=bob[$msg]!:uuid:4378$do/$add/=alice&lt;#email>
+</programlisting>
+<para>The target graph after the operation will be:</para>
+<programlisting>//+acme
+=alice//&lt;#email>
+</programlisting>
+
+</section>
+
+<section><title><code>$add</code> applied to a statement</title>
+
+<para>This operation creates the target statement, as well as any parent context nodes(s) as needed.
+If the target statement exists already, the operation generates an error.</para>
+<para>Example: Given the following target graph:</para>
+<programlisting>//+acme
+=alice&lt;//#email>
+</programlisting>
+<para>And the following <code>$add</code> operation on target statements <code>=alice&lt;#email>/&amp;/"alice@email.com"</code> and <code>=alice/#friend/=bob</code>:</para>
+<programlisting>(=bob[$msg]!:uuid:4378$do/$add)=alice&lt;#email>/&amp;/"alice@email.com"
+(=bob[$msg]!:uuid:4378$do/$add)=alice/#friend/=bob 
+</programlisting>
+<para>The target graph after the operation will be:</para>
+<programlisting>//+acme
+=alice&lt;#email>/&amp;/"alice@email.com"
+=alice/#friend/=bob
+</programlisting>
+
+</section>
+
+</section>
+
+<section><title><code>$mod</code> operation</title>
+
+<para>This operation modifies data in a target graph. Unless an error occurs, the message result is the empty graph.
+If the operation is applied to data which does not exist, it generates an error
+(this is what distinguishes <code>$mod</code> from <code>$set</code>).</para>
+
+<section><title><code>$mod</code> applied to an address</title>
+
+<para>This operation on a target address is not defined and generates an error.</para>
+
+</section>
+
+<section><title><code>$mod</code> applied to a statement</title>
+
+<para>This operation is only defined on a literal statement and generates an error otherwise.
+It modifies the value of an existing literal statement.
+If the context node that contains the literal does not exist, the operation generates an error.</para>
+<para>Example: Given the following target graph:</para>
+<programlisting>//+acme
+=alice&lt;#email>/&amp;/"alice@email.com"
+=alice/#friend/=bob
+</programlisting>
+<para>And the following <code>$mod</code> operation on target statement <code>=alice&lt;#email>/&amp;/"alice@new.com"</code>:</para>
+<programlisting>(=bob[$msg]!:uuid:4378$do/$set)=alice&lt;#email>/&amp;/"alice@new.com"
+</programlisting>
+<para>The target graph after the operation will be:</para>
+<programlisting>=alice&lt;#email>/&amp;/"alice@new.com"
+</programlisting>
+
+</section>
+
+</section>
+
+<section><title><code>$do</code> operation</title>
+
+<para>This operation provides an extensibility mechanism for performing potentially complex operations on a target
+graph that are not defined by this specification. Such complex operations may be sequences composed
+of basic operations, or follow an external logic that cannot be reproduced by basic operations
+at all.</para>
+<para>For example, an operation called <code>$do#cleanup</code> may be defined to "clean up", i.e. delete,
+various parts of a graph, according to a set of rules.</para>
+<para>Implementors SHOULD document exactly how such operations behave when applied to target
+addresses and target statements, and provide examples, following
+the pattern used in this specification to document the basic operations.</para>
+
+</section>
+
+</section>
+
+<section><title>Conditional Execution Rules</title>
+
+<orderedlist>
+<listitem><para>An XDI message MAY also include condition statements to govern their execution at an XDI endpoint.</para></listitem>
+<listitem><para>If an XDI message includes a <code>&lt;--from-->[$msg]&lt;--id-->$do$if</code> sub context, the set of message policy statements in this context MUST be evaluated by the XDI endpoint.</para></listitem>
+<listitem><para>Message policy evaluation MUST follow the same rules as link contract policy evaluation. (see <xref linkend="xdi-policy-1.0"/>)</para></listitem>
+<listitem><para>For privacy reasons, a message policy may only access parts of the target graph which it has <code>$get</code> access to under the link contract referenced in the message.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Parameter Rules</title>
+
+<orderedlist>
+<listitem><para>An XDI message MAY include one or more parameters that govern how an XDI endpoint processes an XDI message.</para></listitem>
+<listitem><para>A parameter MUST apply only to the XDI message and the XDI message operation that contains it.</para></listitem>
+</orderedlist>
+
+<para>Currently, parameters are only defined for the XDI <code>$get</code> operation.</para>
+
+<section><title><code>$get</code> Parameters</title>
+
+<section><title>&lt;$deref></title>
+<para>The <code>&lt;$deref></code> parameter is defined in [[EquivalenceRelations]]. It governs whether the XDI endpoint automatically dereferences <code>$ref</code> statements in a response graph.</para>
+</section>
+
+<section><title>&lt;$proxy></title>
+
+<para>The <code>&lt;$proxy></code> parameter is defined in <xref linkend='xdi-discovery-1.0'/>. It governs whether the XDI endpoint serves as a proxy to complete discovery of an XDI resource for which the XDI endpoint is not itself authoritative.</para>
+
+</section>
+
+</section>
+
+</section>
+
+</section>
+
+<section><title>Response messages</title>
+
+<para>Every request message MUST have a corresponding response message which is transmitted back from the responder
+to the requester, in a way defined by the binding that is being used. There are three types of response messages:</para>
+<orderedlist>
+<listitem><para>Plain response message</para></listitem>
+<listitem><para>Full response message</para></listitem>
+<listitem><para>Deferred response message</para></listitem>
+</orderedlist>
+<para>If the &lt;$full&gt; message parameter (see section ZZZ) is absent or set to false, then the response message MUST be
+either a plain response message or a deferred response message.</para>
+<para>If the &lt;$full&gt; message parameter is set to true, then the response message MUST be
+either a full response message or a deferred response message.</para>
+<para>If the response message is a deferred response message, it MUST eventually be followed by a full response message.</para>
+
+<section><title>Plain response message</title>
+
+<para>A <firstterm>plain response message</firstterm> consists only of the result graph of the request operations,
+as defined in section XXX. It does not contain any information about the message itself, and it does
+not use the message pattern defined section YYY.</para>
+
+</section>
+
+<section><title>Full response message</title>
+
+<para>A <firstterm>full response message</firstterm> follows the message pattern defined in section YYY. The result graph of the
+request operations is included in the response message using inner root nodes as follows:</para>
+<orderedlist>
+<listitem><para>For every request operation in the request message, a separate inner root node
+is included in the response message to represent the result graph of that particular request operation.</para></listitem>
+<listitem><para>The XDI subject of the XDI address of the inner root node is the XDI address of
+the request message to which the response message corresponds.</para></listitem>
+<listitem><para>The XDI predicate of the XDI address of the inner root node is the request operation to
+which the result graph corresponds.</para></listitem>
+<listitem><para>The inner graph under the inner root node is the result graph of the request operation.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Deferred response message</title>
+
+<para>A <firstterm>deferred response message</firstterm> follows the message pattern defined in section YYY. Unlike a 
+full response message however, it does not contain a result graph. A responder MUST send a deferred response message
+if the result graph is not immediately available and can therefore only be sent at a later time, i.e. asynchronously.
+This occurs most commonly in the case of connection requests and connection invitations when user interaction is
+required (see XDI Connections spec).
+</para>
+<para>When the result graph becomes available, the responder MUST send a full response message to the requester, 
+in a way defined by the binding that is being used.
+</para>
+
+</section>
+
+</section>
+
+<section><title>Error Handling Rules</title>
+
+<para>The template for an error message is:</para>
+<programlisting>#1: ERROR TIMESTAMP      $error&lt;$t>/&amp;/&lt;--timestamp-->
+#2: ERROR CODES         $error/$do/&lt;--error-code-->
+</programlisting>
+<para><code>&lt;error-statement></code> is an inner graph of error statements pertaining to the message.</para>
+<para>The dictionary for XDI error code statements is still being defined. See MessagingErrorCode.</para>
+
+</section>
+
+<section><title>Error Codes</title>
+
+<para>Error codes</para>
+
+<informaltable><tgroup cols="3"><thead>
+<row><entry>Name</entry><entry>Code</entry><entry>Explanation</entry></row>
+</thead><tbody>
+<row><entry>Request unknown</entry><entry><code>$false/$error/$request$unknown</code></entry><entry>Request format is unknown. (E.g. request does not contain operation xdi statement.)</entry></row>
+<row><entry>Can't process request</entry><entry><code>$false/$error/$request$cant$process</code></entry><entry>General error, such as internal exception, db connection failure, or other not described by another error.</entry></row>
+<row><entry>Request forbidden</entry><entry><code>$false/$error/$request$forbidden</code></entry><entry>Operations in request are not allowed by link contract sent by client.</entry></row>
+<row><entry>Supported auth type</entry><entry><code>$false/$error/$supported$auth$type$AUTHTYPE</code></entry><entry>Request was denied together with $request$forbidden error code with supported auth types must be returned to let client know, maybe it used wrong auth type.</entry></row>
+<row><entry>Authorization data invalid</entry><entry><code>$false/$error/$auth$data$invalid</code></entry><entry>E.g. OpenID token is expired or invalid.</entry></row>
+<row><entry>Node does not have child</entry><entry><code>$false/$error/$node$does$not$have$child</code></entry><entry>$get operation requested node that does not have child, so nothing to return.</entry></row>
+<row><entry>Graph not found</entry><entry><code>$false/$error/$graph$not$found</code></entry><entry>Graph with specified id was not found on XDI Server.</entry></row>
+</tbody></tgroup></informaltable>
+
+</section>
+
+<section><title>Transactional Integrity</title>
+
+<para>The XDI TC has discussed [[https://en.wikipedia.org/wiki/Database_transaction|transactional integrity]], 
+including <ulink url="https://en.wikipedia.org/wiki/ACID">ACID</ulink> and
+<ulink url="https://en.wikipedia.org/wiki/Eventual_consistency">BASE</ulink>, but has not yet determined the requirements
+that XDI messaging will need to support.</para>
+
+</section>
+
+<appendix id="s.acknowledgements" role="non-normative">
+  <title>Acknowledgements</title>
+
+  <para>This specification was written with the generous and appreciated assistance of</para>
+</appendix>
+  
+<appendix id="a.dollarwords" role="non-normative">
+  <title>Dollar Words</title>
+  
+  <para>This appendix contains formal definitions of the XDI dollar words introduced by this specification.</para>
+</appendix>
+  
+<appendix id="a.examples" role="non-normative">
+  <title>Examples</title>
+  
+  <para>This appendix contains XDI messaging examples.</para>
+</appendix>
+
+</article>
