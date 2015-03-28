@@ -85,7 +85,7 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 </legalnotice>
 
 <abstract><title>Abstract</title>
-  <para>This working draft specifies the abstract pattern for transmitting XDI messages between two peers.</para>
+  <para>This document specifies the abstract pattern for transmitting XDI messages between two peers.</para>
 </abstract>
 
 <!--legalnotice role="status"><title>Status</title>
@@ -118,10 +118,10 @@ document made available to committee members to support the publishing process.<
 
 </articleinfo>
 
-<section id="s.introduction"> <title>Introduction</title>
+<section id="s.introduction"><title>Introduction</title>
 
-  <para>This working draft specifies the abstract pattern for transmitting XDI messages between two peers.</para>
-  <para>This working draft builds on <xref linkend="xdi-core-1.0"/>.</para>
+  <para>This document specifies the abstract pattern for transmitting XDI messages between two peers.</para>
+  <para>This builds on <xref linkend="xdi-core-1.0"/>.</para>
 
   <section><title> Key words</title>
 
