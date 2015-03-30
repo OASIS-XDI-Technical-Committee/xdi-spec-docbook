@@ -292,7 +292,7 @@ three concrete ways how messages can be transmitted over a network:</para>
 <listitem><para>XDI Browser Binding: Request and response messages are transmitted between the requester and the responder via a sequence of HTML form elements and HTTP form submit operations.</para></listitem>
 <listitem><para>XDI Websocket Binding: Request and response messages are transmitted between the requester and the responder via Websocket sessions.</para></listitem>
 </orderedlist>
-<para>Certain bindings MAY require the use of endpoint URIs on a network, which can be discovered using the XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol, which is itself an application of XDI messaging.</para>
+<para>Certain bindings require the use of endpoint URIs on a network, which can be discovered using the XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol, which is itself an application of XDI messaging.</para>
 
 </section>
 
@@ -316,35 +316,29 @@ sender of the message:</para>
 statements that make up the semantics and function of the message.</para>
 
 <para>Following are the statements that are common to both request messages and response
-messages (shown in statement format). Labels in <code>&lt;--this-form--></code> represent
+messages (shown in statement format). Labels in <code>&lt;--this-form--&gt;</code> represent
 template variables.</para>
 
-<programlisting>FROM PEER             &lt;--sending-peer-->/$set/&lt;--sender-->[$msg]&lt;--message-id-->
-TO PEER               &lt;--sender-->[$msg]&lt;--message-id-->/$is()/&lt;--receiving-peer-->
-MESSAGE TYPE          &lt;--sender-->[$msg]&lt;--message-id-->/$is#/&lt;--message-type-->[$v]&lt;--version-number-->$xdi[$v]@1$msg
-TIMESTAMP             &lt;--sender-->[$msg]&lt;--message-id-->&lt;$t>/&amp;/&lt;--timestamp-->
-MESSAGE PARAMETERS    &lt;--sender-->[$msg]&lt;--message-id-->&lt;--parameter-->/&amp;/&lt;--parameter-value-->
+<programlisting>RECEIVING PEER              &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is()/&lt;--receiving-peer--&gt;
+MESSAGE TYPE                &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is#/&lt;--message-type--&gt;[$v]&lt;--version-number--&gt;$xdi[$v]@1$msg
+TIMESTAMP                   &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;$t>/&amp;/&lt;--timestamp--&gt;
+MESSAGE PARAMETERS          &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
+AUTHENTICATION TOKEN        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--token-type--&gt;&lt;$token&gt;/&amp;/&lt;--token--&gt;
+AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--signature-type--&gt;&lt;$sig&gt;/&amp;/&lt;--signature--&gt;
 </programlisting>
+
 
 <para>Where:</para>
 <orderedlist>
-<listitem><para><code>&lt;--sending-peer--></code> is the XDI address of the peer root node of the XDI graph originating the message.</para></listitem> 
-<listitem><para><code>&lt;--sender--></code> is the XDI address of the sender (the XDI authority originating the message) which may or may not be the same as the XDI address inside the <code>&lt;--sending-peer--></code> cross-reference.</para></listitem>
-<listitem><para><code>&lt;--message-id--></code> is an entity instance that is the unique ID of the message in the context of this sender. See the ''Message ID Rules'' section below.</para></listitem>
-<listitem><para><code>&lt;--receiving-peer--></code> is the XDI address of the XDI peer root for the recipient. It is the XDI address on which Xdi Discovery is performed to discover the XDI endpoint URI. For a message to multiple recipients, there will be one TO statement per recipient.</para></listitem> 
-<listitem><para><code>&lt;--message-type--></code> is an optional XDI context defining the XDI message type.</para></listitem>
-<listitem><para><code>&lt;--version-number--></code> is the message type version, expressed as an ordered instance <code>@x</code> where x is a non-negative integer.</para></listitem>
-<listitem><para><code>&lt;--timestamp--></code> is the timestamp of the message in XML datetime format.</para></listitem>
-<listitem><para><code>&lt;--parameter--></code> is a message parameter.</para></listitem>
-<listitem><para><code>&lt;--parameter-value--></code> is the value of a message parameter.</para></listitem>
+<listitem><para><code>&lt;--parameter--&gt;</code> is a message parameter.</para></listitem>
+<listitem><para><code>&lt;--parameter-value--&gt;</code> is the value of a message parameter.</para></listitem>
 </orderedlist>
 
-<section><title>Sending Peer</title>
+<section><title>Sender</title>
 
-<para>If an XDI message is required to include a FROM statement, the following rules apply:</para>
 <orderedlist>
-<listitem><para><code>&lt;--sending-peer--></code> MUST be the peer root address of the XDI endpoint originating the message. (Note that the <code>&lt;--sending-peer--></code> for XDI client that does not function as an XDI endpoint may be an XDI cross-reference to its current network endpoint or some other client identifier acceptable to the receiving XDI endpoint.)</para></listitem>
-<listitem><para><code>&lt;--sender--></code> MUST be the XDI address representing the XDI authority (e.g., person, organization, device, service, etc.) originating the message.</para></listitem>
+<listitem><para><code>&lt;--sender--&gt;</code> is the XDI address of the peer sending the message.</para></listitem>
+<listitem><para>This XDI address may be any valid XDI entity (e.g., person, organization, device, service, etc.)</para></listitem>
 </orderedlist>
 
 </section>
@@ -352,31 +346,66 @@ MESSAGE PARAMETERS    &lt;--sender-->[$msg]&lt;--message-id-->&lt;--parameter-->
 <section><title>Message ID</title>
 
 <orderedlist>
-<listitem><para>Like any XDI subgraph, the value of the <code>&lt;--id--></code> variable representing the message ID MUST be unique within the scope of the <code>[$msg]</code> collection of messages sent by the sender. The <code>&lt;--id--></code> value may be sequential, or based on timestamps, or a UUID, or use any other algorithm that provides uniqueness in this context.</para></listitem>
-<listitem><para>An XDI client MUST use a different message ID for every message.</para></listitem>
-<listitem><para>An XDI endpoint MAY enforce uniqueness of message IDs.</para></listitem>
+<listitem><para><code>&lt;--message-id--&gt;</code> is an entity instance that is the unique ID of the message in the context of the <code>[$msg]</code> collection of messages sent by the sender.</para></listitem>
+<listitem><para>The message ID value may be sequential, or based on timestamps, or a random UUID, or use any other algorithm that provides uniqueness in this context.</para></listitem>
+<listitem><para>Sending peers MUST use a different message ID for every message.</para></listitem>
+<listitem><para>Receiving peers MAY enforce uniqueness of message IDs.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Message Type and Version</title>
+
+<orderedlist>
+<listitem><para><code>&lt;--message-type--&gt;</code> is an optional XDI address specifying a message type.</para></listitem>
+<listitem><para><code>&lt;--version-number--&gt;</code> is the message type version, expressed as an ordered instance of a <code>[$v]</code> collection.</para></listitem>
 </orderedlist>
 
 </section>
 
 <section><title>Receiving Peer</title>
 
-<para>If an XDI message is required to include a TO statement, the following rules apply:</para>
 <orderedlist>
-<listitem><para><code>&lt;--receiving-peer--></code> MUST be the peer root address of the XDI endpoint to which the message is sent.</para></listitem>
-<listitem><para>This peer root address SHOULD be discoverable using XDI Discovery.</para></listitem>
-<listitem><para>An XDI message MAY include multiple TO statements in order to deliver the message to multiple recipients.</para></listitem>
+<listitem><para><code>&lt;--receiving-peer--&gt;</code> is the XDI address of the receiving peer root.</para></listitem>
+<listitem><para>Depending on the binding being used, it MAY be possible or required to apply the XDI discovery process to the receiving peer in order to obtain an associated endpoint URI.</para></listitem> 
+<listitem><para>A message MUST have at least one receiving peer, and MAY have multiple receiving peers.</para></listitem>
 </orderedlist>
 
 </section>
 
 <section><title>Timestamp</title>
 
-<para>If an XDI message is required to include a TIMESTAMP statement, the following rules apply:</para>
 <orderedlist>
-<listitem><para><code>&lt;--timestamp--></code> MUST be an XML datetime as specified by the '''$t''' entry in the XDI $ Dictionary.</para></listitem>
-<listitem><para>?An XDI endpoint MAY enforce server-side policy requiring the message <code>&lt;timestamp></code> value to be within a certain tolerance of the server timestamp.</para></listitem>
+<listitem><para><code>&lt;--timestamp--&gt;</code> is the timestamp of the message in XML datetime format as specified by the '''$t''' entry in the XDI $ Dictionary.</para></listitem>
+<listitem><para>Receiving peers MAY enforce policies requiring the message <code>&lt;timestamp></code> value to be within a certain tolerance.</para></listitem>
 </orderedlist>
+
+</section>
+
+<section><title>Authentication Token</title>
+
+<para>A message MAY be authenticated with a token as defined in section 1.4 of <xref linkend="rfc6749"/>.</para>
+
+<para><code>&lt;--token-type--&gt;</code> is the XDI address defining the type of token provided for message authentication.</para>
+<para><code>&lt;--token--&gt;</code> is the literal token value provided for authentication.</para>
+
+<para>This specification specifies the following supported token types and authentication requirements:</para>
+
+<orderedlist>
+<listitem><para><code>&lt;$secret&gt;</code> for shared secrets. Any valid XDI literal value may be used as a shared secret.</para></listitem>
+<listitem><para><code>&lt;$bearer&gt;</code> for bearer tokens as defined by <xref linkend="rfc6750"/>.</para></listitem>
+<listitem><para>Other token types as registered with the IANA OAuth Access Token Types Registry defined in section 11.1 of <xref linkend="rfc6749"/>.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Authentication Signature</title>
+
+<para>A message MAY be signed for authentication. See <xref linkend="xdi-signature1.0"/>.</para>
+
+<listitem><para><code>&lt;--signature-type--&gt;</code> is the context defining the type of signature provided for authentication.</para></listitem>
+<listitem><para><code>&lt;--signature--&gt;</code> is the literal signature value provided for authentication as required by the referenced link contract.</para></listitem>
+
 
 </section>
 
@@ -385,13 +414,8 @@ MESSAGE PARAMETERS    &lt;--sender-->[$msg]&lt;--message-id-->&lt;--parameter-->
 <orderedlist>
 <listitem><para>A message MAY include one or more <firstterm>message parameters</firstterm> that govern how the message is executed.</para></listitem>
 <listitem><para>A message parameter MUST apply only to the message that contains it.</para></listitem>
+<listitem><para>This specification currently specifies a single message parameter for request messages (see section XXX).</para></listitem>
 </orderedlist>
-
-<section><title>&lt;$full></title>
-
-<para>The <code>&lt;$full></code> parameter ....</para>
-
-</section>
 
 </section>
 
@@ -405,56 +429,31 @@ A request message MUST conform to the statements in this template in addition
 to the statements required for all messages. 
 </para>
 
-<programlisting>AUTHENTICATION TOKEN        &lt;--sender-->[$msg]&lt;--message-id-->&lt;--token-type-->&lt;$token>/&amp;/&lt;--token-->
-AUTHENTICATION SIGNATURE    &lt;--sender-->[$msg]&lt;--message-id-->&lt;--signature-type-->&lt;$sig>/&amp;/&lt;--signature-->
-LINK CONTRACT ADDRESS       &lt;--sender-->[$msg]&lt;--message-id-->/$do/&lt;--link-contract-address-->
-MESSAGE POLICY              &lt;--sender-->[$msg]&lt;--message-id-->$do$if&lt;--boolean-context-->/&lt;--operator-->/&lt;--condition-->
-OPERATION PARAMETERS        &lt;--sender-->[$msg]&lt;--message-id-->&lt;--operation-->&lt;--parameter-->/&amp;/&lt;--parameter-value-->
-OPERATION ON ADDRESS        &lt;--sender-->[$msg]&lt;--message-id-->$do/&lt;--operation-->/&lt;--target-address-->
-OPERATION ON STATEMENT      (&lt;--sender-->[$msg]&lt;--message-id-->$do/&lt;--operation-->)&lt;--target-statement-->
+<programlisting>LINK CONTRACT ADDRESS       &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$do/&lt;--link-contract-address--&gt;
+MESSAGE POLICY              &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do$if&lt;--boolean-context--&gt;/&lt;--operator--&gt;/&lt;--condition--&gt;
+OPERATION PARAMETERS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
+OPERATION ON ADDRESS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;/&lt;--target-address--&gt;
+OPERATION ON STATEMENT      (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;)&lt;--target-statement--&gt;
 </programlisting>
 
 <para>Where:</para>
 <orderedlist>
-<listitem><para><code>&lt;--token-type--></code> is the context defining the type of token provided for message authentication.</para></listitem>
-<listitem><para><code>&lt;--token--></code> is the literal token value provided for authentication as required by the referenced link contract.</para></listitem>
-<listitem><para><code>&lt;--signature-type--></code> is the context defining the type of signature provided for authentication.</para></listitem>
-<listitem><para><code>&lt;--signature--></code> is the literal signature value provided for authentication as required by the referenced link contract.</para></listitem>
-<listitem><para><code>&lt;--link-contract-address--></code> is the XDI address of the link contract authorizing the requested operation on the requested object graph. This MUST be either: a) a <code>$do</code> entity singleton or: b) a <code>[$do]</code> entity class followed by an entity instance. See the XDI Policy specification: <xref linkend='xdi-policy-1.0'/>.</para></listitem>
-<listitem><para><code>&lt;--boolean-context--></code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem>
-<listitem><para><code>&lt;--operator--></code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem> 
-<listitem><para><code>&lt;--condition--></code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem>
-<listitem><para><code>&lt;--operation--></code> is the requested XDI operation (<code>$get, $set, $del, $add, $mod, $do</code>), plus subcontexts (if any). There may be one or more operation statements in a message.</para></listitem>
-<listitem><para><code>&lt;--parameter--></code> is an operation parameter.</para></listitem>
-<listitem><para><code>&lt;--parameter-value--></code> is the value of an operation parameter.</para></listitem>
-<listitem><para><code>&lt;--target-address--></code> is an XDI address that is the target of the operation.</para></listitem> 
-<listitem><para><code>&lt;--target-statement--></code> is an XDI statement that is the target of the operation.</para></listitem> 
+<listitem><para><code>&lt;--link-contract-address--&gt;</code> is the XDI address of the link contract authorizing the requested operation on the requested object graph. This MUST be either: a) a <code>$do</code> entity singleton or: b) a <code>[$do]</code> entity class followed by an entity instance. See the XDI Policy specification: <xref linkend='xdi-policy-1.0'/>.</para></listitem>
+<listitem><para><code>&lt;--boolean-context--&gt;</code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem>
+<listitem><para><code>&lt;--operator--&gt;</code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem> 
+<listitem><para><code>&lt;--condition--&gt;</code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem>
+<listitem><para><code>&lt;--operation--&gt;</code> is the requested XDI operation (<code>$get, $set, $del, $add, $mod, $do</code>), plus subcontexts (if any). There may be one or more operation statements in a message.</para></listitem>
+<listitem><para><code>&lt;--parameter--&gt;</code> is an operation parameter.</para></listitem>
+<listitem><para><code>&lt;--parameter-value--&gt;</code> is the value of an operation parameter.</para></listitem>
+<listitem><para><code>&lt;--target-address--&gt;</code> is an XDI address that is the target of the operation.</para></listitem> 
+<listitem><para><code>&lt;--target-statement--&gt;</code> is an XDI statement that is the target of the operation.</para></listitem> 
 </orderedlist>
-
-<section><title>Authentication Token</title>
-
-<para>A message MAY be authenticated with a token as defined in section 1.4 of <xref linkend="rfc6749"/>.</para>
-<para>Supported token types and token authentication requirements will defined in separate specifications. The
-token types currently planned to be supported by the XDI TC include:</para>
-<orderedlist>
-<listitem><para><code>$secret</code> for shared secrets. Any valid XDI literal value may be used as a shared secret.</para></listitem>
-<listitem><para><code>$bearer</code> for bearer tokens as defined by <xref linkend="rfc6750"/>.</para></listitem>
-<listitem><para>Other token types as registered with the IANA OAuth Access Token Types Registry defined in section 11.1 of <xref linkend="rfc6749"/>.</para></listitem>
-</orderedlist>
-
-</section>
-
-<section><title>Authentication Signature</title>
-
-<para>XDI messages MAY be signed for authentication. See <xref linkend="xdi-signature1.0"/>.</para>
-
-</section>
 
 <section><title>Link Contract Address</title>
 
 <orderedlist>
-<listitem><para>Each XDI message MUST include a <code>&lt;--link-contract-address--></code> reference to the XDI link contract authorizing that message. See the [[Link Contract Pattern]]. Requiring the <code>&lt;--link-contract--></code> reference in an XDI message makes it much more efficient for XDI servers to perform authentication and authorization, because they know which link contract to evaluate. (For a public link contract, the value of <code>&lt;--link-contract--></code> is <code>$public$do</code>.)</para></listitem>
-<listitem><para>The message MUST be executed only if the [[XdiPolicyExpression|link contract policies]] evaluates to true.</para></listitem>
+<listitem><para>Request messages MUST include a <code>&lt;--link-contract-address--&gt;</code> reference to the XDI link contract authorizing that message. See the [[Link Contract Pattern]]. Requiring the <code>&lt;--link-contract--&gt;</code> reference in an XDI message makes it much more efficient for XDI servers to perform authentication and authorization, because they know which link contract to evaluate. (For a public link contract, the value of <code>&lt;--link-contract--&gt;</code> is <code>$public$do</code>.)</para></listitem>
+<listitem><para>Request messages MUST be executed only if the [[XdiPolicyExpression|link contract policies]] evaluates to true.</para></listitem>
 </orderedlist>
 
 </section>
@@ -462,11 +461,28 @@ token types currently planned to be supported by the XDI TC include:</para>
 <section><title>Message Policy</title>
 
 <orderedlist>
-<listitem><para>An XDI message MAY also include condition statements to govern their execution at an XDI endpoint.</para></listitem>
-<listitem><para>If an XDI message includes a <code>&lt;--sender-->[$msg]&lt;--id-->$do$if</code> sub context, the set of message policy statements in this context MUST be evaluated by the XDI endpoint.</para></listitem>
-<listitem><para>Message policy evaluation MUST follow the same rules as link contract policy evaluation. (see <xref linkend="xdi-policy-1.0"/>)</para></listitem>
+<listitem><para>A request message MAY have a policy c to govern their execution at an XDI endpoint.</para></listitem>
+<listitem><para>If an XDI message includes a <code>&lt;--sender--&gt;[$msg]&lt;--id--&gt;$do$if</code> sub context, the set of message policy statements in this context MUST be evaluated by the XDI endpoint.</para></listitem>
+<listitem><para>Request messages MUST be executed only if the [[XdiPolicyExpression|link contract policies]] evaluates to true.</para></listitem>
 <listitem><para>For privacy reasons, a message policy may only access parts of the target graph which it has <code>$get</code> access to under the link contract referenced in the message.</para></listitem>
 </orderedlist>
+
+</section>
+
+<section><title>Message Parameters</title>
+
+<para>The following message parameter is specified for request messages.</para>
+
+<section><title>&lt;$full></title>
+
+<orderedlist>
+<listitem><para>The <code>&lt;$full></code> message parameter instructs the responder to send a full response message or deferred response
+message after the request message has been executed, even when a plain response message would have been possible (see section XXX).</para></listitem>
+<listitem><para>Valid values are <code>true</code> and <code>false</code>.</para></listitem>
+<listitem><para>If this message parameter is not present on a request message, the default value is <code>false</code>.</para></listitem>
+</orderedlist>
+
+</section>
 
 </section>
 
@@ -477,12 +493,17 @@ token types currently planned to be supported by the XDI TC include:</para>
 <listitem><para>An operation parameter MUST apply only to the request operation that contains it.</para></listitem>
 </orderedlist>
 
+<para>The following operation parameters are specified for request messages.</para>
+
 <section><title>&lt;$deref></title>
+
 <para>The <code>&lt;$deref></code> MUST NOT be used with any operation other than <code>$get</code>.</para>
 <para>The <code>&lt;$deref></code> parameter is defined in [[EquivalenceRelations]]. It governs whether the XDI endpoint automatically dereferences <code>$ref</code> statements in a result graph.</para>
+
 </section>
 
 <section><title>&lt;$proxy></title>
+
 <para>The <code>&lt;$proxy></code> MUST NOT be used with any operation other than <code>$get</code>.</para>
 <para>The <code>&lt;$proxy></code> parameter is defined in <xref linkend='xdi-discovery-1.0'/>. It governs whether the XDI endpoint serves as a proxy to complete discovery of an XDI resource for which the XDI endpoint is not itself authoritative.</para>
 
@@ -494,8 +515,8 @@ token types currently planned to be supported by the XDI TC include:</para>
 
 <para>Operations constitute the body of an XDI message.</para>
 <orderedlist>
-<listitem><para>An XDI message MUST contain at least one operation statement.</para></listitem>
-<listitem><para>To successfully complete execution of an XDI message, an XDI endpoint MUST complete execution of each operation requested in each operation statement in the message.</para></listitem>
+<listitem><para>A request message MUST contain at least one operation statement.</para></listitem>
+<listitem><para>To successfully complete execution of a request message, a responder MUST complete execution of each operation requested in each operation statement in the message.</para></listitem>
 </orderedlist>
 
 <para>Depending on: a) the operation, and b) whether the operation target is an XDI address or
@@ -811,8 +832,8 @@ in a way defined by the binding that is being used.
 <para>In the XDI graph model as a whole, XDI statements are unordered.</para>
 
 <orderedlist>
-<listitem><para>Messages within a message envelope (i.e., within the <code>&lt;--sender-->[$msg]</code> collection) MAY be explicitly ordered by appending the <code>@&lt;--digit--></code>ordering context to the <code>&lt;--sender-->[$msg]!&lt;--id--></code> context.</para></listitem>
-<listitem><para>Operation statements within a message (i.e., as objects of the <code>&lt;--operation--></code> predicate) MAY be explicitly ordered by appending the <code>@&lt;--digit--></code> ordering context to the <code>&lt;--operation--></code> predicate.</para></listitem>
+<listitem><para>Messages within a message envelope (i.e., within the <code>&lt;--sender--&gt;[$msg]</code> collection) MAY be explicitly ordered by appending the <code>@&lt;--digit--&gt;</code>ordering context to the <code>&lt;--sender--&gt;[$msg]!&lt;--id--&gt;</code> context.</para></listitem>
+<listitem><para>Operation statements within a message (i.e., as objects of the <code>&lt;--operation--&gt;</code> predicate) MAY be explicitly ordered by appending the <code>@&lt;--digit--&gt;</code> ordering context to the <code>&lt;--operation--&gt;</code> predicate.</para></listitem>
 <listitem><para>Explicit ordering of messages and operations is OPTIONAL for an XDI client.</para></listitem>
 <listitem><para>Support for explicit ordering of messages and operations is REQUIRED for an XDI endpoint.</para></listitem>
 <listitem><para>If explicit ordering of messages and operations is not used, then an XDI endpoint MUST NOT make guarantees about the order in which messages in a message envelope are executed, or about the order in which operations in a message are executed.</para></listitem>
@@ -826,8 +847,8 @@ in a way defined by the binding that is being used.
 <section><title>Error Handling Rules</title>
 
 <para>The template for an error message is:</para>
-<programlisting>#1: ERROR TIMESTAMP      $error&lt;$t>/&amp;/&lt;--timestamp-->
-#2: ERROR CODES         $error/$do/&lt;--error-code-->
+<programlisting>#1: ERROR TIMESTAMP      $error&lt;$t>/&amp;/&lt;--timestamp--&gt;
+#2: ERROR CODES         $error/$do/&lt;--error-code--&gt;
 </programlisting>
 <para><code>&lt;error-statement></code> is an inner graph of error statements pertaining to the message.</para>
 <para>The dictionary for XDI error code statements is still being defined. See MessagingErrorCode.</para>

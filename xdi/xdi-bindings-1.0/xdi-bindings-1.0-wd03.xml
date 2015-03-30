@@ -616,7 +616,7 @@ SHOULD be forced as described in <xref linkend="xdi-messaging-1.0"/>.</para>
 
 </section>
 
-<section><title>XDI Artifact Binding</title>
+<section><title>Artifact Binding</title>
 
 <para>The artifact binding defines a mechanism by which XDI requests are transmitted using an artifact.</para>
 
@@ -627,7 +627,7 @@ SHOULD be forced as described in <xref linkend="xdi-messaging-1.0"/>.</para>
 <para>The WebSocket Binding defines a mechanism by which message envelopes containing request messages
 and response messages are transmitted using WebSocket connections. The requester acts as a WebSocket client
 and opens a connection to a WebSocket endpoint associated with the responder. During the WebSocket handshake,
-the sub-protocol "xdi" is used. The requester sends the serialized message envelope containing one or more
+the sub-protocol "xdi" is established. The requester sends the serialized message envelope containing one or more
 request message(s) as a WebSocket data frame.</para>
 
 <para>The responder executes the request message(s) against its peer graph. The responder sends
@@ -653,6 +653,8 @@ The following is an example of a response message transmitted via the WebSocket 
 <programlisting>...
 </programlisting>
 </para>
+
+</section>
 
 </section>
 
