@@ -33,7 +33,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <!ENTITY name "xdi-messaging">
 <!ENTITY pversion "0.1">
 <!ENTITY version "1.0">
-<!ENTITY stage "wd02">
+<!ENTITY stage "wd03">
 <!ENTITY standard "Working Draft 03">
 <!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;">
 <!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
