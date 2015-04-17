@@ -312,6 +312,11 @@ sender of the message:</para>
 <programlisting>=alice[$msg]*!:uuid:1234
 </programlisting>
 
+<para>In practice, persistent identifiers SHOULD be used for identifying authorities:</para>
+
+<programlisting>=!:uuid:1111[$msg]*!:uuid:1234
+</programlisting>
+
 <para>A context node representing a message contains various
 statements that make up the semantics and function of the message.</para>
 
@@ -561,7 +566,7 @@ If the target address does not exist, the result graph is empty.</para>
 =alice/#friend/=bob
 </programlisting>
 <para>And the following <code>$get</code> operation on target address <code>=alice</code>:</para>
-<programlisting>=bob[$msg]!:uuid:4378$do/$get/=alice
+<programlisting>=bob[$msg]*!:uuid:4378$do/$get/=alice
 </programlisting>
 <para>The result graph will be:</para>
 <programlisting>=alice&lt;#email>/&amp;/"alice@email.com"
@@ -580,7 +585,7 @@ If the target statement does not exist, the result graph is empty.</para>
 =alice/#friend/=bob
 </programlisting>
 <para>And the following <code>$get</code> operation on target statement <code>=alice/#friend/=bob</code>:</para>
-<programlisting>(=bob[$msg]!:uuid:4378$do/$get)=alice/#friend/=bob
+<programlisting>(=bob[$msg]*!:uuid:4378$do/$get)=alice/#friend/=bob
 </programlisting>
 <para>The result graph will be:</para>
 <programlisting>=alice/#friend/=bob
@@ -603,7 +608,7 @@ If the target address exists already, the operation has no effect (this is not c
 //=alice
 </programlisting>
 <para>And the following <code>$set</code> operation on target address <code>=alice&lt;#email></code>:</para>
-<programlisting>=bob[$msg]!:uuid:4378$do/$set/=alice&lt;#email>
+<programlisting>=bob[$msg]*!:uuid:4378$do/$set/=alice&lt;#email>
 </programlisting>
 <para>The target graph after the operation will be:</para>
 <programlisting>//+acme
@@ -621,8 +626,8 @@ If the target statement exists already, the operation has no effect (this is not
 =alice&lt;//#email>
 </programlisting>
 <para>And the following <code>$set</code> operation on target statements <code>=alice&lt;#email>/&amp;/"alice@email.com"</code> and <code>=alice/#friend/=bob</code>:</para>
-<programlisting>(=bob[$msg]!:uuid:4378$do/$set)=alice&lt;#email>/&amp;/"alice@email.com"
-(=bob[$msg]!:uuid:4378$do/$set)=alice/#friend/=bob 
+<programlisting>(=bob[$msg]*!:uuid:4378$do/$set)=alice&lt;#email>/&amp;/"alice@email.com"
+(=bob[$msg]*!:uuid:4378$do/$set)=alice/#friend/=bob 
 </programlisting>
 <para>The target graph after the operation will be:</para>
 <programlisting>//+acme
@@ -648,7 +653,7 @@ If the target address does not exist, the operation has no effect (this is not c
 =alice/#friend/=bob
 </programlisting>
 <para>And the following <code>$del</code> operation on target address <code>=alice&lt;#email></code>:</para>
-<programlisting>=bob[$msg]!:uuid:4378$do/$del/=alice&lt;#email>
+<programlisting>=bob[$msg]*!:uuid:4378$do/$del/=alice&lt;#email>
 </programlisting>
 <para>The target graph after the operation will be:</para>
 <programlisting>//+acme
@@ -668,7 +673,7 @@ If the target statement does not exist, the operation has no effect (this is not
 =alice/#friend/=bob
 </programlisting>
 <para>And the following <code>$del</code> operation on target statement <code>=alice/#friend/=bob</code>:</para>
-<programlisting>(=bob[$msg]!:uuid:4378$do/$del)=alice/#friend/=bob
+<programlisting>(=bob[$msg]*!:uuid:4378$do/$del)=alice/#friend/=bob
 </programlisting>
 <para>The target graph after the operation will be:</para>
 <programlisting>//+acme
@@ -695,7 +700,7 @@ If the target address exists already, the operation generates an error.</para>
 //=alice
 </programlisting>
 <para>And the following <code>$add</code> operation on target address <code>=alice&lt;#email></code>:</para>
-<programlisting>=bob[$msg]!:uuid:4378$do/$add/=alice&lt;#email>
+<programlisting>=bob[$msg]*!:uuid:4378$do/$add/=alice&lt;#email>
 </programlisting>
 <para>The target graph after the operation will be:</para>
 <programlisting>//+acme
@@ -713,8 +718,8 @@ If the target statement exists already, the operation generates an error.</para>
 =alice&lt;//#email>
 </programlisting>
 <para>And the following <code>$add</code> operation on target statements <code>=alice&lt;#email>/&amp;/"alice@email.com"</code> and <code>=alice/#friend/=bob</code>:</para>
-<programlisting>(=bob[$msg]!:uuid:4378$do/$add)=alice&lt;#email>/&amp;/"alice@email.com"
-(=bob[$msg]!:uuid:4378$do/$add)=alice/#friend/=bob 
+<programlisting>(=bob[$msg]*!:uuid:4378$do/$add)=alice&lt;#email>/&amp;/"alice@email.com"
+(=bob[$msg]*!:uuid:4378$do/$add)=alice/#friend/=bob 
 </programlisting>
 <para>The target graph after the operation will be:</para>
 <programlisting>//+acme
@@ -749,7 +754,7 @@ If the context node that contains the literal does not exist, the operation gene
 =alice/#friend/=bob
 </programlisting>
 <para>And the following <code>$mod</code> operation on target statement <code>=alice&lt;#email>/&amp;/"alice@new.com"</code>:</para>
-<programlisting>(=bob[$msg]!:uuid:4378$do/$set)=alice&lt;#email>/&amp;/"alice@new.com"
+<programlisting>(=bob[$msg]*!:uuid:4378$do/$set)=alice&lt;#email>/&amp;/"alice@new.com"
 </programlisting>
 <para>The target graph after the operation will be:</para>
 <programlisting>=alice&lt;#email>/&amp;/"alice@new.com"
