@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+For use when a committee document points at the OASIS web site for publishing:
+<?xml-stylesheet type="text/xsl" 
+href="http://docs.oasis-open.org/templates/DocBook/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
+<!DOCTYPE article
+  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+         "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
+
+For use when a committee document points to an embedded runtime installation:
+<?xml-stylesheet type="text/xsl" 
+         href="htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
+<!DOCTYPE article
+ PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" 
+        "htmlruntime/spec-0.6/docbook/docbookx.dtd" 
+
+For use when a committee document is published in a local environment only
+(note the instructions for local publishing require adjusting the stylesheet
+ and DocBook directories in these declarations):
+<?xml-stylesheet type="text/xsl" 
+href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl"?>
+<!DOCTYPE article
+  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+         "file:///c:/oasis/spec-0.6/docbook/docbookx.dtd" 
+-->
+<?xml-stylesheet type="text/xsl" 
+         href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
+<!DOCTYPE article
+ PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" 
+        "../../htmlruntime/spec-0.6/docbook/docbookx.dtd" 
+[
+<!--the document properties-->
+<!ENTITY name "xdi-bindings">
+<!ENTITY pversion "0.1">
+<!ENTITY version "1.0">
+<!ENTITY stage "wd04">
+<!ENTITY standard "Working Draft 04">
+<!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;">
+<!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
+<!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
+<!ENTITY pubdate "(not published)">
+<!ENTITY title "XDI Bindings V&version;">
+]>
+
+<article status="&standard;">
+
+<articleinfo>
+
+<title>&title;</title>
+<productname>&name;</productname>
+<productnumber>&version;-&stage;</productnumber>
+<releaseinfo role="track">Standards Track Work Product</releaseinfo>
+<releaseinfo role="OASIS-specification-this-authoritative">&this-loc;/&name;-&version;-&stage;.xml</releaseinfo>
+<releaseinfo role="OASIS-specification-this">&this-loc;/&name;-&version;-&stage;.pdf</releaseinfo>
+<releaseinfo role="OASIS-specification-this">&this-loc;/&name;-&version;-&stage;.html</releaseinfo>
+<releaseinfo role="OASIS-specification-previous-authoritative">&previous-loc;/&name;-&pversion;.xml</releaseinfo>
+<releaseinfo role="OASIS-specification-previous">&previous-loc;/&name;-&pversion;.pdf</releaseinfo>
+<releaseinfo role="OASIS-specification-previous">&previous-loc;/&name;-&pversion;.html</releaseinfo>
+<releaseinfo role="OASIS-specification-latest-authoritative">&latest-loc;/&name;.xml</releaseinfo>
+<releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.pdf</releaseinfo>
+<releaseinfo role="OASIS-specification-latest">&latest-loc;/&name;.html</releaseinfo>
+<releaseinfo role="committee"><ulink url="http://www.oasis-open.org/committees/xdi">OASIS XDI TC</ulink></releaseinfo>
+<authorgroup>
+  <editor> <firstname>Markus</firstname><surname>Sabadello</surname>
+    <affiliation><orgname>Project Danube</orgname></affiliation>
+    <email>markus@projectdanube.org</email> </editor>
+  <editor> <firstname>Drummond</firstname><surname>Reed</surname>
+    <affiliation><orgname>XDI.org</orgname></affiliation>
+    <email>drummond.reed@xdi.org</email> </editor>
+  <editor> <firstname>Joseph</firstname><surname>Boyle</surname>
+    <affiliation><orgname>Planetwork</orgname></affiliation>
+    <email>joseph@planetwork.net</email> </editor>
+</authorgroup>
+<pubdate>&pubdate;</pubdate>
+<copyright><year>2014</year>
+<holder>OASIS Open, Inc. All Rights Reserved.</holder></copyright>
+ <legalnotice role="additional"><title>Additional artifacts</title>
+ <para>This prose specification is one component of a Work Product which also includes:</para>
+ <!--itemizedlist spacing="compact"> <listitem><para>
+publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this-loc;/&name;-&version;-&stage;.zip</ulink></para>
+ </listitem> </itemizedlist-->
+</legalnotice>
+<legalnotice role="related"><title>Related work</title>
+  <para>This document is primarily based on a set of proposals that had been collected by the OASIS XDI TC on its associated wiki at <ulink url="https://wiki.oasis-open.org/xdi/">https://wiki.oasis-open.org/xdi/</ulink>.</para>
+</legalnotice>
+
+<abstract><title>Abstract</title>
+  <para>This document specifies concrete ways for applying XDI messaging to specific network topologies and protocols.</para>
+</abstract>
+
+<!--legalnotice role="status"><title>Status</title>
+<para>This is a work in progress contributed to the OASIS TC administration 
+and does not at this time represent the consensus of any particular OASIS Technical Committee.
+There are no plans to make this a formal Committee Specification as it is merely an internal
+document made available to committee members to support the publishing process.</para>
+</legalnotice-->
+<legalnotice role="citation"><title>Citation format</title>
+<para>When referencing this specification the following citation format should be used:</para>
+<!--bibliolist> <bibliomixed>
+  <abbrev>OASIS-XDI-Messaging-V1.0</abbrev>
+  <title>OASIS XDI Messaging V1.0</title>
+  <date>&pubdate;. </date>
+  <releaseinfo>OASIS &standard;. </releaseinfo>
+  <citetitle><ulink url="&latest-loc;/&name;.html">&latest-loc;/&name;.html</ulink>.</citetitle>
+</bibliomixed> </bibliolist-->
+</legalnotice>
+<legalnotice role="notices"><title>Notices</title>
+<para>Copyright &#169; OASIS&#174; Open 2013. All Rights Reserved.  </para>
+<para>All capitalized terms in the following text have the meanings assigned to them in the OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full Policy may be found at <ulink  url="http://www.oasis-open.org/who/intellectualproperty.php">http://www.oasis-open.org/who/intellectualproperty.php</ulink>.</para>
+<para>This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to OASIS, except as needed for the purpose of developing any document or deliverable produced by an OASIS Technical Committee (in which case the rules applicable to copyrights, as set forth in the OASIS IPR Policy, must be followed) or as required to translate it into languages other than English.</para> 
+<para>The limited permissions granted above are perpetual and will not be revoked by OASIS or its successors or assigns.</para>
+<para>This document and the information contained herein is provided on an "AS IS" basis and OASIS DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</para> 
+<para>OASIS requests that any OASIS Party or any other party that believes it has patent claims that would necessarily be infringed by implementations of this OASIS Committee Specification or OASIS Standard, to notify OASIS TC Administrator and provide an indication of its willingness to grant patent licenses to such patent claims in a manner consistent with the IPR Mode of the OASIS Technical Committee that produced this specification.</para>
+<para>OASIS invites any party to contact the OASIS TC Administrator if it is aware of a claim of ownership of any patent claims that would necessarily be infringed by implementations of this specification by a patent holder that is not willing to provide a license to such patent claims in a manner consistent with the IPR Mode of the OASIS Technical Committee that produced this specification. OASIS may include such claims on its website, but disclaims any obligation to do so.</para>
+<para>OASIS takes no position regarding the validity or scope of any intellectual property or other rights that might be claimed to pertain to the implementation or use of the technology described in this document or the extent to which any license under such rights might or might not be available; neither does it represent that it has made any effort to identify any such rights. Information on OASIS' procedures with respect to rights in any document or deliverable produced by an OASIS Technical Committee can be found on the OASIS website. Copies of claims of rights made available for publication and any assurances of licenses to be made available, or the result of an attempt made to obtain a general license or permission for the use of such proprietary rights by implementers or users of this OASIS Committee Specification or OASIS Standard, can be obtained from the OASIS TC Administrator. OASIS makes no representation that any information or list of intellectual property rights will at any time be complete, or that any claims in such list are, in fact, Essential Claims.</para>
+<para>The name "OASIS" is a trademark of <ulink url="http://www.oasis-open.org">OASIS</ulink>, the owner and developer of this specification, and should be used only to refer to the organization and its official outputs. OASIS welcomes reference to, and implementation and use of, specifications, while reserving the right to enforce its marks against misleading uses. Please see <ulink url="http://www.oasis-open.org/who/trademark.php">http://www.oasis-open.org/who/trademark.php</ulink> for above guidance.</para>
+</legalnotice>
+
+</articleinfo>
+
+<section id="s.introduction"><title>Introduction</title>
+
+<para>This document specifies concrete ways for applying XDI messaging to specific network topologies
+and protocols.</para>
+
+<para>The XDI 1.0 Core specification <xref linkend="xdi-core-1.0"/> defines the XDI
+graphs and the XDI Messaging specification <xref linkend="xdi-messaging-1.0"/> defines the messaging
+patterns and the messages themselves.</para>
+
+<section><title>Terminology</title>
+
+<section><title> Key words</title>
+
+<para>The key words <glossterm>must</glossterm>, <glossterm>must not</glossterm>,
+<glossterm>required</glossterm>, <glossterm>shall</glossterm>, <glossterm>shall
+not</glossterm>, <glossterm>should</glossterm>, <glossterm>should not</glossterm>,
+<glossterm>recommended</glossterm>, <glossterm>may</glossterm>, and
+<glossterm>optional</glossterm> are to be interpreted as described in <xref
+linkend="RFC2119"/>. Note that for reasons of style, these words are not capitalized in
+this document.</para>
+
+</section>
+
+</section>
+
+<section><title>Normative References</title>
+
+<bibliolist>
+  <bibliomixed id="xdi-core-1.0">
+    <abbrev>OASIS-XDI-Core-V1.0</abbrev>
+    <date>&pubdate; </date>
+    <title>
+      <ulink url="../../xdi-core-1.0/xdi-core-1.0-wd01.xml">OASIS XDI 1.0 Core Specification</ulink>
+    </title>
+    <author>
+      <firstname>Joseph </firstname>
+      <surname>Boyle</surname></author>,
+    <author>
+      <firstname>Drummond </firstname>
+      <surname>Reed</surname></author>. 
+    <releaseinfo>OASIS &standard;. </releaseinfo>
+    <citetitle>
+      <ulink url="&latest-loc;/xdi-core.html">&latest-loc;/xdi-core.html</ulink>.
+    </citetitle>
+  </bibliomixed>
+  <bibliomixed id="xdi-messaging-1.0">
+    <abbrev>OASIS-XDI-Messaging-V1.0</abbrev>
+    <date>&pubdate; </date>
+    <title>
+      <ulink url="../../xdi-messaging-1.0/xdi-messaging-1.0-wd01.xml">OASIS XDI 1.0 Messaging Specification</ulink>
+    </title>
+    <author>
+      <firstname>Joseph </firstname>
+      <surname>Boyle</surname></author>,
+    <author>
+      <firstname>Drummond </firstname>
+      <surname>Reed</surname></author>. 
+    <releaseinfo>OASIS &standard;. </releaseinfo>
+    <citetitle>
+      <ulink url="&latest-loc;/xdi-messaging.html">&latest-loc;/xdi-messaging.html</ulink>.
+    </citetitle>
+  </bibliomixed>
+  <bibliomixed id="xdi-signatures-1.0">
+    <abbrev>OASIS-XDI-Signatures-V1.0</abbrev>
+    <date>&pubdate; </date>
+    <title>
+      <ulink url="../../xdi-signatures-1.0/xdi-signatures-1.0-wd01.xml">OASIS XDI 1.0 Signatures Specification</ulink>
+    </title>
+    <author>
+      <firstname>Peter </firstname>
+      <surname>Davis</surname></author>.
+    <releaseinfo>OASIS &standard;. </releaseinfo>
+    <citetitle>
+      <ulink url="&latest-loc;/xdi-signatures.html">&latest-loc;/xdi-signatures.html</ulink>.
+    </citetitle>
+  </bibliomixed>
+  <bibliomixed id="xdi-security-mechanisms-1.0">
+    <abbrev>OASIS-XDI-Security-Mechanisms-V1.0</abbrev>
+    <date>&pubdate; </date>
+    <title>
+      <ulink url="../../xdi-security-mechanisms-1.0/xdi-security-mechanisms-1.0-wd01.xml">OASIS XDI 1.0 Security Mechanisms Specification</ulink>
+    </title>
+    <author>
+      <firstname>Peter </firstname>
+      <surname>Davis</surname></author>.
+    <releaseinfo>OASIS &standard;. </releaseinfo>
+    <citetitle>
+      <ulink url="&latest-loc;/xdi-security-mechanisms.html">&latest-loc;/xdi-security-mechanisms.html</ulink>.
+    </citetitle>
+  </bibliomixed>
+  <bibliomixed id="RFC4346">
+    <abbrev>RFC4346</abbrev>
+    <date>April 2006</date>
+    <title>
+      <ulink url="http://tools.ietf.org/html/rfc4346">
+        The Transport Layer Security (TLS) Protocol Version 1.1
+      </ulink>
+    </title>
+    <author>
+      <firstname>T.</firstname>
+      <surname>Dierks</surname>
+    </author>,
+    <author>
+      <firstname>E.</firstname>
+      <surname>Rescorla</surname>
+    </author>. 
+    <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+  </bibliomixed>
+  <bibliomixed id="CORS">
+    <abbrev>CORS</abbrev>
+    <date>January 2014</date>
+    <title>
+      <ulink url="http://www.w3.org/TR/cors/">
+        Cross-Origin Resource Sharing
+      </ulink>
+    </title>
+    <author>
+      <firstname>A.</firstname>
+      <surname>van Kesteren</surname>
+    </author>.
+    <releaseinfo>W3C</releaseinfo>
+  </bibliomixed>
+  <bibliomixed id="MICRODATA">
+    <abbrev>MICRODATA</abbrev>
+    <date>October 2013</date>
+    <title>
+      <ulink url="http://www.w3.org/TR/2013/NOTE-microdata-20131029/">
+        HTML Microdata
+      </ulink>
+    </title>
+    <author>
+      <firstname>I.</firstname>
+      <surname>Hickson</surname>
+    </author>.
+    <releaseinfo>W3C</releaseinfo>
+  </bibliomixed>
+  <bibliomixed id="RFC5246">
+    <abbrev>RFC5246</abbrev>
+    <date>August 2008</date>
+    <title>
+      <ulink url="http://tools.ietf.org/html/rfc5246">
+        The Transport Layer Security (TLS) Protocol Version 1.2
+      </ulink>
+    </title>
+    <author>
+      <firstname>T.</firstname>
+      <surname>Dierks</surname>
+    </author>,
+    <author>
+      <firstname>E.</firstname>
+      <surname>Rescorla</surname>
+    </author>. 
+    <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+  </bibliomixed>
+  <bibliomixed id="RFC2616">
+    <abbrev>RFC2616</abbrev>
+    <date>June 1999</date>
+    <title>
+      <ulink url="http://www.w3.org/Protocols/rfc2616/rfc2616.html">
+        Hypertext Transfer Protocol -- HTTP/1.1
+      </ulink>
+    </title>
+    <author>
+      <firstname>R.</firstname>
+      <surname>Fielding</surname>
+    </author>,
+    <author>
+      <firstname>J.</firstname>
+      <surname>Gettys</surname>
+    </author>, 
+    <author>
+      <firstname>J.</firstname>
+      <surname>Mogul</surname>
+    </author>, 
+    <author>
+      <firstname>H.</firstname>
+      <surname>Frystyk</surname>
+    </author>, 
+    <author>
+      <firstname>L.</firstname>
+      <surname>Masinter</surname>
+    </author>, 
+    <author>
+      <firstname>P.</firstname>
+      <surname>Leach</surname>
+    </author>, 
+    <author>
+      <firstname>T.</firstname>
+      <surname>Berners-Lee</surname>
+    </author>.
+    <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
+  </bibliomixed>
+  <bibliomixed id="RFC2119">
+    <abbrev>RFC 2119</abbrev>
+    <title>Key words for use in RFCs to Indicate Requirement Levels</title>, <date>March 1997. </date>
+    <author>
+      <firstname>S. </firstname>
+      <surname>Bradner</surname>
+    </author>. <releaseinfo>IETF (Internet Engineering Task Force) RFC 2119, </releaseinfo>
+    <citetitle><ulink url="http://www.ietf.org/rfc/rfc2119.txt"
+      >http://www.ietf.org/rfc/rfc2119.txt</ulink></citetitle>
+  </bibliomixed>
+</bibliolist>
+
+</section>
+
+<section><title>Non-Normative References</title>
+
+<bibliolist>
+  <bibliomixed id="json-ld">
+    <abbrev>json-ld</abbrev> W3C Editor's Draft 20 August 2013, <title><ulink
+      url="http://json-ld.org/spec/latest/json-ld">JSON-LD: A JSON-based Serialization for
+      Linked Data</ulink></title> , W3C 20 August 2013 </bibliomixed>
+</bibliolist>
+
+</section>
+
+</section>
+
+<section><title>XDI Bindings</title>
+
+<para>An XDI binding [OASIS-XDI-Bindings-V1.0] is a concrete way how messages can be transmitted over a network between
+two peers.</para>
+
+<para>Bindings introduce specific terms such as <firstterm>client</firstterm>, <firstterm>server</firstterm>, and <firstterm>endpoint</firstterm>.</para>
+
+<para>Other terms are defined in the XDI Messaging specification and are common to all bindings, e.g.
+<firstterm>requester</firstterm>, <firstterm>responder</firstterm>, <firstterm>message envelope</firstterm>, 
+<firstterm>message</firstterm>, <firstterm>target graph</firstterm>, <firstterm>result graph</firstterm>.</para>
+
+<para>The abstract mechanism for executing messages is also defined in the XDI Messaging specification. Bindings
+merely specify how messages are transmitted between peers.</para>
+
+<section><title>Serialization</title>
+
+<para>The XDI Core specification <xref linkend="xdi-core-1.0"/> defines several serialization formats.</para>
+
+<para>For bindings, the following rule applies:
+<itemizedlist>
+  <listitem><para>The XDI JSON serialization format (MIME type: <code>application/xdi+json</code>) MUST be
+    supported by both requesters and responders. Other serialization formats MAY be supported.</para></listitem>
+</itemizedlist>
+</para>
+
+</section>
+
+<section><title>Security Considerations</title>
+
+<para>Bindings rely on message-level integrity protection via signing of the messages as defined in
+the XDI Signatures specification <xref linkend="xdi-signatures-1.0"/>.
+Additionally, the Security Mechanisms specification <xref linkend="xdi-security-mechanisms-1.0"/> protection
+of messages in transit between requester and responder.</para>
+
+</section>
+
+</section>
+
+<section><title>Direct Binding</title>
+
+<para>The Direct Binding defines a mechanism by which message envelopes containing request messages
+and response messages are transmitted using HTTP POST operations. The XDI requester acts as an HTTP client
+and opens a connection to an HTTP endpoint associated with the XDI responder. The requester sends
+a POST request. The serialized message envelope containing one or more request message(s) is sent
+in the HTTP body.</para>
+
+<para>The responder executes the request message(s) against its peer graph. The responder sends
+a message envelope containing one or more response message(s) in the HTTP body of the response
+to the POST request.</para>
+
+<section><title>HTTP Headers</title>      
+
+<para>The following HTTP headers are relevant to the Direct Binding:</para>
+<itemizedlist>
+  <listitem><para>Both requesters and responders SHOULD set the <code>Content-Type</code> HTTP header
+    to indicate the serialization format used for the message envelope.</para></listitem>
+  <listitem><para>Requesters MAY set the <code>Accept</code> header to indicate what serialization formats
+    it would prefer the responder uses.</para></listitem>
+  <listitem><para>Both requesters and responders SHOULD set the <code>Content-Length</code> HTTP header to indicate the length
+    of the serialized message envelope in the HTTP body.</para></listitem>
+  <listitem><para>Requesters supporting HTTP 1.1 SHOULD use the chunked transfer encoding mechanism
+    (<code>Transfer-Encoding: chunked</code>). Note that even if this mechanism is used, it is recommended
+    to also include the <code>Content-Length</code> HTTP header.</para></listitem>
+  <listitem><para>Responders SHOULD set HTTP headers for Cross-Origin Resource Sharing <xref linkend="CORS"/>.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title>Error Reporting</title>
+
+<para>In addition to the status codes defined in HTTP 1.1 <xref linkend="RFC2616"/>, an HTTP responder
+SHOULD convey second-level error in the HTTP body of the message.</para>
+
+</section>
+
+<section><title>Correlation of request message and response message</title>
+
+<para>In the Direct Binding, request messages and response messages are implicitly
+correlated by the fact that they are exchanged within the same HTTPS connection.</para>
+<para>If stronger correlation and/or additional security is desired, a full response
+SHOULD be forced as described in <xref linkend="xdi-messaging-1.0"/>.</para>
+
+</section>
+
+<section><title>Example</title>
+
+<para>The following is an example of a request message transmitted via the Direct Binding.
+<programlisting>
+POST /xdi/ HTTP/1.1
+Host: demo.xdi.org
+Content-Type: application/xdi+json; charset=utf-8
+Content-Length: 267
+
+&lt;&lt; XDI JSON serialized request here &gt;&gt;
+</programlisting>
+</para>
+<para>
+The following is an example of a response message transmitted via the Direct Binding.
+<programlisting>
+HTTP/1.1 200 OK
+Content-Type: application/xdi+json
+Content-Length: 202
+
+&lt;&lt; XDI JSON serialized response here &gt;&gt;
+</programlisting>
+</para>
+
+</section>
+
+</section>
+
+<section><title>Browser Binding</title>
+
+<para>The Browser Binding defines a mechanism by which an XDI request message envelope is
+transmitted from a requester to a responder using a web browser and an HTML form on a web page.
+Transmission of the request message envelope is triggered by
+a user initiating an action on the web page, usually by clicking on a button that submits the
+HTML form. The XDI authority associated with the web page is the requester. The XDI authority
+associated with the user is the responder.</para>
+
+<section><title>HTML form (request)</title>
+
+<para>
+  The HTML form is not submitted directly to an XDI endpoint. Instead,
+  it is submitted to an XDI endpoint's "authorization service" (see next section). 
+</para>
+<para>
+  The HTML form containing the request message envelope MUST have the following characteristics:
+</para>
+<itemizedlist>
+  <listitem><para>The value of the "METHOD" attribute of the HTML form MUST be "POST".</para></listitem>
+  <listitem><para>If the responder is known at the time the HTML form is constructed, the
+  value of the "ACTION" attribute MUST be the URI of the target XDI endpoint's authorization service.
+  </para></listitem>
+  <listitem><para>If the responder is not known at the time the HTML form is constructed, the
+  value of the "ACTION" attribute MAY be the URI of a connect service, or it may be empty (see
+  next section). 
+  </para></listitem>
+  <listitem><para>The form MUST contain a hidden field with the name "xdiMessageEnvelope". The
+  value of the field is the request message envelope to be transmitted to the responder.</para></listitem>
+  <listitem><para>The form MAY contain the HTML microdata <xref linkend="MICRODATA"/> attributes
+  <code>itemscope</code> and <code>itemtype="$xdi$msg"</code>, to assist user agents with native
+  support for the Browser Binding to recognize the HTML form.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title>Authorization service</title>
+
+<para>
+The "authorization service" is a web application that receives and processes the HTML form
+that contains the request message envelope. It has privileged
+access to the target graph and MAY interact with the user by presenting a web-based user interface, for
+authentication and/or authorization purposes. After this user interaction step, the request message
+envelope is transmitted to the target XDI endpoint.
+</para>
+<para>The authorization service MAY use cookies to reduce the number of steps in subsequent transmissions.
+</para>
+
+</section>
+
+<section><title>Discovering the authorization service</title>
+
+<para>
+The responder and therefore the target XDI endpoint's authorization service may not be known at the 
+time the HTML form is constructed and displayed in the user's web browser. In order to find the
+authorization service, XDI discovery is performed on the user's discovery key, using the service
+type <code>&lt;$https&gt;&lt;$connect&gt;&lt;$xdi&gt;</code>. This may happen in one of three ways:
+</para>
+<section>
+<title>Discovery via connect service</title>
+<para>The HTML form may be submitted to a well-known "connect service", which interacts with
+the user by presenting a web-based user interface. The user submits a discovery key to the connect service, which
+uses it to discover the URI of the authorization service. The request message envelope is then forwarded
+to the authorization service without modification, using an HTML form equivalent to the one
+on the original requester web page. This HTML form may be auto-submitted using JavaScript.</para>
+<para>The
+connect service MAY use cookies to reduce the number of steps in subsequent transmissions.</para>
+</section>
+<section>
+<title>Discovery via user agent</title>
+<para>The user agent (web browser), possibly via a plugin, may natively support the Browser
+Binding. In this case, the user submits a discovery key to the user agent, which uses it to
+discover the URI of the authorization service. The HTML form is then submitted to the discovered authorization
+service.</para>
+<para>The user's discovery key and/or authorization service MAY be permanantly stored or cached
+by the user agent.</para>
+</section>
+<section>
+<title>Discovery via widget</title>
+<para>The HTML form may contain client-side scripting code which interacts with the user by
+presenting a widget. The user submits a discovery key to the widget, which uses it to discover
+the URI of the authorization service. Except for the XDI discovery process itself, this interaction
+happens purely within the user agent (web browser). The HTML form is then dynamically modified
+by the scripting code and submitted to the discovered authorization service.</para>
+</section>
+
+</section>
+
+<section><title>HTML form (response)</title>
+
+<para>After the request message envelope is received by the responder and processed, a
+response is generated and returned to the requester web page via an HTML form.</para>
+<para>The HTML form containing the response MUST have the following characteristics:</para>
+<itemizedlist>
+  <listitem><para>The value of the "METHOD" attribute of the HTML form MUST be "POST".</para></listitem>
+  <listitem><para>The value of the "ACTION" attribute MUST be the requester's return URI.
+  </para></listitem>
+  <listitem><para>The form MUST contain a hidden field with the name "xdiResponse". The
+  value of the field is the response to be transmitted to the requester.</para></listitem>
+  <listitem><para>The form MAY contain the HTML microdata <xref linkend="MICRODATA"/> attributes
+  <code>itemscope</code> and <code>itemtype="$xdi$msg"</code>, to assist user agents with native
+  support for the Browser Binding to recognize the HTML form.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title>Request message envelope requirements</title>
+
+<para>
+  The request message envelope SHOULD contain a return URI in the form
+  of a message attribute <code>&lt;#return&gt;&lt;$uri&gt;</code>, or otherwise the return URI
+  MUST be established out-of-band before the Browser Binding can be used.
+</para>
+<para>
+  If the responder is not known at the time the HTML form is constructed, the variable
+  <code>{$to}</code> may be used to construct the request message envelope.
+</para>
+
+</section>
+
+<section><title>Correlation of request message and response message</title>
+
+<para>
+In the Browser Binding, Request messages and response messages may be implicitly
+correlated by means of a cookie-based session that may exist between the user and the web page.</para>
+<para>If stronger correlation and/or additional security is desired, a full response
+SHOULD be forced as described in <xref linkend="xdi-messaging-1.0"/>.</para>
+
+</section>
+
+<section><title>Example</title>
+
+<para>
+  The following is an example of a request message envelope. It illustrates how to 
+  specify a responder that is not known at the time the HTML form is constructed. It also illustrates the use of the <code>&lt;#return&gt;&lt;$uri&gt;</code>
+  message parameter.
+  <programlisting>
+    [+]!:uuid:8888[$msg]@0/$is()/({$to})
+    [+]!:uuid:8888[$msg]@0/$do/({$to}/[+]!:uuid:8888)$do
+    [+]!:uuid:8888[$msg]@0$do/$get/{$to}&lt;#email&gt;
+    [+]!:uuid:8888[$msg]@0&lt;$sig&gt;/&amp;/"&lt;&lt; signature &gt;&gt;"
+    [+]!:uuid:8888[$msg]@0&lt;$sig&gt;/$is#/$sha$256$rsa$2048
+    [+]!:uuid:8888[$msg]@0&lt;#return&gt;&lt;$uri&gt;/&amp;/"https://acmenews.projectdanube.org/acmenews-return"
+  </programlisting>
+</para>
+<para>The following is an example of an HTML form that contains a request message envelope.
+  In this case, a connect service is used to find the authorization service.
+  <programlisting>
+    &lt;form itemscope itemtype="$connect$request" action="https://connect-service.projectdanube.org/connect" method="post"&gt;
+    &lt;input type="hidden" name="xdiMessageEnvelope" value="&lt;&lt; XDI JSON serialized request here &gt;&gt;"&gt;	
+    &lt;input type="submit" value="Send request message envelope"&gt;
+    &lt;/form&gt;
+  </programlisting>
+</para>
+<para>
+  The following is an example of an HTML form that contains a synchronous response with a result XDI statement.
+  <programlisting>
+    &lt;form action="https://acmenews.projectdanube.org/acmenews-return" method="post"&gt;
+    &lt;input type="hidden" name="xdiResponse" value="&lt;&lt; XDI JSON serialized response here &gt;&gt;"&gt;
+    &lt;input type="submit" value="Return to requester web page"&gt;
+    &lt;/form&gt;
+  </programlisting>
+</para>
+
+</section>
+
+</section>
+
+<section><title>Artifact Binding</title>
+
+<para>The artifact binding defines a mechanism by which XDI requests are transmitted using an artifact.</para>
+
+</section>
+
+<section><title>WebSocket Binding</title>
+
+<para>The WebSocket Binding defines a mechanism by which message envelopes containing request messages
+and response messages are transmitted using WebSocket connections. The requester acts as a WebSocket client
+and opens a connection to a WebSocket endpoint associated with the responder. During the WebSocket handshake,
+the sub-protocol "xdi" is established. The requester sends the serialized message envelope containing one or more
+request message(s) as a WebSocket message using WebSocket text frames.</para>
+
+<para>The responder executes the request message(s) against its peer graph. The responder sends
+a message envelope containing one or more response message(s) as a WebSocket message using WebSocket text frames.</para>
+
+<section><title>Correlation of request message and response message</title>
+
+<para>In the WebSocket Binding, request messages and response messages are implicitly
+correlated by the fact that they are exchanged within the same WebSocket connection.</para>
+<para>If stronger correlation and/or additional security is desired, a full response
+SHOULD be forced as described in <xref linkend="xdi-messaging-1.0"/>.</para>
+
+</section>
+
+<section><title>Example</title>
+
+<para>The following is an example of a request message transmitted via the WebSocket Binding.
+<programlisting>...
+</programlisting>
+</para>
+<para>
+The following is an example of a response message transmitted via the WebSocket Binding.
+<programlisting>...
+</programlisting>
+</para>
+
+</section>
+
+</section>
+
+<appendix id="a.acknowledgments" role="non-normative">
+  <title>Acknowledgments</title>
+  <para>This specification was written with the generous and appreciated assistance of XXXXX. We
+    also acknowledge the following original members of the XDI TC: YYYYY</para>
+</appendix>
+
+<appendix id="a.examples" role="non-normative">
+  <title>Examples</title>
+  <para>This appendix contains examples of XDI messaging over HTTP.</para>
+</appendix>
+
+</article>
