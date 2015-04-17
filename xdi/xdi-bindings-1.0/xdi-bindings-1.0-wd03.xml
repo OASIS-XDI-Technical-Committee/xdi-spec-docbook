@@ -628,10 +628,10 @@ SHOULD be forced as described in <xref linkend="xdi-messaging-1.0"/>.</para>
 and response messages are transmitted using WebSocket connections. The requester acts as a WebSocket client
 and opens a connection to a WebSocket endpoint associated with the responder. During the WebSocket handshake,
 the sub-protocol "xdi" is established. The requester sends the serialized message envelope containing one or more
-request message(s) as a WebSocket data frame.</para>
+request message(s) as a WebSocket message using WebSocket text frames.</para>
 
 <para>The responder executes the request message(s) against its peer graph. The responder sends
-a message envelope containing one or more response message(s) as a WebSocket data frame.</para>
+a message envelope containing one or more response message(s) as a WebSocket message using WebSocket text frames.</para>
 
 <section><title>Correlation of request message and response message</title>
 
