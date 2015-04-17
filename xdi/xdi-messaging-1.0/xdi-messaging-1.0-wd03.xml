@@ -835,6 +835,16 @@ in a way defined by the binding that is being used.
 
 </section>
 
+<section><title>Response statement</title>
+
+<para>Deferred response messages and full response messages MUST have exactly one <firstterm>response statement</firstterm>,
+also known as <firstterm>thread statement</firstterm>.</para>
+
+<programlisting>RESPONSE STATEMENT            &lt;--responder--&gt;[$msg]&lt;--response-message-id--&gt;/$msg/&lt;--requester--&gt;[$msg]&lt;--request-message-id--&gt;
+</programlisting>
+
+</section>
+
 </section>
 
 <section><title>Message Execution</title>
