@@ -24,10 +24,10 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
          "file:///c:/oasis/spec-0.6/docbook/docbookx.dtd" 
 -->
 <?xml-stylesheet type="text/xsl" 
-href="http://docs.oasis-open.org/templates/DocBook/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
+         href="../../htmlruntime/spec-0.6/stylesheets/oasis-specification-html.xsl"?>
 <!DOCTYPE article
-  PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
-         "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
+ PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" 
+        "../../htmlruntime/spec-0.6/docbook/docbookx.dtd" 
 [
 <!--the document properties-->
 <!ENTITY name "oasis-specification">
