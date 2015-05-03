@@ -38,7 +38,7 @@ href="http://docs.oasis-open.org/templates/DocBook/spec-0.6/stylesheets/oasis-sp
 <!ENTITY this-loc "http://docs.oasis-open.org/templates/DocBook/spec-&version;">
 <!ENTITY previous-loc "http://docs.oasis-open.org/templates/DocBook/spec-&pversion;">
 <!ENTITY latest-loc "http://docs.oasis-open.org/templates/DocBook/oasis-specification">
-<!ENTITY pubdate "25 July 2013">
+<!ENTITY pubdate "(not published)">
 <!ENTITY title "XDI Push V&version;">
 ]>
 <article status="&standard;">
