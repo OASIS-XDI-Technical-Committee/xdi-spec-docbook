@@ -30,14 +30,14 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
         "../../htmlruntime/spec-0.6/docbook/docbookx.dtd" 
 [
 <!--the document properties-->
-<!ENTITY name "oasis-specification">
+<!ENTITY name "xdi-push">
 <!ENTITY pversion "0.0">
 <!ENTITY version "1.0">
 <!ENTITY stage "wd01">
 <!ENTITY standard "Working Draft 01">
-<!ENTITY this-loc "http://docs.oasis-open.org/templates/DocBook/spec-&version;">
-<!ENTITY previous-loc "http://docs.oasis-open.org/templates/DocBook/spec-&pversion;">
-<!ENTITY latest-loc "http://docs.oasis-open.org/templates/DocBook/oasis-specification">
+<!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;">
+<!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
+<!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
 <!ENTITY pubdate "(not published)">
 <!ENTITY title "XDI Push V&version;">
 ]>
