@@ -269,8 +269,8 @@ document made available to committee members to support the publishing process.<
 
 <para>XDI messaging is the mechanism for transmitting <firstterm>request messages</firstterm> and 
 <firstterm>response messages</firstterm>
-between two peers. A peer sending a request message is called <firstterm>requester</firstterm>. A
-peer sending a response message is called <firstterm>responder</firstterm>.</para>
+between two peers. A peer sending a request message is called <firstterm>requesting peer</firstterm> (or short "requester"). A
+peer sending a response message is called <firstterm>responding peer</firstterm> (or short "responder").</para>
 <para>A <firstterm>message</firstterm> is itself a context node in a graph, so it can be addressed, serialized, stored,
 shared, and controlled by link contracts. A graph containing one or more messages is also
 called a <firstterm>message envelope</firstterm>.</para>
