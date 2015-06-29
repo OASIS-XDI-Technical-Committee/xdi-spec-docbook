@@ -260,7 +260,7 @@ connection requests and connection invitations when user interaction is required
 and creates a push contract. This implicit push contract is returned to the requester of the XDI
 operation. [TODO: more precise language and details].</para>
 
-<para>In an XDI message that explicitly creates a push contract, the subscribing peer is the requester,
+<para>In an XDI message that implicitly creates a push contract, the subscribing peer is the requester,
 and the publishing peer is the responder. [TODO: more precise language and details].</para>
 
 <para>Once the original XDI operation is completed, the push contract is used to deliver a full response message
