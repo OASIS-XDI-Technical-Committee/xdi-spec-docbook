@@ -33,8 +33,8 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <!ENTITY name "xdi-messaging">
 <!ENTITY pversion "0.1">
 <!ENTITY version "1.0">
-<!ENTITY stage "wd04">
-<!ENTITY standard "Working Draft 04">
+<!ENTITY stage "wd05">
+<!ENTITY standard "Working Draft 05">
 <!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;">
 <!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
 <!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
@@ -62,8 +62,8 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <releaseinfo role="committee"><ulink url="http://www.oasis-open.org/committees/xdi">OASIS XDI TC</ulink></releaseinfo>
 <authorgroup>
   <editor> <firstname>Markus</firstname><surname>Sabadello</surname>
-    <affiliation><orgname>Project Danube</orgname></affiliation>
-    <email>markus@projectdanube.org</email> </editor>
+    <affiliation><orgname>Danube Tech</orgname></affiliation>
+    <email>markus@danubetech.com</email> </editor>
   <editor> <firstname>Drummond</firstname><surname>Reed</surname>
     <affiliation><orgname>XDI.org</orgname></affiliation>
     <email>drummond.reed@xdi.org</email> </editor>
@@ -72,7 +72,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
     <email>joseph@planetwork.net</email> </editor>
 </authorgroup>
 <pubdate>&pubdate;</pubdate>
-<copyright><year>2014</year>
+<copyright><year>2015</year>
 <holder>OASIS Open, Inc. All Rights Reserved.</holder></copyright>
  <legalnotice role="additional"><title>Additional artifacts</title>
  <para>This prose specification is one component of a Work Product which also includes:</para>
@@ -267,19 +267,37 @@ document made available to committee members to support the publishing process.<
 
 <section><title>XDI Messaging</title>
 
-<para>XDI messaging is the mechanism for transmitting <firstterm>request messages</firstterm> and 
-<firstterm>response messages</firstterm>
-between two peers. A peer sending a request message is called <firstterm>requesting peer</firstterm> (or short "requester"). A
-peer sending a response message is called <firstterm>responding peer</firstterm> (or short "responder").</para>
+<para>XDI messaging is the mechanism for transmitting <firstterm>messages</firstterm> between two peers, for the purpose
+of exchanging data between the graphs for which the peers are authoritative.</para>
+<para>Every message is transmitted from a <firstterm>sending peer</firstterm> to a <firstterm>receiving peer</firstterm>.</para>
+<para>The XDI messaging process consists of round-trips, each one of which involves a <firstterm>request message</firstterm> which is followed by a <firstterm>response message</firstterm>.</para>
+<para>A peer sending a request message is called <firstterm>requesting peer</firstterm> (or short <firstterm>requester</firstterm>). A
+peer sending a response message is called <firstterm>responding peer</firstterm> (or short <firstterm>responder</firstterm>).</para>
 <para>A <firstterm>message</firstterm> is itself a context node in a graph, so it can be addressed, serialized, stored,
-shared, and controlled by link contracts. A graph containing one or more messages is also
-called a <firstterm>message envelope</firstterm>.</para>
+shared, and controlled by link contracts. When a graph containing one or more messages is serialized and transmitted
+between peers, then that graph is called a <firstterm>message envelope</firstterm>.</para>
 <para>A request message contains one or more <firstterm>request operations</firstterm>, which can perform
 queries and/or apply modifications to a graph for which the responder is authoritative. This graph is called
 the <firstterm>target graph</firstterm>.</para>
 <para>A response message contains a <firstterm>result graph</firstterm>, which represents the result of the request operations.
 The result graph MAY be empty.
 </para>
+<para>The following diagram shows a typical XDI messaging round-trip:</para>
+
+<para>
+  <figure float="true"><title>XDI Messaging Terminology</title>
+   <mediaobject>
+    <imageobject>
+	<imagedata fileref="xdi-messaging-terminology.png" />
+    </imageobject>
+    </mediaobject>
+    </figure>
+</para>
+
+<para>For the request message, the requester is the
+sending peer, and the responder is the receiving peer.</para>
+
+<para>For the response message, the responder is the sending peer, and the requester is the receiving peer.</para>
 
 <section><title>Bindings</title>
 
@@ -289,10 +307,24 @@ The XDI Bindings <xref linkend='xdi-bindings-1.0'/> specification defines
 three concrete ways how messages can be transmitted over a network:</para>
 <orderedlist>
 <listitem><para>XDI Direct Binding: Request and response messages are transmitted between the requester and the responder via HTTP POST operations.</para></listitem>
-<listitem><para>XDI Browser Binding: Request and response messages are transmitted between the requester and the responder via a sequence of HTML form elements and HTTP form submit operations.</para></listitem>
+<listitem><para>XDI Browser Binding: Request and response messages are transmitted between the requester and the responder via a web browser and a sequence of HTTP form submit operations.</para></listitem>
 <listitem><para>XDI Websocket Binding: Request and response messages are transmitted between the requester and the responder via Websocket sessions.</para></listitem>
 </orderedlist>
-<para>Certain bindings require the use of endpoint URIs on a network, which can be discovered using the XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol, which is itself an application of XDI messaging.</para>
+
+<para>From an abstract XDI messaging perspective, any peer can act as a requester and responder. In the context
+of specific bindings, a distinction can be made between <firstterm>XDI endpoints</firstterm>
+and <firstterm>XDI agents</firstterm>.</para>
+
+<para>An XDI endpoint is a peer that &#8211; within the context of a specific binding &#8211; has an endpoint URI
+on a network. The three bindings above all require such endpoint URIs, which can be discovered using 
+XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol. An XDI endpoint can always act as both
+requesting peer and responding peer.</para>
+
+<para>An XDI agent is a peer that &#8211; within the context of a specific binding &#8211; does not have an endpoint
+URI on a network. In many situations and bindings, an XDI agent can only act as a responding peer. One
+exception is the XDI Websocket Binding. Once a Websocket connection has been established between two peers, they may
+both act as both requesting peer and responding peer, even if one of them is an XDI agent without its own
+endpoint URI on a network.</para>
 
 </section>
 
@@ -300,21 +332,22 @@ three concrete ways how messages can be transmitted over a network:</para>
 
 <section><title>Messages</title>
 
-<para>A message is itself a context node in a graph. It is an unordered instance within
-an entity collection identified by <code>[$msg]</code>, under an entity that represents the
-sender of the message:</para>
+<para>A message is itself a context node in a graph. It is a member instance within
+an entity collection identified by <code>[$msg]</code>, under an entity representing the
+XDI actor that creates the message:</para>
 
-<programlisting>&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;
+<programlisting>&lt;--actor--&gt;[$msg]&lt;--message-id--&gt;
 </programlisting>
 
-<para>Example message sent by =alice, with message ID *!:uuid:1234:</para>
-
-<programlisting>=alice[$msg]*!:uuid:1234
-</programlisting>
-
-<para>In practice, persistent identifiers SHOULD be used for identifying authorities:</para>
+<para>Example message by XDI actor =!:uuid:1111, with message ID *!:uuid:1234:</para>
 
 <programlisting>=!:uuid:1111[$msg]*!:uuid:1234
+</programlisting>
+
+<para>Every message SHOULD have an immutable address. To express order, the ordered/unordered reference pattern
+[TODO: ref to XDI Core spec] may be used:</para>
+
+<programlisting>=!:uuid:1111[$msg]@~0/$ref/=!:uuid:1111[$msg]*!:uuid:1234
 </programlisting>
 
 <para>A context node representing a message contains various
@@ -324,22 +357,22 @@ statements that make up the semantics and function of the message.</para>
 messages (shown in statement format). Labels in <code>&lt;--this-form--&gt;</code> represent
 template variables.</para>
 
-<programlisting>SENDING PEER                &lt;--sending-peer--&gt;/$set/&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;
-RECEIVING PEER              &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is()/&lt;--receiving-peer--&gt;
-MESSAGE TYPE                &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is#/&lt;--message-type--&gt;[$v]&lt;--version-number--&gt;$xdi[$v]@1$msg
-TIMESTAMP                   &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;$t>/&amp;/&lt;--timestamp--&gt;
-MESSAGE PARAMETERS          &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
-AUTHENTICATION TOKEN        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--token-type--&gt;&lt;$token&gt;/&amp;/&lt;--token--&gt;
-AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--signature-type--&gt;&lt;$sig&gt;/&amp;/&lt;--signature--&gt;
+<programlisting>SENDING PEER                &lt;--sending-peer--&gt;/$send/&lt;--actor--&gt;[$msg]&lt;--message-id--&gt;
+RECEIVING PEER              &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;/$is()/&lt;--receiving-peer--&gt;
+MESSAGE TYPE                &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;/$is#/&lt;--message-type--&gt;[$v]&lt;--version-number--&gt;$xdi[$v]@1$msg
+TIMESTAMP                   &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;&lt;$t>/&amp;/&lt;--timestamp--&gt;
+MESSAGE PARAMETERS          &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
+AUTHENTICATION TOKEN        &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;&lt;--token-type--&gt;&lt;$token&gt;/&amp;/&lt;--token--&gt;
+AUTHENTICATION SIGNATURE    &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;&lt;--signature-type--&gt;&lt;$sig&gt;/&amp;/&lt;--signature--&gt;
 </programlisting>
 
-<section><title>Sender</title>
+<section><title>Actor</title>
 
-<para>A message MUST have a <firstterm>sender</firstterm>.</para>
+<para>A message MUST have an <firstterm>actor</firstterm> that creates the message.</para>
 
 <orderedlist>
-<listitem><para><code>&lt;--sender--&gt;</code> is the XDI address of the peer sending the message.</para></listitem>
-<listitem><para>This XDI address may be any valid XDI entity (e.g., person, organization, device, service, etc.)</para></listitem>
+<listitem><para><code>&lt;--actor--&gt;</code> is the XDI address of the actor that creates the message.</para></listitem>
+<listitem><para>This XDI address may be any valid XDI entity (e.g., person, organization, thing, device, service, etc.)</para></listitem>
 </orderedlist>
 
 </section>
@@ -357,6 +390,27 @@ AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--
 
 </section>
 
+<section><title>Sending Peer</title>
+
+<para>A message MUST have exactly one <firstterm>sending peer</firstterm>.</para>
+
+<orderedlist>
+<listitem><para><code>&lt;--sending-peer--&gt;</code> is the XDI peer (XDI endpoint or agent) sending this message.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Receiving Peer</title>
+
+<para>A message MUST have at least one <firstterm>receiving peer</firstterm>, and MAY have multiple <firstterm>receiving peers</firstterm>.</para>
+
+<orderedlist>
+<listitem><para><code>&lt;--receiving-peer--&gt;</code> is the XDI peer (XDI endpoint or agent) receiving the message.</para></listitem>
+<listitem><para>Depending on the binding being used, it MAY be possible or required to apply the XDI discovery process on thie XDI peer root in order to obtain an associated endpoint URI.</para></listitem> 
+</orderedlist>
+
+</section>
+
 <section><title>Message Type and Version</title>
 
 <para>A message MAY have a <firstterm>message type</firstterm> and <firstterm>message version</firstterm>.</para>
@@ -364,27 +418,6 @@ AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--
 <orderedlist>
 <listitem><para><code>&lt;--message-type--&gt;</code> is an optional XDI address specifying a message type.</para></listitem>
 <listitem><para><code>&lt;--version-number--&gt;</code> is the message type version, expressed as an ordered instance of a <code>[$v]</code> collection.</para></listitem>
-</orderedlist>
-
-</section>
-
-<section><title>Sending Peer</title>
-
-<para>A message MUST have exactly one <firstterm>sending peer</firstterm>.</para>
-
-<orderedlist>
-<listitem><para><code>&lt;--sending-peer--&gt;</code> is the XDI address of the sending peer root.</para></listitem>
-</orderedlist>
-
-</section>
-
-<section><title>Receiving Peer</title>
-
-<para>A message MUST have at least one <firstterm>receiving peer</firstterm>, and MAY have multiple receiving peers.</para>
-
-<orderedlist>
-<listitem><para><code>&lt;--receiving-peer--&gt;</code> is the XDI address of the receiving peer root.</para></listitem>
-<listitem><para>Depending on the binding being used, it MAY be possible or required to apply the XDI discovery process to the receiving peer in order to obtain an associated endpoint URI.</para></listitem> 
 </orderedlist>
 
 </section>
@@ -432,7 +465,7 @@ AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--
 <orderedlist>
 <listitem><para><code>&lt;--parameter--&gt;</code> is a message parameter.</para></listitem>
 <listitem><para><code>&lt;--parameter-value--&gt;</code> is the value of a message parameter.</para></listitem>
-<listitem><para>A message parameter MUST apply only to the message that contains it.</para></listitem>
+<listitem><para>A message parameter MUST be interpreted to apply only to the message that contains it.</para></listitem>
 <listitem><para>This specification currently specifies a single message parameter for request messages (see section XXX).</para></listitem>
 </orderedlist>
 
@@ -445,14 +478,14 @@ AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--
 <para>Following are the
 statements that are specific to request messages (shown in statement format). 
 A request message MUST conform to the statements in this template in addition
-to the statements required for all messages. 
+to the statements required for all messages (TODO: add ref to message pattern).
 </para>
 
-<programlisting>LINK CONTRACT ADDRESS       &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$do/&lt;--link-contract-address--&gt;
-MESSAGE POLICY              &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do$if&lt;--boolean-context--&gt;/&lt;--operator--&gt;/&lt;--condition--&gt;
-OPERATION PARAMETERS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
-OPERATION ON ADDRESS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;/&lt;--target-address--&gt;
-OPERATION ON STATEMENT      (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;)&lt;--target-statement--&gt;
+<programlisting>LINK CONTRACT ADDRESS       &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;/$do/&lt;--link-contract-address--&gt;
+MESSAGE POLICY              &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;$do$if&lt;--boolean-context--&gt;/&lt;--operator--&gt;/&lt;--condition--&gt;
+OPERATION PARAMETERS        &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
+OPERATION ON ADDRESS        &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;/&lt;--target-address--&gt;
+OPERATION ON INNER GRAPH    (&lt;--actor--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;)&lt;--target-inner-graph--&gt;
 </programlisting>
 
 <para>Where:</para>
@@ -461,11 +494,11 @@ OPERATION ON STATEMENT      (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&
 <listitem><para><code>&lt;--boolean-context--&gt;</code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem>
 <listitem><para><code>&lt;--operator--&gt;</code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem> 
 <listitem><para><code>&lt;--condition--&gt;</code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem>
-<listitem><para><code>&lt;--operation--&gt;</code> is the requested XDI operation (<code>$get, $set, $del, $add, $mod, $do</code>), plus subcontexts (if any). There may be one or more operation statements in a message.</para></listitem>
+<listitem><para><code>&lt;--operation--&gt;</code> is the requested XDI operation (<code>$get, $set, $add, $mod, $del, $connect, $send, $push, $do</code>). There may be one or more operations in a message.</para></listitem>
 <listitem><para><code>&lt;--parameter--&gt;</code> is an operation parameter.</para></listitem>
 <listitem><para><code>&lt;--parameter-value--&gt;</code> is the value of an operation parameter.</para></listitem>
 <listitem><para><code>&lt;--target-address--&gt;</code> is an XDI address that is the target of the operation.</para></listitem> 
-<listitem><para><code>&lt;--target-statement--&gt;</code> is an XDI statement that is the target of the operation.</para></listitem> 
+<listitem><para><code>&lt;--target-inner-graph--&gt;</code> is an XDI inner graph containing statements that are the target of the operation.</para></listitem> 
 </orderedlist>
 
 <section><title>Link Contract Address</title>
@@ -481,7 +514,7 @@ OPERATION ON STATEMENT      (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&
 
 <orderedlist>
 <listitem><para>A request message MAY have a policy c to govern their execution at an XDI endpoint.</para></listitem>
-<listitem><para>If an XDI message includes a <code>&lt;--sender--&gt;[$msg]&lt;--id--&gt;$do$if</code> sub context, the set of message policy statements in this context MUST be evaluated by the XDI endpoint.</para></listitem>
+<listitem><para>If an XDI message includes a <code>&lt;--actor--&gt;[$msg]&lt;--id--&gt;$do$if</code> sub context, the set of message policy statements in this context MUST be evaluated by the XDI endpoint.</para></listitem>
 <listitem><para>Request messages MUST be executed only if the [[XdiPolicyExpression|link contract policies]] evaluates to true.</para></listitem>
 <listitem><para>For privacy reasons, a message policy may only access parts of the target graph which it has <code>$get</code> access to under the link contract referenced in the message.</para></listitem>
 </orderedlist>
@@ -539,17 +572,20 @@ message after the request message has been executed, even when a light response 
 </orderedlist>
 
 <para>Depending on: a) the operation, and b) whether the operation target is an XDI address or
-a statement, the following operations and behaviors are possible:</para>
+an inner graph, the following operations and behaviors are possible:</para>
 
-<table><tgroup cols="5"><thead>
-<row><entry></entry><entry>on address</entry><entry>on contextual statement</entry><entry>on literal statement</entry><entry>on relational statement</entry></row>
+<table><title>XDI Operations Overview</title><tgroup cols="3"><thead>
+<row><entry></entry><entry>on address</entry><entry>on inner graph</entry></row>
 </thead><tbody>
-<row><entry><code>$get</code></entry><entry>retrieves graph/subgraph</entry><entry>retrieves contextual statement</entry><entry>retrieves literal statement</entry><entry>retrieves relational statement</entry></row>
-<row><entry><code>$set</code></entry><entry>creates context node and parent context node(s)</entry><entry>creates contextual statement and parent context node(s)</entry><entry>creates literal statement and parent context node(s), or modifies existing literal statement</entry><entry>creates relational statement and parent context node(s)</entry></row>
-<row><entry><code>$del</code></entry><entry>deletes context node and subgraph</entry><entry>deletes contextual statement and subgraph</entry><entry>deletes literal statement</entry><entry>deletes relational statement</entry></row>
-<row><entry><code>$add</code></entry><entry>creates new context node and parent context node(s)</entry><entry>creates new contextual statement and parent context node(s)</entry><entry>creates new literal statement and parent context node(s)</entry><entry>creates new relational statement and parent context node(s)</entry></row>
-<row><entry><code>$mod</code></entry><entry>(invalid)</entry><entry>(invalid)</entry><entry>modifies existing literal statement</entry><entry>(invalid)</entry></row>
-<row><entry><code>$do</code></entry><entry>(unspecified)</entry><entry>(unspecified)</entry><entry>(unspecified)</entry><entry>(unspecified)</entry></row>
+<row><entry><code>$get</code></entry><entry>retrieves graph/subgraph</entry><entry>retrieves individual contextual/relational/literal statement(s)</entry></row>
+<row><entry><code>$set</code></entry><entry>creates or modifies context node plus parent context node(s) if needed</entry><entry>creates or modifies individual contextual/relational/literal statement(s) plus parent context nodes(s) if needed</entry></row>
+<row><entry><code>$add</code></entry><entry>creates new context node plus parent context node(s) if needed</entry><entry>creates new individual contextual/relational/literal statement(s) plus parent context nodes(s) if needed</entry></row>
+<row><entry><code>$mod</code></entry><entry>(invalid)</entry><entry>modifies existing literal statement(s)</entry></row>
+<row><entry><code>$del</code></entry><entry>deletes context node and subgraph</entry><entry>deletes individual contextual/relational/literal statement(s) plus subgraph(s)</entry></row>
+<row><entry><code>$connect</code></entry><entry>requests instantiation of a link contract</entry><entry>requests instantiation of a link contract</entry></row>
+<row><entry><code>$send</code></entry><entry>requests sending of a nested message</entry><entry>requests sending of a nested message</entry></row>
+<row><entry><code>$push</code></entry><entry>(invalid)</entry><entry>delivers a notification based on push contract</entry></row>
+<row><entry><code>$do</code></entry><entry>(unspecified)</entry><entry>(unspecified)</entry></row>
 </tbody></tgroup></table>
 
 <section><title><code>$get</code> operation</title>
@@ -558,14 +594,14 @@ a statement, the following operations and behaviors are possible:</para>
 
 <section><title><code>$get</code> applied to an address</title>
 
-<para>The result graph contains the subgraph at the target address if it exists.
-If the target address does not exist, the result graph is empty.</para>
+<para>The result graph contains the subgraph at the given address if it exists.
+If the subgraph does not exist, the result graph is empty.</para>
 <para>Example: Given the following target graph:</para>
 <programlisting>//+acme
 =alice&lt;#email>/&amp;/"alice@email.com"
 =alice/#friend/=bob
 </programlisting>
-<para>And the following <code>$get</code> operation on target address <code>=alice</code>:</para>
+<para>And the following <code>$get</code> operation on address <code>=alice</code>:</para>
 <programlisting>=bob[$msg]*!:uuid:4378$do/$get/=alice
 </programlisting>
 <para>The result graph will be:</para>
@@ -575,16 +611,16 @@ If the target address does not exist, the result graph is empty.</para>
 
 </section>
 
-<section><title><code>$get</code> applied to a statement</title>
+<section><title><code>$get</code> applied to an inner graph</title>
 
-<para>The result graph contains the target statement if it exists.
-If the target statement does not exist, the result graph is empty.</para>
+<para>The result graph contains the given statements of the inner graph if they exist.
+If the statements do not exist, the result graph is empty (this is not considered an error).</para>
 <para>Example: Given the following target graph:</para>
 <programlisting>//+acme
 =alice&lt;#email>/&amp;/"alice@email.com"
 =alice/#friend/=bob
 </programlisting>
-<para>And the following <code>$get</code> operation on target statement <code>=alice/#friend/=bob</code>:</para>
+<para>And the following <code>$get</code> operation on statement <code>=alice/#friend/=bob</code>:</para>
 <programlisting>(=bob[$msg]*!:uuid:4378$do/$get)=alice/#friend/=bob
 </programlisting>
 <para>The result graph will be:</para>
@@ -601,13 +637,13 @@ If the target statement does not exist, the result graph is empty.</para>
 
 <section><title><code>$set</code> applied to an address</title>
 
-<para>This operation creates a context node at the target address, as well as any parent context node(s) as needed.
-If the target address exists already, the operation has no effect (this is not considered an error).</para>
+<para>This operation creates a context node at the given address, as well as any parent context node(s) as needed.
+If the context node exists already, the operation has no effect (this is not considered an error).</para>
 <para>Example: Given the following target graph:</para>
 <programlisting>//+acme
 //=alice
 </programlisting>
-<para>And the following <code>$set</code> operation on target address <code>=alice&lt;#email></code>:</para>
+<para>And the following <code>$set</code> operation on address <code>=alice&lt;#email></code>:</para>
 <programlisting>=bob[$msg]*!:uuid:4378$do/$set/=alice&lt;#email>
 </programlisting>
 <para>The target graph after the operation will be:</para>
@@ -617,15 +653,15 @@ If the target address exists already, the operation has no effect (this is not c
 
 </section>
 
-<section><title><code>$set</code> applied to a statement</title>
+<section><title><code>$set</code> applied to an inner graph</title>
 
-<para>This operation creates the target statement, as well as any parent context nodes(s) as needed.
-If the target statement exists already, the operation has no effect (this is not considered an error).</para>
+<para>This operation creates the given statements of the inner graph, as well as any parent context nodes(s) as needed.
+If a statement exists already, the operation has no effect on this statement (this is not considered an error).</para>
 <para>Example: Given the following target graph:</para>
 <programlisting>//+acme
 =alice&lt;//#email>
 </programlisting>
-<para>And the following <code>$set</code> operation on target statements <code>=alice&lt;#email>/&amp;/"alice@email.com"</code> and <code>=alice/#friend/=bob</code>:</para>
+<para>And the following <code>$set</code> operation on statements <code>=alice&lt;#email>/&amp;/"alice@email.com"</code> and <code>=alice/#friend/=bob</code>:</para>
 <programlisting>(=bob[$msg]*!:uuid:4378$do/$set)=alice&lt;#email>/&amp;/"alice@email.com"
 (=bob[$msg]*!:uuid:4378$do/$set)=alice/#friend/=bob 
 </programlisting>
@@ -633,52 +669,6 @@ If the target statement exists already, the operation has no effect (this is not
 <programlisting>//+acme
 =alice&lt;#email>/&amp;/"alice@email.com"
 =alice/#friend/=bob
-</programlisting>
-
-</section>
-
-</section>
-
-<section><title><code>$del</code> operation</title>
-
-<para>This operation deletes data from a target graph. Unless an error occurs, the result graph is the empty graph.</para>
-
-<section><title><code>$del</code> applied to an address</title>
-
-<para>This operation deletes a context node at the target address, as well as its entire subgraph.
-If the target address does not exist, the operation has no effect (this is not considered an error).</para>
-<para>Example: Given the following target graph:</para>
-<programlisting>//+acme
-=alice&lt;#email>/&amp;/"alice@email.com"
-=alice/#friend/=bob
-</programlisting>
-<para>And the following <code>$del</code> operation on target address <code>=alice&lt;#email></code>:</para>
-<programlisting>=bob[$msg]*!:uuid:4378$do/$del/=alice&lt;#email>
-</programlisting>
-<para>The target graph after the operation will be:</para>
-<programlisting>//+acme
-=alice/#friend/=bob
-</programlisting>
-
-</section>
-
-<section><title><code>$del</code> applied to a statement</title>
-
-<para>This operation deletes a target statement.
-If it is a contextual statement, the operation also deletes the entire subgraph of the context node.
-If it is a relational statement, the operation deletes neither the source context node nor the target context node, only the relation itself.
-If the target statement does not exist, the operation has no effect (this is not considered an error).</para>
-<para>Example: Given the following target graph:</para>
-<programlisting>//+acme
-=alice/#friend/=bob
-</programlisting>
-<para>And the following <code>$del</code> operation on target statement <code>=alice/#friend/=bob</code>:</para>
-<programlisting>(=bob[$msg]*!:uuid:4378$do/$del)=alice/#friend/=bob
-</programlisting>
-<para>The target graph after the operation will be:</para>
-<programlisting>//+acme
-//=alice
-//=bob
 </programlisting>
 
 </section>
@@ -693,13 +683,13 @@ If the operation is applied to data which already exists, it generates an error
 
 <section><title><code>$add</code> applied to an address</title>
 
-<para>This operation creates a context node at the target address, as well as any parent context node(s) as needed.
-If the target address exists already, the operation generates an error.</para>
+<para>This operation creates a context node at the given address, as well as any parent context node(s) as needed.
+If the context node exists already, the operation generates an error.</para>
 <para>Example: Given the following target graph:</para>
 <programlisting>//+acme
 //=alice
 </programlisting>
-<para>And the following <code>$add</code> operation on target address <code>=alice&lt;#email></code>:</para>
+<para>And the following <code>$add</code> operation on address <code>=alice&lt;#email></code>:</para>
 <programlisting>=bob[$msg]*!:uuid:4378$do/$add/=alice&lt;#email>
 </programlisting>
 <para>The target graph after the operation will be:</para>
@@ -709,15 +699,15 @@ If the target address exists already, the operation generates an error.</para>
 
 </section>
 
-<section><title><code>$add</code> applied to a statement</title>
+<section><title><code>$add</code> applied to an inner graph</title>
 
-<para>This operation creates the target statement, as well as any parent context nodes(s) as needed.
-If the target statement exists already, the operation generates an error.</para>
+<para>This operation creates the given statements of the inner graph, as well as any parent context nodes(s) as needed.
+If a statement exists already, the operation generates an error.</para>
 <para>Example: Given the following target graph:</para>
 <programlisting>//+acme
 =alice&lt;//#email>
 </programlisting>
-<para>And the following <code>$add</code> operation on target statements <code>=alice&lt;#email>/&amp;/"alice@email.com"</code> and <code>=alice/#friend/=bob</code>:</para>
+<para>And the following <code>$add</code> operation on statements <code>=alice&lt;#email>/&amp;/"alice@email.com"</code> and <code>=alice/#friend/=bob</code>:</para>
 <programlisting>(=bob[$msg]*!:uuid:4378$do/$add)=alice&lt;#email>/&amp;/"alice@email.com"
 (=bob[$msg]*!:uuid:4378$do/$add)=alice/#friend/=bob 
 </programlisting>
@@ -739,13 +729,13 @@ If the operation is applied to data which does not exist, it generates an error
 
 <section><title><code>$mod</code> applied to an address</title>
 
-<para>This operation on a target address is not defined and generates an error.</para>
+<para>This operation on an address is not defined and generates an error.</para>
 
 </section>
 
-<section><title><code>$mod</code> applied to a statement</title>
+<section><title><code>$mod</code> applied to an inner graph</title>
 
-<para>This operation is only defined on a literal statement and generates an error otherwise.
+<para>This operation is only defined on literal statements and generates an error otherwise.
 It modifies the value of an existing literal statement.
 If the context node that contains the literal does not exist, the operation generates an error.</para>
 <para>Example: Given the following target graph:</para>
@@ -753,12 +743,131 @@ If the context node that contains the literal does not exist, the operation gene
 =alice&lt;#email>/&amp;/"alice@email.com"
 =alice/#friend/=bob
 </programlisting>
-<para>And the following <code>$mod</code> operation on target statement <code>=alice&lt;#email>/&amp;/"alice@new.com"</code>:</para>
+<para>And the following <code>$mod</code> operation on statement <code>=alice&lt;#email>/&amp;/"alice@new.com"</code>:</para>
 <programlisting>(=bob[$msg]*!:uuid:4378$do/$set)=alice&lt;#email>/&amp;/"alice@new.com"
 </programlisting>
 <para>The target graph after the operation will be:</para>
 <programlisting>=alice&lt;#email>/&amp;/"alice@new.com"
 </programlisting>
+
+</section>
+
+</section>
+
+<section><title><code>$del</code> operation</title>
+
+<para>This operation deletes data from a target graph. Unless an error occurs, the result graph is the empty graph.</para>
+
+<section><title><code>$del</code> applied to an address</title>
+
+<para>This operation deletes a context node at the given address, as well as its entire subgraph.
+If the context node does not exist, the operation has no effect (this is not considered an error).</para>
+<para>Example: Given the following target graph:</para>
+<programlisting>//+acme
+=alice&lt;#email>/&amp;/"alice@email.com"
+=alice/#friend/=bob
+</programlisting>
+<para>And the following <code>$del</code> operation on target address <code>=alice&lt;#email></code>:</para>
+<programlisting>=bob[$msg]*!:uuid:4378$do/$del/=alice&lt;#email>
+</programlisting>
+<para>The target graph after the operation will be:</para>
+<programlisting>//+acme
+=alice/#friend/=bob
+</programlisting>
+
+</section>
+
+<section><title><code>$del</code> applied to an inner graph</title>
+
+<para>This operation deletes the given statements of the inner graph.
+For a contextual statement, the operation also deletes the entire subgraph of the context node.
+For a relational statement, the operation deletes neither the source context node nor the target context node of the relation, only the relation itself.
+If a statement does not exist, the operation has no effect (this is not considered an error).</para>
+<para>Example: Given the following target graph:</para>
+<programlisting>//+acme
+=alice/#friend/=bob
+</programlisting>
+<para>And the following <code>$del</code> operation on statement <code>=alice/#friend/=bob</code>:</para>
+<programlisting>(=bob[$msg]*!:uuid:4378$do/$del)=alice/#friend/=bob
+</programlisting>
+<para>The target graph after the operation will be:</para>
+<programlisting>//+acme
+//=alice
+//=bob
+</programlisting>
+
+</section>
+
+</section>
+
+<section><title><code>$connect</code> operation</title>
+
+<para>This operation requests instantiation of a link contract.</para>
+<para>This operation is specified in [Ref to XDI Connections 1.0]]</para>
+
+<section><title><code>$connect</code> applied to an address</title>
+
+<para>This operation requests instantiation of a link contract.
+The given address MUST be the address of a link contract template, which
+is used as the template for the link contract instantiation process.</para>
+<para>Example:</para>
+<programlisting>=alice[$msg]*!:uuid:4378$do/$connect/+acme#profile{$do}
+</programlisting>
+
+</section>
+
+<section><title><code>$connect</code> applied to an inner graph</title>
+
+<para>This operation requests instantiation of a link contract.
+The given inner graph MUST contain a link contract template, which
+is used as the template for the link contract instantiation process.</para>
+<para>Example:</para>
+<programlisting>(=alice[$msg]*!:uuid:4378$do/$connect)+acme#profile{$do}/$get/{$to}#profile
+(=alice[$msg]*!:uuid:4378$do/$connect)(+acme#profile{$do}$if$and/$true){{$msg}}&lt;$sig&gt;&lt;$valid&gt;/&amp;/true
+(=alice[$msg]*!:uuid:4378$do/$connect)(+acme#profile{$do}$if$and/$true){{$from}}/$is/{$from}
+</programlisting>
+
+</section>
+
+</section>
+
+<section><title><code>$send</code> operation</title>
+
+<para>This operation requests sending of a nested message.</para>
+
+<section><title><code>$send</code> applied to an address</title>
+
+<para>This operation requests sending of a nested message.
+The given address MUST be the address of a message template, which
+is used as the template for the nested message to be sent.</para>
+
+</section>
+
+<section><title><code>$send</code> applied to an inner graph</title>
+
+<para>This operation requests sending of a nested message.
+The given inner graph MUST contain a message template, which
+is used as the template for the nested message to be sent.</para>
+
+</section>
+
+</section>
+
+<section><title><code>$push</code> operation</title>
+
+<para>This operation represent a notification after a push link contract that has been triggered.</para>
+<para>This operation is specified in [Ref to XDI Push 1.0]]</para>
+
+<section><title><code>$push</code> applied to an address</title>
+
+<para>This operation represents a notification that the subgraph at the given address has changed.</para>
+
+</section>
+
+<section><title><code>$push</code> applied to an inner graph</title>
+
+<para>This operation represents a notification containing an inner graph that is
+a message which has caused a change.</para>
 
 </section>
 
@@ -771,9 +880,9 @@ graph that are not defined by this specification. Such complex operations may be
 of basic operations, or follow an external logic that cannot be reproduced by basic operations
 at all.</para>
 <para>For example, an operation called <code>$do#cleanup</code> may be defined to "clean up", i.e. delete,
-various parts of a graph, according to a set of rules.</para>
-<para>Implementors SHOULD document exactly how such operations behave when applied to target
-addresses and target statements, and provide examples, following
+various parts of a graph, according to a pre-defined set of rules.</para>
+<para>Implementors SHOULD document exactly how such operations behave when applied to 
+addresses and inner graphs, and provide examples, following
 the pattern used in this specification to document the basic operations.</para>
 
 </section>
@@ -785,17 +894,15 @@ the pattern used in this specification to document the basic operations.</para>
 <section><title>Response messages</title>
 
 <para>Every request message MUST have a corresponding response message which is transmitted back from the responder
-to the requester, in a way defined by the binding that is being used. There are three types of response messages:</para>
+to the requester, in a way defined by the binding that is being used. There are two types of response messages:</para>
 <orderedlist>
 <listitem><para>Light response message</para></listitem>
 <listitem><para>Full response message</para></listitem>
-<listitem><para>Deferred response message</para></listitem>
 </orderedlist>
 <para>If the &lt;$full&gt; message parameter (see section ZZZ) is absent or set to false, then the response message MUST be
-either a light response message or a deferred response message.</para>
+a light response message.</para>
 <para>If the &lt;$full&gt; message parameter is set to true, then the response message MUST be
-either a full response message or a deferred response message.</para>
-<para>If the response message is a deferred response message, it MUST eventually be followed by a full response message.</para>
+a full response message.</para>
 
 <section><title>Light response message</title>
 
@@ -807,7 +914,20 @@ not use the message pattern defined section YYY.</para>
 
 <section><title>Full response message</title>
 
-<para>A <firstterm>full response message</firstterm> follows the message pattern defined in section YYY. The result graph of the
+<para>Following are the
+statements that are specific to <firstterm>full response messages</firstterm> (shown in statement format). 
+A full response message MUST conform to the statements in this template in addition
+to the statements required for all messages (TODO: add ref to message pattern).
+</para>
+
+<programlisting>
+RESULT GRAPHS       (&lt;--actor--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator&gt;)&lt;--result-graph--&gt;
+PUSH CONTRACTS      (&lt;--actor--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator$push&gt;)&lt;--push-contracts--&gt;</programlisting>
+
+<section><title>Result graphs</title>
+
+<para>
+The result graph of the
 request operations is included in the response message using inner root nodes as follows:</para>
 <orderedlist>
 <listitem><para>For every request operation in the request message, a separate inner root node
@@ -821,17 +941,21 @@ which the result graph corresponds.</para></listitem>
 
 </section>
 
-<section><title>Deferred response message</title>
+<section><title>Push contracts</title>
 
-<para>A <firstterm>deferred response message</firstterm> follows the message pattern defined in section YYY. Unlike a 
-full response message however, it does not contain a result graph. A responder MUST send a deferred response message
-if the result graph is not immediately available and can therefore only be sent at a later time, i.e. asynchronously.
-This occurs most commonly in the case of connection requests and connection invitations when user interaction is
-required (see XDI Connections spec).
-</para>
-<para>When the result graph becomes available, the responder MUST send a full response message to the requester, 
-in a way defined by the binding that is being used.
-</para>
+<para>A full response message may include one or more push contracts, which indicate that the
+result of an operation is not immediately available. This occurs most commonly if the result
+of a link contract evaluation process is that the operation is "held back" 
+(see XDI Link Contracts spec).</para>
+
+<para>Each request operation MUST have AT MOST one corresponding
+push contract in the response message.</para>
+
+<para>A request operation MAY have both a result graph and a push contract in the response message,
+indicating a partial result.</para>
+
+
+</section>
 
 </section>
 
@@ -861,7 +985,7 @@ also known as <firstterm>thread statement</firstterm>.</para>
 <para>In the XDI graph model as a whole, XDI statements are unordered.</para>
 
 <orderedlist>
-<listitem><para>Messages within a message envelope (i.e., within the <code>&lt;--sender--&gt;[$msg]</code> collection) MAY be explicitly ordered by appending the <code>@&lt;--digit--&gt;</code>ordering context to the <code>&lt;--sender--&gt;[$msg]!&lt;--id--&gt;</code> context.</para></listitem>
+<listitem><para>Messages within a message envelope (i.e., within the <code>&lt;--actor--&gt;[$msg]</code> collection) MAY be explicitly ordered by appending the <code>@&lt;--digit--&gt;</code>ordering context to the <code>&lt;--actor--&gt;[$msg]!&lt;--id--&gt;</code> context.</para></listitem>
 <listitem><para>Operation statements within a message (i.e., as objects of the <code>&lt;--operation--&gt;</code> predicate) MAY be explicitly ordered by appending the <code>@&lt;--digit--&gt;</code> ordering context to the <code>&lt;--operation--&gt;</code> predicate.</para></listitem>
 <listitem><para>Explicit ordering of messages and operations is OPTIONAL for an XDI client.</para></listitem>
 <listitem><para>Support for explicit ordering of messages and operations is REQUIRED for an XDI endpoint.</para></listitem>

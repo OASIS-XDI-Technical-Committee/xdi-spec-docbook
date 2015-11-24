@@ -1,0 +1,12 @@
+title XDI Messaging Terminology
+
+Requesting Peer (A)->Responding Peer (B): Request Message (M1)
+note right of Requesting Peer (A)
+    A is the Sending Peer
+    B is the Receiving Peer
+end note
+Responding Peer (B)->Requesting Peer (A): Response Message (M2)
+note right of Requesting Peer (A)
+    B is the Sending Peer
+    A is the Receiving Peer
+end note

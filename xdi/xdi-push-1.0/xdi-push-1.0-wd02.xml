@@ -33,8 +33,8 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <!ENTITY name "xdi-push">
 <!ENTITY pversion "0.0">
 <!ENTITY version "1.0">
-<!ENTITY stage "wd02">
-<!ENTITY standard "Working Draft 02">
+<!ENTITY stage "wd03">
+<!ENTITY standard "Working Draft 03">
 <!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;">
 <!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
 <!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
@@ -62,14 +62,14 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <releaseinfo role="committee"><ulink url="http://www.oasis-open.org/committees/xdi">OASIS XDI TC</ulink></releaseinfo>
 <authorgroup>
   <editor> <firstname>Markus</firstname><surname>Sabadello</surname>
-    <affiliation><orgname>Project Danube</orgname></affiliation>
-    <email>markus@projectdanube.org</email> </editor>
+    <affiliation><orgname>Danube Tech</orgname></affiliation>
+    <email>markus@danubetech.com</email> </editor>
   <editor> <firstname>Drummond</firstname><surname>Reed</surname>
     <affiliation><orgname>XDI.org</orgname></affiliation>
     <email>drummond.reed@xdi.org</email> </editor>
 </authorgroup>
 <pubdate>&pubdate;</pubdate>
-<copyright><year>2014</year>
+<copyright><year>2015</year>
 <holder>OASIS Open, Inc. All Rights Reserved.</holder></copyright>
  <legalnotice role="additional"><title>Additional artifacts</title>
  <para>This prose specification is one component of a Work Product which also includes:</para>
@@ -189,8 +189,8 @@ document made available to committee members to support the publishing process.<
 <section><title>XDI Push</title>
 
 <para>Using XDI messaging and XDI link contracts, a publish/subscribe mechanism can be defined between two
-or more peers. It allows a peer called  <firstterm>publishing peer</firstterm> (or short <firstterm>"publisher"</firstterm>)
-to notify one or more other peers called <firstterm>subscribing peers</firstterm> (or short <firstterm>"subscribers"</firstterm>)
+or more peers. It allows a peer called  <firstterm>publishing peer</firstterm> (or short <firstterm>publisher</firstterm>)
+to notify one or more other peers called <firstterm>subscribing peers</firstterm> (or short <firstterm>subscribers</firstterm>)
 of changes in a graph for which the publishing peer is authoritative. It is not relevant what
 operation or peer caused the change.</para>
 
@@ -254,7 +254,7 @@ add explanation].</para>
 
 <para>A push contract may be added to an XDI graph implicitly by a responder while executing an XDI operation
 that cannot be immediately completed ("asynchronous messaging"). This occurs most commonly in the case of
-connection requests and connection invitations when user interaction is required (see XDI Connections spec).</para>
+connection requests and connection invitations when user interaction is required (TODO: ref to XDI Link Contracts spec).</para>
 
 <para>Instead of sending a plain or full response message, the responder sends a deferred response message
 and creates a push contract. This implicit push contract is returned to the requester of the XDI
