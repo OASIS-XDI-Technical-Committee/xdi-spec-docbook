@@ -33,12 +33,12 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <!ENTITY name "xdi-messaging">
 <!ENTITY pversion "0.1">
 <!ENTITY version "1.0">
-<!ENTITY stage "wd03">
-<!ENTITY standard "Working Draft 03">
+<!ENTITY stage "wd04">
+<!ENTITY standard "Working Draft 04">
 <!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;">
 <!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
 <!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
-<!ENTITY pubdate "17 April 2015">
+<!ENTITY pubdate "(not published)">
 <!ENTITY title "XDI Messaging V&version;">
 ]>
 
@@ -269,8 +269,8 @@ document made available to committee members to support the publishing process.<
 
 <para>XDI messaging is the mechanism for transmitting <firstterm>request messages</firstterm> and 
 <firstterm>response messages</firstterm>
-between two peers. A peer sending a request message is called <firstterm>requester</firstterm>. A
-peer sending a response message is called <firstterm>responder</firstterm>.</para>
+between two peers. A peer sending a request message is called <firstterm>requesting peer</firstterm> (or short "requester"). A
+peer sending a response message is called <firstterm>responding peer</firstterm> (or short "responder").</para>
 <para>A <firstterm>message</firstterm> is itself a context node in a graph, so it can be addressed, serialized, stored,
 shared, and controlled by link contracts. A graph containing one or more messages is also
 called a <firstterm>message envelope</firstterm>.</para>
@@ -496,7 +496,7 @@ OPERATION ON STATEMENT      (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&
 
 <orderedlist>
 <listitem><para>The <code>&lt;$full></code> message parameter instructs the responder to send a full response message or deferred response
-message after the request message has been executed, even when a plain response message would have been possible (see section XXX).</para></listitem>
+message after the request message has been executed, even when a light response message would have been possible (see section XXX).</para></listitem>
 <listitem><para>Valid values are <code>true</code> and <code>false</code>.</para></listitem>
 <listitem><para>If this message parameter is not present on a request message, the default value is <code>false</code>.</para></listitem>
 </orderedlist>
@@ -787,19 +787,19 @@ the pattern used in this specification to document the basic operations.</para>
 <para>Every request message MUST have a corresponding response message which is transmitted back from the responder
 to the requester, in a way defined by the binding that is being used. There are three types of response messages:</para>
 <orderedlist>
-<listitem><para>Plain response message</para></listitem>
+<listitem><para>Light response message</para></listitem>
 <listitem><para>Full response message</para></listitem>
 <listitem><para>Deferred response message</para></listitem>
 </orderedlist>
 <para>If the &lt;$full&gt; message parameter (see section ZZZ) is absent or set to false, then the response message MUST be
-either a plain response message or a deferred response message.</para>
+either a light response message or a deferred response message.</para>
 <para>If the &lt;$full&gt; message parameter is set to true, then the response message MUST be
 either a full response message or a deferred response message.</para>
 <para>If the response message is a deferred response message, it MUST eventually be followed by a full response message.</para>
 
-<section><title>Plain response message</title>
+<section><title>Light response message</title>
 
-<para>A <firstterm>plain response message</firstterm> consists only of the result graph of the request operations,
+<para>A <firstterm>light response message</firstterm> consists only of the result graph of the request operations,
 as defined in section XXX. It does not contain any information about the message itself, and it does
 not use the message pattern defined section YYY.</para>
 
