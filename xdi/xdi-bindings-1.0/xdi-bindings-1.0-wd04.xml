@@ -33,8 +33,8 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <!ENTITY name "xdi-bindings">
 <!ENTITY pversion "0.1">
 <!ENTITY version "1.0">
-<!ENTITY stage "wd05">
-<!ENTITY standard "Working Draft 05">
+<!ENTITY stage "wd04">
+<!ENTITY standard "Working Draft 04">
 <!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;">
 <!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
 <!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
@@ -105,7 +105,7 @@ document made available to committee members to support the publishing process.<
 </bibliomixed> </bibliolist-->
 </legalnotice>
 <legalnotice role="notices"><title>Notices</title>
-<para>Copyright &#169; OASIS&#174; Open 2013. All Rights Reserved.  </para>
+<para>Copyright &#169; OASIS&#174; Open 2015. All Rights Reserved.  </para>
 <para>All capitalized terms in the following text have the meanings assigned to them in the OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full Policy may be found at <ulink  url="http://www.oasis-open.org/who/intellectualproperty.php">http://www.oasis-open.org/who/intellectualproperty.php</ulink>.</para>
 <para>This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to OASIS, except as needed for the purpose of developing any document or deliverable produced by an OASIS Technical Committee (in which case the rules applicable to copyrights, as set forth in the OASIS IPR Policy, must be followed) or as required to translate it into languages other than English.</para> 
 <para>The limited permissions granted above are perpetual and will not be revoked by OASIS or its successors or assigns.</para>

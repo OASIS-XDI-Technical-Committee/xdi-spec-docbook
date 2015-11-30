@@ -5,7 +5,7 @@ note right of Requesting Peer (A)
     A is the Sending Peer
     B is the Receiving Peer
 end note
-Responding Peer (B)->Requesting Peer (A): Response Message (M2)
+Responding Peer (B)->Requesting Peer (A): Result Graph or Response Message (M2)
 note right of Requesting Peer (A)
     B is the Sending Peer
     A is the Receiving Peer

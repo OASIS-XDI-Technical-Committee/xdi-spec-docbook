@@ -33,8 +33,8 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <!ENTITY name "xdi-messaging">
 <!ENTITY pversion "0.1">
 <!ENTITY version "1.0">
-<!ENTITY stage "wd05">
-<!ENTITY standard "Working Draft 05">
+<!ENTITY stage "wd04">
+<!ENTITY standard "Working Draft 04">
 <!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;">
 <!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
 <!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
@@ -105,7 +105,7 @@ document made available to committee members to support the publishing process.<
 </bibliomixed> </bibliolist-->
 </legalnotice>
 <legalnotice role="notices"><title>Notices</title>
-<para>Copyright &#169; OASIS&#174; Open 2013. All Rights Reserved.  </para>
+<para>Copyright &#169; OASIS&#174; Open 2015. All Rights Reserved.  </para>
 <para>All capitalized terms in the following text have the meanings assigned to them in the OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full Policy may be found at <ulink  url="http://www.oasis-open.org/who/intellectualproperty.php">http://www.oasis-open.org/who/intellectualproperty.php</ulink>.</para>
 <para>This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to OASIS, except as needed for the purpose of developing any document or deliverable produced by an OASIS Technical Committee (in which case the rules applicable to copyrights, as set forth in the OASIS IPR Policy, must be followed) or as required to translate it into languages other than English.</para> 
 <para>The limited permissions granted above are perpetual and will not be revoked by OASIS or its successors or assigns.</para>
@@ -267,20 +267,20 @@ document made available to committee members to support the publishing process.<
 
 <section><title>XDI Messaging</title>
 
-<para>XDI messaging is the mechanism for transmitting <firstterm>messages</firstterm> between two peers, for the purpose
+<para>XDI messaging is the mechanism for transmitting <firstterm>messages</firstterm> between peers, for the purpose
 of exchanging data between the graphs for which the peers are authoritative.</para>
 <para>Every message is transmitted from a <firstterm>sending peer</firstterm> to a <firstterm>receiving peer</firstterm>.</para>
-<para>The XDI messaging process consists of round-trips, each one of which involves a <firstterm>request message</firstterm> which is followed by a <firstterm>response message</firstterm>.</para>
+<para>The XDI messaging process consists of round-trips, each one of which involves a <firstterm>request message</firstterm> which is followed by a corresponding <firstterm>response</firstterm>.</para>
 <para>A peer sending a request message is called <firstterm>requesting peer</firstterm> (or short <firstterm>requester</firstterm>). A
-peer sending a response message is called <firstterm>responding peer</firstterm> (or short <firstterm>responder</firstterm>).</para>
-<para>A <firstterm>message</firstterm> is itself a context node in a graph, so it can be addressed, serialized, stored,
-shared, and controlled by link contracts. When a graph containing one or more messages is serialized and transmitted
-between peers, then that graph is called a <firstterm>message envelope</firstterm>.</para>
+peer sending a response is called <firstterm>responding peer</firstterm> (or short <firstterm>responder</firstterm>).</para>
 <para>A request message contains one or more <firstterm>request operations</firstterm>, which can perform
 queries and/or apply modifications to a graph for which the responder is authoritative. This graph is called
 the <firstterm>target graph</firstterm>.</para>
-<para>A response message contains a <firstterm>result graph</firstterm>, which represents the result of the request operations.
-The result graph MAY be empty.
+<para>When a request message is executed by the responder against the target graph, a <firstterm>result graph</firstterm>
+is generated, which represents the result of the request operations. The result graph MAY be empty.
+</para>
+<para>A response sent from the responder to the requester may either simply be the result graph itself,
+or it may be a <firstterm>response message</firstterm>, which contains within itself the result graph.
 </para>
 <para>The following diagram shows a typical XDI messaging round-trip:</para>
 
@@ -297,7 +297,11 @@ The result graph MAY be empty.
 <para>For the request message, the requester is the
 sending peer, and the responder is the receiving peer.</para>
 
-<para>For the response message, the responder is the sending peer, and the requester is the receiving peer.</para>
+<para>For the response, the responder is the sending peer, and the requester is the receiving peer.</para>
+
+<para>A <firstterm>message</firstterm> is itself a context node in a graph, so it can be addressed, serialized, stored,
+shared, and controlled by link contracts. When a graph containing one or more messages is serialized and transmitted
+between peers, then that graph is called a <firstterm>message envelope</firstterm>.</para>
 
 <section><title>Bindings</title>
 
@@ -307,7 +311,7 @@ The XDI Bindings <xref linkend='xdi-bindings-1.0'/> specification defines
 three concrete ways how messages can be transmitted over a network:</para>
 <orderedlist>
 <listitem><para>XDI Direct Binding: Request and response messages are transmitted between the requester and the responder via HTTP POST operations.</para></listitem>
-<listitem><para>XDI Browser Binding: Request and response messages are transmitted between the requester and the responder via a web browser and a sequence of HTTP form submit operations.</para></listitem>
+<listitem><para>XDI Browser Binding: Request and response messages are transmitted between the requester and the responder via a web browser and a sequence of HTTP form submit and redirect operations.</para></listitem>
 <listitem><para>XDI Websocket Binding: Request and response messages are transmitted between the requester and the responder via Websocket sessions.</para></listitem>
 </orderedlist>
 
@@ -317,11 +321,11 @@ and <firstterm>XDI agents</firstterm>.</para>
 
 <para>An XDI endpoint is a peer that &#8211; within the context of a specific binding &#8211; has an endpoint URI
 on a network. The three bindings above all require such endpoint URIs, which can be discovered using 
-XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol. An XDI endpoint can always act as both
+the XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol. An XDI endpoint can always act as both
 requesting peer and responding peer.</para>
 
 <para>An XDI agent is a peer that &#8211; within the context of a specific binding &#8211; does not have an endpoint
-URI on a network. In many situations and bindings, an XDI agent can only act as a responding peer. One
+URI on a network. In many situations and bindings, an XDI agent can only act as a requesting peer. One
 exception is the XDI Websocket Binding. Once a Websocket connection has been established between two peers, they may
 both act as both requesting peer and responding peer, even if one of them is an XDI agent without its own
 endpoint URI on a network.</para>
@@ -332,14 +336,15 @@ endpoint URI on a network.</para>
 
 <section><title>Messages</title>
 
-<para>A message is itself a context node in a graph. It is a member instance within
-an entity collection identified by <code>[$msg]</code>, under an entity representing the
-XDI actor that creates the message:</para>
+<para>A message is itself a context in a graph. It is a member instance under
+an entity collection identified by a <code>[$msg]</code> context, under an entity that
+is authoritative for the message. That entity is called the <firstterm>sender</firstterm>
+of the message. The member instance is called the <firstterm>message ID</firstterm>.</para>
 
-<programlisting>&lt;--actor--&gt;[$msg]&lt;--message-id--&gt;
+<programlisting>&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;
 </programlisting>
 
-<para>Example message by XDI actor =!:uuid:1111, with message ID *!:uuid:1234:</para>
+<para>Example message by XDI sender <code>=!:uuid:1111</code>, with message ID <code>*!:uuid:1234</code>:</para>
 
 <programlisting>=!:uuid:1111[$msg]*!:uuid:1234
 </programlisting>
@@ -357,21 +362,21 @@ statements that make up the semantics and function of the message.</para>
 messages (shown in statement format). Labels in <code>&lt;--this-form--&gt;</code> represent
 template variables.</para>
 
-<programlisting>SENDING PEER                &lt;--sending-peer--&gt;/$send/&lt;--actor--&gt;[$msg]&lt;--message-id--&gt;
-RECEIVING PEER              &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;/$is()/&lt;--receiving-peer--&gt;
-MESSAGE TYPE                &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;/$is#/&lt;--message-type--&gt;[$v]&lt;--version-number--&gt;$xdi[$v]@1$msg
-TIMESTAMP                   &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;&lt;$t>/&amp;/&lt;--timestamp--&gt;
-MESSAGE PARAMETERS          &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
-AUTHENTICATION TOKEN        &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;&lt;--token-type--&gt;&lt;$token&gt;/&amp;/&lt;--token--&gt;
-AUTHENTICATION SIGNATURE    &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;&lt;--signature-type--&gt;&lt;$sig&gt;/&amp;/&lt;--signature--&gt;
+<programlisting>SENDING PEER                &lt;--sending-peer--&gt;/$send/&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;
+RECEIVING PEER              &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is()/&lt;--receiving-peer--&gt;
+MESSAGE TYPE                &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is#/&lt;--message-type--&gt;[$v]&lt;--version-number--&gt;$xdi[$v]@1$msg
+TIMESTAMP                   &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;$t>/&amp;/&lt;--timestamp--&gt;
+MESSAGE PARAMETERS          &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
+AUTHENTICATION TOKEN        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--token-type--&gt;&lt;$token&gt;/&amp;/&lt;--token--&gt;
+AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--signature-type--&gt;&lt;$sig&gt;/&amp;/&lt;--signature--&gt;
 </programlisting>
 
-<section><title>Actor</title>
+<section><title>Sender</title>
 
-<para>A message MUST have an <firstterm>actor</firstterm> that creates the message.</para>
+<para>A message MUST have a <firstterm>sender</firstterm> that creates the message.</para>
 
 <orderedlist>
-<listitem><para><code>&lt;--actor--&gt;</code> is the XDI address of the actor that creates the message.</para></listitem>
+<listitem><para><code>&lt;--sender--&gt;</code> is the XDI address of the sender that creates the message.</para></listitem>
 <listitem><para>This XDI address may be any valid XDI entity (e.g., person, organization, thing, device, service, etc.)</para></listitem>
 </orderedlist>
 
@@ -471,6 +476,25 @@ AUTHENTICATION SIGNATURE    &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;&lt;--s
 
 </section>
 
+<section><title>Correlation statement</title>
+
+<para>A message MAY have exactly one <firstterm>correlation statement</firstterm>, also known as <firstterm>thread statement</firstterm>. The
+purpose of this statement is to express that the sending of this message has in some way been caused as a consequence
+of a previous message.</para>
+
+<para>For a response message, the correlation statement is REQUIRED and relates the response message to the request message.</para>
+
+<para>For a request message, the correlation statement is OPTIONAL and MAY relate the request message to an earlier request
+or response message.</para>
+
+<para>The correlation statement is identified by a <code>$msg</code> relational arc. This identifier MAY be
+specialized to express additional semantics about how two messages are related.</para>
+
+<programlisting>CORRELATION STATEMENT            &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$msg/&lt;--earlier-sender--&gt;[$msg]&lt;--earlier-message-id--&gt;
+</programlisting>
+
+</section>
+
 </section>
 
 <section><title>Request Messages</title>
@@ -481,11 +505,11 @@ A request message MUST conform to the statements in this template in addition
 to the statements required for all messages (TODO: add ref to message pattern).
 </para>
 
-<programlisting>LINK CONTRACT ADDRESS       &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;/$do/&lt;--link-contract-address--&gt;
-MESSAGE POLICY              &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;$do$if&lt;--boolean-context--&gt;/&lt;--operator--&gt;/&lt;--condition--&gt;
-OPERATION PARAMETERS        &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
-OPERATION ON ADDRESS        &lt;--actor--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;/&lt;--target-address--&gt;
-OPERATION ON INNER GRAPH    (&lt;--actor--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;)&lt;--target-inner-graph--&gt;
+<programlisting>LINK CONTRACT ADDRESS       &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$do/&lt;--link-contract-address--&gt;
+MESSAGE POLICY              &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do$if&lt;--boolean-context--&gt;/&lt;--operator--&gt;/&lt;--condition--&gt;
+OPERATION PARAMETERS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
+OPERATION ON ADDRESS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;/&lt;--target-address--&gt;
+OPERATION ON INNER GRAPH    (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;)&lt;--target-inner-graph--&gt;
 </programlisting>
 
 <para>Where:</para>
@@ -514,7 +538,7 @@ OPERATION ON INNER GRAPH    (&lt;--actor--&gt;[$msg]&lt;--message-id--&gt;$do/&l
 
 <orderedlist>
 <listitem><para>A request message MAY have a policy c to govern their execution at an XDI endpoint.</para></listitem>
-<listitem><para>If an XDI message includes a <code>&lt;--actor--&gt;[$msg]&lt;--id--&gt;$do$if</code> sub context, the set of message policy statements in this context MUST be evaluated by the XDI endpoint.</para></listitem>
+<listitem><para>If an XDI message includes a <code>&lt;--sender--&gt;[$msg]&lt;--id--&gt;$do$if</code> sub context, the set of message policy statements in this context MUST be evaluated by the XDI endpoint.</para></listitem>
 <listitem><para>Request messages MUST be executed only if the [[XdiPolicyExpression|link contract policies]] evaluates to true.</para></listitem>
 <listitem><para>For privacy reasons, a message policy may only access parts of the target graph which it has <code>$get</code> access to under the link contract referenced in the message.</para></listitem>
 </orderedlist>
@@ -525,10 +549,10 @@ OPERATION ON INNER GRAPH    (&lt;--actor--&gt;[$msg]&lt;--message-id--&gt;$do/&l
 
 <para>The following message parameter is specified for request messages.</para>
 
-<section><title>&lt;$full></title>
+<section><title>&lt;$msg></title>
 
 <orderedlist>
-<listitem><para>The <code>&lt;$full></code> message parameter instructs the responder to send a full response message or deferred response
+<listitem><para>The <code>&lt;$msg></code> message parameter instructs the responder to send a full response message or deferred response
 message after the request message has been executed, even when a light response message would have been possible (see section XXX).</para></listitem>
 <listitem><para>Valid values are <code>true</code> and <code>false</code>.</para></listitem>
 <listitem><para>If this message parameter is not present on a request message, the default value is <code>false</code>.</para></listitem>
@@ -891,38 +915,36 @@ the pattern used in this specification to document the basic operations.</para>
 
 </section>
 
-<section><title>Response messages</title>
+<section><title>Response</title>
 
-<para>Every request message MUST have a corresponding response message which is transmitted back from the responder
-to the requester, in a way defined by the binding that is being used. There are two types of response messages:</para>
+<para>Every request message MUST have a corresponding response which is transmitted back from the responder
+to the requester, in a way defined by the binding that is being used. There are two types of responses:</para>
 <orderedlist>
-<listitem><para>Light response message</para></listitem>
-<listitem><para>Full response message</para></listitem>
+<listitem><para>Result graph</para></listitem>
+<listitem><para>Response message</para></listitem>
 </orderedlist>
-<para>If the &lt;$full&gt; message parameter (see section ZZZ) is absent or set to false, then the response message MUST be
-a light response message.</para>
-<para>If the &lt;$full&gt; message parameter is set to true, then the response message MUST be
-a full response message.</para>
+<para>If the &lt;$msg&gt; message parameter (see section ZZZ) is absent or set to false, then the response MUST be
+a result graph.</para>
+<para>If the &lt;$msg&gt; message parameter is set to true, then the response MUST be
+a response message.</para>
 
-<section><title>Light response message</title>
+<section><title>Result graph</title>
 
-<para>A <firstterm>light response message</firstterm> consists only of the result graph of the request operations,
+<para>A <firstterm>result graph</firstterm> consists only of the direct results of the request operations,
 as defined in section XXX. It does not contain any information about the message itself, and it does
-not use the message pattern defined section YYY.</para>
+not use the message pattern defined in section YYY.</para>
 
 </section>
 
-<section><title>Full response message</title>
+<section><title>Response message</title>
 
-<para>Following are the
-statements that are specific to <firstterm>full response messages</firstterm> (shown in statement format). 
-A full response message MUST conform to the statements in this template in addition
-to the statements required for all messages (TODO: add ref to message pattern).
+<para>A <firstterm>response message</firstterm> MUST conform to the statements required for all messages
+(see section XXX). In addition, response messages (shown in statement format) contain the following pattern:
 </para>
 
 <programlisting>
-RESULT GRAPHS       (&lt;--actor--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator&gt;)&lt;--result-graph--&gt;
-PUSH CONTRACTS      (&lt;--actor--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator$push&gt;)&lt;--push-contracts--&gt;</programlisting>
+RESULT GRAPHS       (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator&gt;)&lt;--result-graph--&gt;
+PUSH CONTRACTS      (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator$push&gt;)&lt;--push-contracts--&gt;</programlisting>
 
 <section><title>Result graphs</title>
 
@@ -959,16 +981,6 @@ indicating a partial result.</para>
 
 </section>
 
-<section><title>Response statement</title>
-
-<para>Deferred response messages and full response messages MUST have exactly one <firstterm>response statement</firstterm>,
-also known as <firstterm>thread statement</firstterm>.</para>
-
-<programlisting>RESPONSE STATEMENT            &lt;--responder--&gt;[$msg]&lt;--response-message-id--&gt;/$msg/&lt;--requester--&gt;[$msg]&lt;--request-message-id--&gt;
-</programlisting>
-
-</section>
-
 </section>
 
 <section><title>Message Execution</title>
@@ -985,7 +997,7 @@ also known as <firstterm>thread statement</firstterm>.</para>
 <para>In the XDI graph model as a whole, XDI statements are unordered.</para>
 
 <orderedlist>
-<listitem><para>Messages within a message envelope (i.e., within the <code>&lt;--actor--&gt;[$msg]</code> collection) MAY be explicitly ordered by appending the <code>@&lt;--digit--&gt;</code>ordering context to the <code>&lt;--actor--&gt;[$msg]!&lt;--id--&gt;</code> context.</para></listitem>
+<listitem><para>Messages within a message envelope (i.e., within the <code>&lt;--sender--&gt;[$msg]</code> collection) MAY be explicitly ordered by appending the <code>@&lt;--digit--&gt;</code>ordering context to the <code>&lt;--sender--&gt;[$msg]!&lt;--id--&gt;</code> context.</para></listitem>
 <listitem><para>Operation statements within a message (i.e., as objects of the <code>&lt;--operation--&gt;</code> predicate) MAY be explicitly ordered by appending the <code>@&lt;--digit--&gt;</code> ordering context to the <code>&lt;--operation--&gt;</code> predicate.</para></listitem>
 <listitem><para>Explicit ordering of messages and operations is OPTIONAL for an XDI client.</para></listitem>
 <listitem><para>Support for explicit ordering of messages and operations is REQUIRED for an XDI endpoint.</para></listitem>
@@ -1000,8 +1012,8 @@ also known as <firstterm>thread statement</firstterm>.</para>
 <section><title>Error Handling Rules</title>
 
 <para>The template for an error message is:</para>
-<programlisting>#1: ERROR TIMESTAMP      $error&lt;$t>/&amp;/&lt;--timestamp--&gt;
-#2: ERROR CODES         $error/$do/&lt;--error-code--&gt;
+<programlisting>ERROR TIMESTAMP      $error&lt;$t>/&amp;/&lt;--timestamp--&gt;
+ERROR CODES         $error/$do/&lt;--error-code--&gt;
 </programlisting>
 <para><code>&lt;error-statement></code> is an inner graph of error statements pertaining to the message.</para>
 <para>The dictionary for XDI error code statements is still being defined. See MessagingErrorCode.</para>
