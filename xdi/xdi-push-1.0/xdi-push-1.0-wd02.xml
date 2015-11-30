@@ -64,9 +64,6 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   <editor> <firstname>Markus</firstname><surname>Sabadello</surname>
     <affiliation><orgname>Danube Tech</orgname></affiliation>
     <email>markus@danubetech.com</email> </editor>
-  <editor> <firstname>Drummond</firstname><surname>Reed</surname>
-    <affiliation><orgname>XDI.org</orgname></affiliation>
-    <email>drummond.reed@xdi.org</email> </editor>
 </authorgroup>
 <pubdate>&pubdate;</pubdate>
 <copyright><year>2015</year>
@@ -117,8 +114,7 @@ document made available to committee members to support the publishing process.<
 
 <section id="s.introduction"><title>Introduction</title>
 
-  <para>This document specifies a publish/subscribe mechanism between two XDI peers.</para>
-  <para>This builds on <xref linkend="xdi-messaging-1.0"/> and <xref linkend="xdi-policy-1.0"/>.</para>
+  <para>This specification defines a publish/subscribe mechanism between XDI peers.</para>
 
   <section><title> Key words</title>
 
@@ -188,31 +184,38 @@ document made available to committee members to support the publishing process.<
 
 <section><title>XDI Push</title>
 
-<para>Using XDI messaging and XDI link contracts, a publish/subscribe mechanism can be defined between two
-or more peers. It allows a peer called  <firstterm>publishing peer</firstterm> (or short <firstterm>publisher</firstterm>)
+<para>Using XDI messaging (see <xref linkend="xdi-messaging-1.0"/>) and XDI link contracts
+(see <xref linkend="xdi-policy-1.0"/>), this specification defines publish/subscribe relationships between 
+peers. It enables a peer called  <firstterm>publishing peer</firstterm> (or short <firstterm>publisher</firstterm>)
 to notify one or more other peers called <firstterm>subscribing peers</firstterm> (or short <firstterm>subscribers</firstterm>)
-of changes in a graph for which the publishing peer is authoritative. It is not relevant what
-operation or peer caused the change.</para>
-
-<para>A notification (<firstterm>"push"</firstterm>) may either only reference the address of the target subgraph
-that has changed (<firstterm>"light push"</firstterm>), or it may contain the original XDI operation(s) that
-caused changes to the target subgraph (<firstterm>"content push"</firstterm>).</para>
-
-<section><title>Structure</title>
+of changes in a graph for which the publisher is authoritative.</para>
 
 <para>A publish/subscribe relationship between a publishing authority and a subscribing authority is modeled as
-a link contract with the following characteristics:</para>
+a link contract with certain properties. This link contract is called a <firstterm>push link contract</firstterm>
+(or short <firstterm>push contract</firstterm>).</para>
+
+<para>A notification is itself an XDI message. This message is called a <firstterm>push message</firstterm>
+(or short <firstterm>push</firstterm>).</para>
+
+<para>XDI Push specifies <code>$push</code>, which is used as an operation in <xref linkend="xdi-messaging-1.0"/>
+and a permission in <xref linkend="xdi-policy-1.0"/>.</para>
+
+</section>
+
+<section><title>Structure of a Push Contract</title>
+
+<para>A push contract is a link contract that fulfills the following conditions:</para>
+
 <orderedlist>
 <listitem><para>The publisher is the <firstterm>authorizing authority</firstterm>.</para></listitem>
-<listitem><para>The subscribers are the <firstterm>requesting authorities</firstterm>.</para></listitem>
-<listitem><para>The link contract contains one ore more <code>$push</code> operations.</para></listitem>
+<listitem><para>The subscribers are the <firstterm>requesting authority</firstterm>.</para></listitem>
+<listitem><para>The link contract contains one ore more <code>$push</code> permissions.</para></listitem>
 <listitem><para>The link contract MAY contain one or more <firstterm>push target endpoint URIs</firstterm>.</para></listitem>
 <listitem><para>The link contract MAY contain the <firstterm>content flag</firstterm> which specifies whether a subscriber
 wishes to use light pushes or content pushes.</para></listitem>
 </orderedlist>
 
-<para>A link contract fulfilling the above characteristics is also called a <firstterm>push contract</firstterm>.
-Following is the basic structure of a push contract. Labels in <code>&lt;--this-form--&gt;</code> represent
+<para>Following is the basic structure of a push contract. Labels in <code>&lt;--this-form--&gt;</code> represent
 template variables.</para>
 
 <programlisting>(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)$do/$push/&lt;--target-address--&gt;
@@ -227,16 +230,16 @@ be used as the single push target endpoint URI of the push contract.</para>
 <para>If the content flag is absent, the default value <code>false</code> (i.e. use light pushes) MUST be assumed.</para>
 
 <para>Like all link contracts, push contracts are unidirectional and only apply to data in the authorizing
-authority's graph. In order to set up a bi- or multidirectional relationship, two or more push contracts can
-be created in which multiple authorities simultaneously fulfill the publisher and subscriber roles.</para>
+authority's graph. In order to set up a bi- or multidirectional publish/subscribe relationship, two or more
+push contracts can be created in which multiple peers simultaneously fulfill the publisher and subscriber roles.</para>
 
 </section>
 
-<section><title>Creation</title>
+<section><title>Creation of a Push Contract</title>
 
 <para>A push contract can be created in two ways, explicit and implicit.</para>
 
-<section><title>Explicit creation</title>
+<section><title>Explicit Creation</title>
 
 <para>A push contract may be added to an XDI graph like any other structure, i.e. by executing a
 <code>$set</code> operation against a target graph.</para>
@@ -250,7 +253,7 @@ add explanation].</para>
 
 </section>
 
-<section><title>Implicit creation</title>
+<section><title>Implicit Creation</title>
 
 <para>A push contract may be added to an XDI graph implicitly by a responder while executing an XDI operation
 that cannot be immediately completed ("asynchronous messaging"). This occurs most commonly in the case of
@@ -270,10 +273,26 @@ to the original requester. The push contract may then be deleted. [TODO: more pr
 
 </section>
 
-<section><title>Pushes</title>
+<section id="triggering"><title>Triggering a Push Contract</title>
+
+<para>A push contract is triggered when the following conditions are met:</para>
+
+<orderedlist>
+<listitem><para>An operation is executed against a graph that contains one or more push contracts.</para></listitem>
+<listitem><para>The operation is not a <code>$get</code> operation</para>.</listitem>
+<listitem><para>The target of the operation is a sub-context of any context that is the target of a <code>$push</code> permission of at least one of the push contracts in the graph.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Structure of a Push Message</title>
 
 <para>Once a push contract is in place, every change to a subgraph covered by the push contract results
 in a push being delivered from the publishing peer to the subscribing peer(s) using XDI messages.</para>
+
+<para>A push message may either only reference the address of the target subgraph
+that has changed (this is called a <firstterm>light push</firstterm>), or it may contain the original 
+request message as well as its result graph (this is called a <firstterm>content push</firstterm>).</para>
 
 <para>XDI implementations MUST support light pushes and MAY support content pushes. Local policies of
 publishing peers MAY prohibit content pushes. If content pushes are not supported or prohibited, a subscriber
@@ -303,13 +322,35 @@ It uses the <code>$push</code> operation.</para>
 
 </section>
 
+<section><title>Delivery of a Push Message</title>
+
+<para>This section defines how a push message is delivered to the subscribers of a push contract.
+The process of delivering the push message is also called <firstterm>pushing</firstterm>.</para>
+
+<para>TODO: Describe here how a publisher delivers push messages to the subscribers.</para>
+
+<para>TODO: Describe the role of XDI discovery, bindings, and routing.</para>
+
+</section>
+
+<section><title>Execution of a Push Message</title>
+
+<para>TODO: Describe here how a subscriber executes an incoming push messages from a publisher.</para>
+
+<para>Note that when a push message is executed against a subscriber's target graph, it may itself
+fulfill the conditions in <xref linkend="triggering"/>, which in turn results in the creation, sending,
+and execution of a new push message. This can cause a chain reaction of push messages sent between an arbitrary
+number of peers.</para>
+
+<para>TODO: how to detect and prevent infinite "push loops"?</para>
+
 <section><title>Authentication and Authorization</title>
 
 <para>When a push contract is in place, it SHOULD exist both in the publishing peer's graph and in the
 subscribing peer's graph. The existence of the push contract in the subscribing peer's graph serves as
 authorization for incoming pushes from the publishing peer's graph.</para>
 
-<para>[TODO: add information how a push link contract's policy is used.]</para>
+<para>[TODO: add information how a push contract's policy is used.]</para>
 
 </section>
 

@@ -85,7 +85,7 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 </legalnotice>
 
 <abstract><title>Abstract</title>
-  <para>This document specifies the abstract pattern for transmitting XDI messages between two peers.</para>
+  <para>This document specifies the abstract pattern for transmitting XDI messages between peers.</para>
 </abstract>
 
 <!--legalnotice role="status"><title>Status</title>
@@ -120,8 +120,8 @@ document made available to committee members to support the publishing process.<
 
 <section id="s.introduction"><title>Introduction</title>
 
-  <para>This document specifies the abstract pattern for transmitting XDI messages between two peers.</para>
-  <para>This builds on <xref linkend="xdi-core-1.0"/>.</para>
+  <para>This document specifies the abstract pattern for transmitting XDI messages between peers.</para>
+  <para>This builds on the basic XDI graph model (see <xref linkend="xdi-core-1.0"/>).</para>
 
   <section><title> Key words</title>
 
@@ -156,6 +156,20 @@ document made available to committee members to support the publishing process.<
       <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
       <releaseinfo>OASIS &standard;. </releaseinfo>
       <citetitle><ulink url="&latest-loc;/xdi-bindings.html">&latest-loc;/xdi-bindings.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="xdi-connections-1.0">
+      <abbrev>OASIS-XDI-Connections-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-connections-1.0/xdi-connections-1.0-wd01.xml">OASIS XDI 1.0 Connections Specification</ulink></title>
+      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-connections.html">&latest-loc;/xdi-connections.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="xdi-push-1.0">
+      <abbrev>OASIS-XDI-Push-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-push-1.0/xdi-push-1.0-wd01.xml">OASIS XDI 1.0 Push Specification</ulink></title>
+      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-push.html">&latest-loc;/xdi-push.html</ulink>.</citetitle>
     </bibliomixed> <bibliomixed id="xdi-policy-1.0">
       <abbrev>OASIS-XDI-Policy-V1.0</abbrev> <date>&pubdate; </date>
       <title><ulink url="../../xdi-policy-1.0/xdi-policy-1.0-wd01.xml">OASIS XDI 1.0 Policy Specification</ulink></title>
@@ -163,46 +177,24 @@ document made available to committee members to support the publishing process.<
       <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
       <releaseinfo>OASIS &standard;. </releaseinfo>
       <citetitle><ulink url="&latest-loc;/xdi-policy.html">&latest-loc;/xdi-privacy.html</ulink>.</citetitle>
-    </bibliomixed> <bibliomixed id="xdi-security-1.0">
-      <abbrev>OASIS-XDI-Security-V1.0</abbrev> <date>&pubdate; </date>
-      <title><ulink url="../../xdi-security-1.0/xdi-security-1.0-wd01.xml">OASIS XDI 1.0 Security Mechanisms Specification</ulink></title>
+    </bibliomixed> <bibliomixed id="xdi-security-mechanisms-1.0">
+      <abbrev>OASIS-XDI-Security-Mechanisms-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-security-mechanisms-1.0/xdi-security-mechanisms-1.0-wd01.xml">OASIS XDI 1.0 Security Mechanisms Specification</ulink></title>
       <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
       <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
       <releaseinfo>OASIS &standard;. </releaseinfo>
-      <citetitle><ulink url="&latest-loc;/xdi-security.html">&latest-loc;/xdi-security.html</ulink>.</citetitle>
-    </bibliomixed> <bibliomixed id="xdi-privacy-1.0">
-      <abbrev>OASIS-XDI-Privacy-V1.0</abbrev> <date>&pubdate; </date>
-      <title><ulink url="../../xdi-privacy-1.0/xdi-privacy-1.0-wd01.xml">OASIS XDI 1.0 Privacy Mechanisms Specification</ulink></title>
+      <citetitle><ulink url="&latest-loc;/xdi-security-mechanisms.html">&latest-loc;/xdi-security-mechanisms.html</ulink>.</citetitle>
+    </bibliomixed> <bibliomixed id="xdi-privacy-mechanisms-1.0">
+      <abbrev>OASIS-XDI-Privacy-Mechanisms-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-privacy-mechanisms-1.0/xdi-privacy-mechanisms-1.0-wd01.xml">OASIS XDI 1.0 Privacy Mechanisms Specification</ulink></title>
       <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
       <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
       <releaseinfo>OASIS &standard;. </releaseinfo>
-      <citetitle><ulink url="&latest-loc;/xdi-privacy.html">&latest-loc;/xdi-privacy.html</ulink>.</citetitle>
+      <citetitle><ulink url="&latest-loc;/xdi-privacy-mechanisms.html">&latest-loc;/xdi-privacy.html</ulink>.</citetitle>
     </bibliomixed> <bibliomixed id="rfc2119">
       <abbrev>RFC 2119</abbrev><date>March 1997</date>
       <title><ulink url="http://www.ietf.org/rfc/rfc2119.txt">Key words for use in RFCs to Indicate Requirement Levels</ulink></title>
       <author><firstname>S. </firstname> <surname>Bradner</surname></author>. 
-      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
-    </bibliomixed> <bibliomixed id="rfc2234">
-      <abbrev>RFC 2234</abbrev><date>November 1997</date>
-      <title><ulink url="http://www.ietf.org/rfc/rfc2234.txt">Augmented BNF for Syntax Specifications: ABNF</ulink></title>
-      <author><firstname>D. </firstname> <surname>Crocker</surname></author>,
-      <author><firstname>P. </firstname> <surname>Overell</surname></author>. 
-      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
-    </bibliomixed> <bibliomixed id="rfc4627">
-      <abbrev>RFC 4627</abbrev><date>July 2006</date>
-      <title><ulink url="http://www.ietf.org/rfc/rfc4627.txt">The application/json Media Type for JavaScript Object Notation (JSON)</ulink></title>
-      <author><firstname>D. </firstname> <surname>Crockford</surname></author>. 
-      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
-    </bibliomixed> <bibliomixed id="rfc4122">
-      <abbrev>RFC 4122</abbrev><date>July 2005</date>
-      <title><ulink url="http://www.ietf.org/rfc/rfc4122.txt">A Universally Unique IDentifier (UUID) URN Namespace</ulink></title>
-      <author><firstname>D. </firstname> <surname>Crockford</surname></author>. 
-      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
-    </bibliomixed> <bibliomixed id="rfc5952">
-      <abbrev>RFC 5952</abbrev><date>August 2010</date>
-      <title><ulink url="http://www.ietf.org/rfc/rfc5952.txt">A Recommendation for IPv6 Address Text Representation</ulink></title>
-      <author><firstname>S. </firstname> <surname>Kawamura</surname></author>, 
-      <author><firstname>M. </firstname> <surname>Kawashima</surname></author>. 
       <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
     </bibliomixed> <bibliomixed id="rfc6749">
       <abbrev>RFC 6749</abbrev><date>October 2012</date>
@@ -215,17 +207,6 @@ document made available to committee members to support the publishing process.<
       <author><firstname>M. </firstname> <surname>Jones</surname></author>. 
       <author><firstname>D. </firstname> <surname>Hardt</surname></author>, 
       <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
-    </bibliomixed> <bibliomixed id="ecma-404">
-      <abbrev>ECMA-404</abbrev><date>October 2013</date>
-      <title><ulink url="http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf">The JSON Data Interchange Format</ulink></title>
-      <author><firstname>S. </firstname> <surname>Kawamura</surname></author>,
-      <author><firstname>M. </firstname> <surname>Kawashima</surname></author>.
-      <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
-    </bibliomixed> <bibliomixed id="fips180-4">
-      <abbrev>FIPS 180-4</abbrev><date>March 2012</date>
-      <title><ulink url="http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf">Secure Hash Standard (SHS)</ulink></title>
-      <author><firstname></firstname> <surname></surname></author>
-      <releaseinfo>Federal Information Processing Standards Publication (FIPS), NIST</releaseinfo>
     </bibliomixed>
   </bibliolist>
 
@@ -234,31 +215,6 @@ document made available to committee members to support the publishing process.<
 <section><title>Non-Normative References</title>
 
   <bibliolist>
-    <bibliomixed id="erm">
-      <abbrev>erm</abbrev><date>1976</date>
-      <title><ulink url="https://en.wikiversity.org/wiki/1976/Chen">The Entity-Relationship Model: Toward a Unified View of Data</ulink></title>
-      <author><firstname>Peter </firstname> <surname>Chen</surname></author>.
-      <releaseinfo>ACM Transactions on Database Systems 1(1): 9–36. doi:10.1145/320434.320440</releaseinfo>
-    </bibliomixed> <bibliomixed id="webarch">
-      <abbrev>webarch</abbrev><date>15 December 2004</date>
-      <title><ulink url="http://www.w3.org/TR/webarch/#id-resources">Architecture of the World Wide Web, Volume One</ulink></title>
-      <author><firstname>Ian </firstname> <surname>Jacobs</surname></author>,
-      <author><firstname>Norman </firstname> <surname>Walsh</surname></author>.
-      <releaseinfo>W3C Recommendation</releaseinfo>
-    </bibliomixed> <bibliomixed id="reification">
-      <abbrev>reification</abbrev>
-      <title><ulink url="http://en.wikipedia.org/wiki/Reification_(computer_science)">Reification (computer science)</ulink></title>
-      <releaseinfo>Wikipedia</releaseinfo>
-    </bibliomixed> <bibliomixed id="json-ld">
-      <abbrev>json-ld</abbrev><date>04 October 2013</date>
-      <title><ulink url="http://json-ld.org/spec/latest/json-ld">JSON-LD: A JSON-based Serialization for Linked Data</ulink></title>
-      <author><firstname>Gregg </firstname> <surname>Kellogg</surname></author>,
-      <author><firstname>Markus </firstname> <surname>Lanthaler</surname></author>,
-      <author><firstname>Niklaus </firstname> <surname>Lindström</surname></author>,
-      <author><firstname>Dave </firstname> <surname>Longley</surname></author>,
-      <author><firstname>Manu </firstname> <surname>Sporny</surname></author>. 
-      <releaseinfo>W3C Editor's Draft 04 October 2013 </releaseinfo>
-    </bibliomixed>
   </bibliolist>
 
 </section>
@@ -334,7 +290,7 @@ endpoint URI on a network.</para>
 
 </section>
 
-<section><title>Messages</title>
+<section id="messages"><title>Messages</title>
 
 <para>A message is itself a context in a graph. It is a member instance under
 an entity collection identified by a <code>[$msg]</code> context, under an entity that
@@ -350,7 +306,7 @@ of the message. The member instance is called the <firstterm>message ID</firstte
 </programlisting>
 
 <para>Every message SHOULD have an immutable address. To express order, the ordered/unordered reference pattern
-[TODO: ref to XDI Core spec] may be used:</para>
+(see <xref linkend="xdi-core-1.0"/>) may be used:</para>
 
 <programlisting>=!:uuid:1111[$msg]@~0/$ref/=!:uuid:1111[$msg]*!:uuid:1234
 </programlisting>
@@ -359,7 +315,7 @@ of the message. The member instance is called the <firstterm>message ID</firstte
 statements that make up the semantics and function of the message.</para>
 
 <para>Following are the statements that are common to both request messages and response
-messages (shown in statement format). Labels in <code>&lt;--this-form--&gt;</code> represent
+messages (shown in statement format). This is called the <firstterm>common message pattern</firstterm>. Labels in <code>&lt;--this-form--&gt;</code> represent
 template variables.</para>
 
 <programlisting>SENDING PEER                &lt;--sending-peer--&gt;/$send/&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;
@@ -474,9 +430,9 @@ CORRELATION STATEMENT       &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$msg/
 <listitem><para>A message parameter MUST be interpreted to apply only to the message that contains it.</para></listitem>
 </orderedlist>
 
-<para>The following message parameter is defined by this specification.</para>
+<para>The following message parameter is defined by this specification:</para>
 
-<section><title>&lt;$msg></title>
+<section id="msg-message-parameter"><title>&lt;$msg></title>
 
 <orderedlist>
 <listitem><para>The <code>&lt;$msg></code> message parameter MUST only be used with request messages.</para></listitem>
@@ -515,10 +471,9 @@ specialized to express additional semantics about how two messages are related.<
 
 <section><title>Request Messages</title>
 
-<para>Following are the
-statements that are specific to request messages (shown in statement format). 
-A request message MUST conform to the statements in this template in addition
-to the statements required for all messages (TODO: add ref to message pattern).
+<para>A <firstterm>request message</firstterm> MUST conform to the common message pattern
+(see <xref linkend="messages"/>). In addition, request messages extend the common message pattern
+with the following <firstterm>request message pattern</firstterm> (shown in statement format):
 </para>
 
 <programlisting>LINK CONTRACT ADDRESS       &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$do/&lt;--link-contract-address--&gt;
@@ -609,11 +564,19 @@ OPERATION ON INNER GRAPH    (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&
 <section><title>Variable Assignment</title>
 
 <orderedlist>
-<listitem><para>Certain operations use variables when they are executed.</para></listitem>
-<listitem><para>An operation parameter MUST apply only to the request operation that contains it.</para></listitem>
+<listitem><para>A request operation MAY include one or more <firstterm>variable assignments</firstterm> that are used when the request operation is executed.</para></listitem>
+<listitem><para>A variable assignment MUST apply only to the request operation that contains it.</para></listitem>
+<listitem><para>For certain operations it is REQUIRED that variables are assigned values.</para></listitem>
+<listitem><para>For certain operations it is OPTIONAL that variables are assigned values.</para></listitem>
+<listitem><para>See the definitions of individual operation for information whether it uses variables,
+which variables it uses, how
+they are used, and whether it is required or optional to assign values to the variables.</para></listitem>
 </orderedlist>
 
-<para>The following operation parameters are specified for request messages.</para>
+<para>Example variable assignment:</para>
+
+<programlisting>
+</programlisting>
 
 <section><title>&lt;$deref></title>
 
@@ -652,13 +615,13 @@ an inner graph, the following operations and behaviors are possible:</para>
 <row><entry><code>$del</code></entry><entry>deletes context node and subgraph</entry><entry>deletes individual contextual/relational/literal statement(s) plus subgraph(s)</entry></row>
 <row><entry><code>$connect</code></entry><entry>requests instantiation of a link contract</entry><entry>requests instantiation of a link contract</entry></row>
 <row><entry><code>$send</code></entry><entry>requests sending of a nested message</entry><entry>requests sending of a nested message</entry></row>
-<row><entry><code>$push</code></entry><entry>(invalid)</entry><entry>delivers a notification based on push contract</entry></row>
+<row><entry><code>$push</code></entry><entry>delivers a notification based on push link contract</entry><entry>delivers a notification based on push link contract</entry></row>
 <row><entry><code>$do</code></entry><entry>(unspecified)</entry><entry>(unspecified)</entry></row>
 </tbody></tgroup></table>
 
 <section><title><code>$get</code> operation</title>
 
-<para>This operation retrieves data from a target graph and does not make changes to that graph.</para>
+<para>The <code>$get</code> operation retrieves data from a target graph and does not make changes to that graph.</para>
 
 <section><title><code>$get</code> applied to an address</title>
 
@@ -701,7 +664,7 @@ If the statements do not exist, the result graph is empty (this is not considere
 
 <section><title><code>$set</code> operation</title>
 
-<para>This operation creates or modifies data in a target graph. Unless an error occurs, the result graph is the empty graph.</para>
+<para>The <code>$set</code> operation creates or modifies data in a target graph. Unless an error occurs, the result graph is the empty graph.</para>
 
 <section><title><code>$set</code> applied to an address</title>
 
@@ -745,7 +708,7 @@ If a statement exists already, the operation has no effect on this statement (th
 
 <section><title><code>$add</code> operation</title>
 
-<para>This operation creates data in a target graph. Unless an error occurs, the result graph is the empty graph.
+<para>The <code>$add</code> operation creates data in a target graph. Unless an error occurs, the result graph is the empty graph.
 If the operation is applied to data which already exists, it generates an error
 (this is what distinguishes <code>$add</code> from <code>$set</code>).</para>
 
@@ -791,7 +754,7 @@ If a statement exists already, the operation generates an error.</para>
 
 <section><title><code>$mod</code> operation</title>
 
-<para>This operation modifies data in a target graph. Unless an error occurs, the result graph is the empty graph.
+<para>The <code>$mod</code> operation modifies data in a target graph. Unless an error occurs, the result graph is the empty graph.
 If the operation is applied to data which does not exist, it generates an error
 (this is what distinguishes <code>$mod</code> from <code>$set</code>).</para>
 
@@ -824,7 +787,7 @@ If the context node that contains the literal does not exist, the operation gene
 
 <section><title><code>$del</code> operation</title>
 
-<para>This operation deletes data from a target graph. Unless an error occurs, the result graph is the empty graph.</para>
+<para>The <code>$del</code> operation deletes data from a target graph. Unless an error occurs, the result graph is the empty graph.</para>
 
 <section><title><code>$del</code> applied to an address</title>
 
@@ -870,13 +833,12 @@ If a statement does not exist, the operation has no effect (this is not consider
 
 <section><title><code>$connect</code> operation</title>
 
-<para>This operation requests instantiation of a link contract.</para>
-<para>This operation is specified in [Ref to XDI Connections 1.0]]</para>
+<para>The <code>$connect></code> operation requests instantiation of a link contract.</para>
+<para>This operation is specified in <xref linkend="xdi-connections-1.0"/></para>
 
 <section><title><code>$connect</code> applied to an address</title>
 
-<para>This operation requests instantiation of a link contract.
-The given address MUST be the address of a link contract template, which
+<para>The given address MUST be the address of a link contract template, which
 is used as the template for the link contract instantiation process.</para>
 <para>Example:</para>
 <programlisting>=alice[$msg]*!:uuid:4378$do/$connect/+acme#profile{$do}
@@ -886,8 +848,7 @@ is used as the template for the link contract instantiation process.</para>
 
 <section><title><code>$connect</code> applied to an inner graph</title>
 
-<para>This operation requests instantiation of a link contract.
-The given inner graph MUST contain a link contract template, which
+<para>The given inner graph MUST contain a link contract template, which
 is used as the template for the link contract instantiation process.</para>
 <para>Example:</para>
 <programlisting>(=alice[$msg]*!:uuid:4378$do/$connect)+acme#profile{$do}/$get/{$to}#profile
@@ -901,20 +862,19 @@ is used as the template for the link contract instantiation process.</para>
 
 <section><title><code>$send</code> operation</title>
 
-<para>This operation requests sending of a nested message.</para>
+<para>The <code>$send</code> operation requests sending of a nested message.</para>
+<para>This operation is specified in <xref linkend="nested-messages"/>.</para>
 
 <section><title><code>$send</code> applied to an address</title>
 
-<para>This operation requests sending of a nested message.
-The given address MUST be the address of a message template, which
+<para>The given address MUST be the address of a message template, which
 is used as the template for the nested message to be sent.</para>
 
 </section>
 
 <section><title><code>$send</code> applied to an inner graph</title>
 
-<para>This operation requests sending of a nested message.
-The given inner graph MUST contain a message template, which
+<para>The given inner graph MUST contain a message template, which
 is used as the template for the nested message to be sent.</para>
 
 </section>
@@ -923,19 +883,20 @@ is used as the template for the nested message to be sent.</para>
 
 <section><title><code>$push</code> operation</title>
 
-<para>This operation represent a notification after a push link contract that has been triggered.</para>
-<para>This operation is specified in [Ref to XDI Push 1.0]]</para>
+<para>The <code>$push</code> operation represents a notification tiggered by a push contract.</para>
+<para>This operation is specified in <xref linkend="xdi-push-1.0"/></para>
 
 <section><title><code>$push</code> applied to an address</title>
 
-<para>This operation represents a notification that the subgraph at the given address has changed.</para>
+<para>The given address indicates a <firstterm>light push</firstterm>.</para>
+<para>The given address MUST be the subgraph at the given address has changed.</para>
 
 </section>
 
 <section><title><code>$push</code> applied to an inner graph</title>
 
-<para>This operation represents a notification containing an inner graph that is
-a message which has caused a change.</para>
+<para>The given inner graph indicates a <firstterm>content push</firstterm>.</para>
+<para>The given inner graph MUST be the message that triggered the push contract.</para>
 
 </section>
 
@@ -967,23 +928,23 @@ to the requester, in a way defined by the binding that is being used. There are 
 <listitem><para>Result graph</para></listitem>
 <listitem><para>Response message</para></listitem>
 </orderedlist>
-<para>If the &lt;$msg&gt; message parameter (see section ZZZ) is absent or set to false, then the response MUST be
+<para>If the &lt;$msg&gt; message parameter (see <xref linkend="msg-message-parameter"/>) is absent or set to false, then the response MUST be
 a result graph.</para>
 <para>If the &lt;$msg&gt; message parameter is set to true, then the response MUST be
 a response message.</para>
 
 <section><title>Result graph</title>
 
-<para>A <firstterm>result graph</firstterm> consists only of the direct results of the request operations,
-as defined in section XXX. It does not contain any information about the message itself, and it does
-not use the message pattern defined in section YYY.</para>
+<para>A <firstterm>result graph</firstterm> consists only of the result statements of the request operations.
+The result graph is not itself a message and therefore does not conform to the common message pattern (see <xref linkend="messages"/>).</para>
 
 </section>
 
 <section><title>Response message</title>
 
-<para>A <firstterm>response message</firstterm> MUST conform to the statements required for all messages
-(see section XXX). In addition, response messages (shown in statement format) contain the following pattern:
+<para>A <firstterm>response message</firstterm> MUST conform to the common message pattern
+(see <xref linkend="messages"/>). In addition, response messages extend the common message pattern
+with the following <firstterm>response message pattern</firstterm> (shown in statement format):
 </para>
 
 <programlisting>
@@ -998,9 +959,9 @@ request operations is included in the response message using inner root nodes as
 <orderedlist>
 <listitem><para>For every request operation in the request message, a separate inner root node
 is included in the response message to represent the result graph of that particular request operation.</para></listitem>
-<listitem><para>The XDI subject of the XDI address of the inner root node is the XDI address of
+<listitem><para>The subject of the XDI address of the inner root node is the XDI address of
 the request message to which the response message corresponds.</para></listitem>
-<listitem><para>The XDI predicate of the XDI address of the inner root node is the request operation to
+<listitem><para>The predicate of the XDI address of the inner root node is the identifier of the request operation to
 which the result graph corresponds.</para></listitem>
 <listitem><para>The inner graph under the inner root node is the result graph of the request operation.</para></listitem>
 </orderedlist>
@@ -1009,17 +970,27 @@ which the result graph corresponds.</para></listitem>
 
 <section><title>Push contracts</title>
 
-<para>A full response message may include one or more push contracts, which indicate that the
-result of an operation is not immediately available. This occurs most commonly if the result
-of a link contract evaluation process is that the operation is "held back" 
-(see XDI Link Contracts spec).</para>
+<para>A response message may include one or more push contracts, which indicate that the
+result of an operation is not immediately available. </para>
+
+<para>This can occur for various reasons:</para>
+
+<orderedlist>
+<listitem><para>The operation is executed asynchronously. The result of the operation will be
+pushed once execution is complete.</para></listitem>
+<listitem><para>The operation cannot be executed at the moment. It will be executed as soon as possible,
+and the result of the operation will be pushed once execution is complete.</para></listitem>
+<listitem><para>The result of a link contract evaluation process has determined that the operation
+will be "held back" / "stashed" / "deferred" (TODO: decide on terminology here) (TODO: link to
+correct section of <xref linkend="xdi-policy-1.0"/>).</para></listitem>
+</orderedlist>
 
 <para>Each request operation MUST have AT MOST one corresponding
 push contract in the response message.</para>
 
 <para>A request operation MAY have both a result graph and a push contract in the response message,
-indicating a partial result.</para>
-
+indicating that a partial result is available immediately, and that additional results will be available
+in the future.</para>
 
 </section>
 
@@ -1053,16 +1024,63 @@ indicating a partial result.</para>
 
 </section>
 
-<section><title>Nested Messages</title>
+<section id="nested-messages"><title>Nested Messages</title>
 
-<para>Using the <code>$</code></para>
+<para>Using the <code>$send</code> operation, a requester can instruct a responder to send a nested message.
+In doing so, the responder becomes a requester in a separate, nested XDI messaging round-trip.</para>
 
-<orderedlist>
-<listitem><para>A message envelope MAY contain more than one message subgraph.</para></listitem>
-<listitem><para>A message MAY contain more than one operation statement.</para></listitem>
-<listitem><para>An XDI endpoint MUST execute all messages in a message envelope.</para></listitem>
-<listitem><para>An XDI endpoint MUST execute all operation statements within a message.</para></listitem>
-</orderedlist>
+<section><title>Structure of a Nested Message</title>
+
+<para>TODO describe nested message</para>
+<para>TODO introduce terms such as "original"/"outer" responder and "nested" responder</para>
+<para>TODO describe multiple levels of nesting</para>
+
+</section>
+
+<section><title>Delivery of a Nested Message</title>
+
+<para>This section defines how a nested message is delivered to the nested responder.
+The process of delivering the nested message is also called <firstterm>forwarding</firstterm>.</para>
+
+<para>TODO: Describe here how a original responder delivers nested messages to the nested responder.</para>
+
+<para>TODO: Describe the role of XDI discovery, bindings, and routing.</para>
+
+</section>
+
+<section><title>Execution of a Nested Message</title>
+
+<section><title>Authentication and Authorization</title>
+
+<para>TODO: describe how link contracts authorize nested messages</para>
+
+</section>
+
+</section>
+
+<section><title>Common Usage Patterns</title>
+
+<section><title>Invitations</title>
+
+<para>TODO: Describe how in a nested message the responder is the same peer as the requester of the "outer" message.</para>
+
+</section>
+
+<section><title>Delegation</title>
+
+<para>TODO: Describe how one peer can be a delegate of another peer.</para>
+<para>TODO: Common example is an XDI agent acting as a delegate of an XDI endpoint.</para>
+<para>TODO: Maybe mention app clouds and app instances and app sessions.</para>
+
+</section>
+
+<section><title>Approving a "held back" / "stashed" / "deferred" Message</title>
+
+<para>TODO: Describe how in a nested message the responder is the same peer as the requester of the "outer" message.</para>
+
+</section>
+
+</section>
 
 </section>
 
