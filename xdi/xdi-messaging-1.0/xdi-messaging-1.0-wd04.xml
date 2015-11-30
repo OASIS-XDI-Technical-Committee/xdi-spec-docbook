@@ -573,24 +573,11 @@ which variables it uses, how
 they are used, and whether it is required or optional to assign values to the variables.</para></listitem>
 </orderedlist>
 
-<para>Example variable assignment:</para>
+<para>Example:</para>
 
-<programlisting>
+<programlisting>=!:uuid:1111[$msg]*!:uuid:1234$get&lt;$get{$get}/$is/=!:uuid:2222&lt;#email>
+=!:uuid:1111[$msg]*!:uuid:1234$get{&lt;$digest>}/&/"45237548235472"
 </programlisting>
-
-<section><title>&lt;$deref></title>
-
-<para>The <code>&lt;$deref></code> MUST NOT be used with any operation other than <code>$get</code>.</para>
-<para>The <code>&lt;$deref></code> parameter is defined in [[EquivalenceRelations]]. It governs whether the XDI endpoint automatically dereferences <code>$ref</code> statements in a result graph.</para>
-
-</section>
-
-<section><title>&lt;$proxy></title>
-
-<para>The <code>&lt;$proxy></code> MUST NOT be used with any operation other than <code>$get</code>.</para>
-<para>The <code>&lt;$proxy></code> parameter is defined in <xref linkend='xdi-discovery-1.0'/>. It governs whether the XDI endpoint serves as a proxy to complete discovery of an XDI resource for which the XDI endpoint is not itself authoritative.</para>
-
-</section>
 
 </section>
 
