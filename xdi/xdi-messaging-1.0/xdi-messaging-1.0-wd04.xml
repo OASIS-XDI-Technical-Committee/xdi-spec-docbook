@@ -576,7 +576,7 @@ they are used, and whether it is required or optional to assign values to the va
 <para>Example:</para>
 
 <programlisting>=!:uuid:1111[$msg]*!:uuid:1234$get&lt;$get{$get}/$is/=!:uuid:2222&lt;#email>
-=!:uuid:1111[$msg]*!:uuid:1234$get{&lt;$digest>}/&/"45237548235472"
+=!:uuid:1111[$msg]*!:uuid:1234$get{&lt;$digest>}/&amp;/"45237548235472"
 </programlisting>
 
 </section>
