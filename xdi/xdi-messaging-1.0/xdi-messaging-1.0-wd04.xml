@@ -369,6 +369,7 @@ TIMESTAMP                   &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;$t
 MESSAGE PARAMETERS          &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
 AUTHENTICATION TOKEN        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--token-type--&gt;&lt;$token&gt;/&amp;/&lt;--token--&gt;
 AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--signature-type--&gt;&lt;$sig&gt;/&amp;/&lt;--signature--&gt;
+CORRELATION STATEMENT       &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$msg/&lt;--earlier-sender--&gt;[$msg]&lt;--earlier-message-id--&gt;
 </programlisting>
 
 <section><title>Sender</title>
@@ -471,8 +472,26 @@ AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--
 <listitem><para><code>&lt;--parameter--&gt;</code> is a message parameter.</para></listitem>
 <listitem><para><code>&lt;--parameter-value--&gt;</code> is the value of a message parameter.</para></listitem>
 <listitem><para>A message parameter MUST be interpreted to apply only to the message that contains it.</para></listitem>
-<listitem><para>This specification currently specifies a single message parameter for request messages (see section XXX).</para></listitem>
 </orderedlist>
+
+<para>The following message parameter is defined by this specification.</para>
+
+<section><title>&lt;$msg></title>
+
+<orderedlist>
+<listitem><para>The <code>&lt;$msg></code> message parameter MUST only be used with request messages.</para></listitem>
+<listitem><para>The parameter instructs the responder to send a response message rather than simply the result graph
+as a response, after the request message has been executed.</para></listitem>
+<listitem><para>Valid values are <code>true</code> and <code>false</code>.</para></listitem>
+<listitem><para>If this message parameter is not present, the default value is <code>false</code>.</para></listitem>
+</orderedlist>
+
+<para>Example:</para>
+
+<programlisting>=!:uuid:1111[$msg]*!:uuid:1234&lt;$msg&gt;/&amp;/true
+</programlisting>
+
+</section>
 
 </section>
 
@@ -490,9 +509,6 @@ or response message.</para>
 <para>The correlation statement is identified by a <code>$msg</code> relational arc. This identifier MAY be
 specialized to express additional semantics about how two messages are related.</para>
 
-<programlisting>CORRELATION STATEMENT            &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$msg/&lt;--earlier-sender--&gt;[$msg]&lt;--earlier-message-id--&gt;
-</programlisting>
-
 </section>
 
 </section>
@@ -508,6 +524,8 @@ to the statements required for all messages (TODO: add ref to message pattern).
 <programlisting>LINK CONTRACT ADDRESS       &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$do/&lt;--link-contract-address--&gt;
 MESSAGE POLICY              &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do$if&lt;--boolean-context--&gt;/&lt;--operator--&gt;/&lt;--condition--&gt;
 OPERATION PARAMETERS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
+VARIABLE ASSIGNMENT         &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--variable--&gt;/$is/&lt;--variable-value--&gt;
+VARIABLE ASSIGNMENT         &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--variable--&gt;/{&amp;}/"&lt;--variable-value--&gt;"
 OPERATION ON ADDRESS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;/&lt;--target-address--&gt;
 OPERATION ON INNER GRAPH    (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;)&lt;--target-inner-graph--&gt;
 </programlisting>
@@ -545,27 +563,53 @@ OPERATION ON INNER GRAPH    (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&
 
 </section>
 
-<section><title>Message Parameters</title>
-
-<para>The following message parameter is specified for request messages.</para>
-
-<section><title>&lt;$msg></title>
-
-<orderedlist>
-<listitem><para>The <code>&lt;$msg></code> message parameter instructs the responder to send a full response message or deferred response
-message after the request message has been executed, even when a light response message would have been possible (see section XXX).</para></listitem>
-<listitem><para>Valid values are <code>true</code> and <code>false</code>.</para></listitem>
-<listitem><para>If this message parameter is not present on a request message, the default value is <code>false</code>.</para></listitem>
-</orderedlist>
-
-</section>
-
-</section>
-
 <section><title>Operation Parameters</title>
 
 <orderedlist>
 <listitem><para>A request operation MAY include one or more <firstterm>operation parameters</firstterm> that govern how the request operation is executed.</para></listitem>
+<listitem><para>An operation parameter MUST apply only to the request operation that contains it.</para></listitem>
+</orderedlist>
+
+<para>The following operation parameters are defined by this specification.</para>
+
+<section><title>&lt;$deref></title>
+
+<orderedlist>
+<listitem><para>The <code>&lt;$deref></code> MUST only be used with the <code>$get</code> operation.</para></listitem>
+<listitem><para>The parameter controls whether the responder automatically dereferences <code>$ref</code> statements in a result graph.</para></listitem>
+<listitem><para>Valid values are <code>true</code> and <code>false</code>.</para></listitem>
+<listitem><para>If this parameter is not present, the default value is <code>false</code>.</para></listitem>
+</orderedlist>
+
+<para>Example:</para>
+
+<programlisting>=!:uuid:1111[$msg]*!:uuid:1234$get&lt;$deref&gt;/&amp;/true
+</programlisting>
+
+</section>
+
+<section><title>&lt;$proxy></title>
+
+<orderedlist>
+<listitem><para>The <code>&lt;$proxy></code> MUST only be used with the <code>$get</code> operation.</para></listitem>
+<listitem><para>The parameter controls whether the responder acts as a proxy to complete discovery of an XDI context for which the responder is not itself authoritative.</para></listitem>
+<listitem><para>Valid values are <code>true</code> and <code>false</code>.</para></listitem>
+<listitem><para>If this parameter is not present, the default value is <code>false</code>.</para></listitem>
+</orderedlist>
+
+<para>Example:</para>
+
+<programlisting>=!:uuid:1111[$msg]*!:uuid:1234$get&lt;$proxy&gt;/&amp;/true
+</programlisting>
+
+</section>
+
+</section>
+
+<section><title>Variable Assignment</title>
+
+<orderedlist>
+<listitem><para>Certain operations use variables when they are executed.</para></listitem>
 <listitem><para>An operation parameter MUST apply only to the request operation that contains it.</para></listitem>
 </orderedlist>
 
@@ -1006,6 +1050,19 @@ indicating a partial result.</para>
 </orderedlist>
 
 </section>
+
+</section>
+
+<section><title>Nested Messages</title>
+
+<para>Using the <code>$</code></para>
+
+<orderedlist>
+<listitem><para>A message envelope MAY contain more than one message subgraph.</para></listitem>
+<listitem><para>A message MAY contain more than one operation statement.</para></listitem>
+<listitem><para>An XDI endpoint MUST execute all messages in a message envelope.</para></listitem>
+<listitem><para>An XDI endpoint MUST execute all operation statements within a message.</para></listitem>
+</orderedlist>
 
 </section>
 
