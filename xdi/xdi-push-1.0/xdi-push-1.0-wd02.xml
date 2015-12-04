@@ -79,24 +79,18 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 </legalnotice>
 
 <abstract><title>Abstract</title>
-  <para>This document specifies a publish/subscribe mechanism between XDI peers using the $push operation.</para>
+  <para>This working draft is for reviewer comment only and is not yet a standards document or published at OASIS. This specification defines a publish/subscribe mechanism between XDI peers using the <code>$push</code> operation.</para>
 </abstract>
 
-<!--legalnotice role="status"><title>Status</title>
-<para>This is a work in progress contributed to the OASIS TC administration 
-and does not at this time represent the consensus of any particular OASIS Technical Committee.
-There are no plans to make this a formal Committee Specification as it is merely an internal
-document made available to committee members to support the publishing process.</para>
-</legalnotice-->
 <legalnotice role="citation"><title>Citation format</title>
 <para>When referencing this specification the following citation format should be used:</para>
-<!--bibliolist> <bibliomixed>
-  <abbrev>OASIS-XDI-Messaging-V1.0</abbrev>
-  <title>OASIS XDI Messaging V1.0</title>
+<bibliolist> <bibliomixed>
+  <abbrev>OASIS-XDI-Push-V1.0</abbrev>
+  <title>OASIS XDI Push V1.0</title>
   <date>&pubdate;. </date>
   <releaseinfo>OASIS &standard;. </releaseinfo>
   <citetitle><ulink url="&latest-loc;/&name;.html">&latest-loc;/&name;.html</ulink>.</citetitle>
-</bibliomixed> </bibliolist-->
+</bibliomixed> </bibliolist>
 </legalnotice>
 <legalnotice role="notices"><title>Notices</title>
 <para>Copyright &#169; OASIS&#174; Open 2015. All Rights Reserved.  </para>
@@ -114,7 +108,7 @@ document made available to committee members to support the publishing process.<
 
 <section id="s.introduction"><title>Introduction</title>
 
-  <para>This specification defines a publish/subscribe mechanism between XDI peers.</para>
+  <para>This specification defines a publish/subscribe mechanism between XDI peers using the <code>$push</code> operation.</para>
 
   <section><title> Key words</title>
 
@@ -204,12 +198,14 @@ and a permission in <xref linkend="xdi-policy-1.0"/>.</para>
 
 <section><title>Structure of a Push Contract</title>
 
-<para>A push contract is a link contract that fulfills the following conditions:</para>
+<para>A push contract is a link contract that conforms to the link contract pattern (see <xref linkend='xdi-policy-1.0'/>)
+and additionally meets the following conditions:</para>
 
 <orderedlist>
-<listitem><para>The publisher is the <firstterm>authorizing authority</firstterm>.</para></listitem>
-<listitem><para>The subscribers are the <firstterm>requesting authority</firstterm>.</para></listitem>
+<listitem><para>The link contract's <firstterm>authorizing authority</firstterm> is the publisher.</para></listitem>
+<listitem><para>The link contract's <firstterm>requesting authority</firstterm> is the subscriber.</para></listitem>
 <listitem><para>The link contract contains one ore more <code>$push</code> permissions.</para></listitem>
+<listitem><para>The link contract MAY contain permissions other than <code>$push</code>.</para></listitem>
 <listitem><para>The link contract MAY contain one or more <firstterm>push target endpoint URIs</firstterm>.</para></listitem>
 <listitem><para>The link contract MAY contain the <firstterm>content flag</firstterm> which specifies whether a subscriber
 wishes to use light pushes or content pushes.</para></listitem>
@@ -287,8 +283,8 @@ to the original requester. The push contract may then be deleted. [TODO: more pr
 
 <section><title>Structure of a Push Message</title>
 
-<para>Once a push contract is in place, every change to a subgraph covered by the push contract results
-in a push being delivered from the publishing peer to the subscribing peer(s) using XDI messages.</para>
+<para>A push message is a message that conforms to the request message pattern (see <xref linkend='xdi-messaging-1.0'/>)
+and additionally meets the following conditions:</para>
 
 <para>A push message may either only reference the address of the target subgraph
 that has changed (this is called a <firstterm>light push</firstterm>), or it may contain the original 

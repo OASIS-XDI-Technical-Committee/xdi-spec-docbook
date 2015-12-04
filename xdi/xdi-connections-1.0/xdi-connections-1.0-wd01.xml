@@ -75,38 +75,25 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
  </listitem> </itemizedlist-->
 </legalnotice>
 <legalnotice role="related"><title>Related work</title>
-  <para>This document specifies the establishment of connections (link contracts) between XDI peers using the $connect operation.</para>
+  <para>This document is primarily based on a set of proposals that had been collected by the OASIS XDI TC on its associated wiki at <ulink url="https://wiki.oasis-open.org/xdi/">https://wiki.oasis-open.org/xdi/</ulink>.</para>
 </legalnotice>
 
 <abstract><title>Abstract</title>
-    <para>This working draft describes an environment for writing and publishing an OASIS specification using DocBook XML.  It is an internal OASIS support document and not the basis of an OASIS specification in and of itself.</para>
-  </abstract>
-
-<legalnotice role="status"><title>Status</title>
-<para>This is a work in progress contributed to the OASIS TC administration 
-and does not at this time represent
-the consensus of any particular OASIS Technical Committee.  There are no plans to make this a formal Committee Specification as it is merely an internal document made available to committee members to support the publishing process.</para>
-</legalnotice>
+  <para>This working draft is for reviewer comment only and is not yet a standards document or published at OASIS. This specification defines how to establish connections between XDI peers using the <code>$connect</code> operation.</para>
+</abstract>
 
 <legalnotice role="citation"><title>Citation format</title>
 <para>When referencing this specification the following citation format should be used:</para>
-
-<bibliolist>
-
-<bibliomixed>
-  <abbrev>OASIS-DOCBOOK-TEMPLATE-V0.6</abbrev>
-  <title>OASIS DocBook Template V0.6. </title>
+<bibliolist> <bibliomixed>
+  <abbrev>OASIS-XDI-Connections-V1.0</abbrev>
+  <title>OASIS XDI Connections V1.0</title>
   <date>&pubdate;. </date>
   <releaseinfo>OASIS &standard;. </releaseinfo>
   <citetitle><ulink url="&latest-loc;/&name;.html">&latest-loc;/&name;.html</ulink>.</citetitle>
-</bibliomixed>
-
-</bibliolist>
-
+</bibliomixed> </bibliolist>
 </legalnotice>
 <legalnotice role="notices"><title>Notices</title>
-<para>Copyright &#169; OASIS&#174; Open 2015. All Rights Reserved. 
-</para>
+<para>Copyright &#169; OASIS&#174; Open 2015. All Rights Reserved. </para>
 <para>All capitalized terms in the following text have the meanings assigned to them in the OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full Policy may be found at <ulink  url="http://www.oasis-open.org/who/intellectualproperty.php">http://www.oasis-open.org/who/intellectualproperty.php</ulink>.</para>
 <para>This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to OASIS, except as needed for the purpose of developing any document or deliverable produced by an OASIS Technical Committee (in which case the rules applicable to copyrights, as set forth in the OASIS IPR Policy, must be followed) or as required to translate it into languages other than English.</para> 
 <para>The limited permissions granted above are perpetual and will not be revoked by OASIS or its successors or assigns.</para>
@@ -116,11 +103,13 @@ the consensus of any particular OASIS Technical Committee.  There are no plans t
 <para>OASIS takes no position regarding the validity or scope of any intellectual property or other rights that might be claimed to pertain to the implementation or use of the technology described in this document or the extent to which any license under such rights might or might not be available; neither does it represent that it has made any effort to identify any such rights. Information on OASIS' procedures with respect to rights in any document or deliverable produced by an OASIS Technical Committee can be found on the OASIS website. Copies of claims of rights made available for publication and any assurances of licenses to be made available, or the result of an attempt made to obtain a general license or permission for the use of such proprietary rights by implementers or users of this OASIS Committee Specification or OASIS Standard, can be obtained from the OASIS TC Administrator. OASIS makes no representation that any information or list of intellectual property rights will at any time be complete, or that any claims in such list are, in fact, Essential Claims.</para>
 <para>The name "OASIS" is a trademark of <ulink url="http://www.oasis-open.org">OASIS</ulink>, the owner and developer of this specification, and should be used only to refer to the organization and its official outputs. OASIS welcomes reference to, and implementation and use of, specifications, while reserving the right to enforce its marks against misleading uses. Please see <ulink url="http://www.oasis-open.org/who/trademark.php">http://www.oasis-open.org/who/trademark.php</ulink> for above guidance.</para>
 </legalnotice>
+
 </articleinfo>
 
 <section id="s.introduction"><title>Introduction</title>
 
-  <para>This specification defines connections between XDI peers.</para>
+  <para>This specification defines how to establish connections between XDI peers using the <code>$connect</code> operation.</para>
+  <para>This builds on XDI Messaging (see <xref linkend="xdi-core-1.0"/>) and XDI Policy (see <xref linkend="xdi-policy-1.0"/>).</para>
 
   <section><title> Key words</title>
 
@@ -183,7 +172,7 @@ between an <firstterm>authorizing authority</firstterm> and a <firstterm>request
 <listitem><para>A link contract is written into the authorizing authority's graph using the standard
 XDI messaging operations <code>$set</code> or <code>$add</code>. This method does
 </para></listitem>
-<listitem><para>A link contract can be created using a <firstterm>connection message</firstterm>,
+<listitem><para>A link contract can be created using a <firstterm>connect message</firstterm>,
 which initiates a process called <firstterm>link contract instantiation</firstterm>. In this process,
 a <firstterm>link contract template</firstterm> is used to create a link contract.</para></listitem>
 </orderedlist>

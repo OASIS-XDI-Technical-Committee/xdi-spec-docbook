@@ -85,24 +85,18 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 </legalnotice>
 
 <abstract><title>Abstract</title>
-  <para>This document specifies concrete ways for applying XDI messaging to specific network topologies and protocols.</para>
+  <para>This working draft is for reviewer comment only and is not yet a standards document or published at OASIS. This specification defines concrete ways for binding XDI messaging to specific network protocols such as HTTP and WebSocket.</para>
 </abstract>
 
-<!--legalnotice role="status"><title>Status</title>
-<para>This is a work in progress contributed to the OASIS TC administration 
-and does not at this time represent the consensus of any particular OASIS Technical Committee.
-There are no plans to make this a formal Committee Specification as it is merely an internal
-document made available to committee members to support the publishing process.</para>
-</legalnotice-->
 <legalnotice role="citation"><title>Citation format</title>
 <para>When referencing this specification the following citation format should be used:</para>
-<!--bibliolist> <bibliomixed>
-  <abbrev>OASIS-XDI-Messaging-V1.0</abbrev>
-  <title>OASIS XDI Messaging V1.0</title>
+<bibliolist> <bibliomixed>
+  <abbrev>OASIS-XDI-Bindings-V1.0</abbrev>
+  <title>OASIS XDI Bindings V1.0</title>
   <date>&pubdate;. </date>
   <releaseinfo>OASIS &standard;. </releaseinfo>
   <citetitle><ulink url="&latest-loc;/&name;.html">&latest-loc;/&name;.html</ulink>.</citetitle>
-</bibliomixed> </bibliolist-->
+</bibliomixed> </bibliolist>
 </legalnotice>
 <legalnotice role="notices"><title>Notices</title>
 <para>Copyright &#169; OASIS&#174; Open 2015. All Rights Reserved.  </para>
@@ -120,8 +114,8 @@ document made available to committee members to support the publishing process.<
 
 <section id="s.introduction"><title>Introduction</title>
 
-<para>This specification defines concrete ways for binding XDI messaging to specific network topologies
-and protocols.</para>
+<para>This specification defines concrete ways for binding XDI messaging to specific network 
+protocols such as HTTP and WebSocket.</para>
 
 <para>The XDI 1.0 Core specification <xref linkend="xdi-core-1.0"/> defines the XDI
 graphs and the XDI Messaging specification <xref linkend="xdi-messaging-1.0"/> defines the messaging
@@ -227,16 +221,16 @@ this document.</para>
 
 <section><title>XDI Bindings</title>
 
-<para>An XDI binding [OASIS-XDI-Bindings-V1.0] is a concrete way how messages can be transmitted over a network between
-two peers.</para>
+<para>An XDI binding is a concrete way how messages can be sent over a network between peers.</para>
 
-<para>Bindings introduce specific terms such as <firstterm>client</firstterm>, <firstterm>server</firstterm>, and <firstterm>endpoint</firstterm>.</para>
+<para>Bindings introduce specific terms such as <firstterm>client</firstterm>, <firstterm>server</firstterm>,
+and <firstterm>endpoint</firstterm>.</para>
 
-<para>Other terms are defined in the XDI Messaging specification and are common to all bindings, e.g.
+<para>Other terms are defined in <xref linkend='xdi-messaging-1.0'/> and are common to all bindings, e.g.
 <firstterm>requester</firstterm>, <firstterm>responder</firstterm>, <firstterm>message envelope</firstterm>, 
 <firstterm>message</firstterm>, <firstterm>target graph</firstterm>, <firstterm>result graph</firstterm>.</para>
 
-<para>The abstract mechanism for executing messages is also defined in the XDI Messaging specification. Bindings
+<para>The abstract mechanism for executing messages is also defined in <xref linkend='xdi-messaging-1.0'/>. Bindings
 merely specify how messages are transmitted between peers.</para>
 
 <section><title>Serialization</title>
@@ -300,12 +294,12 @@ SHOULD convey second-level error in the HTTP body of the message.</para>
 
 </section>
 
-<section><title>Message Correlation</title>
+<section><title>Response Correlation</title>
 
-<para>In the Direct Binding, request messages and response messages are implicitly
-correlated by the fact that they are exchanged within the same HTTPS connection.</para>
-<para>If stronger correlation and/or additional security is desired, a response
-message rather than simply a result graph SHOULD be forced as described in <xref linkend="xdi-messaging-1.0"/>.</para>
+<para>In the Direct Binding, request messages and responses are implicitly
+correlated due to the fact that they are exchanged within the same HTTPS connection.</para>
+<para>If explicit correlation and/or additional security is desired, a response
+message rather than simply a result graph SHOULD be requested as described in <xref linkend="xdi-messaging-1.0"/>.</para>
 
 </section>
 
@@ -345,7 +339,7 @@ a user initiating an action on the web page, usually by clicking on a button tha
 HTML form. The XDI authority associated with the web page is the requester. The XDI authority
 associated with the user is the responder.</para>
 
-<section><title>HTML form (request)</title>
+<section><title>Request HTML Form</title>
 
 <para>
   The HTML form is not submitted directly to an XDI endpoint. Instead,
@@ -355,15 +349,15 @@ associated with the user is the responder.</para>
   The HTML form containing the request message envelope MUST have the following characteristics:
 </para>
 <itemizedlist>
-  <listitem><para>The value of the "METHOD" attribute of the HTML form MUST be "POST".</para></listitem>
+  <listitem><para>The value of the <code>METHOD</code> attribute of the HTML form MUST be <code>POST</code>.</para></listitem>
   <listitem><para>If the responder is known at the time the HTML form is constructed, the
-  value of the "ACTION" attribute MUST be the URI of the target XDI endpoint's authorization service.
+  value of the <code>ACTION</code> attribute MUST be the URI of the target XDI endpoint's authorization service.
   </para></listitem>
   <listitem><para>If the responder is not known at the time the HTML form is constructed, the
-  value of the "ACTION" attribute MAY be the URI of a connect service, or it may be empty (see
+  value of the <code>ACTION</code> attribute MAY be the URI of a connect service, or it may be empty (see
   next section). 
   </para></listitem>
-  <listitem><para>The form MUST contain a hidden field with the name "xdiMessageEnvelope". The
+  <listitem><para>The form MUST contain a hidden field with the name <code>xdiMessageEnvelope</code>. The
   value of the field is the request message envelope to be transmitted to the responder.</para></listitem>
   <listitem><para>The form MAY contain the HTML microdata <xref linkend="MICRODATA"/> attributes
   <code>itemscope</code> and <code>itemtype="$xdi$msg"</code>, to assist user agents with native
@@ -372,27 +366,27 @@ associated with the user is the responder.</para>
 
 </section>
 
-<section><title>Authorization service</title>
+<section><title>Authorization Service</title>
 
 <para>
-The "authorization service" is a web application that receives and processes the HTML form
+The <firsterm>authorization service</firsterm> is a web application that receives and processes the HTML form
 that contains the request message envelope. It has privileged
-access to the target graph and MAY interact with the user by presenting a web-based user interface, for
+access to the target graph and . It MAY interact with the user by presenting a web-based user interface, for
 authentication and/or authorization purposes. After this user interaction step, the request message
-envelope is transmitted to the target XDI endpoint.
+envelope is sent to the target XDI endpoint.
 </para>
 <para>The authorization service MAY use cookies to reduce the number of steps in subsequent transmissions.
 </para>
 
 </section>
 
-<section><title>Discovering the authorization service</title>
+<section><title>Discovering the Authorization Service</title>
 
 <para>
 The responder and therefore the target XDI endpoint's authorization service may not be known at the 
 time the HTML form is constructed and displayed in the user's web browser. In order to find the
 authorization service, XDI discovery is performed on the user's discovery key, using the service
-type <code>&lt;$https&gt;&lt;$connect&gt;&lt;$xdi&gt;</code>. This may happen in one of three ways:
+type <code>&lt;$connect&gt;&lt;$xdi&gt;</code>. This may happen in one of three ways:
 </para>
 <section>
 <title>Discovery via connect service</title>
@@ -401,20 +395,19 @@ the user by presenting a web-based user interface. The user submits a discovery 
 uses it to discover the URI of the authorization service. The request message envelope is then forwarded
 to the authorization service without modification, using an HTML form equivalent to the one
 on the original requester web page. This HTML form may be auto-submitted using JavaScript.</para>
-<para>The
-connect service MAY use cookies to reduce the number of steps in subsequent transmissions.</para>
+<para>The connect service MAY use cookies to reduce the number of steps in subsequent transmissions.</para>
 </section>
 <section>
-<title>Discovery via user agent</title>
-<para>The user agent (web browser), possibly via a plugin, may natively support the Browser
+<title>Discovery via User Agent</title>
+<para>The user agent (web browser), possibly via a plug-in, may natively support the Browser
 Binding. In this case, the user submits a discovery key to the user agent, which uses it to
 discover the URI of the authorization service. The HTML form is then submitted to the discovered authorization
 service.</para>
-<para>The user's discovery key and/or authorization service MAY be permanantly stored or cached
+<para>The user's discovery key and/or authorization service MAY be permanently stored or cached
 by the user agent.</para>
 </section>
 <section>
-<title>Discovery via widget</title>
+<title>Discovery via Script</title>
 <para>The HTML form may contain client-side scripting code which interacts with the user by
 presenting a widget. The user submits a discovery key to the widget, which uses it to discover
 the URI of the authorization service. Except for the XDI discovery process itself, this interaction
@@ -424,7 +417,7 @@ by the scripting code and submitted to the discovered authorization service.</pa
 
 </section>
 
-<section><title>HTML form (response)</title>
+<section><title>Response HTML Form</title>
 
 <para>After the request message envelope is received by the responder and processed, a
 response is generated and returned to the requester web page via an HTML form.</para>
@@ -456,13 +449,13 @@ response is generated and returned to the requester web page via an HTML form.</
 
 </section>
 
-<section><title>Message Correlation</title>
+<section><title>Response Correlation</title>
 
 <para>
-In the Browser Binding, Request messages and response messages may be implicitly
+In the Browser Binding, request messages and responses may be implicitly
 correlated by means of a cookie-based session that may exist between the user and the web page.</para>
-<para>If stronger correlation and/or additional security is desired, a response
-message rather than simply a result graph SHOULD be forced as described in <xref linkend="xdi-messaging-1.0"/>.</para>
+<para>If explicit correlation and/or additional security is desired, a response
+message rather than simply a result graph SHOULD be requested as described in <xref linkend="xdi-messaging-1.0"/>.</para>
 
 </section>
 
@@ -473,12 +466,12 @@ message rather than simply a result graph SHOULD be forced as described in <xref
   specify a responder that is not known at the time the HTML form is constructed. It also illustrates the use of the <code>&lt;#return&gt;&lt;$uri&gt;</code>
   message parameter.
   <programlisting>
-    [+]!:uuid:8888[$msg]@0/$is()/({$to})
-    [+]!:uuid:8888[$msg]@0/$do/({$to}/[+]!:uuid:8888)$do
-    [+]!:uuid:8888[$msg]@0$do/$get/{$to}&lt;#email&gt;
-    [+]!:uuid:8888[$msg]@0&lt;$sig&gt;/&amp;/"&lt;&lt; signature &gt;&gt;"
-    [+]!:uuid:8888[$msg]@0&lt;$sig&gt;/$is#/$sha$256$rsa$2048
-    [+]!:uuid:8888[$msg]@0&lt;#return&gt;&lt;$uri&gt;/&amp;/"https://acmenews.projectdanube.org/acmenews-return"
+    +!:uuid:8888[$msg]@~0/$is()/({$to})
+    +!:uuid:8888[$msg]@~0/$do/({$to}/+!:uuid:8888)$do
+    +!:uuid:8888[$msg]@~0$do/$get/{$to}&lt;#email&gt;
+    +!:uuid:8888[$msg]@~0&lt;$sig&gt;/&amp;/"&lt;&lt; signature &gt;&gt;"
+    +!:uuid:8888[$msg]@~0&lt;$sig&gt;/$is#/$sha$256$rsa$2048
+    +!:uuid:8888[$msg]@~0&lt;#return&gt;&lt;$uri&gt;/&amp;/"https://demo.acmepizza.com/return"
   </programlisting>
 </para>
 <para>The following is an example of an HTML form that contains a request message envelope.
@@ -515,12 +508,13 @@ request message(s) as a WebSocket message using WebSocket text frames.</para>
 <para>The responder executes the request message(s) against its peer graph. The responder sends
 a message envelope containing one or more response message(s) as a WebSocket message using WebSocket text frames.</para>
 
-<section><title>Message Correlation</title>
+<section><title>Response Correlation</title>
 
-<para>In the WebSocket Binding, request messages and response messages are implicitly
-correlated by the fact that they are exchanged within the same WebSocket connection.</para>
-<para>If stronger correlation and/or additional security is desired, a response
-message rather than simply a result graph SHOULD be forced as described in <xref linkend="xdi-messaging-1.0"/>.</para>
+<para>In the WebSocket Binding, request messages and responses are usually not implicitly
+correlated, due to the fact that an arbitrary number of messaging round-trips can take place over a single
+WebSocket connection.</para>
+<para>In order to achieve explicit correlation, a response message rather than simply a result graph
+SHOULD be requested as described in <xref linkend="xdi-messaging-1.0"/>.</para>
 
 </section>
 
@@ -537,6 +531,15 @@ The following is an example of a response message transmitted via the WebSocket 
 </para>
 
 </section>
+
+</section>
+
+<section><title>XDI Routing</title>
+
+<para>Given an XDI peer address such as <code>(=!:uuid:1111)</code>, XDI routing refers to the process of choosing
+a binding that can be used to initiate messaging round-trips to the peer. XDI routing also includes obtaining the
+information necessary to execute a specific binding. This typically means discovering endpoint URIs of the given
+XDI peer address for a specific binding.</para>
 
 </section>
 

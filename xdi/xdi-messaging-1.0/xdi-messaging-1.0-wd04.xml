@@ -85,24 +85,18 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 </legalnotice>
 
 <abstract><title>Abstract</title>
-  <para>This document specifies the abstract pattern for transmitting XDI messages between peers.</para>
+  <para>This working draft is for reviewer comment only and is not yet a standards document or published at OASIS. This specification defines the abstract pattern for transmitting XDI messages between peers.</para>
 </abstract>
 
-<!--legalnotice role="status"><title>Status</title>
-<para>This is a work in progress contributed to the OASIS TC administration 
-and does not at this time represent the consensus of any particular OASIS Technical Committee.
-There are no plans to make this a formal Committee Specification as it is merely an internal
-document made available to committee members to support the publishing process.</para>
-</legalnotice-->
 <legalnotice role="citation"><title>Citation format</title>
 <para>When referencing this specification the following citation format should be used:</para>
-<!--bibliolist> <bibliomixed>
+<bibliolist> <bibliomixed>
   <abbrev>OASIS-XDI-Messaging-V1.0</abbrev>
   <title>OASIS XDI Messaging V1.0</title>
   <date>&pubdate;. </date>
   <releaseinfo>OASIS &standard;. </releaseinfo>
   <citetitle><ulink url="&latest-loc;/&name;.html">&latest-loc;/&name;.html</ulink>.</citetitle>
-</bibliomixed> </bibliolist-->
+</bibliomixed> </bibliolist>
 </legalnotice>
 <legalnotice role="notices"><title>Notices</title>
 <para>Copyright &#169; OASIS&#174; Open 2015. All Rights Reserved.  </para>
@@ -120,7 +114,7 @@ document made available to committee members to support the publishing process.<
 
 <section id="s.introduction"><title>Introduction</title>
 
-  <para>This document specifies the abstract pattern for transmitting XDI messages between peers.</para>
+  <para>This specification defines the abstract pattern for transmitting XDI messages between peers.</para>
   <para>This builds on the basic XDI graph model (see <xref linkend="xdi-core-1.0"/>).</para>
 
   <section><title> Key words</title>
@@ -276,8 +270,8 @@ of specific bindings, a distinction can be made between <firstterm>XDI endpoints
 and <firstterm>XDI agents</firstterm>.</para>
 
 <para>An XDI endpoint is a peer that &#8211; within the context of a specific binding &#8211; has an endpoint URI
-on a network. The three bindings above all require such endpoint URIs, which can be discovered using 
-the XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol. An XDI endpoint can always act as both
+on a network. The three bindings above all require such endpoint URIs, which are discoverable given the XDI peer address
+(see <xref linkend='xdi-discovery-1.0'/>). An XDI endpoint can always act as both
 requesting peer and responding peer.</para>
 
 <para>An XDI agent is a peer that &#8211; within the context of a specific binding &#8211; does not have an endpoint
@@ -453,17 +447,21 @@ as a response, after the request message has been executed.</para></listitem>
 
 <section><title>Correlation statement</title>
 
-<para>A message MAY have exactly one <firstterm>correlation statement</firstterm>, also known as <firstterm>thread statement</firstterm>. The
-purpose of this statement is to express that the sending of this message has in some way been caused as a consequence
-of a previous message.</para>
+<para>A message MAY have one or more <firstterm>correlation statements</firstterm>, also known as <firstterm>thread statements</firstterm>.
+The purpose of such statements is to express that this message is in some way related to a previous message.</para>
 
-<para>For a response message, the correlation statement is REQUIRED and relates the response message to the request message.</para>
+<para>For a response message, at least one correlation statement is REQUIRED in order to express that
+the response message is related to the request message.</para>
 
-<para>For a request message, the correlation statement is OPTIONAL and MAY relate the request message to an earlier request
-or response message.</para>
+<para>For a request message, a correlation statement MAY express that the request message is related
+to previous request or response message.</para>
 
-<para>The correlation statement is identified by a <code>$msg</code> relational arc. This identifier MAY be
+<para>A correlation statement is identified by a <code>$msg</code> relational arc between messages. This identifier MAY be
 specialized to express additional semantics about how two messages are related.</para>
+
+<para>Example correlation statement:</para>
+
+<programlisting>=!:uuid:1111[$msg]*!:uuid:x-2/$msg/=!:uuid:x-3[$msg]*!:uuid:x-4</programlisting>
 
 </section>
 
@@ -476,13 +474,13 @@ specialized to express additional semantics about how two messages are related.<
 with the following <firstterm>request message pattern</firstterm> (shown in statement format):
 </para>
 
-<programlisting>LINK CONTRACT ADDRESS       &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$do/&lt;--link-contract-address--&gt;
-MESSAGE POLICY              &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do$if&lt;--boolean-context--&gt;/&lt;--operator--&gt;/&lt;--condition--&gt;
-OPERATION PARAMETERS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
-VARIABLE ASSIGNMENT         &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--variable--&gt;/$is/&lt;--variable-value--&gt;
-VARIABLE ASSIGNMENT         &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--variable--&gt;/{&amp;}/"&lt;--variable-value--&gt;"
-OPERATION ON ADDRESS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;/&lt;--target-address--&gt;
-OPERATION ON INNER GRAPH    (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;)&lt;--target-inner-graph--&gt;
+<programlisting>LINK CONTRACT ADDRESS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$do/&lt;--link-contract-address--&gt;
+MESSAGE POLICY               &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do$if&lt;--boolean-context--&gt;/&lt;--operator--&gt;/&lt;--condition--&gt;
+OPERATION PARAMETERS         &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
+VARIABLE ADDRESS ASSIGNMENT  &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--variable--&gt;/$is/&lt;--variable-value--&gt;
+VARIABLE LITERAL ASSIGNMENT  &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--variable--&gt;/&amp;/"&lt;--variable-value--&gt;"
+OPERATION ON ADDRESS         &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;/&lt;--target-address--&gt;
+OPERATION ON INNER GRAPH     (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;)&lt;--target-inner-graph--&gt;
 </programlisting>
 
 <para>Where:</para>
@@ -578,6 +576,86 @@ they are used, and whether it is required or optional to assign values to the va
 <programlisting>=!:uuid:1111[$msg]*!:uuid:1234$connect{$get}/$is/=!:uuid:2222&lt;#email>
 =!:uuid:1111[$msg]*!:uuid:1234$connect{&lt;$digest>}/&amp;/"45237548235472"
 </programlisting>
+
+</section>
+
+</section>
+
+<section><title>Response</title>
+
+<para>Every request message MUST have a corresponding response which is transmitted back from the responder
+to the requester, in a way defined by the binding that is being used. There are two types of responses:</para>
+<orderedlist>
+<listitem><para>Result graph</para></listitem>
+<listitem><para>Response message</para></listitem>
+</orderedlist>
+<para>If the &lt;$msg&gt; message parameter (see <xref linkend="msg-message-parameter"/>) is absent or set to false, then the response MUST be
+a result graph.</para>
+<para>If the &lt;$msg&gt; message parameter is set to true, then the response MUST be
+a response message.</para>
+
+<section><title>Result graph</title>
+
+<para>A <firstterm>result graph</firstterm> consists only of the result statements of the request operations.
+The result graph is not itself a message and therefore does not conform to the common message pattern (see <xref linkend="messages"/>).</para>
+
+</section>
+
+<section><title>Response message</title>
+
+<para>A <firstterm>response message</firstterm> MUST conform to the common message pattern
+(see <xref linkend="messages"/>). In addition, response messages extend the common message pattern
+with the following <firstterm>response message pattern</firstterm> (shown in statement format):
+</para>
+
+<programlisting>
+RESULT GRAPHS       (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator&gt;)&lt;--result-graph--&gt;
+PUSH CONTRACTS      (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator$push&gt;)&lt;--push-contracts--&gt;</programlisting>
+
+<section><title>Result graphs</title>
+
+<para>
+The result graph of the
+request operations is included in the response message using inner root nodes as follows:</para>
+<orderedlist>
+<listitem><para>For every request operation in the request message, a separate inner root node
+is included in the response message to represent the result graph of that particular request operation.</para></listitem>
+<listitem><para>The subject of the XDI address of the inner root node is the XDI address of
+the request message to which the response message corresponds.</para></listitem>
+<listitem><para>The predicate of the XDI address of the inner root node is the identifier of the request operation to
+which the result graph corresponds.</para></listitem>
+<listitem><para>The inner graph under the inner root node is the result graph of the request operation.</para></listitem>
+</orderedlist>
+
+</section>
+
+<section><title>Push contracts</title>
+
+<para>A response message may include one or more push contracts, which indicate that the
+result of an operation is not immediately available. </para>
+
+<para>This can occur for various reasons:</para>
+
+<orderedlist>
+<listitem><para>The operation is executed asynchronously. The result of the operation will be
+pushed once execution is complete.</para></listitem>
+<listitem><para>The operation cannot be executed at the moment. It will be executed as soon as possible,
+and the result of the operation will be pushed once execution is complete.</para></listitem>
+<listitem><para>The result of a link contract evaluation process has determined that the operation
+will be "held back" / "stashed" / "deferred" (TODO: decide on terminology here) (TODO: link to
+correct section of <xref linkend="xdi-policy-1.0"/>).</para></listitem>
+</orderedlist>
+
+<para>Each request operation MUST have AT MOST one corresponding
+push contract in the response message.</para>
+
+<para>A request operation MAY have both a result graph and a push contract in the response message,
+indicating that a partial result is available immediately, and that additional results will be available
+in the future.</para>
+
+</section>
+
+</section>
 
 </section>
 
@@ -864,6 +942,42 @@ is used as the template for the nested message to be sent.</para>
 <para>The given inner graph MUST contain a message template, which
 is used as the template for the nested message to be sent.</para>
 
+<section id="nested-messages"><title>Nested Messages</title>
+
+<para>Using the <code>$send</code> operation, a requester can instruct a responder to send a nested message.
+In doing so, the responder becomes a requester in a separate, nested XDI messaging round-trip.</para>
+
+<section><title>Structure of a Nested Message</title>
+
+<para>TODO describe nested message</para>
+<para>TODO introduce terms such as "original"/"outer" responder and "nested" responder</para>
+<para>TODO describe multiple levels of nesting</para>
+
+</section>
+
+<section><title>Delivery of a Nested Message</title>
+
+<para>This section defines how a nested message is delivered to the nested responder.
+The process of delivering the nested message is also called <firstterm>forwarding</firstterm>.</para>
+
+<para>TODO: Describe here how a original responder delivers nested messages to the nested responder.</para>
+
+<para>TODO: Describe the role of XDI discovery, bindings, and routing.</para>
+
+</section>
+
+<section><title>Execution of a Nested Message</title>
+
+<section><title>Authentication and Authorization</title>
+
+<para>TODO: describe how link contracts authorize nested messages</para>
+
+</section>
+
+</section>
+
+</section>
+
 </section>
 
 </section>
@@ -905,86 +1019,6 @@ the pattern used in this specification to document the basic operations.</para>
 
 </section>
 
-</section>
-
-<section><title>Response</title>
-
-<para>Every request message MUST have a corresponding response which is transmitted back from the responder
-to the requester, in a way defined by the binding that is being used. There are two types of responses:</para>
-<orderedlist>
-<listitem><para>Result graph</para></listitem>
-<listitem><para>Response message</para></listitem>
-</orderedlist>
-<para>If the &lt;$msg&gt; message parameter (see <xref linkend="msg-message-parameter"/>) is absent or set to false, then the response MUST be
-a result graph.</para>
-<para>If the &lt;$msg&gt; message parameter is set to true, then the response MUST be
-a response message.</para>
-
-<section><title>Result graph</title>
-
-<para>A <firstterm>result graph</firstterm> consists only of the result statements of the request operations.
-The result graph is not itself a message and therefore does not conform to the common message pattern (see <xref linkend="messages"/>).</para>
-
-</section>
-
-<section><title>Response message</title>
-
-<para>A <firstterm>response message</firstterm> MUST conform to the common message pattern
-(see <xref linkend="messages"/>). In addition, response messages extend the common message pattern
-with the following <firstterm>response message pattern</firstterm> (shown in statement format):
-</para>
-
-<programlisting>
-RESULT GRAPHS       (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator&gt;)&lt;--result-graph--&gt;
-PUSH CONTRACTS      (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator$push&gt;)&lt;--push-contracts--&gt;</programlisting>
-
-<section><title>Result graphs</title>
-
-<para>
-The result graph of the
-request operations is included in the response message using inner root nodes as follows:</para>
-<orderedlist>
-<listitem><para>For every request operation in the request message, a separate inner root node
-is included in the response message to represent the result graph of that particular request operation.</para></listitem>
-<listitem><para>The subject of the XDI address of the inner root node is the XDI address of
-the request message to which the response message corresponds.</para></listitem>
-<listitem><para>The predicate of the XDI address of the inner root node is the identifier of the request operation to
-which the result graph corresponds.</para></listitem>
-<listitem><para>The inner graph under the inner root node is the result graph of the request operation.</para></listitem>
-</orderedlist>
-
-</section>
-
-<section><title>Push contracts</title>
-
-<para>A response message may include one or more push contracts, which indicate that the
-result of an operation is not immediately available. </para>
-
-<para>This can occur for various reasons:</para>
-
-<orderedlist>
-<listitem><para>The operation is executed asynchronously. The result of the operation will be
-pushed once execution is complete.</para></listitem>
-<listitem><para>The operation cannot be executed at the moment. It will be executed as soon as possible,
-and the result of the operation will be pushed once execution is complete.</para></listitem>
-<listitem><para>The result of a link contract evaluation process has determined that the operation
-will be "held back" / "stashed" / "deferred" (TODO: decide on terminology here) (TODO: link to
-correct section of <xref linkend="xdi-policy-1.0"/>).</para></listitem>
-</orderedlist>
-
-<para>Each request operation MUST have AT MOST one corresponding
-push contract in the response message.</para>
-
-<para>A request operation MAY have both a result graph and a push contract in the response message,
-indicating that a partial result is available immediately, and that additional results will be available
-in the future.</para>
-
-</section>
-
-</section>
-
-</section>
-
 <section><title>Message Execution</title>
 
 <orderedlist>
@@ -1011,43 +1045,222 @@ in the future.</para>
 
 </section>
 
-<section id="nested-messages"><title>Nested Messages</title>
+<section><title>Standard Link Contract Templates</title>
 
-<para>Using the <code>$send</code> operation, a requester can instruct a responder to send a nested message.
-In doing so, the responder becomes a requester in a separate, nested XDI messaging round-trip.</para>
+<para>EDITORIAL NOTE: This section should be moved to <xref linkend="xdi-policy-1.0"/>.</para>
 
-<section><title>Structure of a Nested Message</title>
+<para>The following link contract templates are defined by this specification and MUST be recognized by XDI processors
+to be part of the common graph:</para>
 
-<para>TODO describe nested message</para>
-<para>TODO introduce terms such as "original"/"outer" responder and "nested" responder</para>
-<para>TODO describe multiple levels of nesting</para>
+<section id="s.standard.root.link.contract.template"><title>Standard Root Link Contract Template</title>
 
-</section>
+<para>The purpose of the <firstterm>standard root link contract template</firstterm> is to
+instantiate link contracts with a <emphasis>$all</emphasis> permission ("root access") on an entire graph:</para>
 
-<section><title>Delivery of a Nested Message</title>
-
-<para>This section defines how a nested message is delivered to the nested responder.
-The process of delivering the nested message is also called <firstterm>forwarding</firstterm>.</para>
-
-<para>TODO: Describe here how a original responder delivers nested messages to the nested responder.</para>
-
-<para>TODO: Describe the role of XDI discovery, bindings, and routing.</para>
+<programlisting>$all{$do}/$all/
+($all{$do}$if$and/$true){{$from}}/$is/{$from}
+($all{$do}$if$and$or/$true){{$msg}}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
+($all{$do}$if$and$or/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+</programlisting>
 
 </section>
 
-<section><title>Execution of a Nested Message</title>
+<section id="s.standard.get.link.contract.template"><title>Standard Get Link Contract Template</title>
 
-<section><title>Authentication and Authorization</title>
+<para>The purpose of the <firstterm>standard <emphasis>$get</emphasis> link contract template</firstterm> is to
+instantiate link contracts with a <emphasis>$get</emphasis> permission on a certain subgraph identified by the {$get} variable:</para>
 
-<para>TODO: describe how link contracts authorize nested messages</para>
+<programlisting>$get{$do}/$get/{$get}
+($get{$do}$if$and/$true){{$from}}/$is/{$from}
+($get{$do}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+</programlisting>
+
+</section>
+
+<section id="s.standard.push.link.contract.template"><title>Standard Push Link Contract Template</title>
+
+<para>The purpose of the <firstterm>standard push link contract template</firstterm> is to
+instantiate push link contracts with a <emphasis>$push</emphasis> permission on a certain subgraph identified by the {$push} variable:</para>
+
+<programlisting>$push{$do}/$push/{$push}
+$push{$do}/$is()/{($from)}
+($push{$do}$if$and/$true){{$from}}/$is/{$to}
+($push{$do}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+</programlisting>
+
+</section>
+
+<section id="s.standard.deferred.push.link.contract.template"><title>Standard Deferred Push Link Contract Template</title>
+
+<para>The purpose of the <firstterm>standard deferred push link contract template</firstterm> is to
+instantiate deferred push link contracts with a <emphasis>$push</emphasis> permission on a certain subgraph identified by the {$push} variable:</para>
+
+<para>This link contract template is automatically instantiated every time the result of a link contract evaluation
+process is that a request operation is <glossterm>deferred</glossterm>.</para>
+
+<programlisting>$defer$push{$do}/$push/{$push}
+$defer$push{$do}/$is()/{($from)}
+($defer$push{$do}$if$and/$true){{$from}}/$is/{$to}
+($defer$push{$do}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+($defer$push{$do}$if$and/$true){{$msg}}/$msg/{$msg}
+</programlisting> 
+
+</section>
+
+<section id="s.standard.push.link.contract.template"><title>Standard Push Link Contract Template</title>
+
+<para>The purpose of the <firstterm>standard push link contract template</firstterm> is to
+instantiate push link contracts with a <emphasis>$push</emphasis> permission on a certain subgraph identified by the {$push} variable:</para>
+
+<programlisting>$push{$do}/$push/{$push}
+$push{$do}/$is()/{($from)}
+($push{$do}$if$and/$true){{$from}}/$is/{$to}
+($push{$do}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+</programlisting>
+
+</section>
+
+<section id="s.standard.digest.link.contract.template"><title>Standard Digest Link Contract Template</title>
+
+<para>The purpose of the <firstterm>standard digest link contract template</firstterm> is to
+instantiate digest link contracts that only authorize a single specific message. This is achieved
+through a policy that requires a certain digest value calculated from the serialized message.</para>
+
+<programlisting>$msg$digest{$do}/$all/
+($msg$digest{$do}$if/$true){{$msg}}&lt;$digest>/{&amp;}/{&lt;$digest>}</programlisting>
 
 </section>
 
 </section>
 
-<section><title>Common Usage Patterns</title>
+<section><title>Common Link Contract Patterns</title>
+
+<para>EDITORIAL NOTE: This section should be moved to <xref linkend="xdi-policy-1.0"/>.</para>
+
+<para>This section describes a number of non-normative link contract patterns that build on the various permissions defined by
+this specification. These patterns are designed for various common data sharing and communication use cases.</para>
+
+<section id="s.root.link.contract"><title>Root Link Contract</title>
+
+<para>A <firstterm>root link contract</firstterm> contains a <emphasis>$all</emphasis> permission ("root access") on 
+an entire graph.</para>
+
+<para>A root link contract is typically set up for the following reasons:</para>
+
+<orderedlist>
+<listitem><para>By a peer for itself, in order to enable an XDI actor root access to its own graph for
+which it is authoritative.</para></listitem>
+<listitem><para>Between peers if they have a highly trusted relationship similar
+to the legal concepts of custodianship or guardianship (e.g. parent-child).</para></listitem>
+<listitem><para>Between XDI agents and XDI endpoints, if they are controlled by the same XDI actor.</para></listitem>
+</orderedlist>
+
+<para>A root link contract is an instance of the standard root link contract template
+(see <xref linkend="s.standard.root.link.contract.template"/>).</para>
+
+<para>Example root link contract:</para>
+
+<programlisting>/$is$ref/(=!:uuid:1111)
+(=!:uuid:1111)/$ref/
+
+(=!:uuid:1111/=!:uuid:1111)$do/$all/
+(=!:uuid:1111/=!:uuid:1111)($do$if$and/$true){$from}/$is/=!:uuid:1111
+(=!:uuid:1111/=!:uuid:1111)($do$if$and$or/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
+(=!:uuid:1111/=!:uuid:1111)($do$if$and$or/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+</programlisting>
+
+</section>
+
+<section id="s.public.link.contract"><title>Public Link Contract</title>
+
+<para>A <firstterm>public link contract</firstterm> contains a <emphasis>$get</emphasis> permission on 
+certain limited subgraphs that are intended to be public.</para>
+
+<para>A public link contract does not contain a policy, i.e. it always evaluates to <emphasis>true</emphasis>.</para>
+
+<para>Example public link contract:</para>
+
+<programlisting>/$is$ref/(=!:uuid:1111)
+(=!:uuid:1111)/$ref/
+
+(=!:uuid:1111/$public)($do/$get)=!:uuid:1111/$is$ref/{}
+(=!:uuid:1111/$public)($do/$get)/$is$ref/{}
+(=!:uuid:1111/$public)$do/$get/=!:uuid:1111$public
+(=!:uuid:1111/$public)$do/$get/=!:uuid:1111$msg$sig$keypair&lt;$public>&lt;$key>
+(=!:uuid:1111/$public)$do/$get/=!:uuid:1111$msg$encrypt$keypair&lt;$public>&lt;$key>
+(=!:uuid:1111/$public)($do/$get)=!:uuid:1111$msg$sig$keypair/$is#/{}
+(=!:uuid:1111/$public)($do/$get)=!:uuid:1111$msg$encrypt$keypair/$is#/{}
+</programlisting>
+
+</section>
+
+<section id="s.connect.link.contract"><title>Connect Link Contract</title>
+
+<para>A <firstterm>connect link contract</firstterm> contains a <emphasis>$connect</emphasis> permission on
+an entire graph.</para>
+
+<para>A connect link contract contains policies that will defer all requests.</para>
+
+<para>Example connect link contract:</para>
+
+<programlisting>(=!:uuid:1111/$connect)($do$defer$push$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:1111/$connect)$do$if//$not
+(=!:uuid:1111/$connect)$do/$connect/
+</programlisting>
+
+</section>
+
+<section id="s.send.link.contract"><title>Send Link Contract</title>
+
+<para>TODO: The Send Link Contract covers <emphasis>$send</emphasis> requests</para>
+
+<programlisting>(=!:uuid:1111/$send)($do$defer$push$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:1111/$send)$do$if//$not
+(=!:uuid:1111/$send)$do/$connect/
+</programlisting>
+
+</section>
+
+</section>
+
+<section><title>Common Messaging Patterns</title>
+
+<para>This section describes a number of non-normative messaging patterns that build on the various operations defined by
+this specification. These patterns are designed for various common data sharing and communication use cases.</para>
 
 <section><title>Invitations</title>
+
+<para>An <firstterm>invitation</firstterm> is a <emphasis>$send</emphasis> request operation with a nested message whose responder
+is equal to the requester of the <emphasis>$send</emphasis> operation. In other words, it is a way for a requester to "invite"
+a responder to send a request back to the original requester.</para>
+
+<para>The requester of the <emphasis>$send</emphasis> operation is called <firstterm>inviting peer</firstterm>
+(or short <firstterm>inviter</firstterm>). The responder of the <emphasis>$send</emphasis> operation is called
+<firstterm>invited peer</firstterm> (or short <firstterm>invitee</firstterm>).</para>
+
+<para>In many cases, the nested message contains a <emphasis>$connect</emphasis> request operation. This enables a requester to "invite"
+a responder to send a request for a new link contract to the original requester.</para>
+
+<para>The invitation typically references the invitee's <glossterm>send link contract</glossterm> (see <xref linkend="s.send.link.contract"/>).</para>
+
+<para>The inviter typically sets up an instance of the <glossterm>standard digest link contract template</glossterm>
+ (see <xref linkend="s.standard.digest.link.contract.template"/>) to ensure that the nested message &#8211; if accepted by
+ the invitee &#8211; is authorized when received by the inviter.</para>
+
+<para>Example invitation from inviter =!:uuid:1111 to invitee =!:uuid:2222:</para>
+
+<programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:1234
+=!:uuid:1111[$msg]*!:uuid:1234/$is()/(=!:uuid:2222)
+=!:uuid:1111[$msg]*!:uuid:1234/$do/(=!:uuid:2222/$send)$do
+=!:uuid:1111[$msg]*!:uuid:1234/$is()/(=!:uuid:2222)
+</programlisting>
+
+<programlisting>
+</programlisting>
+
+</section>
+
+<section><title>Approving a Deferred Message</title>
 
 <para>TODO: Describe how in a nested message the responder is the same peer as the requester of the "outer" message.</para>
 
@@ -1058,14 +1271,6 @@ The process of delivering the nested message is also called <firstterm>forwardin
 <para>TODO: Describe how one peer can be a delegate of another peer.</para>
 <para>TODO: Common example is an XDI agent acting as a delegate of an XDI endpoint.</para>
 <para>TODO: Maybe mention app clouds and app instances and app sessions.</para>
-
-</section>
-
-<section><title>Approving a "held back" / "stashed" / "deferred" Message</title>
-
-<para>TODO: Describe how in a nested message the responder is the same peer as the requester of the "outer" message.</para>
-
-</section>
 
 </section>
 
