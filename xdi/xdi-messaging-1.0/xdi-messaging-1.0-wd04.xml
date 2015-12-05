@@ -67,9 +67,6 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   <editor> <firstname>Drummond</firstname><surname>Reed</surname>
     <affiliation><orgname>XDI.org</orgname></affiliation>
     <email>drummond.reed@xdi.org</email> </editor>
-  <editor> <firstname>Joseph</firstname><surname>Boyle</surname>
-    <affiliation><orgname>Planetwork</orgname></affiliation>
-    <email>joseph@planetwork.net</email> </editor>
 </authorgroup>
 <pubdate>&pubdate;</pubdate>
 <copyright><year>2015</year>
@@ -680,7 +677,7 @@ an inner graph, the following operations and behaviors are possible:</para>
 <row><entry><code>$del</code></entry><entry>deletes context node and subgraph</entry><entry>deletes individual contextual/relational/literal statement(s) plus subgraph(s)</entry></row>
 <row><entry><code>$connect</code></entry><entry>requests instantiation of a link contract</entry><entry>requests instantiation of a link contract</entry></row>
 <row><entry><code>$send</code></entry><entry>requests sending of a nested message</entry><entry>requests sending of a nested message</entry></row>
-<row><entry><code>$push</code></entry><entry>delivers a notification based on push link contract</entry><entry>delivers a notification based on push link contract</entry></row>
+<row><entry><code>$push</code></entry><entry>delivers a notification based on a push link contract</entry><entry>delivers a notification based on a push link contract</entry></row>
 <row><entry><code>$do</code></entry><entry>(unspecified)</entry><entry>(unspecified)</entry></row>
 </tbody></tgroup></table>
 
@@ -1055,7 +1052,7 @@ to be part of the common graph:</para>
 <section id="s.standard.root.link.contract.template"><title>Standard Root Link Contract Template</title>
 
 <para>The purpose of the <firstterm>standard root link contract template</firstterm> is to
-instantiate link contracts with a <emphasis>$all</emphasis> permission ("root access") on an entire graph:</para>
+instantiate link contracts with a <emphasis>$all</emphasis> permission on an entire graph ("root access"):</para>
 
 <programlisting>$all{$do}/$all/
 ($all{$do}$if$and/$true){{$from}}/$is/{$from}
@@ -1067,8 +1064,9 @@ instantiate link contracts with a <emphasis>$all</emphasis> permission ("root ac
 
 <section id="s.standard.get.link.contract.template"><title>Standard Get Link Contract Template</title>
 
-<para>The purpose of the <firstterm>standard <emphasis>$get</emphasis> link contract template</firstterm> is to
-instantiate link contracts with a <emphasis>$get</emphasis> permission on a certain subgraph identified by the {$get} variable:</para>
+<para>The purpose of the <firstterm>standard <emphasis>get</emphasis> link contract template</firstterm> is to
+instantiate link contracts with a <emphasis>$get</emphasis> permission on a certain subgraph identified by the
+<emphasis>{$get}</emphasis> variable:</para>
 
 <programlisting>$get{$do}/$get/{$get}
 ($get{$do}$if$and/$true){{$from}}/$is/{$from}
@@ -1080,7 +1078,8 @@ instantiate link contracts with a <emphasis>$get</emphasis> permission on a cert
 <section id="s.standard.push.link.contract.template"><title>Standard Push Link Contract Template</title>
 
 <para>The purpose of the <firstterm>standard push link contract template</firstterm> is to
-instantiate push link contracts with a <emphasis>$push</emphasis> permission on a certain subgraph identified by the {$push} variable:</para>
+instantiate push link contracts with a <emphasis>$push</emphasis> permission on a certain subgraph identified by
+the <emphasis>{$push}</emphasis> variable:</para>
 
 <programlisting>$push{$do}/$push/{$push}
 $push{$do}/$is()/{($from)}
@@ -1093,7 +1092,8 @@ $push{$do}/$is()/{($from)}
 <section id="s.standard.deferred.push.link.contract.template"><title>Standard Deferred Push Link Contract Template</title>
 
 <para>The purpose of the <firstterm>standard deferred push link contract template</firstterm> is to
-instantiate deferred push link contracts with a <emphasis>$push</emphasis> permission on a certain subgraph identified by the {$push} variable:</para>
+instantiate deferred push link contracts with a <emphasis>$push</emphasis> permission on a certain subgraph identified by
+the <emphasis>{$push}</emphasis> variable:</para>
 
 <para>This link contract template is automatically instantiated every time the result of a link contract evaluation
 process is that a request operation is <glossterm>deferred</glossterm>.</para>
@@ -1110,7 +1110,8 @@ $defer$push{$do}/$is()/{($from)}
 <section id="s.standard.push.link.contract.template"><title>Standard Push Link Contract Template</title>
 
 <para>The purpose of the <firstterm>standard push link contract template</firstterm> is to
-instantiate push link contracts with a <emphasis>$push</emphasis> permission on a certain subgraph identified by the {$push} variable:</para>
+instantiate push link contracts with a <emphasis>$push</emphasis> permission on a certain subgraph identified by
+the <emphasis>{$push}</emphasis> variable:</para>
 
 <programlisting>$push{$do}/$push/{$push}
 $push{$do}/$is()/{($from)}
@@ -1142,8 +1143,8 @@ this specification. These patterns are designed for various common data sharing 
 
 <section id="s.root.link.contract"><title>Root Link Contract</title>
 
-<para>A <firstterm>root link contract</firstterm> contains a <emphasis>$all</emphasis> permission ("root access") on 
-an entire graph.</para>
+<para>A <firstterm>root link contract</firstterm> contains a <emphasis>$all</emphasis> permission on 
+an entire graph ("root access").</para>
 
 <para>A root link contract is typically set up for the following reasons:</para>
 
@@ -1234,8 +1235,9 @@ this specification. These patterns are designed for various common data sharing 
 is equal to the requester of the <emphasis>$send</emphasis> operation. In other words, it is a way for a requester to "invite"
 a responder to send a request back to the original requester.</para>
 
-<para>The requester of the <emphasis>$send</emphasis> operation is called <firstterm>inviting peer</firstterm>
-(or short <firstterm>inviter</firstterm>). The responder of the <emphasis>$send</emphasis> operation is called
+<para>The requester of the <emphasis>$send</emphasis> operation (and thus the responder of the nested message) is called
+<firstterm>inviting peer</firstterm> (or short <firstterm>inviter</firstterm>). The responder of the
+<emphasis>$send</emphasis> operation (and thus the requester of the nested message) is called
 <firstterm>invited peer</firstterm> (or short <firstterm>invitee</firstterm>).</para>
 
 <para>In many cases, the nested message contains a <emphasis>$connect</emphasis> request operation. This enables a requester to "invite"
@@ -1247,12 +1249,21 @@ a responder to send a request for a new link contract to the original requester.
  (see <xref linkend="s.standard.digest.link.contract.template"/>) to ensure that the nested message &#8211; if accepted by
  the invitee &#8211; is authorized when received by the inviter.</para>
 
+<para>Example digest link contract instance set up by the inviter:</para>
+
+<programlisting>(=!:uuid:1111/=!:uuid:2222)$msg$digest$do/$all/
+(=!:uuid:1111/=!:uuid:2222)($msg$digest$do$if/$true){$msg}&lt;$digest>/&amp;/"6384263486348249836"
+</programlisting>
+
 <para>Example invitation from inviter =!:uuid:1111 to invitee =!:uuid:2222:</para>
 
 <programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:1234
 =!:uuid:1111[$msg]*!:uuid:1234/$is()/(=!:uuid:2222)
 =!:uuid:1111[$msg]*!:uuid:1234/$do/(=!:uuid:2222/$send)$do
-=!:uuid:1111[$msg]*!:uuid:1234/$is()/(=!:uuid:2222)
+(=!:uuid:1111[$msg]*!:uuid:1234/$send)=!:uuid:2222[$msg]*!:uuid:5678/$is()/(=!:uuid:1111)
+(=!:uuid:1111[$msg]*!:uuid:1234/$send)=!:uuid:2222[$msg]*!:uuid:5678/$do/(=!:uuid:1111/=!:uuid:2222)$msg$digest$do
+(=!:uuid:1111[$msg]*!:uuid:1234/$send)=!:uuid:2222[$msg]*!:uuid:5678/$connect/$get{$do}
+(=!:uuid:1111[$msg]*!:uuid:1234/$send)=!:uuid:2222[$msg]*!:uuid:5678$connect{$get}/$is/=!:uuid:1111&lt;#email>
 </programlisting>
 
 <programlisting>
