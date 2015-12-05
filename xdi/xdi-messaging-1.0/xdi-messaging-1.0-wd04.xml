@@ -606,8 +606,8 @@ with the following <firstterm>response message pattern</firstterm> (shown in sta
 </para>
 
 <programlisting>
-RESULT GRAPHS       (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator&gt;)&lt;--result-graph--&gt;
-PUSH CONTRACTS      (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator$push&gt;)&lt;--push-contracts--&gt;</programlisting>
+RESULT GRAPHS            (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator&gt;)&lt;--result-graph--&gt;
+DEFERRED PUSH CONTRACTS  (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operator$defer$push&gt;)&lt;--deferred-push-contracts--&gt;</programlisting>
 
 <section><title>Result graphs</title>
 
@@ -626,9 +626,9 @@ which the result graph corresponds.</para></listitem>
 
 </section>
 
-<section><title>Push contracts</title>
+<section><title>Deferred push contracts</title>
 
-<para>A response message may include one or more push contracts, which indicate that the
+<para>A response message may include one or more deferred push contracts, which indicate that the
 result of an operation is not immediately available. </para>
 
 <para>This can occur for various reasons:</para>
@@ -639,16 +639,15 @@ pushed once execution is complete.</para></listitem>
 <listitem><para>The operation cannot be executed at the moment. It will be executed as soon as possible,
 and the result of the operation will be pushed once execution is complete.</para></listitem>
 <listitem><para>The result of a link contract evaluation process has determined that the operation
-will be "held back" / "stashed" / "deferred" (TODO: decide on terminology here) (TODO: link to
-correct section of <xref linkend="xdi-policy-1.0"/>).</para></listitem>
+is be deferred.</para></listitem>
 </orderedlist>
 
-<para>Each request operation MUST have AT MOST one corresponding
-push contract in the response message.</para>
-
-<para>A request operation MAY have both a result graph and a push contract in the response message,
+<para>A request operation MAY have both a result graph and a deferred push contract in the response message,
 indicating that a partial result is available immediately, and that additional results will be available
 in the future.</para>
+
+<para>A request operation MAY have more than one corresponding deferred push contract, if the result
+graph will delivered in multiple pushes.</para>
 
 </section>
 
