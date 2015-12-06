@@ -1107,20 +1107,6 @@ $defer$push{$do}/$is()/{($from)}
 
 </section>
 
-<section id="s.standard.push.link.contract.template"><title>Standard Push Link Contract Template</title>
-
-<para>The purpose of the <firstterm>standard push link contract template</firstterm> is to
-instantiate push link contracts with a <emphasis>$push</emphasis> permission on a certain subgraph identified by
-the <emphasis>{$push}</emphasis> variable:</para>
-
-<programlisting>$push{$do}/$push/{$push}
-$push{$do}/$is()/{($from)}
-($push{$do}$if$and/$true){{$from}}/$is/{$to}
-($push{$do}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
-</programlisting>
-
-</section>
-
 <section id="s.standard.digest.link.contract.template"><title>Standard Digest Link Contract Template</title>
 
 <para>The purpose of the <firstterm>standard digest link contract template</firstterm> is to
@@ -1204,20 +1190,25 @@ an entire graph.</para>
 
 <para>Example connect link contract:</para>
 
-<programlisting>(=!:uuid:1111/$connect)($do$defer$push$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+<programlisting>(=!:uuid:1111/$connect)$do/$connect/
+(=!:uuid:1111/$connect)($do$defer$push$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 (=!:uuid:1111/$connect)$do$if//$not
-(=!:uuid:1111/$connect)$do/$connect/
 </programlisting>
 
 </section>
 
 <section id="s.send.link.contract"><title>Send Link Contract</title>
 
-<para>TODO: The Send Link Contract covers <emphasis>$send</emphasis> requests</para>
+<para>A <firstterm>send link contract</firstterm> contains a <emphasis>$send</emphasis> permission on
+an entire graph.</para>
 
-<programlisting>(=!:uuid:1111/$send)($do$defer$push$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+<para>A send link contract contains policies that will defer all requests.</para>
+
+<para>Example send link contract:</para>
+
+<programlisting>(=!:uuid:1111/$send)$do/$send/
+(=!:uuid:1111/$send)($do$defer$push$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 (=!:uuid:1111/$send)$do$if//$not
-(=!:uuid:1111/$send)$do/$connect/
 </programlisting>
 
 </section>
