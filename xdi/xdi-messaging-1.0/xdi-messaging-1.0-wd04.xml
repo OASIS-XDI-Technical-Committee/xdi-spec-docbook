@@ -653,23 +653,45 @@ which the result graph corresponds.</para></listitem>
 <section id="s.response.message.deferred.push.contracts"><title>Deferred Push Contracts</title>
 
 <para>A response message may have one or more <glossterm>deferred push contracts</glossterm>,
-which indicate that a result graph is not immediately available and that a request operation has
+which indicate that a result graph is not yet available and that a request operation has
 therefore been <firstterm>deferred</firstterm>.</para>
 
-<para>This can occur for various reasons:</para>
+<para><glossterm>Deferred push contracts</glossterm> are <glossterm>push contracts</glossterm> 
+(see <xref linkend="s.push.contracts"/>) that are used for handling deferred request operations.</para>
+
+<para>This can occur for the following reasons:</para>
 
 <itemizedlist>
-<listitem><para>The operation is executed asynchronously. The result of the operation will be
+<listitem><para>The operation is executed asynchronously. The result graph of the operation will be
 pushed once execution is complete.</para></listitem>
 <listitem><para>The operation cannot be executed at the moment. It will be executed as soon as possible,
-and the result of the operation will be pushed once execution is complete.</para></listitem>
-<listitem><para>The result of a link contract evaluation process has determined that the operation
-is be deferred.</para></listitem>
+and the result graph of the operation will be pushed once execution is complete.</para></listitem>
+<listitem><para>The link contract referenced by the request message has determined that the operation
+is deferred.</para></listitem>
 </itemizedlist>
 
-<para><glossterm>Deferred push contracts</glossterm> are instantiated automatically from the <glossterm>standard
-deferred push link contract</glossterm> (see <xref linkend="s.standard.deferred.push.link.contract.template"/>) using
-the <glossterm>link contract instantiation function</glossterm> (see <xref linkend="s.link.contract.instantiation"/>).</para>
+<para>In the above cases, <glossterm>deferred push contracts</glossterm> are created automatically 
+in the target graph and returned in the response.</para>
+
+<para>To create a <glossterm>deferred push contract</glossterm>, the link contract instantiation function
+(see <xref linkend="s.link.contract.instantiation"/>) is invoked with the following input parameters:</para>
+
+<itemizedlist>
+<listitem>The link contract template is <code>$defer$push{$do}</code> (see <xref linkend="s.standard.deferred.push.link.contract.template"/>).</listitem>
+<listitem>The variable <code>{$from}</code> is assigned the sending peer of the request operation (see <xref linkend="s.message.sending.peer"/>).</listitem>
+<listitem>The variable <code>{$to}</code> is assigned the receiving peer of the request operation (see <xref linkend="s.message.receiving.peer"/>).</listitem>
+<listitem>The variable <code>{$push}</code> is assigned the address of the context(s) of the result graph that are not yet available.</listitem>
+<listitem>The <glossterm>instance flag</glossterm> set to "instance"</listitem>
+</itemizedlist>
+
+<para>Example instantiated deferred push contract:</para>
+
+<programlisting>(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:8736/$push/=!:uuid:2222&lt;#email>
+(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:8736/$is()/(=!:uuid:1111)
+(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:8736$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
+(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:8736$if$and/$true){$from}/$is/=!:uuid:2222
+(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:8736$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+</programlisting>
 
 <para>A request operation MAY have both a result graph and a deferred push contract in the response message,
 indicating that a partial result is available immediately, and that additional results will be available
@@ -1011,6 +1033,8 @@ These messages are called <firstterm>nested request messages</firstterm>.</para>
 =!:uuid:1111[$msg]*!:uuid:m-1$connect{$get}/$is/=!:uuid:2222&lt;#email>
 </programlisting>
 
+</section>
+
 <section><title>Executing the <code>$send</code> Operation</title>
 
 <para>To execute the <code>$send</code> operation, a new XDI messaging round-trip is initiated in order
@@ -1020,7 +1044,9 @@ to send the nested messages:</para>
 <listitem>The original request message containing the <code>$send</code> operation
 is called the <firstterm>outer request message</firstterm>.</listitem>
 <listitem>The requester of the outer request message is called the outer requester.</listitem>
-<listitem>The requester of the outer request message is called the outer requester.</listitem>
+<listitem>The responder of the outer request message is called the outer responder.</listitem>
+<listitem>The requester of the nested request message is called the inner requester.</listitem>
+<listitem>The responder of the nested request message is called the inner responder.</listitem>
 </itemizedlist>
 
 <para>A nested message may itself contain one or more <code>$send</code> request operations which
@@ -1036,10 +1062,8 @@ The process of delivering the nested message is also called <firstterm>forwardin
 <para>TODO: describe multiple levels of nesting</para>
 <para>TODO: describe here how a original responder delivers nested messages to the nested responder.</para>
 <para>TODO: describe the role of XDI discovery, bindings, and routing.</para>
-
-</section>
-
-<para>TODO: describe how link contracts authorize nested messages</para>
+<para>TODO: describe how a nested message may be manipulated before being sent (either due to XDI attributes, or endpoint configuration, e.g. to add signature).</para>
+<para>TODO: describe how link contracts authorize nested messages (should this be in XDI policy?)</para>
 
 </section>
 
@@ -1053,7 +1077,11 @@ The process of delivering the nested message is also called <firstterm>forwardin
 <section><title><code>$push</code> applied to an address</title>
 
 <para>The given address indicates a <firstterm>light push</firstterm>.</para>
-<para>The given address MUST be the subgraph at the given address has changed.</para>
+<para>The given address MUST be the subgraph at the given address that has changed.</para>
+
+<programlisting>&lt;--publisher--&gt;[$msg]&lt;--message-id--&gt;$do/$is()/(&lt;--subscriber--&gt;)
+&lt;--publisher--&gt;[$msg]&lt;--message-id--&gt;$do/$push/&lt;--target-address--&gt;
+</programlisting>
 
 </section>
 
@@ -1061,6 +1089,26 @@ The process of delivering the nested message is also called <firstterm>forwardin
 
 <para>The given inner graph indicates a <firstterm>content push</firstterm>.</para>
 <para>The given inner graph MUST be the message that triggered the push contract.</para>
+
+<programlisting>&lt;--publisher--&gt;[$msg]&lt;--message-id--&gt;$do/$is()/(&lt;--subscriber--&gt;)
+&lt;--publisher--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;/&lt;--target-address--&gt;
+(&lt;--publisher--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;)&lt;--target-statement--&gt;
+</programlisting>
+
+</section>
+
+<section><title>Executing the <code>$push</code> Operation</title>
+
+<para>TODO: Describe here how a subscriber executes incoming push messages from a publisher.</para>
+
+<para>Note that when a push message is executed against a subscriber's target graph, it may itself
+fulfill the conditions in <xref linkend="s.push.contracts.trigger"/>, which in turn results in the
+creation, sending, and execution of a new push message. This can cause a chain reaction of push messages
+sent between an arbitrary number of peers.</para>
+
+<para>When a push contract is in place, it SHOULD exist both in the publishing peer's graph and in the
+subscribing peer's graph. The existence of the push contract in the subscribing peer's graph serves as
+authorization for incoming pushes from the publishing peer's graph.</para>
 
 </section>
 
@@ -1096,13 +1144,83 @@ the pattern used in this specification to document the basic operations.</para>
 <para>In the XDI graph model as a whole, XDI statements are unordered.</para>
 
 <orderedlist>
-<listitem><para>Messages within a message envelope (i.e., within the <code>&lt;--sender--&gt;[$msg]</code> collection) MAY be explicitly ordered by appending the <code>@&lt;--digit--&gt;</code>ordering context to the <code>&lt;--sender--&gt;[$msg]!&lt;--id--&gt;</code> context.</para></listitem>
-<listitem><para>Operation statements within a message (i.e., as objects of the <code>&lt;--operation--&gt;</code> predicate) MAY be explicitly ordered by appending the <code>@&lt;--digit--&gt;</code> ordering context to the <code>&lt;--operation--&gt;</code> predicate.</para></listitem>
+<listitem><para>Messages within a message envelope (i.e., within the <code>&lt;--sender--&gt;[$msg]</code> collection) MAY be explicitly ordered by appending the <code>@~&lt;--digit--&gt;</code>ordering context to the <code>&lt;--sender--&gt;[$msg]!&lt;--id--&gt;</code> context.</para></listitem>
+<listitem><para>Operation statements within a message (i.e., as objects of the <code>&lt;--operation--&gt;</code> predicate) MAY be explicitly ordered by appending the <code>@~&lt;--digit--&gt;</code> ordering context to the <code>&lt;--operation--&gt;</code> predicate.</para></listitem>
 <listitem><para>Explicit ordering of messages and operations is OPTIONAL for an XDI client.</para></listitem>
 <listitem><para>Support for explicit ordering of messages and operations is REQUIRED for an XDI endpoint.</para></listitem>
 <listitem><para>If explicit ordering of messages and operations is not used, then an XDI endpoint MUST NOT make guarantees about the order in which messages in a message envelope are executed, or about the order in which operations in a message are executed.</para></listitem>
 <listitem><para>An XDI endpoint MUST guarantee that all operations in one message are executed before operations in another message are executed.</para></listitem>
 </orderedlist>
+
+</section>
+
+</section>
+
+<section id="s.push.contracts"><title>Push Contracts</title>
+
+<section id="s.push.contracts.structure"><title>Structure of a Push Contract</title>
+
+<para>EDITORIAL NOTE: This section should be moved to <xref linkend="xdi-policy-1.0"/>.</para>
+
+<para>A push contract is a link contract that expresses a publish/subscribe relationships between 
+peers. It enables a peer called  <firstterm>publishing peer</firstterm> (or short <firstterm>publisher</firstterm>)
+to notify one or more other peers called <firstterm>subscribing peers</firstterm> (or short <firstterm>subscribers</firstterm>)
+of changes in a graph for which the publisher is authoritative.</para>
+
+<para>A publish/subscribe relationship between a publishing authority and a subscribing authority is modeled as
+a link contract with certain properties. This link contract is called a <firstterm>push link contract</firstterm>
+(or short <firstterm>push contract</firstterm>).</para>
+
+<para>A notification is itself an XDI message. This message is called a <firstterm>push message</firstterm>
+(or short <firstterm>push</firstterm>).</para>
+
+<para>A push contract is a link contract that conforms to the link contract pattern (see <xref linkend='xdi-policy-1.0'/>)
+and additionally meets the following conditions:</para>
+
+<orderedlist>
+<listitem><para>The link contract's <firstterm>authorizing authority</firstterm> is the publisher.</para></listitem>
+<listitem><para>The link contract's <firstterm>requesting authority</firstterm> is the subscriber.</para></listitem>
+<listitem><para>The link contract contains one ore more <code>$push</code> permissions.</para></listitem>
+<listitem><para>The link contract MAY contain permissions other than <code>$push</code>.</para></listitem>
+<listitem><para>The link contract MAY contain one or more <firstterm>push target endpoint URIs</firstterm>.</para></listitem>
+<listitem><para>The link contract MAY contain the <firstterm>content flag</firstterm> which specifies whether a subscriber
+wishes to use light pushes or content pushes.</para></listitem>
+</orderedlist>
+
+<para>Following is the basic structure of a push contract. Labels in <code>&lt;--this-form--&gt;</code> represent
+template variables.</para>
+
+<programlisting>(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)$do/$push/&lt;--target-address--&gt;
+(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)($do/$push)&lt;$xdi&gt;&lt;$uri&gt;/&amp;/"&lt;--push target endpoint--&gt;"
+(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)($do/$push)&lt;$content&gt;/&amp;/&lt;--light-or-content-push--&gt;
+</programlisting>
+
+<para>If the push contract does not contain at least one push target endpoint URI, the subscriber's XDI endpoint MUST
+be discovered using the XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol. This XDI endpoint MUST then
+be used as the single push target endpoint URI of the push contract.</para>
+
+<para>If the content flag is absent, the default value <code>false</code> (i.e. use light pushes) MUST be assumed.</para>
+
+<para>Like all link contracts, push contracts are unidirectional and only apply to data in the authorizing
+authority's graph. In order to set up a bi- or multidirectional publish/subscribe relationship, two or more
+push contracts can be created in which multiple peers simultaneously fulfill the publisher and subscriber roles.</para>
+
+</section>
+
+<section id="s.push.contracts.trigger"><title>Triggering a Push Contract</title>
+
+<para>EDITORIAL NOTE: This section should be moved to <xref linkend="xdi-policy-1.0"/>.</para>
+
+<para>A push contract is triggered when the following conditions are met:</para>
+
+<orderedlist>
+<listitem><para>An operation is executed against a graph that contains one or more push contracts.</para></listitem>
+<listitem><para>The operation is not a <code>$get</code> operation.</para></listitem>
+<listitem><para>The target of the operation is a sub-context of any context that is the target of a <code>$push</code> permission of at least one of the push contracts in the graph.</para></listitem>
+</orderedlist>
+
+<para>TODO: describe how a push contract's policy must be evaluated by both sender and receiver</para>
+<para>TODO: describe who in the $push message is the requester and who is responder</para>
 
 </section>
 

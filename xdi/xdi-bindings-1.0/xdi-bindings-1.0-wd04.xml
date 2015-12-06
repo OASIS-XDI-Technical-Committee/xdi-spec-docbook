@@ -144,6 +144,13 @@ this document.</para>
       <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
       <releaseinfo>OASIS &standard;. </releaseinfo>
       <citetitle><ulink url="&latest-loc;/xdi-messaging.html">&latest-loc;/xdi-messaging.html</ulink>.</citetitle>
+  </bibliomixed> <bibliomixed id="xdi-cryptographic-profiles-1.0">
+    <abbrev>OASIS-XDI-Cryptographic-Profiles-V1.0</abbrev>
+    <date>&pubdate; </date>
+    <title><ulink url="../../xdi-cryptographic-profiles-1.0/xdi-cryptographic-profiles-1.0-wd01.xml">OASIS XDI 1.0 Cryptographic Profiles Specification</ulink></title>
+    <author><firstname>Peter </firstname> <surname>Davis</surname></author>.
+    <releaseinfo>OASIS &standard;. </releaseinfo>
+    <citetitle><ulink url="&latest-loc;/xdi-security-mechanisms.html">&latest-loc;/xdi-security-mechanisms.html</ulink>.</citetitle>
   </bibliomixed> <bibliomixed id="xdi-security-mechanisms-1.0">
     <abbrev>OASIS-XDI-Security-Mechanisms-V1.0</abbrev>
     <date>&pubdate; </date>
@@ -218,17 +225,13 @@ this document.</para>
 
 <section><title>XDI Bindings</title>
 
-<para>An XDI binding is a concrete way how messages can be sent over a network between peers.</para>
+<para>The abstract mechanism for executing messages is defined in <xref linkend='xdi-messaging-1.0'/>.
+Terms such as <firstterm>requester</firstterm>, <firstterm>responder</firstterm>, <firstterm>message envelope</firstterm>, 
+<firstterm>message</firstterm>, <firstterm>target graph</firstterm>, <firstterm>result graph</firstterm> are
+common to all bindings.</para>
 
-<para>Bindings introduce specific terms such as <firstterm>client</firstterm>, <firstterm>server</firstterm>,
-and <firstterm>endpoint</firstterm>.</para>
-
-<para>Other terms are defined in <xref linkend='xdi-messaging-1.0'/> and are common to all bindings, e.g.
-<firstterm>requester</firstterm>, <firstterm>responder</firstterm>, <firstterm>message envelope</firstterm>, 
-<firstterm>message</firstterm>, <firstterm>target graph</firstterm>, <firstterm>result graph</firstterm>.</para>
-
-<para>The abstract mechanism for executing messages is also defined in <xref linkend='xdi-messaging-1.0'/>. Bindings
-merely specify how messages are transmitted between peers.</para>
+<para>XDI bindings define concrete ways how messages can be sent over a network between peers. Bindings introduce
+specific terms such as <firstterm>client</firstterm>, <firstterm>server</firstterm>, and <firstterm>endpoint</firstterm>.</para>
 
 <section><title>Serialization</title>
 
@@ -246,8 +249,9 @@ merely specify how messages are transmitted between peers.</para>
 <section><title>Security Considerations</title>
 
 <para>Bindings rely on message-level integrity protection via signing of the messages as defined in
-the XDI Signatures specification <xref linkend="xdi-signatures-1.0"/>.
-Additionally, the Security Mechanisms specification <xref linkend="xdi-security-mechanisms-1.0"/> protection
+<xref linkend="xdi-cryptographic-profiles-1.0"/>.</para>
+
+<para>Additionally, <xref linkend="xdi-security-mechanisms-1.0"/> addresses the protection
 of messages in transit between requester and responder.</para>
 
 </section>
