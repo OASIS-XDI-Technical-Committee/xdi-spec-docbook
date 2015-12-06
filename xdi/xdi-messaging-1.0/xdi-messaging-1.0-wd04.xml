@@ -643,8 +643,9 @@ which the result graph corresponds.</para></listitem>
 
 <section id="s.response.message.deferred.push.contracts"><title>Deferred Push Contracts</title>
 
-<para>A response message may have one or more deferred push contracts, which indicate that the
-result of an operation is not immediately available. </para>
+<para>A response message may have one or more <glossterm>deferred push contracts</glossterm>,
+which indicate that a result graph is not immediately available and that a request operation has
+therefore been <firstterm>deferred</firstterm>.</para>
 
 <para>This can occur for various reasons:</para>
 
@@ -656,6 +657,10 @@ and the result of the operation will be pushed once execution is complete.</para
 <listitem><para>The result of a link contract evaluation process has determined that the operation
 is be deferred.</para></listitem>
 </itemizedlist>
+
+<para><glossterm>Deferred push contracts</glossterm> are instantiated automatically from the <glossterm>standard
+deferred push link contract</glossterm> (see <xref linkend="s.standard.deferred.push.link.contract.template"/>) using
+the <glossterm>link contract instantiation function</glossterm> (see <xref linkend="s.link.contract.instantiation"/>).</para>
 
 <para>A request operation MAY have both a result graph and a deferred push contract in the response message,
 indicating that a partial result is available immediately, and that additional results will be available
