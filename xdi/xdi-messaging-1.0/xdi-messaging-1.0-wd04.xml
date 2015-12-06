@@ -229,7 +229,7 @@ is generated, which represents the result of the request operations. The result 
 <para>A response sent from the responder to the requester may either simply be the result graph itself,
 or it may be a <firstterm>response message</firstterm>, which contains within itself the result graph.
 </para>
-<para>The following diagram shows a typical XDI messaging round-trip:</para>
+<para>The following diagram shows a typical XDI messaging ip:</para>
 
 <para>
   <figure float="true"><title>XDI Messaging Terminology</title>
@@ -297,7 +297,7 @@ of the message. The member instance is called the <firstterm>message ID</firstte
 </programlisting>
 
 <para>Every message SHOULD have an immutable address. To express order, the ordered/unordered reference pattern
-(see <xref linkend="xdi-core-1.0"/>) may be used:</para>
+(see <xref linkend="xdi-core-1.0"/>) MAY be used:</para>
 
 <programlisting>=!:uuid:1111[$msg]@~0/$ref/=!:uuid:1111[$msg]*!:uuid:m-1
 </programlisting>
@@ -312,11 +312,11 @@ template variables.</para>
 <programlisting>SENDING PEER                &lt;--sending-peer--&gt;/$send/&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;
 RECEIVING PEER              &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is()/&lt;--receiving-peer--&gt;
 MESSAGE TYPE                &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is#/&lt;--message-type--&gt;[$v]&lt;--version-number--&gt;$xdi[$v]@1$msg
+CORRELATION STATEMENT       &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is$msg/&lt;--previous-sender--&gt;[$msg]&lt;--previous-message-id--&gt;
 TIMESTAMP                   &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;$t>/&amp;/&lt;--timestamp--&gt;
 MESSAGE PARAMETERS          &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
 AUTHENTICATION TOKEN        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--token-type--&gt;&lt;$token&gt;/&amp;/&lt;--token--&gt;
 AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--signature-type--&gt;&lt;$sig&gt;/&amp;/&lt;--signature--&gt;
-CORRELATION STATEMENT       &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is$msg/&lt;--previous-sender--&gt;[$msg]&lt;--previous-message-id--&gt;
 </programlisting>
 
 <section id="s.message.sender"><title>Sender</title>
@@ -372,6 +372,27 @@ CORRELATION STATEMENT       &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is$m
 <listitem><para><code>&lt;--message-type--&gt;</code> is an optional XDI address specifying a message type.</para></listitem>
 <listitem><para><code>&lt;--version-number--&gt;</code> is the message type version, expressed as an ordered instance of a <code>[$v]</code> collection.</para></listitem>
 </orderedlist>
+
+</section>
+
+<section id="s.message.correlation.statement"><title>Correlation statement</title>
+
+<para>A message MAY have one or more <firstterm>correlation statements</firstterm>, also known as <firstterm>thread statements</firstterm>.
+The purpose of such statements is to express that this message is in some way related to a previous message.</para>
+
+<para>For a response message, at least one correlation statement is REQUIRED in order to express that
+the response message is related to the request message.</para>
+
+<para>For a request message, a correlation statement MAY express that the request message is related
+to previous request or response message.</para>
+
+<para>A correlation statement is identified by a <code>$is$msg</code> relational arc between messages. This identifier MAY be
+specialized to express additional semantics about how two messages are related.</para>
+
+<para>Example correlation statement:</para>
+
+<programlisting>=!:uuid:2222[$msg]*!:uuid:m-2/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
+</programlisting>
 
 </section>
 
@@ -442,26 +463,6 @@ as a response, after the request message has been executed.</para></listitem>
 
 </section>
 
-<section id="s.message.correlation.statement"><title>Correlation statement</title>
-
-<para>A message MAY have one or more <firstterm>correlation statements</firstterm>, also known as <firstterm>thread statements</firstterm>.
-The purpose of such statements is to express that this message is in some way related to a previous message.</para>
-
-<para>For a response message, at least one correlation statement is REQUIRED in order to express that
-the response message is related to the request message.</para>
-
-<para>For a request message, a correlation statement MAY express that the request message is related
-to previous request or response message.</para>
-
-<para>A correlation statement is identified by a <code>$is$msg</code> relational arc between messages. This identifier MAY be
-specialized to express additional semantics about how two messages are related.</para>
-
-<para>Example correlation statement:</para>
-
-<programlisting>=!:uuid:1111[$msg]*!:uuid:x-2/$is$msg/=!:uuid:x-3[$msg]*!:uuid:x-4</programlisting>
-
-</section>
-
 </section>
 
 <section id="s.request.messages"><title>Request Messages</title>
@@ -486,12 +487,20 @@ OPERATION ON INNER GRAPH     (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/
 <listitem><para><code>&lt;--boolean-context--&gt;</code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem>
 <listitem><para><code>&lt;--operator--&gt;</code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem> 
 <listitem><para><code>&lt;--condition--&gt;</code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem>
-<listitem><para><code>&lt;--operation--&gt;</code> is the requested XDI operation (<code>$get, $set, $add, $mod, $del, $connect, $send, $push, $do</code>). There may be one or more operations in a message.</para></listitem>
+<listitem><para><code>&lt;--operation--&gt;</code> is the request operation (<code>$get, $set, $add, $mod, $del, $connect, $send, $push, $do</code>). A request operation may be executed on an address or on an inner root. There may be one or more operations in a message.</para></listitem>
 <listitem><para><code>&lt;--parameter--&gt;</code> is an operation parameter.</para></listitem>
 <listitem><para><code>&lt;--parameter-value--&gt;</code> is the value of an operation parameter.</para></listitem>
-<listitem><para><code>&lt;--target-address--&gt;</code> is an XDI address that is the target of the operation.</para></listitem> 
-<listitem><para><code>&lt;--target-inner-graph--&gt;</code> is an XDI inner graph containing statements that are the target of the operation.</para></listitem> 
+<listitem><para><code>&lt;--target-address--&gt;</code> is an XDI address that the operation is executed on.</para></listitem> 
+<listitem><para><code>&lt;--target-inner-graph--&gt;</code> is an XDI inner graph containing statements that the operation is executed on.</para></listitem> 
 </orderedlist>
+
+<para>Example request message:</para>
+
+<programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
+=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
+=!:uuid:1111[$msg]*!:uuid:m-1/$do/(=!:uuid:2222/=!:uuid:1111)$do
+=!:uuid:1111[$msg]*!:uuid:m-1$do/$get/=!:uuid:2222&lt;#email>
+</programlisting>
 
 <section id="s.request.message.link.contract.address"><title>Link Contract Address</title>
 
@@ -926,7 +935,7 @@ If a statement does not exist, the operation has no effect (this is not consider
 
 <section id="s.operation.connect"><title><code>$connect</code> operation</title>
 
-<para>The <code>$connect></code> operation requests instantiation of a link contract.</para>
+<para>The <code>$connect</code> operation requests instantiation of a link contract.</para>
 
 <section><title><code>$connect</code> applied to an address</title>
 
@@ -953,7 +962,7 @@ The link contract template MUST be discovered from this address (see <xref linke
 
 </section>
 
-<section><title>Executing the <code>$connect</code> operation</title>
+<section><title>Executing the <code>$connect</code> Operation</title>
 
 <para>To execute the <code>$connect</code> operation, the link contract instantiation function
 (see <xref linkend="s.link.contract.instantiation"/>) is invoked with the following input parameters:</para>
@@ -976,55 +985,61 @@ is the empty graph.</para>
 <section id="s.operation.send"><title><code>$send</code> operation</title>
 
 <para>The <code>$send</code> operation requests sending of a nested message.</para>
-<para>This operation is specified in <xref linkend="nested-messages"/>.</para>
 
 <section><title><code>$send</code> applied to an address</title>
 
-<para>The given address MUST be the address of a message template, which
-is used as the template for the nested message to be sent.</para>
+<para>The given address MUST be the address of a message template.
+The message template MUST be discovered from this address (see <xref linkend="xdi-discovery-1.0"/>).</para>
+
+<para>The message template is used to instantiate a message.
+This message is called <firstterm>nested request message</firstterm>.</para>
+
+<para>TODO: define the message instantiation process, and figure out how it is similar to
+link contract instantiation.</para>
 
 </section>
 
 <section><title><code>$send</code> applied to an inner graph</title>
 
-<para>The given inner graph MUST contain a message template, which
-is used as the template for the nested message to be sent.</para>
+<para>The given inner graph MUST contain one or more messages.
+These messages are called <firstterm>nested request messages</firstterm>.</para>
 
-<section id="nested-messages"><title>Nested Messages</title>
+<para>Example:</para>
+<programlisting>(=!:uuid:1111[$msg]*!:uuid:m-1$do/$send)
+(=!:uuid:1111[$msg]*!:uuid:m-1$do/$send)($get{$do}$if$and/$true){{$from}}/$is/{$from}
+(=!:uuid:1111[$msg]*!:uuid:m-1$do/$send)($get{$do}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+=!:uuid:1111[$msg]*!:uuid:m-1$connect{$get}/$is/=!:uuid:2222&lt;#email>
+</programlisting>
+
+<section><title>Executing the <code>$send</code> Operation</title>
+
+<para>To execute the <code>$send</code> operation, a new XDI messaging round-trip is initiated in order
+to send the nested messages:</para>
+
+<itemizedlist>
+<listitem>The original request message containing the <code>$send</code> operation
+is called the <firstterm>outer request message</firstterm>.</listitem>
+<listitem>The requester of the outer request message is called the outer requester.</listitem>
+<listitem>The requester of the outer request message is called the outer requester.</listitem>
+</itemizedlist>
+
+<para>A nested message may itself contain one or more <code>$send</code> request operations which
+in turn have their own nested messages. This results in a chain of nested messages.</para>
 
 <para>Using the <code>$send</code> operation, a requester can instruct a responder to send a nested message.
 In doing so, the responder becomes a requester in a separate, nested XDI messaging round-trip.</para>
 
-<section><title>Structure of a Nested Message</title>
-
-<para>TODO describe nested message</para>
-<para>TODO introduce terms such as "original"/"outer" responder and "nested" responder</para>
-<para>TODO describe multiple levels of nesting</para>
-
-</section>
-
-<section><title>Delivery of a Nested Message</title>
-
 <para>This section defines how a nested message is delivered to the nested responder.
 The process of delivering the nested message is also called <firstterm>forwarding</firstterm>.</para>
 
-<para>TODO: Describe here how a original responder delivers nested messages to the nested responder.</para>
-
-<para>TODO: Describe the role of XDI discovery, bindings, and routing.</para>
+<para>TODO: introduce terms such as "original"/"outer" responder and "nested" responder</para>
+<para>TODO: describe multiple levels of nesting</para>
+<para>TODO: describe here how a original responder delivers nested messages to the nested responder.</para>
+<para>TODO: describe the role of XDI discovery, bindings, and routing.</para>
 
 </section>
-
-<section><title>Execution of a Nested Message</title>
-
-<section><title>Authentication and Authorization</title>
 
 <para>TODO: describe how link contracts authorize nested messages</para>
-
-</section>
-
-</section>
-
-</section>
 
 </section>
 
