@@ -33,12 +33,12 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <!ENTITY name "xdi-messaging">
 <!ENTITY pversion "0.1">
 <!ENTITY version "1.0">
-<!ENTITY stage "wd04">
-<!ENTITY standard "Working Draft 04">
+<!ENTITY stage "wd05">
+<!ENTITY standard "Working Draft 05">
 <!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;">
 <!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
 <!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
-<!ENTITY pubdate "7 December 2015">
+<!ENTITY pubdate "(not published)">
 <!ENTITY title "XDI Messaging V&version;">
 ]>
 
