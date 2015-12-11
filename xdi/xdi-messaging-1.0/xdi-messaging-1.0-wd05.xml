@@ -229,7 +229,7 @@ is generated, which represents the result of the request operations. The result 
 <para>A response sent from the responder to the requester may either simply be the result graph itself,
 or it may be a <firstterm>response message</firstterm>, which contains within itself the result graph.
 </para>
-<para>The following diagram shows a typical XDI messaging ip:</para>
+<para>The following diagram shows a typical XDI messaging round-trip:</para>
 
 <para>
   <figure float="true"><title>XDI Messaging Terminology</title>
@@ -1758,7 +1758,7 @@ a responder to "impersonate" an arbitrary peer when sending the inner message.</
 
 <para>If a request operation is deferred due to link contract policy (see <xref linkend="xdi-policy-1.0"/>),
 it can be <firstterm>approved</firstterm>
-by "re-sending" the it as an inner message of a new <code>$send</code> request operation.
+by "re-sending" it as an inner message of a new <code>$send</code> request operation.
 The outer message of the <code>$send</code> operation is called <firstterm>approval message</firstterm>.</para>
 
 <para>The responder of an outer message (the approval message) is equal to responder of the inner message
@@ -1768,7 +1768,7 @@ The outer message of the <code>$send</code> operation is called <firstterm>appro
 <glossterm>root link contract</glossterm> is used. In other words, an XDI actor approves a deferred message
 that was sent to its own graph.</para>
 
-<para>Note that the approval message will trigger the push <glossterm>deferred push contract</glossterm>
+<para>Note that the approval message will trigger the <glossterm>deferred push contract</glossterm>
 (see <xref linkend="xdi-policy-1.0"/>) that
 was automatically created for the deferred request operation.</para>
 
