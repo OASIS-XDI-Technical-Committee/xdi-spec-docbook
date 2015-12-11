@@ -33,12 +33,12 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <!ENTITY name "xdi-policy">
 <!ENTITY pversion "0.1">
 <!ENTITY version "1.0">
-<!ENTITY stage "wd01">
-<!ENTITY standard "Working Draft 01">
+<!ENTITY stage "wd02">
+<!ENTITY standard "Working Draft 02">
 <!ENTITY this-loc "http://docs.oasis-open.org/xdi/spec-&version;">
 <!ENTITY previous-loc "http://docs.oasis-open.org/xdi/spec-&pversion;">
 <!ENTITY latest-loc "http://docs.oasis-open.org/xdi/spec">
-<!ENTITY pubdate "11 December 2015">
+<!ENTITY pubdate "(not published)">
 <!ENTITY title "XDI Policy V&version;">
 ]>
 
