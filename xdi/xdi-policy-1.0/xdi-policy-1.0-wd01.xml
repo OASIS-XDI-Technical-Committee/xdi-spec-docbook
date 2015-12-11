@@ -64,6 +64,9 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   <editor> <firstname>Dan</firstname><surname>Blum</surname>
     <affiliation><orgname>Respect Network</orgname></affiliation>
     <email>dan.blum@respect.network</email> </editor>
+  <editor> <firstname>Drummond</firstname><surname>Reed</surname>
+    <affiliation><orgname>Respect Network</orgname></affiliation>
+    <email>drummond@respect.network</email> </editor>
   <editor> <firstname>Markus</firstname><surname>Sabadello</surname>
     <affiliation><orgname>Danube Tech</orgname></affiliation>
     <email>markus@danubetech.com</email> </editor>
