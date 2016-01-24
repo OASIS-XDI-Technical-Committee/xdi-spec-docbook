@@ -1326,15 +1326,15 @@ $defer$push{$do}/$is()/{($from)}
 
 </section>
 
-<section id="s.standard.digest.link.contract.template"><title>Standard Digest Link Contract Template</title>
+<section id="s.standard.digest.link.contract.template"><title>Standard Message Digest Link Contract Template</title>
 
-<para>The purpose of the <firstterm>standard digest link contract template</firstterm> is to
+<para>The purpose of the <firstterm>standard message digest link contract template</firstterm> is to
 instantiate digest link contracts that only authorize a single specific message. This is achieved
 through a policy that requires a certain digest value calculated from the serialized message.</para>
 
-<para>The <firstterm>standard digest link contract template</firstterm> is typically instantiated as an instance in a <code>[$do]</code>
-entity collection, since
-for any given relationship between two peers, multiple <firstterm>digest link contracts</firstterm> may exist.</para>
+<para>The <firstterm>standard message digest link contract template</firstterm> is typically instantiated as an instance
+in a <code>[$do]</code> entity collection, since
+for any given relationship between two peers, multiple <firstterm>message digest link contracts</firstterm> may exist.</para>
 
 <para>The <firstterm>standard digest link contract template</firstterm>:</para>
 
@@ -1347,12 +1347,12 @@ for any given relationship between two peers, multiple <firstterm>digest link co
 
 <appendix id="a.common.link.contract.patterns" role="non-normative"><title>Common Link Contract Patterns</title>
 
-<para>This section describes a number of non-normative link contract patterns that build on the various permissions defined by
-this specification. These patterns are designed for various common data sharing and communication use cases.</para>
+<para>This section describes a number of non-normative link contract patterns that build on this specification.
+These patterns are designed for various common data sharing and communication use cases.</para>
 
 <section id="s.root.link.contract"><title>Root Link Contract</title>
 
-<para>A root link contract is a link contract that grants an XDI actor unlimited permissions on an XDI graph.</para>
+<para>A root link contract is a link contract with a <code>$all</code> permission on an entire graph ("root access").</para>
 
 <para>A root link contract is typically set up for the following reasons:</para>
 
@@ -1367,10 +1367,9 @@ to the legal concepts of custodianship or guardianship (e.g. parent-child).</par
 <para>A root link contract is an instance of the standard root link contract template
 (see <xref linkend="s.standard.root.link.contract.template"/>).</para>
 
-<para>A root link contract fulfills the following properties:</para>
+<para>A root link contract is based on the generic link contract instance pattern, with the following properties:</para>
 
 <itemizedlist>
-<listitem><para>The root link contract is based on the generic link contract instance pattern, with the following constraints:</para></listitem>
 <listitem><para>The requesting authority is set to the XDI authority.</para></listitem>
 <listitem><para>The authorizing authority is set to the XDI authority.</para></listitem>
 <listitem><para>The template ID is empty.</para></listitem>
@@ -1401,8 +1400,8 @@ an entire graph ("root access").</para>
 
 <section id="s.public.link.contract"><title>Public Link Contract</title>
 
-<para>The public link contract is the well-known link contract that an XDI authority can
-offer for access to the portion of its XDI subgraph (if any) that is publicly available.</para>
+<para>A <firstterm>public link contract</firstterm> contains <code>$get</code> permissions on 
+certain limited subgraphs that are intended to be publicly available.</para>
 
 <itemizedlist>
 <listitem><para>The public link contract is based on the generic link contract instance pattern, with the following constraints:</para></listitem>
@@ -1422,9 +1421,6 @@ offer for access to the portion of its XDI subgraph (if any) that is publicly av
 </programlisting>
 
 <para>Note that authorities can further customize the public link contract, e.g. to prevent spam.</para>
-
-<para>A <firstterm>public link contract</firstterm> contains a <code>$get</code> permission on 
-certain limited subgraphs that are intended to be public.</para>
 
 <para>A public link contract does not contain a policy, i.e. it always evaluates to <emphasis>true</emphasis>.</para>
 
