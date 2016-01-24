@@ -67,6 +67,9 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   <editor> <firstname>Markus</firstname><surname>Sabadello</surname>
     <affiliation><orgname>Danube Tech</orgname></affiliation>
     <email>markus@danubetech.com</email> </editor>
+  <editor> <firstname>Drummond</firstname><surname>Reed</surname>
+    <affiliation><orgname>XDI.org</orgname></affiliation>
+    <email>drummond.reed@xdi.org</email> </editor>
 </authorgroup>
 <pubdate>&pubdate;</pubdate>
 <copyright><year>2015</year>
@@ -134,19 +137,12 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
       <releaseinfo>OASIS &standard;. </releaseinfo>
       <citetitle><ulink url="&latest-loc;/xdi-core.html">&latest-loc;/xdi-core.html</ulink>.</citetitle>
     </bibliomixed> <bibliomixed id="xdi-discovery-1.0">
-      <abbrev>OASIS-XDI-Discovery-V1.0</abbrev> <date>&pubdate; </date>
-      <title><ulink url="../../xdi-discovery-1.0/xdi-discovery-1.0-wd01.xml">OASIS XDI 1.0 Discovery Specification</ulink></title>
+      <abbrev>OASIS-XDI-Messaging-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-messaging-1.0/xdi-messaging-1.0-wd01.xml">OASIS XDI 1.0 Messaging Specification</ulink></title>
       <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
       <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
       <releaseinfo>OASIS &standard;. </releaseinfo>
-      <citetitle><ulink url="&latest-loc;/xdi-discovery.html">&latest-loc;/xdi-discovery.html</ulink>.</citetitle>
-    </bibliomixed> <bibliomixed id="xdi-bindings-1.0">
-      <abbrev>OASIS-XDI-Bindings-V1.0</abbrev> <date>&pubdate; </date>
-      <title><ulink url="../../xdi-bindings-1.0/xdi-bindings-1.0-wd01.xml">OASIS XDI 1.0 Bindings Specification</ulink></title>
-      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
-      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
-      <releaseinfo>OASIS &standard;. </releaseinfo>
-      <citetitle><ulink url="&latest-loc;/xdi-bindings.html">&latest-loc;/xdi-bindings.html</ulink>.</citetitle>
+      <citetitle><ulink url="&latest-loc;/xdi-messaging.html">&latest-loc;/xdi-messaging.html</ulink>.</citetitle>
     </bibliomixed> <bibliomixed id="xdi-security-mechanisms-1.0">
       <abbrev>OASIS-XDI-Security-Mechanisms-V1.0</abbrev> <date>&pubdate; </date>
       <title><ulink url="../../xdi-security-mechanisms-1.0/xdi-security-mechanisms-1.0-wd01.xml">OASIS XDI 1.0 Security Mechanisms Specification</ulink></title>
@@ -193,1127 +189,611 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 
 <section><title>XDI Link Contracts</title>
 
-<para>XDI messaging is the mechanism for transmitting <firstterm>messages</firstterm> between peers, for the purpose
-of exchanging data between the graphs for which the peers are authoritative.</para>
-<para>Every message is transmitted from a <firstterm>sending peer</firstterm> to a <firstterm>receiving peer</firstterm>.</para>
-<para>The XDI messaging process consists of round-trips, each one of which involves a <firstterm>request message</firstterm> which is followed by a corresponding <firstterm>response</firstterm>.</para>
-<para>A peer sending a request message is called <firstterm>requesting peer</firstterm> (or short <firstterm>requester</firstterm>). A
-peer sending a response is called <firstterm>responding peer</firstterm> (or short <firstterm>responder</firstterm>).</para>
-<para>A request message contains one or more <firstterm>request operations</firstterm>, which can perform
-queries and/or apply modifications to a graph for which the responder is authoritative. This graph is called
-the <firstterm>target graph</firstterm>.</para>
-<para>When a request message is executed by the responder against the target graph, a <firstterm>result graph</firstterm>
-is generated, which represents the result of the request operations. The result graph MAY be empty.
-</para>
-<para>A response sent from the responder to the requester may either simply be the result graph itself,
-or it may be a <firstterm>response message</firstterm>, which contains within itself the result graph.
-</para>
-<para>The following diagram shows a typical XDI messaging ip:</para>
+<para>To meet the security and privacy requirements of XDI-based systems acting for different authorities,
+the XDI protocol enables systems to precisely describe access and usage rights to the data they control.
+In order for these rights to be enforced uniformly by the all XDI authorities to which they are granted,
+XDI authorization is described in XDI itself. This includes the ability to express any policy governing
+authorization and for policies to reference data, variables, relations, and other statements in the
+relevant XDI graphs. XDI’s primary policy building blocks are a protocol for message operations, a policy
+expression syntax (using Boolean constructs) and the link contract. The link contract is an access control
+mechanism designed to work equally well in either a centralized, or distributed (peer to peer) model.</para>
 
-<para>
-  <figure float="true"><title>XDI Messaging Terminology</title>
-   <mediaobject>
-    <imageobject>
-	<imagedata fileref="xdi-messaging-terminology.png" />
-    </imageobject>
-    </mediaobject>
-    </figure>
-</para>
+</section>
 
-<para>For the request message, the requester is the
-sending peer, and the responder is the receiving peer.</para>
+<section><title>Terminology</title>
 
-<para>For the response, the responder is the sending peer, and the requester is the receiving peer.</para>
+<para><firstterm>XDI policy: </firstterm>The rules and practices by which XDI authorities protect information graphs from unauthorized access operations, or unauthorized usage. </para>
+<para><firstterm>Authorizing authority (AA): </firstterm>The entity or organization controlling an XDI graph to which it may authorize access.</para>
+<para><firstterm>Requesting authority (RA): </firstterm>An entity or organization requesting access to an AA’s graph.</para>
+<para><firstterm>Operational policies: </firstterm>Control access to the graph. They can be specified in XDI link contracts or XDI messages and optionally make use of conditional policy expressions.</para>
+<para><firstterm>Usage policies: </firstterm>Specify RA’s permissions to use data from the AA’s graph once the data is accessed. In many cases the obligation to honor a usage policy must be specified in a legal (or other) agreement for it to be effective. </para>
+<para><firstterm>Conditional policy expressions: </firstterm>Boolean reserved words and patterns for use in XDI policies. </para>
+<para><firstterm>Other policy variables: </firstterm>Time and other variables may be used in policy expressions.</para>
+<para><firstterm>XDI message: </firstterm>An XDI subgraph exchanged between XDI authorities to accomplish an XDI operation ($get, $set, $del)
+against information in a target graph.</para>
+<para><firstterm>Link contract: </firstterm>An XDI subgraph used for access control, or authorization between an AA and an RA. It is a machine-readable agreement describing data shared and permissions granted by one XDI authority to another. A link contract describes both the policy that must be satisfied by an XDI message to be accepted and the permissions granted to the RA if those conditions are met. Link contracts may be used to apply and enforce any type of policy over shared data and messages, including security, privacy, re-sharing, synchronization, and termination.</para>
 
-<para>A <firstterm>message</firstterm> is itself a context node in a graph, so it can be addressed, serialized, stored,
-shared, and controlled by link contracts. When a graph containing one or more messages is serialized and transmitted
-between peers, then that graph is called a <firstterm>message envelope</firstterm>.</para>
+</section>
 
-<section><title>Bindings</title>
+<section><title>Link Contract Model</title>
 
-<para>
-XDI messaging is defined in an abstract way and does not rely on any specific network topology or protocol.
-The XDI Bindings <xref linkend='xdi-bindings-1.0'/> specification defines
-three concrete ways how messages can be transmitted over a network:</para>
+<para>By default, no one has access to data in an XDI graph unless access is granted through a link contract.
+An XDI authority SHOULD create a root link contract to express its access rights to its whole graph. If parts
+of the graph are to be shared publicly with external services, the controlling authority SHOULD create a
+public link contract allowing anonymous access to them. If parts of the graph are to be shared with other
+authorities, the controlling authority can create generic or specific link contract instances for them
+through link contract instantiation exchanges.</para>
+
+<para>Thus, link contracts may be set at various contexts of a graph. In general, a link contract specifically
+addresses the subject nodes. However, the public link contract and root link contract address an entire graph.</para>
+
+<para>All access to the graph other than by its controlling authority’s software occurs via XDI messages. XDI
+messages may be submitted to the graph for policy evaluation through local APIs or over a network interface.</para>
+
+<para>An XDI graph may be controlled by one authority yet contain sub-graphs that are controlled by other
+authorities. These sub-graphs are expressed as inner roots to mark them clearly as originating from another
+authority. When the two authorities choose to cooperate, the authority containing the subgraph should respect
+the originating authority’s link contracts.</para>
+
+</section>
+
+<section><title>Link Contracts</title>
+
+<para>Per the XDI policy model, all access to graphs is controlled through link contracts. Some
+of these are general link contracts – such as the root link contract and the public link
+contract – to set default policies over a broad graph context. Other link contracts enable
+relationships with specific external authorities (such as an individual person) or generic types
+of authorities (such as "all customers" or "all friends").</para>
+
+<para>Link contracts reflecting relationships among authorities are created through a link
+contract (LC) instantiation process. The LC instantiation process makes use of link contract
+templates, requester link contracts and link contract instances, and is described in the XDI
+connections specification.</para>
+
+<section><title>Link Contract Initiation Participants</title>
+
+<para>The parties to the instantiation of a link contract are:</para>
+
 <orderedlist>
-<listitem><para>XDI Direct Binding: Request and response messages are transmitted between the requester and the responder via HTTP POST operations.</para></listitem>
-<listitem><para>XDI Browser Binding: Request and response messages are transmitted between the requester and the responder via a web browser and a sequence of HTTP form submit and redirect operations.</para></listitem>
-<listitem><para>XDI Websocket Binding: Request and response messages are transmitted between the requester and the responder via Websocket sessions.</para></listitem>
+<listitem><para><glossterm>Authorizing Authority (AA): </glossterm>the XDI authority authorizing a link contract granting permissions to an XDI graph.</para></listitem>
+<listitem><para><glossterm>Requesting Authority (RA): </glossterm>the XDI authority requesting a link contract to obtain permissions to an XDI graph.</para></listitem>
+<listitem><para><glossterm>XDI Community Authority (XCA): </glossterm>the XDI authority for a community link contract.</para></listitem>
+<listitem><para><glossterm>Template authority (TA): </glossterm>the XDI authority publishing a link contract template, which may or may not be the requesting authority or authorizing authority.</para></listitem>
 </orderedlist>
 
-<para>From an abstract XDI messaging perspective, any peer can act as a requester and responder. In the context
-of specific bindings, a distinction can be made between <firstterm>XDI endpoints</firstterm>
-and <firstterm>XDI agents</firstterm>.</para>
+</section>
 
-<para>An XDI endpoint is a peer that &#8211; within the context of a specific binding &#8211; has an endpoint URI
-on a network. The three bindings above all require such endpoint URIs, which are discoverable given the XDI peer address
-(see <xref linkend='xdi-discovery-1.0'/>). An XDI endpoint can always act as both
-requesting peer and responding peer.</para>
+<section><title>Link Contract Pattern Types</title>
 
-<para>An XDI agent is a peer that &#8211; within the context of a specific binding &#8211; does not have an endpoint
-URI on a network. In many situations and bindings, an XDI agent can only act as a requesting peer. One
-exception is the XDI Websocket Binding. Once a Websocket connection has been established between two peers, they may
-both act as both requesting peer and responding peer, even if one of them is an XDI agent without its own
-endpoint URI on a network.</para>
+<para>There are four core link contract patterns used for different stages of defining an XDI
+authorization relationship.</para>
+
+<orderedlist>
+<listitem><para>A <glossterm>link contract template</glossterm> is a link contract containing XDI variables that must be replaced by the authorizing authority in order to create a valid link contract instance. A link contract template may be published by any XDI authority, not just a requesting or authorizing authority. Templates provided by neutral third parties make it much easier for link contracts to be standardized, promoting interoperability of XDI vocabulary and permissions. Note: Separating the RA and TA function has not been specified in detailed examples in this working draft or tested in implementation by TC members.</para></listitem>
+<listitem><para>A <glossterm>link contract instance</glossterm> is produced by replacing the variables in a link contract template.</para></listitem>
+<listitem><para>A <glossterm>community link contract</glossterm> is an AA link contract used to authorize a link contract instantiation request ({$do} message) from an RA. A community contract does for an AA what a requestor contract does for an RA. A community contract allows the members of a community (of any size) to establish a common policy or set of policies that will govern members of the community accepting new link contracts from each other. A simple community contract can prevent link contract requests from being used as a form of spam. The policy for this could be as simple as requiring a link contract request to come from another member of that community. A community link contract address is not derived algorithmically from a link contract template address. Rather, it is simply a well-known XDI address to all members of that community.</para></listitem>
+<listitem><para>A <glossterm>requester link contract</glossterm> is a special link contract used by a requesting authority to govern acceptance of link contract instances conforming to a specific link contract template. The requester link contract expresses the policies enforced by a specific requesting authority for accepting LC instances in its own graph. The address of a requester link contract is algorithmically derived from the address of the link contract template on which it is based, providing a standard way to authorize acceptance of link contract instances based on a known template. The requester link contract also provides a way for the AA to update an LC instance repeatedly as needed, or to delete the instance in the RA’s graph.</para></listitem>
+</orderedlist>
 
 </section>
 
-</section>
+<section><title>Link Contract Pattern Definition</title>
 
-<section id="s.messages"><title>Messages</title>
+<para>The following is a high-level summary of the three link contract pattern types.</para>
 
-<para>A message is itself a context in a graph. It is a member instance under
-an entity collection identified by a <code>[$msg]</code> context, under an entity that
-is authoritative for the message. That entity is called the <firstterm>sender</firstterm>
-of the message. The member instance is called the <firstterm>message ID</firstterm>.</para>
+<section><title>Singleton Patterns</title>
 
-<programlisting>&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;
+<para>Community Contract Pattern:</para>
+
+<programlisting>(&lt;--AA-->/&lt;--XCA-->)(&lt;--XCA-->#&lt;--C-ID-->$do
 </programlisting>
 
-<para>Example message by XDI sender <code>=!:uuid:1111</code>, with message ID <code>*!:uuid:1234</code>:</para>
+or
 
-<programlisting>=!:uuid:1111[$msg]*!:uuid:m-1
+<programlisting>(&lt;--AA-->/&lt;--XCA-->)(&lt;--XCA-->#&lt;--C-ID-->$do$if/&lt;--policy-expression-->
 </programlisting>
 
-<para>Every message SHOULD have an immutable address. To express order, the ordered/unordered reference pattern
-(see <xref linkend="xdi-core-1.0"/>) MAY be used:</para>
+<para>Template Pattern:</para>
 
-<programlisting>=!:uuid:1111[$msg]@~0/$ref/=!:uuid:1111[$msg]*!:uuid:m-1
+<programlisting>&lt;--TA-->&lt;--ID-->{$do}/&lt;--operation-->/{$to}&lt;--object-graph-->
 </programlisting>
 
-<para>A context node representing a message contains various
-statements that make up the semantics and purpose of the message.</para>
+<para>Requester Pattern:</para>
 
-<para>Following are the statements that are common to both request messages and response
-messages (shown in statement format). This is called the <firstterm>common message pattern</firstterm>. Labels in <code>&lt;--this-form--&gt;</code> represent
-template variables.</para>
-
-<programlisting>SENDING PEER                &lt;--sending-peer--&gt;/$send/&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;
-RECEIVING PEER              &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is()/&lt;--receiving-peer--&gt;
-MESSAGE TYPE                &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is#/&lt;--message-type--&gt;[$v]&lt;--version-number--&gt;$xdi[$v]@1$msg
-CORRELATION STATEMENT       &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is$msg/&lt;--previous-sender--&gt;[$msg]&lt;--previous-message-id--&gt;
-TIMESTAMP                   &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;$t>/&amp;/&lt;--timestamp--&gt;
-MESSAGE PARAMETERS          &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
-AUTHENTICATION TOKEN        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--token-type--&gt;&lt;$token&gt;/&amp;/&lt;--token--&gt;
-AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--signature-type--&gt;&lt;$sig&gt;/&amp;/&lt;--signature--&gt;
+<programlisting>(&lt;--RA-->/&lt;--TA-->&lt;--ID-->{$do})$do/$set{$do}/({$to}/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$do
 </programlisting>
 
-<section id="s.message.sender"><title>Sender</title>
+<para>Specific Instance:</para>
 
-<para>A message MUST have a <firstterm>sender</firstterm> that creates the message.</para>
+<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$do/&lt;--operation-->/&lt;--AA-->&lt;--object-graph-->
+</programlisting>
 
-<orderedlist>
-<listitem><para><code>&lt;--sender--&gt;</code> is the XDI address of the sender that creates the message.</para></listitem>
-<listitem><para>This XDI address may be any valid XDI entity (e.g., person, organization, thing, device, service, etc.)</para></listitem>
-</orderedlist>
+<para>Generic Instance:</para>
 
-</section>
-
-<section id="s.message.id"><title>Message ID</title>
-
-<para>A message MUST have a <firstterm>message ID</firstterm>.</para>
-
-<orderedlist>
-<listitem><para><code>&lt;--message-id--&gt;</code> is an entity instance that is the unique ID of the message in the context of the <code>[$msg]</code> collection of messages sent by the sender.</para></listitem>
-<listitem><para>The message ID value may be sequential, or based on timestamps, or a random UUID, or use any other algorithm that provides uniqueness in this context.</para></listitem>
-<listitem><para>Sending peers MUST use a different message ID for every message.</para></listitem>
-<listitem><para>Receiving peers MAY enforce uniqueness of message IDs.</para></listitem>
-</orderedlist>
-
-</section>
-
-<section id="s.message.sending.peer"><title>Sending Peer</title>
-
-<para>A message MUST have exactly one <firstterm>sending peer</firstterm>.</para>
-
-<orderedlist>
-<listitem><para><code>&lt;--sending-peer--&gt;</code> is the XDI peer (XDI endpoint or agent) sending this message.</para></listitem>
-</orderedlist>
-
-</section>
-
-<section id="s.message.receiving.peer"><title>Receiving Peer</title>
-
-<para>A message MUST have at least one <firstterm>receiving peer</firstterm>, and MAY have multiple <firstterm>receiving peers</firstterm>.</para>
-
-<orderedlist>
-<listitem><para><code>&lt;--receiving-peer--&gt;</code> is the XDI peer (XDI endpoint or agent) receiving the message.</para></listitem>
-<listitem><para>Depending on the binding being used, it may be possible or required to discover an endpoint URI for this peer (see <xref linkend="xdi-discovery-1.0"/>).</para></listitem> 
-</orderedlist>
-
-</section>
-
-<section id="s.message.type.version"><title>Message Type and Version</title>
-
-<para>A message MAY have a <firstterm>message type</firstterm> and <firstterm>message version</firstterm>.</para>
-
-<orderedlist>
-<listitem><para><code>&lt;--message-type--&gt;</code> is an optional XDI address specifying a message type.</para></listitem>
-<listitem><para><code>&lt;--version-number--&gt;</code> is the message type version, expressed as an ordered instance of a <code>[$v]</code> collection.</para></listitem>
-</orderedlist>
-
-</section>
-
-<section id="s.message.correlation.statement"><title>Correlation statement</title>
-
-<para>A message MAY have one or more <firstterm>correlation statements</firstterm>, also known as <firstterm>thread statements</firstterm>.
-The purpose of such statements is to express that this message is in some way related to a previous message.</para>
-
-<para>For a response message, at least one correlation statement is REQUIRED in order to express that
-the response message is related to the request message.</para>
-
-<para>For a request message, a correlation statement MAY express that the request message is related
-to previous request or response message.</para>
-
-<para>A correlation statement is identified by a <code>$is$msg</code> relational arc between messages. This identifier MAY be
-specialized to express additional semantics about how two messages are related.</para>
-
-<para>Example correlation statement:</para>
-
-<programlisting>=!:uuid:2222[$msg]*!:uuid:m-2/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
+<programlisting>(&lt;--AA-->/&lt;--class-->)&lt;--TA-->&lt;--ID-->$do/&lt;--operation-->/&lt;--AA-->/&lt;--class-->&lt;--AA-->&lt;--object-graph-->
 </programlisting>
 
 </section>
 
-<section id="s.message.timestamp"><title>Timestamp</title>
+<section><title>Collection Patterns</title>
 
-<para>A message MAY have a <firstterm>timestamp</firstterm> to indicate at which point in time a requester sent the message.</para>
+<para>Template Pattern:</para>
 
-<orderedlist>
-<listitem><para><code>&lt;--timestamp--&gt;</code> is the timestamp of the message in XML datetime format as specified by the '''$t''' entry in the XDI $ Dictionary.</para></listitem>
-<listitem><para>Receiving peers MAY enforce policies requiring the message <code>&lt;--timestamp--></code> value to be within a certain tolerance.</para></listitem>
-</orderedlist>
-
-</section>
-
-<section id="s.message.authentication.token"><title>Authentication Token</title>
-
-<para>A message MAY be authenticated with a token as defined in section 1.4 of <xref linkend="rfc6749"/>.</para>
-
-<orderedlist>
-<listitem><para><code>&lt;--token-type--&gt;</code> is the XDI address defining the type of token provided for message authentication.</para></listitem>
-<listitem><para><code>&lt;--token--&gt;</code> is the literal token value provided for authentication.</para></listitem>
-<listitem><para>The token type <code>&lt;$secret&gt;</code> may be used for shared secrets. Any valid XDI literal value may be used as a shared secret.</para></listitem>
-<listitem><para>The token type <code>&lt;$bearer&gt;</code> may be used for bearer tokens as defined by <xref linkend="rfc6750"/>.</para></listitem>
-<listitem><para>Other token types as registered with the IANA OAuth Access Token Types Registry defined in section 11.1 of <xref linkend="rfc6749"/>.</para></listitem>
-</orderedlist>
-
-</section>
-
-<section id="s.message.authentication.signature"><title>Authentication Signature</title>
-
-<para>A message MAY be signed for authentication. See <xref linkend="xdi-signature1.0"/>.</para>
-
-<orderedlist>
-<listitem><para><code>&lt;--signature-type--&gt;</code> is the context defining the type of signature provided for authentication.</para></listitem>
-<listitem><para><code>&lt;--signature--&gt;</code> is the literal signature value provided for authentication as required by the referenced link contract.</para></listitem>
-</orderedlist>
-
-</section>
-
-<section id="s.message.message.parameters"><title>Message Parameters</title>
-
-<para>A message MAY have one or more <firstterm>message parameters</firstterm> that govern how the message is executed.</para>
-
-<orderedlist>
-<listitem><para><code>&lt;--parameter--&gt;</code> is a message parameter.</para></listitem>
-<listitem><para><code>&lt;--parameter-value--&gt;</code> is the value of a message parameter.</para></listitem>
-<listitem><para>A message parameter MUST be interpreted to apply only to the message that contains it.</para></listitem>
-</orderedlist>
-
-<para>The following message parameter is defined by this specification:</para>
-
-<section id="s.message.message.parameter.msg"><title>&lt;$msg></title>
-
-<orderedlist>
-<listitem><para>The <code>&lt;$msg></code> message parameter MUST only be used with request messages.</para></listitem>
-<listitem><para>The parameter instructs the responder to send a response message rather than simply the result graph
-as a response, after the request message has been executed.</para></listitem>
-<listitem><para>Valid values are <code>true</code> and <code>false</code>.</para></listitem>
-<listitem><para>If this message parameter is not present, the default value is <code>false</code>.</para></listitem>
-</orderedlist>
-
-<para>Example:</para>
-
-<programlisting>=!:uuid:1111[$msg]*!:uuid:m-1&lt;$msg&gt;/&amp;/true
+<programlisting>&lt;--TA-->&lt;--ID-->{$do}!&lt;--member-id-->&lt;--operation-->/{$to}&lt;--object-graph-->
 </programlisting>
 
-</section>
+<para>Requester Pattern:</para>
 
-</section>
+<programlisting>TBD
+</programlisting>
 
-</section>
+<para>Specific Instance:</para>
 
-<section id="s.request.messages"><title>Request Messages</title>
+<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$do]!&lt;--member-id-->/&lt;--operation-->/&lt;--AA-->&lt;--object-graph-->
+</programlisting>
 
-<para>A <firstterm>request message</firstterm> MUST conform to the common message pattern
-(see <xref linkend="s.messages"/>). In addition, request messages extend the common message pattern
-with the following <firstterm>request message pattern</firstterm> (shown in statement format):
-</para>
+<para>Generic Instance:</para>
 
-<programlisting>LINK CONTRACT ADDRESS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$do/&lt;--link-contract-address--&gt;
-MESSAGE POLICY               &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do$if&lt;--boolean-context--&gt;/&lt;--operation--&gt;/&lt;--condition--&gt;
-OPERATION PARAMETERS         &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
-VARIABLE ADDRESS ASSIGNMENT  &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--variable--&gt;/$is/&lt;--variable-value--&gt;
-VARIABLE LITERAL ASSIGNMENT  &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--variable--&gt;/&amp;/"&lt;--variable-value--&gt;"
-OPERATION ON ADDRESS         &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;/&lt;--target-address--&gt;
-OPERATION ON INNER GRAPH     (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;)&lt;--target-inner-graph--&gt;
+<programlisting>(&lt;--AA-->/&lt;--class-->)&lt;--TA-->&lt;--ID-->[$do]!&lt;--member-id-->/&lt;--operation-->/(&lt;--AA-->/&lt;--class-->)&lt;--AA-->&lt;--object-graph-->
 </programlisting>
 
 <para>Where:</para>
-<orderedlist>
-<listitem><para><code>&lt;--link-contract-address--&gt;</code> is the XDI address of the link contract authorizing the requested operation on the requested object graph. This MUST be either: a) a <code>$do</code> entity singleton or: b) a <code>[$do]</code> entity class followed by an entity instance. See the XDI Policy specification: <xref linkend='xdi-policy-1.0'/>.</para></listitem>
-<listitem><para><code>&lt;--boolean-context--&gt;</code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem>
-<listitem><para><code>&lt;--operation--&gt;</code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem> 
-<listitem><para><code>&lt;--condition--&gt;</code> is defined in <xref linkend='xdi-policy-1.0'/>.</para></listitem>
-<listitem><para><code>&lt;--operation--&gt;</code> is the request operation (<code>$get, $set, $add, $mod, $del, $connect, $send, $push, $do</code>). A request operation may be executed on an address or on an inner root. There may be one or more operations in a message.</para></listitem>
-<listitem><para><code>&lt;--parameter--&gt;</code> is an operation parameter.</para></listitem>
-<listitem><para><code>&lt;--parameter-value--&gt;</code> is the value of an operation parameter.</para></listitem>
-<listitem><para><code>&lt;--target-address--&gt;</code> is an XDI address that the operation is executed on.</para></listitem> 
-<listitem><para><code>&lt;--target-inner-graph--&gt;</code> is an XDI inner graph containing statements that the operation is executed on.</para></listitem> 
-</orderedlist>
-
-<para>Example request message:</para>
-
-<programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
-=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
-=!:uuid:1111[$msg]*!:uuid:m-1/$do/(=!:uuid:2222/=!:uuid:1111)$get[$do]*!:uuid:
-=!:uuid:1111[$msg]*!:uuid:m-1$do/$get/=!:uuid:2222&lt;#email>
-</programlisting>
-
-<section id="s.request.message.link.contract.address"><title>Link Contract Address</title>
-
-<orderedlist>
-<listitem><para>Request messages MUST include a <code>&lt;--link-contract-address--&gt;</code> reference to the XDI link contract authorizing that message. See the [[Link Contract Pattern]]. Requiring the <code>&lt;--link-contract--&gt;</code> reference in an XDI message makes it much more efficient for XDI servers to perform authentication and authorization, because they know which link contract to evaluate. (For a public link contract, the value of <code>&lt;--link-contract--&gt;</code> is <code>$public$do</code>.)</para></listitem>
-<listitem><para>Request messages MUST be executed only if the [[XdiPolicyExpression|link contract policies]] evaluates to <code>true</code>.</para></listitem>
-</orderedlist>
-
-</section>
-
-<section id="s.request.message.message.policy"><title>Message Policy</title>
-
-<orderedlist>
-<listitem><para>A request message MAY have a policy c to govern their execution at an XDI endpoint.</para></listitem>
-<listitem><para>If an XDI message includes a <code>&lt;--sender--&gt;[$msg]&lt;--id--&gt;$do$if</code> sub context, the set of message policy statements in this context MUST be evaluated by the XDI endpoint.</para></listitem>
-<listitem><para>Request messages MUST be executed only if the [[XdiPolicyExpression|link contract policies]] evaluates to <code>true</code>.</para></listitem>
-<listitem><para>For privacy reasons, a message policy may only access parts of the target graph which it has <code>$get</code> access to under the link contract referenced in the message.</para></listitem>
-</orderedlist>
-
-</section>
-
-<section id="s.request.message.operation.parameters"><title>Operation Parameters</title>
-
-<orderedlist>
-<listitem><para>A request operation MAY have one or more <firstterm>operation parameters</firstterm> that govern how the request operation is executed.</para></listitem>
-<listitem><para>An operation parameter MUST apply only to the request operation that contains it.</para></listitem>
-</orderedlist>
-
-<para>The following operation parameters are defined by this specification.</para>
-
-<section><title>&lt;$deref></title>
-
-<orderedlist>
-<listitem><para>The <code>&lt;$deref></code> MUST only be used with the <code>$get</code> operation.</para></listitem>
-<listitem><para>The parameter controls whether the responder automatically dereferences <code>$ref</code> statements in a result graph.</para></listitem>
-<listitem><para>Valid values are <code>true</code> and <code>false</code>.</para></listitem>
-<listitem><para>If this parameter is not present, the default value is <code>false</code>.</para></listitem>
-</orderedlist>
-
-<para>Example:</para>
-
-<programlisting>=!:uuid:1111[$msg]*!:uuid:m-1$get&lt;$deref&gt;/&amp;/true
-</programlisting>
-
-</section>
-
-<section><title>&lt;$proxy></title>
-
-<orderedlist>
-<listitem><para>The <code>&lt;$proxy></code> MUST only be used with the <code>$get</code> operation.</para></listitem>
-<listitem><para>The parameter controls whether the responder acts as a proxy to complete discovery of an XDI context for which the responder is not itself authoritative.</para></listitem>
-<listitem><para>Valid values are <code>true</code> and <code>false</code>.</para></listitem>
-<listitem><para>If this parameter is not present, the default value is <code>false</code>.</para></listitem>
-</orderedlist>
-
-<para>Example:</para>
-
-<programlisting>=!:uuid:1111[$msg]*!:uuid:m-1$get&lt;$proxy&gt;/&amp;/true
-</programlisting>
-
-</section>
-
-</section>
-
-<section id="s.request.message.variable.assignments"><title>Variable Assignment</title>
-
-<orderedlist>
-<listitem><para>A request operation MAY have one or more <firstterm>variable assignments</firstterm> that are used when the request operation is executed.</para></listitem>
-<listitem><para>A variable assignment MUST apply only to the request operation that contains it.</para></listitem>
-<listitem><para>For certain operations it is REQUIRED that variables are assigned values.</para></listitem>
-<listitem><para>For certain operations it is OPTIONAL that variables are assigned values.</para></listitem>
-<listitem><para>See the definitions of individual operation for information whether it uses variables,
-which variables it uses, how
-they are used, and whether it is required or optional to assign values to the variables.</para></listitem>
-</orderedlist>
-
-<para>Example:</para>
-
-<programlisting>=!:uuid:1111[$msg]*!:uuid:m-1$connect{$get}/$is/=!:uuid:2222&lt;#email>
-</programlisting>
-
-</section>
-
-</section>
-
-<section id="s.response"><title>Response</title>
-
-<para>Every request message MUST have a corresponding response which is transmitted back from the
-responder to the requester, in a way defined by the binding that is being used. There are two types
-of responses. <firstterm>Result graphs</firstterm> and <firstterm>response messages</firstterm>.</para>
-
-<para>If the <code>&lt;$msg&gt;</code> message parameter (see <xref linkend="s.message.message.parameter.msg"/>) is absent or set to <code>false</code>, then the response MUST be
-a result graph.</para>
-<para>If the <code>&lt;$msg&gt;</code> message parameter is set to <code>true</code>, then the response MUST be
-a response message.</para>
-
-<section id="s.response.result.graph"><title>Result Graph</title>
-
-<para>A <firstterm>result graph</firstterm> consists of the result statements of a request operation.
-The result graph is not itself a message and therefore does not conform to the common message pattern
-(see <xref linkend="s.messages"/>).</para>
-
-<para>Every request operation has its own result graph. If a request message contains multiple
-request operations, and/or a request message envelope contains multiple request messages, then a
-<firstterm>combined result graph</firstterm> is created that is the union of all result graphs.</para>
-
-<para>Example result graph:</para>
-
-<programlisting>=!:uuid:2222&lt;#email>/&amp;/"bob@email.com"
-=!:uuid:2222/#friend/=!:uuid:1111</programlisting>
-
-</section>
-
-<section id="s.response.message"><title>Response Message</title>
-
-<para>A <firstterm>response message</firstterm> MUST conform to the common message pattern
-(see <xref linkend="s.messages"/>). In addition, response messages extend the common message pattern
-with the following <firstterm>response message pattern</firstterm> (shown in statement format):
-</para>
-
-<programlisting>OPERATION RESULT GRAPHS  (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operation--&gt;)&lt;--result-graph--&gt;
-DEFERRED PUSH CONTRACTS  (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operation-->$defer$push)&lt;--deferred-push-contracts--&gt;</programlisting>
-
-<section id="s.response.message.operation.result.graphs"><title>Operation Result Graphs</title>
-
-<para>
-The result graphs of the
-request operations are included in the response message using inner root nodes as follows:</para>
-<itemizedlist>
-<listitem><para>For each request operation in the request message, an inner root node
-is created in the response message to represent the result graph of that particular request operation.</para></listitem>
-<listitem><para>The subject of the inner root node's XDI address is the XDI address of
-the request message to which the response message corresponds.</para></listitem>
-<listitem><para>The predicate of the inner root node's XDI address is the identifier of the request operation to
-which the result graph corresponds.</para></listitem>
-<listitem><para>The inner graph under the inner root node is the result graph of the request operation.</para></listitem>
-</itemizedlist>
-
-<para>Example response message with a result graph:</para>
-
-<programlisting>(=!:uuid:2222)/$send/=!:uuid:2222[$msg]*!:uuid:m-2
-=!:uuid:2222[$msg]*!:uuid:m-2/$is()/(=!:uuid:1111)
-=!:uuid:2222[$msg]*!:uuid:m-2/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
-(=!:uuid:2222[$msg]*!:uuid:m-2/$get)=!:uuid:2222&lt;#email>/&amp;/"bob@email.com"
-(=!:uuid:2222[$msg]*!:uuid:m-2/$get)=!:uuid:2222/#friend/=!:uuid:1111
-</programlisting>
-
-</section>
-
-<section id="s.response.message.deferred.push.contracts"><title>Deferred Push Contracts</title>
-
-<para>EDITORIAL NOTE: Maybe some parts of this section should be moved to <xref linkend="xdi-policy-1.0"/>.</para>
-
-<para>A response message may have one or more <glossterm>deferred push contracts</glossterm>,
-which indicate that a result graph is not yet available, and that a request operation has
-therefore been <firstterm>deferred</firstterm>.</para>
-
-<para><glossterm>Deferred push contracts</glossterm> are <glossterm>push contracts</glossterm> 
-(see <xref linkend="s.push.contracts"/>) that are used for handling deferred request operations.</para>
-
-<para>A request operation may be deferred for the following reasons:</para>
 
 <itemizedlist>
-<listitem><para>The operation is executed asynchronously. The result graph of the operation will be
-pushed once execution is complete.</para></listitem>
-<listitem><para>The operation cannot be executed at the moment. It will be executed as soon as possible,
-and the result graph of the operation will be pushed once execution is complete.</para></listitem>
-<listitem><para>The request operation is deferred due to link contract policy (see <xref linkend="xdi-policy-1.0"/>).
-It is expected to be approved or rejected at a future point in time (see <xref linkend="a.common.messaging.patterns.approval"/>
-and <xref linkend="a.common.messaging.patterns.rejection"/>).
-</para></listitem>
-<listitem><para>For other reasons that are out of scope of this specification.</para></listitem>
+<listitem><para><code>&lt;--TA--></code> is the XDI address of the template authority.</para></listitem>
+<listitem><para><code>&lt;--RA--></code> is the XDI address of the requesting authority.</para></listitem>
+<listitem><para><code>&lt;--AA--></code> is the XDI address of the authorizing authority.</para></listitem>
+<listitem><para><code>&lt;--ID--></code> is an OPTIONAL context for specialization of the singleton <code>$do</code> or collection <code>[$do]&lt;--member-id--></code>. It can serve as a "qualifier" or "tag" that describes the intention of the link contract, e.g. <code>#registration</code>.</para></listitem>
+<listitem><para><code>&lt;--member-id--></code> is a unique immutable ID for a member of a link contract collection. (Unordered members start with <code>!</code>, ordered members start with <code>@</code>.)</para></listitem>
+<listitem><para><code>&lt;--operation--></code> is an XDI operation permitted by this link contract (e.g., <code>$get</code>, <code>$set</code>, <code>$del</code>, <code>$copy</code>, <code>$move</code>, or <code>$do&lt;--extension--></code>).</para></listitem>
+<listitem><para><code>&lt;--object-graph--></code> is the XDI graph that is the object of the operations permitted by the link contract.</para></listitem>
+<listitem><para><code>&lt;--boolean-context--></code> is defined in the Policy Expression Requirements.</para></listitem>
+<listitem><para><code>&lt;--operator--></code> is defined in the Policy Expression Requirements.</para></listitem>
+<listitem><para><code>&lt;--condition--></code> is defined in the Policy Expression Requirements.</para></listitem>
 </itemizedlist>
 
-<para>In the above cases, <glossterm>deferred push contracts</glossterm> are created automatically 
-in the responder's target graph and returned in the response message. To create a
-<glossterm>deferred push contract</glossterm>, the link contract instantiation function
-(see <xref linkend="s.link.contract.instantiation"/>) is invoked with the following input parameters:</para>
+<para>Notes about this overall architecture:</para>
 
 <itemizedlist>
-<listitem>The link contract template is <code>$defer$push{$do}</code> (see <xref linkend="s.standard.deferred.push.link.contract.template"/>).</listitem>
-<listitem>The variable <code>{$from}</code> is assigned the sending peer of the request operation (see <xref linkend="s.message.sending.peer"/>).</listitem>
-<listitem>The variable <code>{$to}</code> is assigned the receiving peer of the request operation (see <xref linkend="s.message.receiving.peer"/>).</listitem>
-<listitem>The variable <code>{$push}</code> is assigned the address of the context(s) of the result graph that are not yet available.</listitem>
-<listitem>The <glossterm>instance flag</glossterm> set to "instance"</listitem>
+<listitem><para>The only difference between the singleton and collection patterns is whether the link contract node itself is an XDI entity singleton or entity collection.</para></listitem>
+<listitem><para>Both the instance and the requester patterns begin with an inner root so that they can have an algorithmically-generated address relative to an AA and RR that is always identical in both authorities’ graphs. `The template and the requester contain an XDI <code>{$to}</code> variable to refer to AA variables outside of the policy expression branch. The instance pattern does not include XDI variables because they have been instantiated in order to create the instance.</para></listitem>
+<listitem><para>In the instance pattern, each of the three components specializes the associated <code>$word</code> that follows it, i.e.:</para>
+<itemizedlist>
+<listitem><para><code>&lt;--authorizing-authority--></code> specializes <code>$to</code>.</para></listitem>
+<listitem><para><code>&lt;--requesting-authority--></code> specializes <code>$from</code>.</para></listitem>
+<listitem><para><code>&lt;--template-authority-->&lt;--template-id--></code> specializes <code>$do</code>.</para></listitem>
+</itemizedlist>
+</listitem>
 </itemizedlist>
 
-<para>Example instantiated deferred push contract:</para>
+</section>
 
-<programlisting>(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2/$push/=!:uuid:2222&lt;#email>
-(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2/$is()/(=!:uuid:1111)
-(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2$if$and/$true){$from}/$is/=!:uuid:2222
-(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
-(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
-</programlisting>
+</section>
 
-<para>A request operation MAY have both a result graph and a deferred push contract in the response message,
-indicating that a partial result is available immediately, and that additional results will be available
-in the future.</para>
+</section>
 
-<para>A request operation MAY have more than one corresponding deferred push contract, if the result
-graph will be delivered in multiple pushes.</para>
+<section><title>Link Contract Instance Pattern</title>
 
-<para>Example response message with a deferred push contract:</para>
+<para>All link contract instances except a root link contract or public link contract
+(see below) MUST consist of a set of XDI statements in one of the two following basic
+patterns, which grant the operational permissions requested in a link contract template:</para>
 
-<programlisting>(=!:uuid:2222)/$send/=!:uuid:2222[$msg]*!:uuid:m-2
-=!:uuid:2222[$msg]*!:uuid:m-2/$is()/(=!:uuid:1111)
-=!:uuid:2222[$msg]*!:uuid:m-2/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
-(=!:uuid:2222[$msg]*!:uuid:m-2/$get$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2/$push/=!:uuid:2222&lt;#email>
-(=!:uuid:2222[$msg]*!:uuid:m-2/$get$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2/$is()/(=!:uuid:1111)
-(=!:uuid:2222[$msg]*!:uuid:m-2/$get$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2$if$and/$true){$from}/$is/=!:uuid:2222
-(=!:uuid:2222[$msg]*!:uuid:m-2/$get$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
-(=!:uuid:2222[$msg]*!:uuid:m-2/$get$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
+<section><title>Link Contract Instance Singleton Pattern</title>
+
+<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$do/&lt;--operation-->/&lt;--AA-->&lt;--object-graph--> 
 </programlisting>
 
 </section>
 
+<section><title>Link Contract Instance Collection Pattern</title>
+
+<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$do]!&lt;--member-id-->/&lt;--operation-->/&lt;--AA-->&lt;--object-graph-->
+</programlisting>
+
+<para>Note that in link contract instances, all XDI variables have been replaced. Unless
+otherwise noted, all subsequence template examples can be expressed as singleton <code>($do$if)</code>
+or as collection (<code>[$do]&lt;--member-id--></code>) statements; the singleton form is shown.</para>
+
+</section>
+
+<section><title>Stating Policy Expressions</title>
+
+<para>A link contract instance MAY contain one or more policy expression branches. They
+express the policies that an AA will apply to allow or deny XDI messages that claim to
+be authorized under the link contract. </para>
+
+<programlisting>(&lt;--AA-->/&lt;--RA-->)$do$if/&lt;--policy expression-->
+</programlisting>
+
+<para>For example, these policy statements might require the entity using the link contract
+instance on behalf of its requesting authority to:</para>
+
+<itemizedlist>
+<listitem><para>Be an employee of a company.</para></listitem>
+<listitem><para>Be under or over a certain age.</para></listitem>
+<listitem><para>Have a certain reputation or trust level.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title>Granting Usage Permissions</title>
+
+<para>Link contract instances MUST grant required usage permissions (otherwise
+no LC instance would be created).</para>
+
+<programlisting>(&lt;--AA-->/&lt;--RA-->)$do$for&lt;$opt>/&amp;/&amp;/true   
+</programlisting>
+
+</section>
+
+<section><title>Other Parameters</title>
+
+<para>Link contracts meant to serve official or business purposes that may have compliance
+or other legal significance SHOULD be time stamped, versioned and signed and contain a copy
+of the generating LC template for audit purposes.</para>
+
+<para>Note: <code>$v</code> (version) could be used as well if a link contract instance was
+changed (which is allowed as long as it is not violating the template). </para>
+
 </section>
 
 </section>
 
-<section id="s.operations"><title>Operations</title>
+<section><title>Link Contract Template Pattern</title>
 
-<para>Operations constitute the body of an XDI message.</para>
+<para>All link contract templates MUST consist of a set of XDI statements in one of the two
+following patterns, both of which use the {$to} variable to represent the AA who will authorize
+an LC instance. This is the same variable used to represent the receiver of an XDI message in
+XDI messaging. </para>
+
+<section><title>Link Contract Template Basic Singleton Pattern</title>
+
+<programlisting>&lt;--TA-->&lt;--ID-->{$do}/&lt;--operation-->/{$to}&lt;--object-graph-->
+</programlisting>
+
+</section>
+
+<section><title>Link Contract Template Basic Collection Pattern</title>
+
+<programlisting>&lt;--TA-->&lt;--ID-->{$do}!&lt;--member-id-->/&lt;--operation-->/{$to}&lt;--object-graph-->
+</programlisting>
+
+<para>Unless otherwise noted, all subsequence template examples can be expressed as
+singleton (<code>$do$if</code>) or as collection (<code>[$do]&lt;--member-id--></code>) statements; the
+singleton form is shown.</para>
+
+</section>
+
+<section><title>Stating Policy Expressions</title>
+
+<para>A link contract template MAY contain one or more policy expression branches. They
+express the policies requested that an AA apply to allow or deny XDI messages that claim
+to be authorized under the link contract.</para>
+
+<programlisting>&lt;--TA-->&lt;--ID-->{$do}$if/&lt;--policy expression-->
+</programlisting>
+
+</section>
+
+<section><title>Requesting Operational Permissions</title>
+
+<para>Each relational <code>&lt;--operation--></code> predicate in the <code>$do</code> or
+<code>[$do]&lt;--member-id--></code> context MUST define a permission granted by the link
+contract to an XDI message that satisfies the link contract policies.</para>
+
+<para>The <code>&lt;--object-graph--></code> of each <code>&lt;--operation--></code> predicate
+defines the XDI graph or subgraph over which the permission for the specified operation is
+granted. A template can indicate whether a requested permission is mandatory or optional
+using the reserved word <code>$required</code>.</para>
+
+<programlisting>&lt;--TA-->&lt;--ID-->{$do}/&lt;--operation-->/{$to}&lt;--object-graph-->&lt;$required>&amp;/&amp;/true  ##mandatory
+&lt;--TA-->&lt;--ID-->{$do}/&lt;--operation-->/{$to}&lt;--object-graph-->&lt;$required>&amp;/&amp;/false  ## optional
+</programlisting>
+
+</section>
+
+<section><title>Requesting Usage Permissions</title>
+
+<para>An operational permission leaving usage permissions unspecified is, in effect, requesting
+blanket permissions. RAs SHOULD request more specific usage permissions for the data in an
+<code>&lt;--object-graph--></code> using the <code>$for</code> reserved word and the <code>$opt</code> reserved word in their link
+contract template. Additionally, RA’s SHOULD use the <code>$required</code> and <code>$default</code> reserved words
+for an opt-in patterns.</para>
+
+<programlisting>&lt;--TA-->&lt;--ID-->{$do}$for{&lt;$opt>}&lt;$required>&amp;/&amp;/true     ## opt in is required
+&lt;--TA-->&lt;--ID-->{$do}$for{&lt;$opt>}&lt;$default>&amp;/&amp;/false     
+&lt;--TA-->&lt;--ID-->{$do}$for{&lt;$opt>}&lt;--language-->/&amp;/&amp;/"human readable explanation"
+</programlisting>
+
+</section>
+
+<section><title>Other Permissions</title>
+
+<para>Templates for link contracts meant to serve official or business purposes that may
+have compliance or other legal significance SHOULD be labeled, time stamped, signed and/or
+version-numbered.</para>
+
+<programlisting>&lt;--TA-->&lt;--ID-->{$do}&lt;--language-context-->/&amp;/&amp;/"human readable label"
+&lt;--TA-->&lt;--ID-->{$do}&lt;$template>&lt;$add>{&lt;$t>}/&amp;/&amp;/&lt;--UTC time-->
+&lt;--TA-->&lt;--ID-->{$do}&lt;-- signature-context --></programlisting>
+
+<para>TBD: version</para>
+
+</section>
+
+</section>
+
+<section><title>Link Contract Policies</title>
+
+<para><firstterm>XDI operational policies</firstterm> are expressed in XDI link contracts or XDI messages and may be evaluated
+against an evaluation context. The result is always a boolean value (true or false).  Two elements are
+needed to set the evaluation context:</para>
+
 <orderedlist>
-<listitem><para>A request message MUST contain at least one operation statement.</para></listitem>
-<listitem><para>To successfully complete execution of a request message, a responder MUST complete execution of each operation requested in each operation statement in the message.</para></listitem>
+<listitem><para>The XDI graph that is the target of an XDI message (called the <glossterm>target graph</glossterm>).</para></listitem>
+<listitem><para>The XDI message that is meant to be executed against the target graph (called the <glossterm>input message</glossterm>).</para></listitem>
 </orderedlist>
 
-<para>Depending on: a) the operation, and b) whether the operation target is an XDI address or
-an inner graph, the following operations and behaviors are possible:</para>
+<para>An XDI link contract policy is part of the target graph. It provides a way for an XDI endpoint to
+determine if the input message is authorized. An XDI message policy is part of the input message. It
+provides a way for an XDI client to request execution of the input message only if certain conditions
+are met. XDI link contract policies and XDI message policies are evaluated by the XDI endpoint that hosts
+the target graph and receives the input message.</para>
 
-<table><title>XDI Operations Overview</title><tgroup cols="3"><thead>
-<row><entry></entry><entry>on address</entry><entry>on inner graph</entry></row>
-</thead><tbody>
-<row><entry><code>$get</code></entry><entry>retrieves graph/subgraph</entry><entry>retrieves individual contextual/relational/literal statement(s)</entry></row>
-<row><entry><code>$set</code></entry><entry>creates or modifies context node plus parent context node(s) if needed</entry><entry>creates or modifies individual contextual/relational/literal statement(s) plus parent context nodes(s) if needed</entry></row>
-<row><entry><code>$add</code></entry><entry>creates new context node plus parent context node(s) if needed</entry><entry>creates new individual contextual/relational/literal statement(s) plus parent context nodes(s) if needed</entry></row>
-<row><entry><code>$mod</code></entry><entry>(invalid)</entry><entry>modifies existing literal statement(s)</entry></row>
-<row><entry><code>$del</code></entry><entry>deletes context node and subgraph</entry><entry>deletes individual contextual/relational/literal statement(s) plus subgraph(s)</entry></row>
-<row><entry><code>$connect</code></entry><entry>requests instantiation of a link contract</entry><entry>requests instantiation of a link contract</entry></row>
-<row><entry><code>$send</code></entry><entry>requests sending of an inner message</entry><entry>requests sending of an inner message</entry></row>
-<row><entry><code>$push</code></entry><entry>delivers a notification based on a push link contract</entry><entry>delivers a notification based on a push link contract</entry></row>
-<row><entry><code>$do</code></entry><entry>(unspecified)</entry><entry>(unspecified)</entry></row>
-</tbody></tgroup></table>
+<para>An <glossterm>XDI data usage policy</glossterm> controls usage of the requested data outside the scope
+of XDI enforcement. Data usage policies are attached to a link contract controlling access to part of the
+target graph. XDI data usage policies are evaluated by the authority that holds the data to which the XDI
+data usage policy applies. This may be the XDI endpoint that hosts the target graph, or it may be any other
+XDI endpoint or XDI client which has retrieved the data (and the XDI data usage policy along with it).</para>
 
-<section id="s.operation.get"><title><code>$get</code> operation</title>
+<para>Note: More work on data usage policies may come in the future, including the possibility of attaching
+them to the data itself rather than the link contract. Usage policies are supported in this working draft
+primarily as a basic privacy mechanism to prevent undesired copying of data when RAs and AAs are part of a
+trust framework supporting these policies.</para>
 
-<para>The <code>$get</code> operation retrieves XDI statements from a target graph and does not make changes to that graph.</para>
+<para>Policy expressions MUST follow the patterns and include applicable reserved words as specified below.</para>
 
-<section><title><code>$get</code> applied to an address</title>
+<section><title>Policy Expression Pattern</title>
 
-<para>The result graph contains the subgraph at the provided address if it exists.
-If the subgraph does not exist, the result graph is empty.</para>
-<para>Example: Given the following target graph:</para>
-<programlisting>//+!:uuid:0000
-=!:uuid:2222&lt;#email>/&amp;/"bob@email.com"
-=!:uuid:2222/#friend/=!:uuid:1111
-</programlisting>
-<para>And the following <code>$get</code> operation on address <code>=!:uuid:2222</code>:</para>
-<programlisting>=!:uuid:1111[$msg]*!:uuid:m-1$do/$get/=!:uuid:2222
-</programlisting>
-<para>The result graph will be:</para>
-<programlisting>=!:uuid:2222&lt;#email>/&amp;/"bob@email.com"
-=!:uuid:2222/#friend/=!:uuid:1111
+<para>A policy MUST consist of one or more XDI statements in the following pattern: </para>
+
+<programlisting>&lt;--policy-context--> $if&lt;--boolean-context-->/&lt;--operator-->/&lt;--condition-->
 </programlisting>
 
-</section>
-
-<section><title><code>$get</code> applied to an inner graph</title>
-
-<para>The result graph contains the provided statements of the inner graph if they exist.
-If the statements do not exist, the result graph is empty (this is not considered an error).</para>
-<para>Example: Given the following target graph:</para>
-<programlisting>//+!:uuid:0000
-=!:uuid:2222&lt;#email>/&amp;/"bob@email.com"
-=!:uuid:2222/#friend/=!:uuid:1111
-</programlisting>
-<para>And the following <code>$get</code> operation on statement <code>=!:uuid:2222/#friend/=!:uuid:1111</code>:</para>
-<programlisting>(=!:uuid:1111[$msg]*!:uuid:m-1$do/$get)=!:uuid:2222/#friend/=!:uuid:1111
-</programlisting>
-<para>The result graph will be:</para>
-<programlisting>=!:uuid:2222/#friend/=!:uuid:1111
-</programlisting>
-
-</section>
-
-</section>
-
-<section id="s.operation.set"><title><code>$set</code> operation</title>
-
-<para>The <code>$set</code> operation creates or modifies data in a target graph. Unless an error occurs, the result graph is the empty graph.</para>
-
-<section><title><code>$set</code> applied to an address</title>
-
-<para>This operation creates a context node at the provided address, as well as any parent context node(s) as needed.
-If the context node exists already, the operation has no effect (this is not considered an error).</para>
-<para>Example: Given the following target graph:</para>
-<programlisting>//+!:uuid:0000
-//=!:uuid:2222
-</programlisting>
-<para>And the following <code>$set</code> operation on address <code>=!:uuid:2222&lt;#email></code>:</para>
-<programlisting>=!:uuid:1111[$msg]*!:uuid:m-1$do/$set/=!:uuid:2222&lt;#email>
-</programlisting>
-<para>The target graph after the operation will be:</para>
-<programlisting>//+!:uuid:0000
-=!:uuid:2222//&lt;#email>
-</programlisting>
-
-</section>
-
-<section><title><code>$set</code> applied to an inner graph</title>
-
-<para>This operation creates the provided statements of the inner graph, as well as any parent context nodes(s) as needed.
-If a statement exists already, the operation has no effect on this statement (this is not considered an error).</para>
-<para>Example: Given the following target graph:</para>
-<programlisting>//+!:uuid:0000
-=!:uuid:2222&lt;//#email>
-</programlisting>
-<para>And the following <code>$set</code> operation on statements <code>=!:uuid:2222&lt;#email>/&amp;/"bob@email.com"</code> and <code>=!:uuid:2222/#friend/=!:uuid:1111</code>:</para>
-<programlisting>(=!:uuid:1111[$msg]*!:uuid:m-1$do/$set)=!:uuid:2222&lt;#email>/&amp;/"bob@email.com"
-(=!:uuid:1111[$msg]*!:uuid:m-1$do/$set)=!:uuid:2222/#friend/=!:uuid:1111 
-</programlisting>
-<para>The target graph after the operation will be:</para>
-<programlisting>//+!:uuid:0000
-=!:uuid:2222&lt;#email>/&amp;/"bob@email.com"
-=!:uuid:2222/#friend/=!:uuid:1111
-</programlisting>
-
-</section>
-
-</section>
-
-<section id="s.operation.add"><title><code>$add</code> operation</title>
-
-<para>The <code>$add</code> operation creates data in a target graph. Unless an error occurs, the result graph is the empty graph.
-If the operation is applied to data which already exists, it generates an error
-(this is what distinguishes <code>$add</code> from <code>$set</code>).</para>
-
-<section><title><code>$add</code> applied to an address</title>
-
-<para>This operation creates a context node at the provided address, as well as any parent context node(s) as needed.
-If the context node exists already, the operation generates an error.</para>
-<para>Example: Given the following target graph:</para>
-<programlisting>//+!:uuid:0000
-//=!:uuid:2222
-</programlisting>
-<para>And the following <code>$add</code> operation on address <code>=!:uuid:2222&lt;#email></code>:</para>
-<programlisting>=!:uuid:1111[$msg]*!:uuid:m-1$do/$add/=!:uuid:2222&lt;#email>
-</programlisting>
-<para>The target graph after the operation will be:</para>
-<programlisting>//+!:uuid:0000
-=!:uuid:2222//&lt;#email>
-</programlisting>
-
-</section>
-
-<section><title><code>$add</code> applied to an inner graph</title>
-
-<para>This operation creates the provided statements of the inner graph, as well as any parent context nodes(s) as needed.
-If a statement exists already, the operation generates an error.</para>
-<para>Example: Given the following target graph:</para>
-<programlisting>//+!:uuid:0000
-=!:uuid:2222&lt;//#email>
-</programlisting>
-<para>And the following <code>$add</code> operation on statements <code>=!:uuid:2222&lt;#email>/&amp;/"bob@email.com"</code> and <code>=!:uuid:2222/#friend/=!:uuid:1111</code>:</para>
-<programlisting>(=!:uuid:1111[$msg]*!:uuid:m-1$do/$add)=!:uuid:2222&lt;#email>/&amp;/"bob@email.com"
-(=!:uuid:1111[$msg]*!:uuid:m-1$do/$add)=!:uuid:2222/#friend/=!:uuid:1111 
-</programlisting>
-<para>The target graph after the operation will be:</para>
-<programlisting>//+!:uuid:0000
-=!:uuid:2222&lt;#email>/&amp;/"bob@email.com"
-=!:uuid:2222/#friend/=!:uuid:1111
-</programlisting>
-
-</section>
-
-</section>
-
-<section id="s.operation.mod"><title><code>$mod</code> operation</title>
-
-<para>The <code>$mod</code> operation modifies data in a target graph. Unless an error occurs, the result graph is the empty graph.
-If the operation is applied to data which does not exist, it generates an error
-(this is what distinguishes <code>$mod</code> from <code>$set</code>).</para>
-
-<section><title><code>$mod</code> applied to an address</title>
-
-<para>This operation on an address is not defined and generates an error.</para>
-
-</section>
-
-<section><title><code>$mod</code> applied to an inner graph</title>
-
-<para>This operation is only defined on literal statements and generates an error otherwise.
-It modifies the value of an existing literal statement.
-If the context node that contains the literal does not exist, the operation generates an error.</para>
-<para>Example: Given the following target graph:</para>
-<programlisting>//+!:uuid:0000
-=!:uuid:2222&lt;#email>/&amp;/"bob@email.com"
-=!:uuid:2222/#friend/=!:uuid:1111
-</programlisting>
-<para>And the following <code>$mod</code> operation on statement <code>=!:uuid:2222&lt;#email>/&amp;/"alice@new.com"</code>:</para>
-<programlisting>(=!:uuid:1111[$msg]*!:uuid:m-1$do/$set)=!:uuid:2222&lt;#email>/&amp;/"bob@new.com"
-</programlisting>
-<para>The target graph after the operation will be:</para>
-<programlisting>=!:uuid:2222&lt;#email>/&amp;/"bob@new.com"
-</programlisting>
-
-</section>
-
-</section>
-
-<section id="s.operation.del"><title><code>$del</code> operation</title>
-
-<para>The <code>$del</code> operation deletes data from a target graph. Unless an error occurs, the result graph is the empty graph.</para>
-
-<section><title><code>$del</code> applied to an address</title>
-
-<para>This operation deletes a context node at the provided address, as well as its entire subgraph.
-If the context node does not exist, the operation has no effect (this is not considered an error).</para>
-<para>Example: Given the following target graph:</para>
-<programlisting>//+!:uuid:0000
-=!:uuid:2222&lt;#email>/&amp;/"bob@email.com"
-=!:uuid:2222/#friend/=!:uuid:1111
-</programlisting>
-<para>And the following <code>$del</code> operation on target address <code>=!:uuid:1111&lt;#email></code>:</para>
-<programlisting>=!:uuid:1111[$msg]*!:uuid:m-1$do/$del/=!:uuid:2222&lt;#email>
-</programlisting>
-<para>The target graph after the operation will be:</para>
-<programlisting>//+!:uuid:0000
-=!:uuid:2222/#friend/=!:uuid:1111
-</programlisting>
-
-</section>
-
-<section><title><code>$del</code> applied to an inner graph</title>
-
-<para>This operation deletes the provided statements of the inner graph.
-For a contextual statement, the operation also deletes the entire subgraph of the context node.
-For a relational statement, the operation deletes neither the source context node nor the target context node of the relation, only the relation itself.
-If a statement does not exist, the operation has no effect (this is not considered an error).</para>
-<para>Example: Given the following target graph:</para>
-<programlisting>//+!:uuid:0000
-=!:uuid:2222/#friend/=!:uuid:1111
-</programlisting>
-<para>And the following <code>$del</code> operation on statement <code>=!:uuid:2222/#friend/=!:uuid:1111</code>:</para>
-<programlisting>(=!:uuid:1111[$msg]*!:uuid:m-1$do/$del)=!:uuid:2222/#friend/=!:uuid:1111
-</programlisting>
-<para>The target graph after the operation will be:</para>
-<programlisting>//+!:uuid:0000
-//=!:uuid:2222
-//=!:uuid:1111
-</programlisting>
-
-</section>
-
-</section>
-
-<section id="s.operation.connect"><title><code>$connect</code> operation</title>
-
-<para>The <code>$connect</code> operation requests instantiation of a link contract.</para>
-
-<section><title><code>$connect</code> applied to an address</title>
-
-<para>The provided address MUST be the address of a link contract template.
-The link contract template MUST be discovered from this address (see <xref linkend="xdi-discovery-1.0"/>).</para>
-
-<para>Example:</para>
-<programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
-=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
-=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect/$get{$do}
-=!:uuid:1111[$msg]*!:uuid:m-1$connect{$get}/$is/=!:uuid:2222&lt;#email>
-</programlisting>
-
-</section>
-
-<section><title><code>$connect</code> applied to an inner graph</title>
-
-<para>The provided inner graph MUST contain one or more link contract templates.</para>
-
-<para>Example:</para>
-<programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
-=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
-(=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect)$get{$do}/$get/{$get}
-(=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect)($get{$do}$if$and/$true){{$from}}/$is/{$from}
-(=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect)($get{$do}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
-=!:uuid:1111[$msg]*!:uuid:m-1$connect{$get}/$is/=!:uuid:2222&lt;#email>
-</programlisting>
-
-</section>
-
-<section><title>Executing the <code>$connect</code> Operation</title>
-
-<para>To execute the <code>$connect</code> operation, link contract(s) are instantiated from the link
-contract template(s).</para>
-
-<para>The link contract instantiation function (see <xref linkend="s.link.contract.instantiation"/>) is
-invoked with the following input parameters:</para>
-
-<itemizedlist>
-<listitem>The link contract template(s) are provided by the <code>$connect</code> operation as described above.</listitem>
-<listitem>The variable <code>{$from}</code> is assigned the sending peer of the <code>$connect</code> operation (see <xref linkend="s.message.sending.peer"/>).</listitem>
-<listitem>The variable <code>{$to}</code> is assigned the receiving peer of the <code>$connect</code> operation (see <xref linkend="s.message.receiving.peer"/>).</listitem>
-<listitem>Additional variable assignments required by the link contract template MUST be provided by the <code>$connect</code> operation (see <xref linkend="s.request.message.variable.assignments"/>).</listitem>
-<listitem>The <glossterm>instance flag</glossterm> set to "instance" (TODO: how can a $connect operation specify this flag?)</listitem>
-</itemizedlist>
-
-<para>The instantiated link contract is written into the target graph. The result graph
-is the empty graph.</para>
-
-</section>
-
-</section>
-
-<section id="s.operation.send"><title><code>$send</code> operation</title>
-
-<para>The <code>$send</code> operation requests sending of an inner message.</para>
-
-<section><title><code>$send</code> applied to an address</title>
-
-<para>The provided address MUST be either the address of a message or the address of a message template.</para>
-
-<para>If the provided address is the address of a message, then the message MUST be
-discovered from this address (see <xref linkend="xdi-discovery-1.0"/>). This message is called
-the <firstterm>inner request message</firstterm>.</para>
-
-<para>Example:</para>
-<programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
-=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
-=!:uuid:1111[$msg]*!:uuid:m-1$do/$send/=!:uuid:2222[$msg]*!:uuid:m-2
-</programlisting>
-
-<para>If the provided address is the address of a message template, then the message template MUST be
-discovered from this address (see <xref linkend="xdi-discovery-1.0"/>). The message template is used
-to instantiate a message. This message is called <firstterm>inner request message</firstterm>.</para>
-
-<para>The message instantiation function (see <xref linkend="s.message.instantiation"/>) is
-invoked with the following input parameters:</para>
-
-<itemizedlist>
-<listitem>The message template is provided by the <code>$send</code> operation as described above.</listitem>
-<listitem>The variable <code>{$from}</code> is assigned the receiving peer of the <code>$send</code> operation (see <xref linkend="s.message.receiving.peer"/>).</listitem>
-<listitem>The variable <code>{$to}</code> MUST be provided by the <code>$send</code> operation (see <xref linkend="s.request.message.variable.assignments"/>).</listitem>
-<listitem>The variable <code>{$do}</code> MUST be provided by the <code>$send</code> operation (see <xref linkend="s.request.message.variable.assignments"/>).</listitem>
-<listitem>Additional variable assignments required by the message template MUST be provided by the <code>$send</code> operation (see <xref linkend="s.request.message.variable.assignments"/>).</listitem>
-</itemizedlist>
-
-<para>Example:</para>
-<programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
-=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
-=!:uuid:1111[$msg]*!:uuid:m-1$do/$send/$get{$msg}
-=!:uuid:1111[$msg]*!:uuid:m-1$send{$to}/$is/=!:uuid:3333
-=!:uuid:1111[$msg]*!:uuid:m-1$send{$do}/$is/(=!:uuid:3333/=!:uuid:2222)$get$do
-=!:uuid:1111[$msg]*!:uuid:m-1$send{$get}/$is/=!:uuid:3333&lt;#email>
-</programlisting>
-
-</section>
-
-<section><title><code>$send</code> applied to an inner graph</title>
-
-<para>The provided inner graph MUST contain one or more messages.
-These messages are called <firstterm>inner request messages</firstterm>.</para>
-
-<para>Example:</para>
-<programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
-=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
-(=!:uuid:1111[$msg]*!:uuid:m-1$do/$send)(=!:uuid:2222)/$send/=!:uuid:2222[$msg]*!:uuid:m-2
-(=!:uuid:1111[$msg]*!:uuid:m-1$do/$send)=!:uuid:2222[$msg]*!:uuid:m-2/$is()/(=!:uuid:3333)
-(=!:uuid:1111[$msg]*!:uuid:m-1$do/$send)=!:uuid:2222[$msg]*!:uuid:m-2/$do/(=!:uuid:3333/=!:uuid:2222)$get$do
-(=!:uuid:1111[$msg]*!:uuid:m-1$do/$send)=!:uuid:2222[$msg]*!:uuid:m-2$do/$get/=!:uuid:3333&lt;#email>
-</programlisting>
-
-</section>
-
-<section><title>Executing the <code>$send</code> Operation</title>
-
-<para>To execute the <code>$send</code> operation, a new XDI messaging round-trip is initiated in order
-to send the inner request message(s).</para>
-
-<itemizedlist>
-<listitem>The original request message containing the <code>$send</code> operation
-is called the <firstterm>outer request message</firstterm>.</listitem>
-<listitem>The requester of the outer request message is called the <firstterm>outer requester</firstterm>.</listitem>
-<listitem>The responder of the outer request message is called the <firstterm>outer responder</firstterm>.</listitem>
-<listitem>The requester of the inner request message is called the <firstterm>inner requester</firstterm>.</listitem>
-<listitem>The responder of the inner request message is called the <firstterm>inner responder</firstterm>.</listitem>
-</itemizedlist>
-
-<para>This new XDI messaging round-trip is executed between the inner requester and the inner responder.</para>
-
-<para>An inner message may itself contain one or more <code>$send</code> request operations which
-in turn have their own inner messages. This results in a chain of multiple inner messages.</para>
-
-<para>The <code>$send</code> operation is the basis for many common messaging patterns (see <xref linked="a.common.messaging.patterns"/>).</para>
-
-<para>TODO: describe here how a original responder delivers inner messages to the inner responder.</para>
-<para>TODO: describe how the inner message is sent, i.e. the role of XDI discovery, bindings, and routing.</para>
-<para>TODO: describe how a inner message may be manipulated before being sent (either due to XDI attributes, or endpoint configuration, e.g. to add signature).</para>
-<para>TODO: describe how link contracts authorize inner messages (should this be in XDI policy?)</para>
-
-</section>
-
-</section>
-
-<section id="s.operation.push"><title><code>$push</code> operation</title>
-
-<para>The <code>$push</code> operation represents a notification triggered by a push contract (see <xref linkend="s.push.contracts"/>).</para>
-<para>This operation is specified in <xref linkend="xdi-push-1.0"/></para>
-
-<para>TODO: "light"/"content" terminology?</para> 
-
-<section><title><code>$push</code> applied to an address</title>
-
-<para>The provided address indicates a <firstterm>light push</firstterm>.</para>
-<para>The provided address MUST be the address of the context that has changed.</para>
-
-<programlisting>&lt;--publisher--&gt;[$msg]&lt;--message-id--&gt;$do/$is()/(&lt;--subscriber--&gt;)
-&lt;--publisher--&gt;[$msg]&lt;--message-id--&gt;$do/$push/&lt;--target-address--&gt;
-</programlisting>
-
-</section>
-
-<section><title><code>$push</code> applied to an inner graph</title>
-
-<para>The provided inner graph indicates a <firstterm>content push</firstterm>.</para>
-<para>The provided inner graph MUST be the message that triggered the push contract.</para>
-
-<programlisting>&lt;--publisher--&gt;[$msg]&lt;--message-id--&gt;$do/$is()/(&lt;--subscriber--&gt;)
-&lt;--publisher--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;/&lt;--target-address--&gt;
-(&lt;--publisher--&gt;[$msg]&lt;--message-id--&gt;$do/&lt;--operation--&gt;)&lt;--target-statement--&gt;
-</programlisting>
-
-</section>
-
-<section><title>Executing the <code>$push</code> Operation</title>
-
-<para>TODO: Describe here how a subscriber executes incoming push messages from a publisher.</para>
-
-<para>Note that when a push message is executed against a subscriber's target graph, it may itself
-fulfill the conditions in <xref linkend="s.push.contracts.trigger"/>, which in turn results in a new
-push message. This can cause a chain reaction of push messages sent between an arbitrary number of peers.</para>
-
-<para>When a push contract is in place, it SHOULD exist both in the publishing peer's graph and in the
-subscribing peer's graph. The existence of the push contract in the subscribing peer's graph serves as
-authorization for incoming pushes from the publishing peer's graph.</para>
-
-<para>TODO: authorization should be covered in XDI policy, not here</para>
-
-</section>
-
-</section>
-
-<section id="s.operation.do"><title><code>$do</code> operation</title>
-
-<para>This operation provides an extensibility mechanism for performing potentially complex operations on a target
-graph that are not defined by this specification. Such complex operations may be sequences composed
-of basic operations, or follow an external logic that cannot be reproduced by basic operations
-at all.</para>
-<para>For example, an operation called <code>$do#cleanup</code> may be defined to "clean up", i.e. delete,
-various parts of a graph, according to a pre-defined set of rules.</para>
-<para>Implementors SHOULD document exactly how such operations behave when applied to 
-addresses and inner graphs, and provide examples, following
-the pattern used in this specification to document the basic operations.</para>
-
-</section>
-
-</section>
-
-<section><title>Message Execution</title>
+<para>Where:</para>
 
 <orderedlist>
-<listitem><para>A message envelope MAY contain more than one message subgraph.</para></listitem>
-<listitem><para>A message MAY contain more than one operation statement.</para></listitem>
-<listitem><para>An XDI endpoint MUST execute all messages in a message envelope.</para></listitem>
-<listitem><para>An XDI endpoint MUST execute all operation statements within a message.</para></listitem>
-</orderedlist>
-
-<section><title>Order</title>
-
-<para>In the XDI graph model as a whole, XDI statements are unordered.</para>
-
-<orderedlist>
-<listitem><para>Messages within a message envelope (i.e., within the <code>&lt;--sender--&gt;[$msg]</code> collection) MAY be explicitly ordered by appending the <code>@~&lt;--digit--&gt;</code>ordering context to the <code>&lt;--sender--&gt;[$msg]!&lt;--id--&gt;</code> context.</para></listitem>
-<listitem><para>Operation statements within a message (i.e., as objects of the <code>&lt;--operation--&gt;</code> predicate) MAY be explicitly ordered by appending the <code>@~&lt;--digit--&gt;</code> ordering context to the <code>&lt;--operation--&gt;</code> predicate.</para></listitem>
-<listitem><para>Explicit ordering of messages and operations is OPTIONAL for an XDI client.</para></listitem>
-<listitem><para>Support for explicit ordering of messages and operations is REQUIRED for an XDI endpoint.</para></listitem>
-<listitem><para>If explicit ordering of messages and operations is not used, then an XDI endpoint MUST NOT make guarantees about the order in which messages in a message envelope are executed, or about the order in which operations in a message are executed.</para></listitem>
-<listitem><para>An XDI endpoint MUST guarantee that all operations in one message are executed before operations in another message are executed.</para></listitem>
+<listitem><para><code>&lt;--policy-context--></code> is the context of the policy expression, e.g. an XDI link contract or an XDI message.</para></listitem>
+<listitem><para><code>&lt;--boolean-context--></code> is an optional hierarchy of subcontexts expressing the XDI boolean operators (<code>$and</code>, <code>$or</code>, <code>$not</code>) needed to produce a boolean logic tree for policy evaluation (see below).</para></listitem>
+<listitem><para><code>&lt;--operator--></code> is either a boolean operator (<code>$true</code>, <code>$false</code>), or an XDI operation being requested by a message (e.g., <code>$get</code>, <code>$set</code>, <code>$del</code>, <code>$do&lt;--extension--></code>).</para></listitem>
+<listitem><para><code>&lt;--condition--></code> is either a comparison condition (<code>$is</code>, <code>$equals</code>, <code>$matches</code>, <code>$greater</code>, <code>$lesser</code>), or an arbitrary XDI statement.</para></listitem>
 </orderedlist>
 
 </section>
 
-</section>
+<section><title>Conditional Operations Policy Expression Dictionary Requirements</title>
 
-<section id="s.push.contracts"><title>Push Contracts</title>
+<para>The following reserved words are proposed for operations policy expression.</para>
 
-<section id="s.push.contracts.structure"><title>Structure of a Push Contract</title>
-
-<para>EDITORIAL NOTE: This section should be moved to <xref linkend="xdi-policy-1.0"/>.</para>
-
-<para>A push contract is a link contract that expresses a publish/subscribe relationships between 
-peers. It enables a peer called  <firstterm>publishing peer</firstterm> (or short <firstterm>publisher</firstterm>)
-to notify one or more other peers called <firstterm>subscribing peers</firstterm> (or short <firstterm>subscribers</firstterm>)
-of changes in a graph for which the publisher is authoritative.</para>
-
-<para>A publish/subscribe relationship between a publishing authority and a subscribing authority is modeled as
-a link contract with certain properties. This link contract is called a <firstterm>push link contract</firstterm>
-(or short <firstterm>push contract</firstterm>).</para>
-
-<para>A push contract conforms to the link contract pattern (see <xref linkend='xdi-policy-1.0'/>)
-and in addition MUST meet the following conditions:</para>
-
-<orderedlist>
-<listitem><para>The link contract's <firstterm>authorizing authority</firstterm> is the publisher.</para></listitem>
-<listitem><para>The link contract's <firstterm>requesting authority</firstterm> is the subscriber.</para></listitem>
-<listitem><para>The link contract contains one ore more <code>$push</code> permissions.</para></listitem>
-<listitem><para>The link contract MAY contain permissions other than <code>$push</code>.</para></listitem>
-<listitem><para>The link contract MAY contain one or more <firstterm>push target endpoint URIs</firstterm>.</para></listitem>
-<listitem><para>The link contract MAY contain the <firstterm>content flag</firstterm> which specifies whether a subscriber
-wishes to use light pushes or content pushes.</para></listitem>
-</orderedlist>
-
-<para>Following is the basic structure of a push contract. Labels in <code>&lt;--this-form--&gt;</code> represent
-template variables.</para>
-
-<programlisting>(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)$do/$push/&lt;--target-address--&gt;
-(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)$do/$is()/&lt;--subscriber-->
-(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)($do/$push)&lt;$xdi&gt;&lt;$uri&gt;/&amp;/"&lt;--subscriber endpoint--&gt;"
-(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)($do/$push)&lt;$content&gt;/&amp;/&lt;--light-or-content-push--&gt;
-</programlisting>
-
-<para>If the push contract does not contain at least one push target endpoint URI, the subscriber's XDI endpoint MUST
-be discovered using the XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol. This XDI endpoint MUST then
-be used as the single push target endpoint URI of the push contract.</para>
-
-<para>If the content flag is absent, the default value <code>false</code> (i.e. use light pushes) MUST be assumed.</para>
-
-<para>Like all link contracts, push contracts are unidirectional and only apply to data in the authorizing
-authority's graph. In order to set up a bi- or multidirectional publish/subscribe relationship, two or more
-push contracts can be created in which multiple peers simultaneously fulfill the publisher and subscriber roles.</para>
-
-</section>
-
-<section id="s.push.contracts.trigger"><title>Triggering a Push Contract</title>
-
-<para>EDITORIAL NOTE: This section should be moved to <xref linkend="xdi-policy-1.0"/>.</para>
-
-<para>A push contract is triggered when the following conditions are met:</para>
-
-<orderedlist>
-<listitem><para>An operation is executed against a graph that contains one or more push contracts.</para></listitem>
-<listitem><para>The operation is not a <code>$get</code> operation.</para></listitem>
-<listitem><para>The target of the operation is a sub-context of any context that is the target of a <code>$push</code> permission of at least one of the push contracts in the graph.</para></listitem>
-</orderedlist>
-
-<para>When a push contract is triggered, it initiates one or more XDI messaging round-trips to notify
-subscribers. The notification is itself an XDI message. This message is called a <firstterm>push message</firstterm>
-(or short <firstterm>push</firstterm>).</para>
-
-<para>A <firstterm>push message</firstterm> MUST conform to the request message pattern
-(see <xref linkend="s.request.messages"/>) and in addition MUST meet the following conditions:</para>
-
-<orderedlist>
-<listitem><para>The push message uses the <code>$push</code> request operation (see <xref linkend="s.operation.push"/>).</para></listitem>
-</orderedlist>
-
-<para>TODO: describe better how a push message is generated and sent</para>
-<para>TODO: describe better how the $push operation is used</para>
-<para>TODO: describe how a push contract's policy must be evaluated by both sender and receiver</para>
-<para>TODO: describe who in the $push message is the requester and who is responder</para>
-
-</section>
-
-</section>
-
-<section id="s.message.instantiation"><title>Message Instantiation</title>
-
-<para><firstterm>Message instantiation</firstterm> is a function which instantiates a new message
-from a message template. This function may be invoked in the following ways:</para>
+<section><title><code>$if</code> Policy Context</title>
 
 <itemizedlist>
-<listitem>When the <code>$send</code> operation is executed on an address of a message template (see <xref linkend="s.operation.send"/>).</listitem>
-<listitem>Through other mechanisms that are out of scope of this specification.</listitem>
+<listitem><para><code>$if</code> defines the root context node of a policy expression subgraph.</para></listitem>
+<listitem><para><code>$if</code> MUST be a child context of a $do context (the root context of an XDI link contract or the operation context of an XDI message).</para></listitem>
+<listitem><para><code>$if</code> MUST be an entity singleton.</para></listitem>
+<listitem><para><code>$if</code> MAY have zero or more boolean subcontexts.</para></listitem>
+<listitem><para><code>$if</code> MAY have zero or more operator predicates.</para></listitem>
+<listitem><para><code>$if</code> evaluates to true, if</para></listitem>
+<listitem><para>ANY of its boolean subcontexts evaluate to true, OR</para></listitem>
+<listitem><para>ANY of its operator predicates evaluate to true.</para></listitem>
+<listitem><para><code>$if</code> evaluates to false, if it has neither boolean subcontexts nor operator predicates.</para></listitem>
 </itemizedlist>
 
-<para>The function's input parameters are:</para>
+</section>
+
+<section><title><code>$and</code> Boolean Context</title>
 
 <itemizedlist>
-<listitem>A <glossterm>message template</glossterm> identified by a <code>{$msg}</code> context.</listitem>
-<listitem>A <glossterm>variable assignment</glossterm> for the variable <code>{$from}</code>.
-This is used as the <glossterm>sending peer</glossterm> of the instantiated message (see <xref linkend="s.message.sending.peer"/>).</listitem>
-<listitem>A <glossterm>variable assignment</glossterm> for the variable <code>{$to}</code>.
-This is used as the <glossterm>receiving peer</glossterm> of the instantiated message (see <xref linkend="s.message.receiving.peer"/>).</listitem>
-<listitem>A <glossterm>variable assignment</glossterm> for the variable <code>{$do}</code>.
-This is used as the address of the <glossterm>link contract</glossterm> of the instantiated message (see <xref linkend="s.request.message.link.contract.address"/>).</listitem>
-<listitem>A list of additional <glossterm>variable assignments</glossterm> that may
-be required by the message template.</listitem>
+<listitem><para><code>$and</code> is the boolean context expressing logical conjunction.</para></listitem>
+<listitem><para><code>$and</code> MAY be an entity singleton for a single logical conjunction.</para></listitem>
+<listitem><para><code>$and</code> MUST be an entity collection if there are multiple logical conjunctions that must be evaluated independently.</para></listitem>
+<listitem><para><code>$and</code> MAY have zero or more boolean subcontexts.</para></listitem>
+<listitem><para><code>$and</code> MAY have zero or more operator predicates.</para></listitem>
+<listitem><para><code>$and</code> evaluates to true, if</para></listitem>
+<listitem><para>ALL of its boolean subcontexts evaluate to true, AND</para></listitem>
+<listitem><para>ALL of its operator predicates evaluate to true</para></listitem>
+<listitem><para><code>$and</code> evaluates to true, if it has neither boolean subcontexts nor operator predicates.</para></listitem>
 </itemizedlist>
 
-<para>The function's output is an instantiated message.</para>
+</section>
 
-<para>The function operates as follows:
-TODO: formal description of the message instantiation function</para>
-
-<para>Example: Given the following input parameters:</para>
+<section><title><code>$or</code> Boolean Context</title>
 
 <itemizedlist>
-<listitem>The message template is <code>$get{$msg}</code> (see <xref linkend="s.standard.get.message.template"/>).</listitem>
-<listitem>The variable <code>{$from}</code> is assigned the value <code>=!:uuid:2222</code>.</listitem>
-<listitem>The variable <code>{$to}</code> is assigned the value <code>=!:uuid:3333</code>.</listitem>
-<listitem>The variable <code>{$do}</code> is assigned the value <code>(=!:uuid:3333/=!:uuid:2222)$get$do</code>.</listitem>
-<listitem>The variable <code>{$get}</code> is assigned the value <code>=!:uuid:3333&lt;#email></code>.</listitem>
+<listitem><para><code>$or</code> is the boolean context defining logical disjunction.</para></listitem>
+<listitem><para><code>$or</code> MAY be an entity singleton for a single logical disjunction.</para></listitem>
+<listitem><para><code>$or</code> MUST be an entity collection if there are multiple logical disjunctions that must be evaluated independently.</para></listitem>
+<listitem><para><code>$or</code> MAY have zero or more boolean subcontexts.</para></listitem>
+<listitem><para><code>$or</code> MAY have zero or more operator predicates.</para></listitem>
+<listitem><para><code>$or</code> evaluates to true, if</para></listitem>
+<listitem><para>ANY of its boolean subcontexts evaluate to true, OR</para></listitem>
+<listitem><para>ANY of its operator predicates evaluate to true.</para></listitem>
+<listitem><para><code>$or</code> evaluates to false, if it has neither boolean subcontexts nor operator predicates.</para></listitem>
 </itemizedlist>
 
-<para>Then the instantiated message is as follows:</para>
+</section>
 
-<programlisting>(=!:uuid:2222)/$send/=!:uuid:2222[$msg]*!:uuid:m-2
-=!:uuid:2222[$msg]*!:uuid:m-2/$is()/(=!:uuid:3333)
-=!:uuid:2222[$msg]*!:uuid:m-2/$do()/(=!:uuid:3333/=!:uuid:2222)$get$do
-=!:uuid:2222[$msg]*!:uuid:m-2$do/$get/=!:uuid:3333&lt;#email>
-</programlisting>
+<section><title><code>$not</code> Boolean Context</title>
+
+<itemizedlist>
+<listitem><para><code>$not</code> is the boolean context defining logical negation.</para></listitem>
+<listitem><para><code>$not</code> MAY be an entity singleton for a single logical negation.</para></listitem>
+<listitem><para><code>$not</code> MUST be an entity collection if there are multiple logical negations that must be evaluated independently.</para></listitem>
+<listitem><para><code>$not</code> MUST either have exactly one boolean subcontext, OR have exactly one operator predicate.</para></listitem>
+<listitem><para><code>$not</code> evaluates to true, if</para></listitem>
+<listitem><para>its single boolean subcontext evaluates to false, OR</para></listitem>
+<listitem><para>its single operator predicate evaluates to false.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title><code>$true</code> Operator</title>
+
+<itemizedlist>
+<listitem><para><code>$true</code> is the boolean operator expressing that a condition statement MUST be true.</para></listitem>
+<listitem><para><code>$true</code> evaluates to true, if</para></listitem>
+<listitem><para>its condition evaluates to true.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title><code>$false</code> Operator</title>
+
+<itemizedlist>
+<listitem><para><code>$false</code> is the boolean operator expressing that a condition statement MUST be false.</para></listitem>
+<listitem><para><code>$false</code> evaluates to true, if</para></listitem>
+<listitem><para>its condition evaluates to false.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title>Generic Operator</title>
+
+<itemizedlist>
+<listitem><para>If an operator is used that does not correspond to any of boolean operators (<code>$true</code>, <code>$false</code>), it is considered to be an XDI operation (e.g., <code>$get</code>, <code>$set</code>, <code>$del</code>, <code>$do&lt;--extension--></code>).</para></listitem>
+<listitem><para>The XDI operation evaluates to true, if</para></listitem>
+<listitem><para>it exists in the input message.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title><code>{$from}</code> Variable</title>
+
+<itemizedlist>
+<listitem><para><code>{$from}</code> is a global XDI variable representing the sender of the input message (see <code>&lt;--from--></code> in the XdiMessagePatterns proposal).</para></listitem>
+<listitem><para><code>{$from}</code> MUST be replaced by the XDI address of the sender of the input message before the condition is evaluated.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title><code>{$msg}</code> Variable</title>
+
+<itemizedlist>
+<listitem><para><code>{$msg}</code> is a global XDI variable representing the global context of the input message (see <code>&lt;--from-->[$msg]!&lt;--id--></code> in the XdiMessagePatterns proposal).</para></listitem>
+<listitem><para><code>{$msg}</code> MUST be replaced by the XDI address of the input message before the condition is evaluated.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title><code>$is</code> Condition</title>
+
+<itemizedlist>
+<listitem><para><code>$is</code> expresses that the subject and object nodes of the condition represent the same logical entity (see the EquivalenceLinks proposal).</para></listitem>
+<listitem><para><code>$is</code> evaluates to true, if</para></listitem>
+<listitem><para>the subject node and object node of the condition represent the same logical entity.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title><code>$equals</code> Condition</title>
+
+<itemizedlist>
+<listitem><para><code>$equals</code> expresses that the subject and object nodes of the condition have the same literal values.</para></listitem>
+<listitem><para><code>$equals</code> evaluates to true, if</para></listitem>
+<listitem><para>both the subject node and object node of the condition identify an XDI literal, AND</para></listitem>
+<listitem><para>the literal values are equivalent.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title><code>$matches</code> Condition</title>
+
+<itemizedlist>
+<listitem><para><code>$matches</code> expresses that the literal value of the subject node of the condition matches the regular expression specified in the literal value of the object node of the condition. [TODO: define which regular expression syntax to use]</para></listitem>
+<listitem><para><code>$matches</code> evaluates to true, if</para></listitem>
+<listitem><para>both the subject node and object node of the condition identify an XDI literal, AND</para></listitem>
+<listitem><para>the literal value of the subject node of the condition matches the regular expression specified in the literal value of the object node of the condition.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title><code>$greater</code> Condition</title>
+
+<itemizedlist>
+<listitem><para><code>$greater</code> expresses that the literal value of the subject node of the condition must be greater than the literal value of the object node of the condition.</para></listitem>
+<listitem><para><code>$greater</code> evaluates to true, if</para></listitem>
+<listitem><para>both the subject node and object node of the condition identify an XDI literal, AND</para></listitem>
+<listitem><para>both literal values are numerical, AND</para></listitem>
+<listitem><para>the numerical literal value of the subject node is greater than the numerical literal value of the object node.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title><code>$lesser</code> Condition</title>
+
+<itemizedlist>
+<listitem><para><code>$lesser</code> expresses that the literal value of the subject node of the condition must be lesser than the literal value of the object node of the condition.</para></listitem>
+<listitem><para><code>$lesser</code> evaluates to true, if</para></listitem>
+<listitem><para>both the subject node and object node of the condition identify an XDI literal, AND</para></listitem>
+<listitem><para>both literal values are numerical, AND</para></listitem>
+<listitem><para>the numerical literal value of the subject node is lesser than the numerical literal value of the object node.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title>Statement Condition</title>
+
+<itemizedlist>
+<listitem><para>If a condition is used that does not correspond to any of comparison conditions (<code>$is</code>, <code>$equals</code>, <code>$greater</code>, <code>$lesser</code>), it is considered to be an arbitrary XDI statement.</para></listitem>
+<listitem><para>The XDI statement evaluates to true, if</para></listitem>
+<listitem><para>it exists in the target graph.</para></listitem>
+</itemizedlist>
+
+</section>
+
+</section>
+
+<section><title>Usage Permissions Policy Expression Dictionary Requirements</title>
+
+<para>The following reserved words are proposed for usage policy expression, also called usage permissions.</para>
+<para>See the example section for the use of the $for branch within a detailed link contract instantiation scenario.</para>
+
+<section><title><code>$for</code></title>
+
+<para>Included within a link contract instance to specify the context of usage. Uses the $opt, $required, $default and other reserved words.  The $for pattern makes use of $opt and other patterns.</para>
+
+</section>
+
+<section><title><code>$opt</code></title>
+
+<para>Included within a $for subgraph support the opt-in process associated with a link contract giving a requesting authority access to data.</para>
+
+</section>
+
+<section><title><code>$required</code></title>
+
+<para>Provides a mechanism within $opt for the requesting authority to declared whether a requested data item is optional or required. Note that a request for a link contract granting access to data may contain multiple elements, some optional and some required for the operation to succeed.</para>
+
+</section>
+
+<section><title><code>$default</code></title>
+
+<para>Specifies whether the usage permission is $true or $false by default (e.g. opt-in or opt-out).</para>
+
+</section>
+
+</section>
 
 </section>
 
 <section id="s.link.contract.instantiation"><title>Link Contract Instantiation</title>
 
-<para>EDITORIAL NOTE: This section should be moved to <xref linkend="xdi-policy-1.0"/>.</para>
-
 <para><firstterm>Link contract instantiation</firstterm> is a function which instantiates a new link
 contract from a link contract template. This function may be invoked in the following ways:</para>
 
 <itemizedlist>
-<listitem>When the <code>$connect</code> operation is executed (see <xref linkend="s.operation.connect"/>).</listitem>
-<listitem>When a request operation is deferred (see <xref linkend="s.response.message.deferred.push.contracts"/>).</listitem>
+<listitem>When the <code>$connect</code> operation is executed (see <xref linkend="xdi-messaging-1.0"/>).</listitem>
+<listitem>When a request operation is deferred (see <xref linkend="xdi-messaging-1.0"/>).</listitem>
 <listitem>Through other mechanisms that are out of scope of this specification.</listitem>
 </itemizedlist>
 
@@ -1355,71 +835,370 @@ TODO: formal description of the link contract instantiation function</para>
 
 </section>
 
-<section><title>Error Handling Rules</title>
+<section id="s.push.contracts"><title>Push Link Contracts</title>
 
-<para>EDITORIAL NOTE: This section is not ready for review.</para>
+<section id="s.push.contracts.structure"><title>Structure of a Push Link Contract</title>
 
-<para>The template for an error message is:</para>
-<programlisting>ERROR TIMESTAMP     $error&lt;$t>/&amp;/&lt;--timestamp--&gt;
-ERROR CODES         $error/$do/&lt;--error-code--&gt;
+<para>A push contract is a link contract that expresses a publish/subscribe relationships between 
+peers. It enables a peer called  <firstterm>publishing peer</firstterm> (or short <firstterm>publisher</firstterm>)
+to notify one or more other peers called <firstterm>subscribing peers</firstterm> (or short <firstterm>subscribers</firstterm>)
+of changes in a graph for which the publisher is authoritative.</para>
+
+<para>A publish/subscribe relationship between a publishing authority and a subscribing authority is modeled as
+a link contract with certain properties. This link contract is called a <firstterm>push link contract</firstterm>
+(or short <firstterm>push contract</firstterm>).</para>
+
+<para>A push contract conforms to the link contract pattern (see <xref linkend='xdi-link-contracts-1.0'/>)
+and in addition MUST meet the following conditions:</para>
+
+<orderedlist>
+<listitem><para>The link contract's <firstterm>authorizing authority</firstterm> is the publisher.</para></listitem>
+<listitem><para>The link contract's <firstterm>requesting authority</firstterm> is the subscriber.</para></listitem>
+<listitem><para>The link contract contains one or more <code>$push</code> permissions.</para></listitem>
+<listitem><para>The link contract MAY contain permissions other than <code>$push</code>.</para></listitem>
+<listitem><para>The link contract MAY contain one or more <firstterm>push target endpoint URIs</firstterm>.</para></listitem>
+<listitem><para>The link contract MAY contain the <firstterm>content flag</firstterm> which specifies whether a subscriber
+wishes to use light pushes or content pushes.</para></listitem>
+</orderedlist>
+
+<para>Following is the basic structure of a push contract. Labels in <code>&lt;--this-form--&gt;</code> represent
+template variables.</para>
+
+<programlisting>(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)$do/$push/&lt;--target-address--&gt;
+(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)$do/$is()/&lt;--subscriber-->
+(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)($do/$push)&lt;$xdi&gt;&lt;$uri&gt;/&amp;/"&lt;--subscriber endpoint--&gt;"
+(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)($do/$push)&lt;$content&gt;/&amp;/&lt;--light-or-content-push--&gt;
 </programlisting>
-<para><code>&lt;error-statement></code> is an inner graph of error statements pertaining to the message.</para>
-<para>The dictionary for XDI error code statements is still being defined. See MessagingErrorCode.</para>
+
+<para>If the push contract does not contain at least one push target endpoint URI, the subscriber's XDI endpoint MUST
+be discovered using the XDI Discovery <xref linkend='xdi-discovery-1.0'/> protocol. This XDI endpoint MUST then
+be used as the single push target endpoint URI of the push contract.</para>
+
+<para>If the content flag is absent, the default value <code>false</code> (i.e. use light pushes) MUST be assumed.</para>
+
+<para>Like all link contracts, push contracts are unidirectional and only apply to data in the authorizing
+authority's graph. In order to set up a bi- or multidirectional publish/subscribe relationship, two or more
+push contracts can be created in which multiple peers simultaneously fulfill the publisher and subscriber roles.</para>
 
 </section>
 
-<section><title>Error Codes</title>
+<section id="s.push.contracts.trigger"><title>Triggering a Push Link Contract</title>
 
-<para>EDITORIAL NOTE: This section is not ready for review.</para>
+<para>A push contract is triggered when the following conditions are met:</para>
 
-<para>Error codes</para>
+<orderedlist>
+<listitem><para>An operation is executed against a graph that contains one or more push contracts.</para></listitem>
+<listitem><para>The operation is not a <code>$get</code> operation.</para></listitem>
+<listitem><para>The target of the operation is a sub-context of any context that is the target of a <code>$push</code> permission of at least one of the push contracts in the graph.</para></listitem>
+</orderedlist>
 
-<informaltable><tgroup cols="3"><thead>
-<row><entry>Name</entry><entry>Code</entry><entry>Explanation</entry></row>
-</thead><tbody>
-<row><entry>Request unknown</entry><entry><code>$false/$error/$request$unknown</code></entry><entry>Request format is unknown. (E.g. request does not contain operation xdi statement.)</entry></row>
-<row><entry>Can't process request</entry><entry><code>$false/$error/$request$cant$process</code></entry><entry>General error, such as internal exception, db connection failure, or other not described by another error.</entry></row>
-<row><entry>Request forbidden</entry><entry><code>$false/$error/$request$forbidden</code></entry><entry>Operations in request are not allowed by link contract sent by client.</entry></row>
-<row><entry>Supported auth type</entry><entry><code>$false/$error/$supported$auth$type$AUTHTYPE</code></entry><entry>Request was denied together with $request$forbidden error code with supported auth types must be returned to let client know, maybe it used wrong auth type.</entry></row>
-<row><entry>Authorization data invalid</entry><entry><code>$false/$error/$auth$data$invalid</code></entry><entry>E.g. OpenID token is expired or invalid.</entry></row>
-<row><entry>Node does not have child</entry><entry><code>$false/$error/$node$does$not$have$child</code></entry><entry>$get operation requested node that does not have child, so nothing to return.</entry></row>
-<row><entry>Graph not found</entry><entry><code>$false/$error/$graph$not$found</code></entry><entry>Graph with specified id was not found on XDI Server.</entry></row>
-</tbody></tgroup></informaltable>
+<para>When a push contract is triggered, it initiates one or more XDI messaging round-trips to notify
+subscribers. The notification is itself an XDI message. This message is called a <firstterm>push message</firstterm>
+(or short <firstterm>push</firstterm>).</para>
 
-</section>
+<para>A <firstterm>push message</firstterm> MUST conform to the request message pattern
+(see <xref linkend="xdi-messaging-1.0"/>) and in addition MUST meet the following conditions:</para>
 
-<section><title>Transactional Integrity</title>
+<orderedlist>
+<listitem><para>The push message uses the <code>$push</code> request operation (see <xref linkend="s.operation.push"/>).</para></listitem>
+</orderedlist>
 
-<para>EDITORIAL NOTE: This section is not ready for review.</para>
-
-<para>The XDI TC has discussed [[https://en.wikipedia.org/wiki/Database_transaction|transactional integrity]], 
-including <ulink url="https://en.wikipedia.org/wiki/ACID">ACID</ulink> and
-<ulink url="https://en.wikipedia.org/wiki/Eventual_consistency">BASE</ulink>, but has not yet determined the requirements
-that XDI messaging will need to support.</para>
+<para>TODO: describe better how a push message is generated and sent</para>
+<para>TODO: describe better how the $push operation is used</para>
+<para>TODO: describe how a push contract's policy must be evaluated by both sender and receiver</para>
+<para>TODO: describe who in the $push message is the requester and who is responder</para>
 
 </section>
 
-<appendix id="s.acknowledgements" role="non-normative">
-  <title>Acknowledgements</title>
+</section>
 
-  <para>This specification was written with the generous and appreciated assistance of</para>
-</appendix>
-  
-<appendix id="a.dollarwords" role="non-normative">
-  <title>Dollar Words</title>
-  
-  <para>This appendix contains formal definitions of the XDI dollar words introduced by this specification.</para>
-</appendix>
-  
-<appendix id="a.examples" role="non-normative">
-  <title>Examples</title>
-  
-  <para>This appendix contains XDI messaging examples.</para>
-</appendix>
+<section><title>Policy Expression Examples</title>
+
+<para>These examples are written in XDI Display Format. See JSON Serialization Rules for the over-the-wire format.</para>
+<para>Link contract policy that checks that the secret token in the message matches the secret token in the graph:</para>
+
+<programlisting>$secret&lt;$token>&amp;/&amp;/"s3cr3t"
+$do$if/$true/({$msg}$secret&lt;$token>/$equals/$secret&lt;$token>)
+</programlisting>
+
+<para>Link contract policy that checks that the message timestamp comes before a certain time:</para>
+
+<programlisting>$do$if/$true/({$msg}&lt;$t>/$lesser/...$do#expiration&lt;$t>)
+$do#expiration&lt;$t>&amp;/&amp;/"2012-12-12"
+</programlisting>
+
+<para>Link contract policy that checks that the message comes from one of the approved senders:</para>
+
+<programlisting>($do$if/$true){$from}/$is/[=]!2222
+($do$if/$true){$from}/$is/[=]!3333
+($do$if/$true){$from}/$is/[=]!4444
+</programlisting>
+
+<para>Link contract policy that excludes a certain sender:</para>
+
+<programlisting>($do$if/$false){$from}/$is/[=]!1111
+</programlisting>
+
+<para>Link contract policy that excludes a certain sender (other way of doing it):</para>
+
+<programlisting>($do$if$not/$true){$from}/$is/[=]!1111
+</programlisting>
+
+<para>Link contract for "root access" to an authority's own graph:</para>
+
+<programlisting>(&lt;--AA-->/&lt;--AA-->)$do/$all/
+(&lt;--AA-->/&lt;--AA-->)($do$if$and/$true){$from}/$is/&lt;--AA-->
+(&lt;--AA-->/&lt;--AA-->)($do$if$and$or/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>&amp;/&amp;/true
+(&lt;--AA-->/&lt;--AA-->)($do$if$and$or/$true){$msg}&lt;$sig>&lt;$valid>&amp;/&amp;/true
+</programlisting>
+
+<para>Link contract for the "public branch" of an XDI graph:</para>
+
+<programlisting>$public$do/$get/$public
+</programlisting>
+
+<para>Link contract to allow Bob access to Alice's phone number:</para>
+
+<programlisting>=alice/$ref/[=]!1111
+=bob/$ref/[=]!2222
+[=]!1111$&lt;#tel>&amp;/&amp;/"#1-123-567-8900"
+($do$if/$true){$from}/$is/[=]!2222)
+$do/$get/[=]!1111&lt;#tel>
+</programlisting>
+
+<para>Link contract policy that checks that the message comes either from myself <code>([=]!1111)</code>
+or from one of my friends:</para>
+
+<programlisting>($do$if$or/$true)[=]!1111/$is/{$from}
+($do$if$or/$true)[=]!1111/#friend/{$from}
+</programlisting>
+
+<para>Link contract that allows a $do$signal operation only on certain statements (with variables):</para>
+
+<programlisting>$do/$do$signal/[=]!1111[#channel]!23[#event]
+($do$if$and/$do$signal)[=]!1111[#channel]!23[#event]{1}/#domain/#cloudos)
+($do$if$and$or/$do$signal)[=]!1111[#channel]!23[#event]{1}/#type/#notification
+($do$if$and$or/$do$signal)[=]!1111[#channel]!23[#event]{1}/#type/#subscription
+($do$if$and$or/$do$signal)[=]!1111[#channel]!23[#event]{1}/#type/#deletion
+</programlisting>
+
+<para>Combination of the previous two examples:</para>
+
+<programlisting>
+[=]!1111/#friend/[=]!2222
+$do/$do$signal/[=]!1111[#channel]!23[#event]
+($do$if$and[$or]!2/$true)[=]!1111/$is/{$from}
+($do$if$and[$or]!2/$true)[=]!1111/#friend/{$from}
+($do$if$and/$do$signal)[=]!1111[#channel]!23[#event]{1}/#domain/#cloudos
+($do$if$and[$or]!1/$do$signal)[=]!1111[#channel]!23[#event]{1}/#type/#notification
+($do$if$and[$or]!1/$do$signal)[=]!1111[#channel]!23[#event]{1}/#type/#subscription
+($do$if$and[$or]!1/$do$signal)[=]!1111[#channel]!23[#event]{1}/#type/#deletion
+</programlisting>
+
+<para>Link contract policy that allows the message if it is not sent on Friday 13th, and
+it is not sent by =drummond or =markus. (Note that the weekday and day-of-month
+definitions still need to be defined in the XDI <code>$</code> Dictionary.)</para>
+
+<programlisting>($do$if$and[$not]!1$and/$true)[weekday_is_friday]
+($do$if$and[$not]!1$and/$true)[day_is_13th]
+($do$if$and[$not]!2$or/$true)(=drummond/$is/{$from}
+($do$if$and[$not]!2$or/$true)=markus/$is/{$from}
+</programlisting>
+
+<para>Complex example, expressing this pseudocode</para>
+
+<programlisting>if a cardholder has a GOLD account THEN
+    (if cardholder exceeded credit limit AND
+    if bank is running out of money) THEN
+       FALSE
+    ELSE
+       TRUE
+ ELSE
+   if cardholder exceeded credit limit THEN
+      FALSE
+   ELSE
+      TRUE
+</programlisting>
+
+<para>in XDI, as</para>
+
+<programlisting>(=aa/=ra)($do$if$or[$and]!1/$true)=ra&lt;#gold>&amp;/&amp;/true
+(=aa/=ra)($do$if$or[$and]!1$not$and/$true)=ra&lt;#ex>&amp;/&amp;/true
+(=aa/=ra)($do$if$or[$and]!1$not$and/$true)+bank&lt;#nomoney>&amp;/&amp;/false
+(=aa/=ra)($do$if$or/$true)=ra&lt;#ex>&amp;/&amp;/false
+</programlisting>
+
+</section>
+
+<section><title>Link Contract Examples</title>
+
+<para>These examples are written in XDI Display Format, with line breaks added after each
+predicate for readability and to add comments. See JSON Serialization Rules for the over-the-wire format.</para>
+
+<section><title>Requester Link Contract Pattern</title>
+
+<para>A requester link contract is used by an RA to authorize acceptance of link contract
+instances in its graph from an AA based on a link contract template. IMPORTANT: the XDI
+address of the requester link contract is algorithmically composed by placing the XDI address
+of the link contract within an inner root of the requesting authority followed by the template
+authority context. This enables XDI clients to reference the requester link contract for
+authorization in an XDI <code>$set{$do}</code> message for a new link contract instance (see XDI messaging).</para>
+
+<para>All requester link contracts except a root requester link contract (see below) MUST
+consist of a set of XDI statements in one of the two following patterns:</para>
+
+<section><title>Requester Link Contract Singleton Pattern</title>
+
+<programlisting>(&lt;--RA-->/&lt;--TA-->&lt;--ID-->{$do})$do/$set{$do}/({$to}/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$do
+</programlisting>
+
+</section>
+
+<section><title>Requester link contract pattern with policy expression</title>
+
+<programlisting>(&lt;--RA-->/&lt;--TA-->&lt;--ID-->{$do})$do$if/&lt;--policy-expression-->
+(&lt;--RA-->/&lt;--TA-->&lt;--ID-->{$do})$do/$set{$do}/({$to}/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$do</programlisting>
+
+<section><title><code>$set{$do}</code> Operation</title>
+
+<para>A requester link contract uses the <code>$set{$do}</code> operation that is used to
+authorize new link contract instances. The object of this predicate MUST be the XDI address
+of the link contract template for which it will authorize instances.</para>
+
+</section>
+
+<section><title>Requester Link Contract Policies</title>
+
+<para>The XDI policy expression statements in a requester link contract expresses the
+requesting authority's policy for accepting writes of the instances of a specific link
+contract template into its own graph. For example, these policy statements might require
+the authorizing authority to:</para>
+
+<itemizedlist>
+<listitem><para>Be an employee of a company.</para></listitem>
+<listitem><para>Be under or over a certain age.</para></listitem>
+<listitem><para>Have a certain reputation or trust level.</para></listitem>
+</itemizedlist>
+
+</section>
+
+</section>
+
+</section>
+
+
+<section><title>Public Link Contract for XDI Discovery</title>
+
+<para>In this XDI graph, the public link contract provides access to the endpoint URIs in the
+XDI graph for the authority <code>[=]!:uuid:2</code> to support XDI Discovery.</para>
+
+<programlisting>/$is$ref/([=]!:uuid:2)                                    &lt;== inverse statement of peer root address for the XDI authority
+([=]!:uuid:2)/$ref/                                       &lt;== direct statement of peer root address for the XDI authority
+[&lt;$uri>]&lt;!1>&amp;/&amp;/"https://xdi.example.com/1224/"           &lt;== endpoint URI 1
+[&lt;$uri>]&lt;!2>&amp;/&amp;/"https://xdi2.example.com/1224/"          &lt;== endpoint URI 2
+&lt;$uri>/$ref/[&lt;$uri>]&lt;!1>                                  &lt;== reference to URI 1 as default endpoint URI
+[=]!:uuid:2$to$anon$from$public$do/$get/&lt;$uri>            &lt;== public link contract to get reference to default endpoint URI
+[=]!:uuid:2$to$anon$from$public$do/$get/[&lt;$uri>]          &lt;== public link contract to get collection of all endpoint URIs
+</programlisting>
+
+</section>
+
+<section><title>Alice-to-Acme Link Contract Pattern</title>
+
+<para>This set of XDI graphs shows how Acme Corp can publish a link contract template
+requesting a name and email address, and Alice can authorize an instance of that link
+contract template. For readability, UUIDs referring to Alice as "AA", ACME as "TA" and
+the template authority as "TA" are shortened. Also, the ## character string combined
+with the red color are used to denote comments amidst XDI statements</para>
+
+<para>NOTE: TO AVOID CONFUSION, MAKE SURE YOUR BROWSER WINDOW IS WIDE ENOUGH SO LINES DO NOT WRAP.</para>
+
+<section><title>Acme's Starting Graph</title>
+
+<para>This is the portion of Acme's graph publishing Acme's own link contract template
+and requester link contract before Alice has authorized an instance of this template.</para>
+
+<programlisting>## use of name/number pattern to select instance of template
+[+]!:uuid:TA#registration{$do}/$ref/[+]!:uuid:TA[{$do}(]!:uuid:1122}
+
+## Template Attributes
+[+]!:uuid:TA[{$do}]!:uuid:1122&lt;#en>&lt;$lang>{&lt;$label>}&amp;/&amp;/"CC Registration Template"
+[+]!:uuid:TA[{$do}]!:uuid:1122&lt;$template>&lt;$add>&lt;$t>&amp;/&amp;/"1987-12-12"
+
+## operational permissions
+([+]!:uuid:TA[{$do}]!:uuid:1122/$get){$to}{&lt;#email>}&lt;$required>&amp;/&amp;/false
+([+]!:uuid:TA[{$do}]!:uuid:1122/$get){$to}{&lt;#phone>}&lt;$required>&amp;/&amp;/true
+
+## usage permissions
+[+]!:uuid:TA[{$do}]!:uuid:1122$for{&lt;$opt>}&lt;$required>&amp;/&amp;/true
+[+]!:uuid:TA[{$do}]!:uuid:1122$for{&lt;$opt>}&lt;$default>&amp;/&amp;/false
+[+]!:uuid:TA[{$do}]!:uuid:1122$for{&lt;$opt>}&lt;#en>&lt;$lang>&lt;$label>&amp;/&amp;/"To let you know about our special offers"
+
+## policy expressions
+([+]!:uuid:TA[{$do}]!:uuid:1122$if/$true){{$from}}/$is/{$from}
+</programlisting>
+
+</section>
+
+<section><title>Alice's Starting Graph</title>
+
+<para>This is Alice's graph before Alice authorizes an instance of Acme's registration
+link contract template.</para>
+
+<programlisting>[=]!:uuid:AA&lt;#name>&amp;/&amp;/"Alice Doe"
+[=]!:uuid:AA&lt;#phone>/$ref/[=]!:uuid:AA[&lt;#phone>]&lt;!:uuid:2222>
+[=]!:uuid:AA&lt;#home>&lt;#phone>/$ref/[=]!:uuid:AA[&lt;#phone>]&lt;!:uuid:12222>
+[=]!:uuid:AA&lt;#mobile>&lt;#phone>/$ref/[=]!:uuid:AA[&lt;#phone>]&lt;!:uuid:2222>
+[=]!:uuid:AA[&lt;#phone>]&lt;!:uuid:12222>&amp;/&amp;/"677-854-AA"
+[=]!:uuid:AA[&lt;#phone>]&lt;!:uuid:2222>&amp;/&amp;/"677-654-4444"
+[=]!:uuid:AA&lt;#email>/$ref/[=]!:uuid:AA[&lt;#email>]&lt;!:uuid:13333>
+[=]!:uuid:AA&lt;#home>&lt;#email>/$ref/[=]!:uuid:AA[&lt;#email>]&lt;!:uuid:13333>
+[=]!:uuid:AA&lt;#work>&lt;#email>/$ref/[=]!:uuid:AA[&lt;#email>]&lt;!:uuid:23333>
+[=]!:uuid:AA[&lt;#email>]&lt;!:uuid:13333>&amp;/&amp;/"ali@gmail.com "
+[=]!:uuid:AA[&lt;#email>]&lt;!:uuid:23333>&amp;/&amp;/"adoe@coco.com"
+</programlisting>
+
+</section>
+
+<section><title>Link Contract Instance to be Added to Both Graphs After Authorization</title>
+
+<para>Following are the new statements added to both Alice's and Acme's graphs after Alice
+authorizes an instance of Acme's registration link contract template.</para>
+
+<programlisting>## Link contract instance, written by rule
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]!:uuid:1122&lt;$add>&lt;$t>&amp;/&amp;/"1965-12-02"
+
+## from Template Attributes
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]!:uuid:1122&lt;#en>&lt;$lang>&lt;$label>&amp;/&amp;/"CC Registration Template"	
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]!:uuid:1122&lt;$template>&lt;$add>&lt;$t>&amp;/&amp;/"1987-12-12"
+
+## operational permissions - including optional email attribute (Alice chose work attributes)
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]!:uuid:1122/$get/[=]!:uuid:AA&lt;#work>&lt;#email>
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]!:uuid:1122/$get/[=]!:uuid:AA&lt;#mobile>&lt;#phone>
+
+## usage permissions 
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]!:uuid:1122$for&lt;$opt>&amp;/&amp;/true
+
+## policy expressions 
+([=]!:uuid:AA/[=]!:uuid:RA)([+]!:uuid:TA[$do]!:uuid:1122$if/$true){$from}/$is/[=]!:uuid:RA
+</programlisting>
+
+<para>Note that exactly the same statements are added to both Alice's and Acme's graphs. They
+are globally unique in both graphs because:</para>
+
+<itemizedlist>
+<listitem><para>The authorizing authority context is Alice's XDI address.</para></listitem>
+<listitem><para>The requesting authority context is Acme's XDI address.</para></listitem>
+<listitem><para>The link contract template ID is an entity singleton assigned by Acme under its own XDI address.</para></listitem>
+</itemizedlist>
+
+</section>
+
+</section>
+
+</section>
 
 <appendix id="a.standard.link.contract.templates" role="normative"><title>Standard Link Contract Templates</title>
-
-<para>EDITORIAL NOTE: This section should be moved to <xref linkend="xdi-policy-1.0"/>.</para>
 
 <para>The link contract templates defined in this section MUST be recognized by XDI processors
 to be part of the common graph. They can be used for <glossterm>link contract instantiation</glossterm>
@@ -1566,43 +1345,14 @@ for any given relationship between two peers, multiple <firstterm>digest link co
 
 </appendix>
 
-<appendix id="a.standard.message.templates" role="normative"><title>Standard Message Templates</title>
-
-<para>The message templates defined in this section MUST be recognized by XDI processors
-to be part of the common graph. They can be used for <glossterm>message instantiation</glossterm>
-(see <xref linkend="s.message.instantiation"/>).</para>
-
-<section id="s.standard.get.message.template"><title>Standard Get Message Template</title>
-
-<para>The purpose of the <firstterm>standard get message template</firstterm> is to
-execute a <code>$get</code> operation on a certain subgraph identified by the
-<code>{$get}</code> variable.</para>
-
-<para>The <firstterm>standard get message template</firstterm>:</para>
-
-<programlisting>$get{$msg}/$get/{$get}
-</programlisting>
-
-<para>Example instantiated <firstterm>get message</firstterm>:</para>
-
-<programlisting>=!:uuid:1111[$msg]*!:uuid:m-1$do/$get/=!:uuid:2222&lt;#email>
-</programlisting>
-
-</section>
-
-</appendix>
-
 <appendix id="a.common.link.contract.patterns" role="non-normative"><title>Common Link Contract Patterns</title>
-
-<para>EDITORIAL NOTE: This section should be moved to <xref linkend="xdi-policy-1.0"/>.</para>
 
 <para>This section describes a number of non-normative link contract patterns that build on the various permissions defined by
 this specification. These patterns are designed for various common data sharing and communication use cases.</para>
 
 <section id="s.root.link.contract"><title>Root Link Contract</title>
 
-<para>A <firstterm>root link contract</firstterm> contains a <code>$all</code> permission on 
-an entire graph ("root access").</para>
+<para>A root link contract is a link contract that grants an XDI actor unlimited permissions on an XDI graph.</para>
 
 <para>A root link contract is typically set up for the following reasons:</para>
 
@@ -1617,6 +1367,28 @@ to the legal concepts of custodianship or guardianship (e.g. parent-child).</par
 <para>A root link contract is an instance of the standard root link contract template
 (see <xref linkend="s.standard.root.link.contract.template"/>).</para>
 
+<para>A root link contract fulfills the following properties:</para>
+
+<itemizedlist>
+<listitem><para>The root link contract is based on the generic link contract instance pattern, with the following constraints:</para></listitem>
+<listitem><para>The requesting authority is set to the XDI authority.</para></listitem>
+<listitem><para>The authorizing authority is set to the XDI authority.</para></listitem>
+<listitem><para>The template ID is empty.</para></listitem>
+<listitem><para>The root link contract MUST use the singleton pattern, i.e. there MUST only be one per XDI authority.</para></listitem>
+<listitem><para>The root link contract MUST grant <code>$all</code> permission to the common root node of an XDI graph.</para></listitem>
+<listitem><para>The root link contract SHOULD contain a policy that restricts the sender of an XDI message to the XDI authority's subgraph.</para></listitem>
+<listitem><para>Authentication SHOULD be required for access to a root link contract. However the XDI authority is the ultimate authority for the policies pertaining to any link contract.</para></listitem>
+</itemizedlist>
+
+<para>Root link contract pattern:</para>
+
+<programlisting>(&lt;--AA-->/&lt;--AA-->)($do$if&lt;--policy-expression-->
+(&lt;--AA-->/&lt;--AA-->)$do/$all/
+</programlisting>
+
+<para>A <firstterm>root link contract</firstterm> contains a <code>$all</code> permission on 
+an entire graph ("root access").</para>
+
 <para>Example root link contract:</para>
 
 <programlisting>(=!:uuid:1111/=!:uuid:1111)$do/$all/
@@ -1628,6 +1400,28 @@ to the legal concepts of custodianship or guardianship (e.g. parent-child).</par
 </section>
 
 <section id="s.public.link.contract"><title>Public Link Contract</title>
+
+<para>The public link contract is the well-known link contract that an XDI authority can
+offer for access to the portion of its XDI subgraph (if any) that is publicly available.</para>
+
+<itemizedlist>
+<listitem><para>The public link contract is based on the generic link contract instance pattern, with the following constraints:</para></listitem>
+<listitem><para>The requesting authority is set to <code>$anon</code>.</para></listitem>
+<listitem><para>The authorizing authority is set to the XDI authority.</para></listitem>
+<listitem><para>The template ID is set to <code>$public</code>.</para></listitem>
+<listitem><para>The public link contract MUST use the singleton pattern, i.e. there MUST only be one per XDI authority.</para></listitem>
+<listitem><para>The public link contract SHOULD grant <code>$get</code> permission to the <code>$public</code> subgraph of the XDI authority's subgraph.</para></listitem>
+<listitem><para>In addition, the public link contract MAY grant permissions to other parts of the XDI authority's subgraph.</para></listitem>
+<listitem><para>The public link contract SHOULD NOT contain a policy.</para></listitem>
+<listitem><para>Authentication SHOULD NOT be required for access to a public link contract. However the XDI authority is the ultimate authority for the policies pertaining to any link contract.</para></listitem>
+</itemizedlist>
+
+<para>Public Link Contract Pattern:</para>
+
+<programlisting>(&lt;--AA-->/$public)$do/$get/&lt;--AA-->&lt;--object-graph-->
+</programlisting>
+
+<para>Note that authorities can further customize the public link contract, e.g. to prevent spam.</para>
 
 <para>A <firstterm>public link contract</firstterm> contains a <code>$get</code> permission on 
 certain limited subgraphs that are intended to be public.</para>
@@ -1676,114 +1470,6 @@ an entire graph (see <xref linkend="s.operation.send"/>).</para>
 (=!:uuid:1111/$send)($do$defer$push$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 (=!:uuid:1111/$send)$do$if//$not
 </programlisting>
-
-</section>
-
-</appendix>
-
-<appendix id="a.common.messaging.patterns" role="non-normative"><title>Common Messaging Patterns</title>
-
-<para>This section describes a number of non-normative messaging patterns that build on the various operations defined by
-this specification. These patterns are designed for various common data sharing and communication use cases.</para>
-
-<section id="a.common.messaging.patterns.invitations"><title>Invitations</title>
-
-<para>An <firstterm>invitation</firstterm> is a <code>$send</code> request operation with an inner message whose
-responder is equal to the requester of outer message. In other words, it is a way for a requester to "invite"
-a responder to send a request back to the original requester.</para>
-
-<para>The requester of the <code>$send</code> operation (and thus the responder of the inner message) is called
-<firstterm>inviting peer</firstterm> (or short <firstterm>inviter</firstterm>). The responder of the
-<code>$send</code> operation (and thus the requester of the inner message) is called
-<firstterm>invited peer</firstterm> (or short <firstterm>invitee</firstterm>).</para>
-
-<para>In many cases, the inner message contains a <code>$connect</code> request operation. This enables a requester to "invite"
-a responder to send a request for a new link contract to the original requester.</para>
-
-<para>The invitation typically references the invitee's <glossterm>send link contract</glossterm> (see <xref linkend="s.send.link.contract"/>).</para>
-
-<para>The inviter typically sets up an instance of the <glossterm>standard digest link contract template</glossterm>
- (see <xref linkend="s.standard.digest.link.contract.template"/>) to ensure that the inner message &#8211; if accepted by
- the invitee &#8211; is authorized when received by the inviter.</para>
-
-<para>Example digest link contract instance set up by the inviter:</para>
-
-<programlisting>(=!:uuid:1111/=!:uuid:2222)$msg$digest$do/$all/
-(=!:uuid:1111/=!:uuid:2222)($msg$digest$do$if/$true){$msg}&lt;$digest>/&amp;/"...digest..."
-</programlisting>
-
-<para>Example invitation from inviter <code>=!:uuid:1111</code> to invitee <code>=!:uuid:2222</code>:</para>
-
-<programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
-=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
-=!:uuid:1111[$msg]*!:uuid:m-1/$do/(=!:uuid:2222/$send)$do
-(=!:uuid:1111[$msg]*!:uuid:m-1/$send)=!:uuid:2222[$msg]*!:uuid:m-2/$is()/(=!:uuid:1111)
-(=!:uuid:1111[$msg]*!:uuid:m-1/$send)=!:uuid:2222[$msg]*!:uuid:m-2/$do/(=!:uuid:1111/=!:uuid:2222)$msg$digest$do
-(=!:uuid:1111[$msg]*!:uuid:m-1/$send)=!:uuid:2222[$msg]*!:uuid:m-2/$connect/$get{$do}
-(=!:uuid:1111[$msg]*!:uuid:m-1/$send)=!:uuid:2222[$msg]*!:uuid:m-2$connect{$get}/$is/=!:uuid:1111&lt;#email>
-</programlisting>
-
-</section>
-
-<section id="a.common.messaging.patterns.impersonation"><title>Impersonation</title>
-
-<para>An <firstterm>impersonation</firstterm> is a <code>$send</code> request operation with an inner message whose
-requester is different from the responder of the outer message. In other words, it is a way for a requester to ask
-a responder to "impersonate" an arbitrary peer when sending the inner message.</para>
-
-</section>
-
-<section id="a.common.messaging.patterns.approval"><title>Approval of a Deferred Request Operation</title>
-
-<para>If a request operation is deferred due to link contract policy (see <xref linkend="xdi-policy-1.0"/>),
-it can be <firstterm>approved</firstterm>
-by "re-sending" the it as an inner message of a new <code>$send</code> request operation.
-The outer message of the <code>$send</code> operation is called <firstterm>approval message</firstterm>.</para>
-
-<para>The responder of an outer message (the approval message) is equal to responder of the inner message
-(the deferred message).</para>
-
-<para>In many cases, the requester and responder of an approval message are equal, and the
-<glossterm>root link contract</glossterm> is used. In other words, an XDI actor approves a deferred message
-that was sent to its own graph.</para>
-
-<para>Note that the approval message will trigger the push <glossterm>deferred push contract</glossterm>
-(see <xref linkend="xdi-policy-1.0"/>) that
-was automatically created for the deferred request operation.</para>
-
-<para>Example request message deferred due to link contract policy:</para>
-
-<programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
-=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
-=!:uuid:1111[$msg]*!:uuid:m-1/$do/(=!:uuid:2222/=!:uuid:1111)$get[$do]*!:uuid:
-=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect/$get{$do}
-=!:uuid:1111[$msg]*!:uuid:m-1$connect{$get}/$is/=!:uuid:2222&lt;#email>
-</programlisting>
-
-<para>Example approval message:</para>
-
-<programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
-=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
-=!:uuid:1111[$msg]*!:uuid:m-1/$do/(=!:uuid:2222/=!:uuid:1111)$get[$do]*!:uuid:
-=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect/$get{$do}
-=!:uuid:1111[$msg]*!:uuid:m-1$connect{$get}/$is/=!:uuid:2222&lt;#email>
-</programlisting>
-
-</section>
-
-<section id="a.common.messaging.patterns.rejection"><title>Rejection of a Deferred Request Operation</title>
-
-<para>If a request message is deferred due to link contract policy</para>
-
-<para>Example </para>
-
-</section>
-
-<section><title>Delegation</title>
-
-<para>TODO: Describe how one peer can be a delegate of another peer.</para>
-<para>TODO: Common example is an XDI agent acting as a delegate of an XDI endpoint.</para>
-<para>TODO: Maybe mention app clouds and app instances and app sessions.</para>
 
 </section>
 
