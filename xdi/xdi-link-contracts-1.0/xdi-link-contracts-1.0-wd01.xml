@@ -136,7 +136,7 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
       <author><firstname>Drummond </firstname> <surname>Reed</surname></author>. 
       <releaseinfo>OASIS &standard;. </releaseinfo>
       <citetitle><ulink url="&latest-loc;/xdi-core.html">&latest-loc;/xdi-core.html</ulink>.</citetitle>
-    </bibliomixed> <bibliomixed id="xdi-discovery-1.0">
+    </bibliomixed> <bibliomixed id="xdi-messaging-1.0">
       <abbrev>OASIS-XDI-Messaging-V1.0</abbrev> <date>&pubdate; </date>
       <title><ulink url="../../xdi-messaging-1.0/xdi-messaging-1.0-wd01.xml">OASIS XDI 1.0 Messaging Specification</ulink></title>
       <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
@@ -213,6 +213,15 @@ mechanism designed to work equally well in either a centralized, or distributed 
 against information in a target graph.</para>
 <para><firstterm>Link contract: </firstterm>An XDI subgraph used for access control, or authorization between an AA and an RA. It is a machine-readable agreement describing data shared and permissions granted by one XDI authority to another. A link contract describes both the policy that must be satisfied by an XDI message to be accepted and the permissions granted to the RA if those conditions are met. Link contracts may be used to apply and enforce any type of policy over shared data and messages, including security, privacy, re-sharing, synchronization, and termination.</para>
 
+<para>The parties to the instantiation of a link contract are:</para>
+
+<orderedlist>
+<listitem><para><glossterm>Authorizing Authority (AA): </glossterm>the XDI authority authorizing a link contract granting permissions to an XDI graph.</para></listitem>
+<listitem><para><glossterm>Requesting Authority (RA): </glossterm>the XDI authority requesting a link contract to obtain permissions to an XDI graph.</para></listitem>
+<listitem><para><glossterm>XDI Community Authority (XCA): </glossterm>the XDI authority for a community link contract.</para></listitem>
+<listitem><para><glossterm>Template authority (TA): </glossterm>the XDI authority publishing a link contract template, which may or may not be the requesting authority or authorizing authority.</para></listitem>
+</orderedlist>
+
 </section>
 
 <section><title>Link Contract Model</title>
@@ -235,10 +244,6 @@ authorities. These sub-graphs are expressed as inner roots to mark them clearly 
 authority. When the two authorities choose to cooperate, the authority containing the subgraph should respect
 the originating authority’s link contracts.</para>
 
-</section>
-
-<section><title>Link Contracts</title>
-
 <para>Per the XDI policy model, all access to graphs is controlled through link contracts. Some
 of these are general link contracts – such as the root link contract and the public link
 contract – to set default policies over a broad graph context. Other link contracts enable
@@ -250,18 +255,9 @@ contract (LC) instantiation process. The LC instantiation process makes use of l
 templates, requester link contracts and link contract instances, and is described in the XDI
 connections specification.</para>
 
-<section><title>Link Contract Initiation Participants</title>
-
-<para>The parties to the instantiation of a link contract are:</para>
-
-<orderedlist>
-<listitem><para><glossterm>Authorizing Authority (AA): </glossterm>the XDI authority authorizing a link contract granting permissions to an XDI graph.</para></listitem>
-<listitem><para><glossterm>Requesting Authority (RA): </glossterm>the XDI authority requesting a link contract to obtain permissions to an XDI graph.</para></listitem>
-<listitem><para><glossterm>XDI Community Authority (XCA): </glossterm>the XDI authority for a community link contract.</para></listitem>
-<listitem><para><glossterm>Template authority (TA): </glossterm>the XDI authority publishing a link contract template, which may or may not be the requesting authority or authorizing authority.</para></listitem>
-</orderedlist>
-
 </section>
+
+<section><title>Link Contracts</title>
 
 <section><title>Link Contract Pattern Types</title>
 
@@ -523,7 +519,7 @@ version-numbered.</para>
 
 </section>
 
-<section><title>Link Contract Policies</title>
+<section><title>Policies</title>
 
 <para><firstterm>XDI operational policies</firstterm> are expressed in XDI link contracts or XDI messages and may be evaluated
 against an evaluation context. The result is always a boolean value (true or false).  Two elements are
@@ -534,8 +530,11 @@ needed to set the evaluation context:</para>
 <listitem><para>The XDI message that is meant to be executed against the target graph (called the <glossterm>input message</glossterm>).</para></listitem>
 </orderedlist>
 
-<para>An XDI link contract policy is part of the target graph. It provides a way for an XDI endpoint to
-determine if the input message is authorized. An XDI message policy is part of the input message. It
+<para>An <glossterm>XDI link contract policy</glossterm> is part of the target graph. It provides a way for
+an XDI endpoint to
+determine if the input message is authorized.</para>
+
+<para>An <glossterm>XDI message policy</glossterm> is part of the input message. It
 provides a way for an XDI client to request execution of the input message only if certain conditions
 are met. XDI link contract policies and XDI message policies are evaluated by the XDI endpoint that hosts
 the target graph and receives the input message.</para>
@@ -557,112 +556,218 @@ trust framework supporting these policies.</para>
 
 <para>A policy MUST consist of one or more XDI statements in the following pattern: </para>
 
-<programlisting>&lt;--policy-context--> $if&lt;--boolean-context-->/&lt;--operator-->/&lt;--condition-->
+<programlisting>&lt;--policy-context--> $if&lt;--boolean-context-->/&lt;--boolean-operator-->/&lt;--condition-->
 </programlisting>
 
 <para>Where:</para>
 
 <orderedlist>
 <listitem><para><code>&lt;--policy-context--></code> is the context of the policy expression, e.g. an XDI link contract or an XDI message.</para></listitem>
-<listitem><para><code>&lt;--boolean-context--></code> is an optional hierarchy of subcontexts expressing the XDI boolean operators (<code>$and</code>, <code>$or</code>, <code>$not</code>) needed to produce a boolean logic tree for policy evaluation (see below).</para></listitem>
-<listitem><para><code>&lt;--operator--></code> is either a boolean operator (<code>$true</code>, <code>$false</code>), or an XDI operation being requested by a message (e.g., <code>$get</code>, <code>$set</code>, <code>$del</code>, <code>$do&lt;--extension--></code>).</para></listitem>
+<listitem><para><code>&lt;--boolean-context--></code> is an optional hierarchy of subcontexts expressing the XDI boolean operators (<code>$and</code>, <code>$or</code>, <code>$not</code>) needed to construct a boolean logic tree.</para></listitem>
+<listitem><para><code>&lt;--boolean-operator--></code> is either <code>$true</code> or <code>$false</code> and expressed whether a condition must be true or false.</para></listitem>
 <listitem><para><code>&lt;--condition--></code> is either a comparison condition (<code>$is</code>, <code>$equals</code>, <code>$matches</code>, <code>$greater</code>, <code>$lesser</code>), or an arbitrary XDI statement.</para></listitem>
 </orderedlist>
 
 </section>
 
-<section><title>Conditional Operations Policy Expression Dictionary Requirements</title>
-
-<para>The following reserved words are proposed for operations policy expression.</para>
-
 <section><title><code>$if</code> Policy Context</title>
 
+<para><code>$if</code> defines the root context node of a policy subgraph.</para>
+
 <itemizedlist>
-<listitem><para><code>$if</code> defines the root context node of a policy expression subgraph.</para></listitem>
 <listitem><para><code>$if</code> MUST be a child context of a $do context (the root context of an XDI link contract or the operation context of an XDI message).</para></listitem>
 <listitem><para><code>$if</code> MUST be an entity singleton.</para></listitem>
 <listitem><para><code>$if</code> MAY have zero or more boolean subcontexts.</para></listitem>
 <listitem><para><code>$if</code> MAY have zero or more operator predicates.</para></listitem>
-<listitem><para><code>$if</code> evaluates to true, if</para></listitem>
+</itemizedlist>
+
+<para><code>$if</code> evaluates to true, if</para>
+
+<itemizedlist>
 <listitem><para>ANY of its boolean subcontexts evaluate to true, OR</para></listitem>
 <listitem><para>ANY of its operator predicates evaluate to true.</para></listitem>
-<listitem><para><code>$if</code> evaluates to false, if it has neither boolean subcontexts nor operator predicates.</para></listitem>
 </itemizedlist>
+
+<para><code>$if</code> evaluates to false, if it has neither boolean subcontexts nor operator predicates.</para>
 
 </section>
 
+<section><title>Boolean Contexts</title>
+
 <section><title><code>$and</code> Boolean Context</title>
 
+<para><code>$and</code> is the boolean context expressing logical conjunction.</para>
+
 <itemizedlist>
-<listitem><para><code>$and</code> is the boolean context expressing logical conjunction.</para></listitem>
 <listitem><para><code>$and</code> MAY be an entity singleton for a single logical conjunction.</para></listitem>
 <listitem><para><code>$and</code> MUST be an entity collection if there are multiple logical conjunctions that must be evaluated independently.</para></listitem>
 <listitem><para><code>$and</code> MAY have zero or more boolean subcontexts.</para></listitem>
 <listitem><para><code>$and</code> MAY have zero or more operator predicates.</para></listitem>
-<listitem><para><code>$and</code> evaluates to true, if</para></listitem>
+</itemizedlist>
+
+<para><code>$and</code> evaluates to true, if</para>
+
+<itemizedlist>
 <listitem><para>ALL of its boolean subcontexts evaluate to true, AND</para></listitem>
 <listitem><para>ALL of its operator predicates evaluate to true</para></listitem>
-<listitem><para><code>$and</code> evaluates to true, if it has neither boolean subcontexts nor operator predicates.</para></listitem>
 </itemizedlist>
+
+<para><code>$and</code> evaluates to true, if it has neither boolean subcontexts nor operator predicates.</para>
 
 </section>
 
 <section><title><code>$or</code> Boolean Context</title>
 
+<para><code>$or</code> is the boolean context defining logical disjunction.</para>
+
 <itemizedlist>
-<listitem><para><code>$or</code> is the boolean context defining logical disjunction.</para></listitem>
 <listitem><para><code>$or</code> MAY be an entity singleton for a single logical disjunction.</para></listitem>
 <listitem><para><code>$or</code> MUST be an entity collection if there are multiple logical disjunctions that must be evaluated independently.</para></listitem>
 <listitem><para><code>$or</code> MAY have zero or more boolean subcontexts.</para></listitem>
 <listitem><para><code>$or</code> MAY have zero or more operator predicates.</para></listitem>
-<listitem><para><code>$or</code> evaluates to true, if</para></listitem>
+</itemizedlist>
+
+<para><code>$or</code> evaluates to true, if</para>
+
+<itemizedlist>
 <listitem><para>ANY of its boolean subcontexts evaluate to true, OR</para></listitem>
 <listitem><para>ANY of its operator predicates evaluate to true.</para></listitem>
-<listitem><para><code>$or</code> evaluates to false, if it has neither boolean subcontexts nor operator predicates.</para></listitem>
+<listitem></listitem>
 </itemizedlist>
+
+<para><code>$or</code> evaluates to false, if it has neither boolean subcontexts nor operator predicates.</para>
 
 </section>
 
 <section><title><code>$not</code> Boolean Context</title>
 
+<para><code>$not</code> is the boolean context defining logical negation.</para>
+
 <itemizedlist>
-<listitem><para><code>$not</code> is the boolean context defining logical negation.</para></listitem>
 <listitem><para><code>$not</code> MAY be an entity singleton for a single logical negation.</para></listitem>
 <listitem><para><code>$not</code> MUST be an entity collection if there are multiple logical negations that must be evaluated independently.</para></listitem>
 <listitem><para><code>$not</code> MUST either have exactly one boolean subcontext, OR have exactly one operator predicate.</para></listitem>
-<listitem><para><code>$not</code> evaluates to true, if</para></listitem>
+</itemizedlist>
+
+<para><code>$not</code> evaluates to true, if</para>
+
+<itemizedlist>
 <listitem><para>its single boolean subcontext evaluates to false, OR</para></listitem>
 <listitem><para>its single operator predicate evaluates to false.</para></listitem>
 </itemizedlist>
 
+<para><code>$not</code> evaluates to false, if it has neither boolean subcontexts nor operator predicates.</para>
+
 </section>
+
+</section>
+
+<section><title>Boolean Operators</title>
 
 <section><title><code>$true</code> Operator</title>
 
+<para><code>$true</code> is the boolean operator expressing that a condition statement MUST be true.</para>
+
+<para><code>$true</code> evaluates to true, if</para>
+
 <itemizedlist>
-<listitem><para><code>$true</code> is the boolean operator expressing that a condition statement MUST be true.</para></listitem>
-<listitem><para><code>$true</code> evaluates to true, if</para></listitem>
-<listitem><para>its condition evaluates to true.</para></listitem>
+<listitem><para>its condition statement evaluates to true.</para></listitem>
 </itemizedlist>
 
 </section>
 
 <section><title><code>$false</code> Operator</title>
 
+<para><code>$false</code> is the boolean operator expressing that a condition statement MUST be false.</para>
+
+<para><code>$false</code> evaluates to true, if</para>
+
 <itemizedlist>
-<listitem><para><code>$false</code> is the boolean operator expressing that a condition statement MUST be false.</para></listitem>
-<listitem><para><code>$false</code> evaluates to true, if</para></listitem>
-<listitem><para>its condition evaluates to false.</para></listitem>
+<listitem><para>its condition statement evaluates to false.</para></listitem>
 </itemizedlist>
 
 </section>
 
-<section><title>Generic Operator</title>
+</section>
+
+<section><title>Conditions</title>
+
+<section><title><code>$is</code> Condition</title>
+
+<para><code>$is</code> expresses that the subject and object nodes of the condition represent
+the same logical entity (see the EquivalenceLinks proposal).</para>
+
+<para><code>$is</code> evaluates to true, if</para>
 
 <itemizedlist>
-<listitem><para>If an operator is used that does not correspond to any of boolean operators (<code>$true</code>, <code>$false</code>), it is considered to be an XDI operation (e.g., <code>$get</code>, <code>$set</code>, <code>$del</code>, <code>$do&lt;--extension--></code>).</para></listitem>
-<listitem><para>The XDI operation evaluates to true, if</para></listitem>
-<listitem><para>it exists in the input message.</para></listitem>
+<listitem><para>the subject node and object node of the condition represent the same logical entity.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title><code>$equals</code> Condition</title>
+
+<para><code>$equals</code> expresses that the subject and object nodes of the condition have the same literal values.</para>
+
+<para><code>$equals</code> evaluates to true, if</para>
+
+<itemizedlist>
+<listitem><para>both the subject node and object node of the condition identify an XDI literal, AND</para></listitem>
+<listitem><para>the literal values are equivalent.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title><code>$matches</code> Condition</title>
+
+<para><code>$matches</code> expresses that the literal value of the subject node of the condition matches the regular expression specified in the literal value of the object node of the condition. [TODO: define which regular expression syntax to use]</para>
+
+<para><code>$matches</code> evaluates to true, if</para>
+
+<itemizedlist>
+<listitem><para>both the subject node and object node of the condition identify an XDI literal, AND</para></listitem>
+<listitem><para>the literal value of the subject node of the condition matches the regular expression specified in the literal value of the object node of the condition.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title><code>$greater</code> Condition</title>
+
+<para><code>$greater</code> expresses that the literal value of the subject node of the condition must be greater than the literal value of the object node of the condition.</para>
+
+<para><code>$greater</code> evaluates to true, if</para>
+
+<itemizedlist>
+<listitem><para>both the subject node and object node of the condition identify an XDI literal, AND</para></listitem>
+<listitem><para>both literal values are numerical, AND</para></listitem>
+<listitem><para>the numerical literal value of the subject node is greater than the numerical literal value of the object node.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title><code>$lesser</code> Condition</title>
+
+<para><code>$lesser</code> expresses that the literal value of the subject node of the condition must be lesser than the literal value of the object node of the condition.</para>
+
+<para><code>$lesser</code> evaluates to true, if</para>
+
+<itemizedlist>
+<listitem><para>both the subject node and object node of the condition identify an XDI literal, AND</para></listitem>
+<listitem><para>both literal values are numerical, AND</para></listitem>
+<listitem><para>the numerical literal value of the subject node is lesser than the numerical literal value of the object node.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title>Statement Condition</title>
+
+<para>If a condition is used that does not correspond to any of comparison conditions
+(<code>$is</code>, <code>$equals</code>, <code>$greater</code>, <code>$lesser</code>), it is
+considered to be an arbitrary XDI statement.</para>
+
+<itemizedlist>
+<listitem><para>The XDI statement evaluates to true, if</para></listitem>
+<listitem><para>it exists in the target graph.</para></listitem>
 </itemizedlist>
 
 </section>
@@ -681,72 +786,6 @@ trust framework supporting these policies.</para>
 <itemizedlist>
 <listitem><para><code>{$msg}</code> is a global XDI variable representing the global context of the input message (see <code>&lt;--from-->[$msg]!&lt;--id--></code> in the XdiMessagePatterns proposal).</para></listitem>
 <listitem><para><code>{$msg}</code> MUST be replaced by the XDI address of the input message before the condition is evaluated.</para></listitem>
-</itemizedlist>
-
-</section>
-
-<section><title><code>$is</code> Condition</title>
-
-<itemizedlist>
-<listitem><para><code>$is</code> expresses that the subject and object nodes of the condition represent the same logical entity (see the EquivalenceLinks proposal).</para></listitem>
-<listitem><para><code>$is</code> evaluates to true, if</para></listitem>
-<listitem><para>the subject node and object node of the condition represent the same logical entity.</para></listitem>
-</itemizedlist>
-
-</section>
-
-<section><title><code>$equals</code> Condition</title>
-
-<itemizedlist>
-<listitem><para><code>$equals</code> expresses that the subject and object nodes of the condition have the same literal values.</para></listitem>
-<listitem><para><code>$equals</code> evaluates to true, if</para></listitem>
-<listitem><para>both the subject node and object node of the condition identify an XDI literal, AND</para></listitem>
-<listitem><para>the literal values are equivalent.</para></listitem>
-</itemizedlist>
-
-</section>
-
-<section><title><code>$matches</code> Condition</title>
-
-<itemizedlist>
-<listitem><para><code>$matches</code> expresses that the literal value of the subject node of the condition matches the regular expression specified in the literal value of the object node of the condition. [TODO: define which regular expression syntax to use]</para></listitem>
-<listitem><para><code>$matches</code> evaluates to true, if</para></listitem>
-<listitem><para>both the subject node and object node of the condition identify an XDI literal, AND</para></listitem>
-<listitem><para>the literal value of the subject node of the condition matches the regular expression specified in the literal value of the object node of the condition.</para></listitem>
-</itemizedlist>
-
-</section>
-
-<section><title><code>$greater</code> Condition</title>
-
-<itemizedlist>
-<listitem><para><code>$greater</code> expresses that the literal value of the subject node of the condition must be greater than the literal value of the object node of the condition.</para></listitem>
-<listitem><para><code>$greater</code> evaluates to true, if</para></listitem>
-<listitem><para>both the subject node and object node of the condition identify an XDI literal, AND</para></listitem>
-<listitem><para>both literal values are numerical, AND</para></listitem>
-<listitem><para>the numerical literal value of the subject node is greater than the numerical literal value of the object node.</para></listitem>
-</itemizedlist>
-
-</section>
-
-<section><title><code>$lesser</code> Condition</title>
-
-<itemizedlist>
-<listitem><para><code>$lesser</code> expresses that the literal value of the subject node of the condition must be lesser than the literal value of the object node of the condition.</para></listitem>
-<listitem><para><code>$lesser</code> evaluates to true, if</para></listitem>
-<listitem><para>both the subject node and object node of the condition identify an XDI literal, AND</para></listitem>
-<listitem><para>both literal values are numerical, AND</para></listitem>
-<listitem><para>the numerical literal value of the subject node is lesser than the numerical literal value of the object node.</para></listitem>
-</itemizedlist>
-
-</section>
-
-<section><title>Statement Condition</title>
-
-<itemizedlist>
-<listitem><para>If a condition is used that does not correspond to any of comparison conditions (<code>$is</code>, <code>$equals</code>, <code>$greater</code>, <code>$lesser</code>), it is considered to be an arbitrary XDI statement.</para></listitem>
-<listitem><para>The XDI statement evaluates to true, if</para></listitem>
-<listitem><para>it exists in the target graph.</para></listitem>
 </itemizedlist>
 
 </section>
@@ -793,7 +832,7 @@ contract from a link contract template. This function may be invoked in the foll
 
 <itemizedlist>
 <listitem>When the <code>$connect</code> operation is executed (see <xref linkend="xdi-messaging-1.0"/>).</listitem>
-<listitem>When a request operation is deferred (see <xref linkend="xdi-messaging-1.0"/>).</listitem>
+<listitem>When a request message is deferred (see <xref linkend="xdi-messaging-1.0"/>).</listitem>
 <listitem>Through other mechanisms that are out of scope of this specification.</listitem>
 </itemizedlist>
 
@@ -802,9 +841,9 @@ contract from a link contract template. This function may be invoked in the foll
 <itemizedlist>
 <listitem>A <glossterm>link contract template</glossterm> identified by a <code>{$do}</code> context.</listitem>
 <listitem>A <glossterm>variable assignment</glossterm> for the variable <code>{$from}</code>.
-This is used as the <glossterm>requesting authority</glossterm> of the instantiated link contract.</listitem>
+This becomes the <glossterm>requesting authority</glossterm> of the instantiated link contract.</listitem>
 <listitem>A <glossterm>variable assignment</glossterm> for the variable <code>{$to}</code>.
-This is used as the <glossterm>authorizing authority</glossterm> of the instantiated link contract.</listitem>
+This becomes the <glossterm>authorizing authority</glossterm> of the instantiated link contract.</listitem>
 <listitem>A list of additional <glossterm>variable assignments</glossterm> that may
 be required by the link contract template.</listitem>
 <listitem>An <glossterm>instance flag</glossterm> that states whether the link contract is

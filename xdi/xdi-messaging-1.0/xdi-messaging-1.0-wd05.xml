@@ -460,7 +460,7 @@ with the following <firstterm>request message pattern</firstterm> (shown in stat
 </para>
 
 <programlisting>LINK CONTRACT ADDRESS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$do/&lt;--link-contract-address--&gt;
-MESSAGE POLICY               &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do$if&lt;--boolean-context--&gt;/&lt;--operation--&gt;/&lt;--condition--&gt;
+MESSAGE POLICY               &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do$if&lt;--boolean-context--&gt;/&lt;--boolean-operator--&gt;/&lt;--condition--&gt;
 OPERATION PARAMETERS         &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
 VARIABLE ADDRESS ASSIGNMENT  &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--variable--&gt;/$is/&lt;--variable-value--&gt;
 VARIABLE LITERAL ASSIGNMENT  &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--variable--&gt;/&amp;/"&lt;--variable-value--&gt;"
