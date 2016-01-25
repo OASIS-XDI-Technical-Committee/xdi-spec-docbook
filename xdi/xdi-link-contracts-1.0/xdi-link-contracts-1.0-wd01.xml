@@ -279,24 +279,9 @@ authorization relationship.</para>
 
 <section><title>Singleton Patterns</title>
 
-<para>Community Contract Pattern:</para>
+<para>Generic Instance:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--XCA-->)(&lt;--XCA-->#&lt;--C-ID-->$do
-</programlisting>
-
-or
-
-<programlisting>(&lt;--AA-->/&lt;--XCA-->)(&lt;--XCA-->#&lt;--C-ID-->$do$if/&lt;--policy-expression-->
-</programlisting>
-
-<para>Template Pattern:</para>
-
-<programlisting>&lt;--TA-->&lt;--ID-->{$do}/&lt;--operation-->/{$to}&lt;--object-graph-->
-</programlisting>
-
-<para>Requester Pattern:</para>
-
-<programlisting>(&lt;--RA-->/&lt;--TA-->&lt;--ID-->{$do})$do/$set{$do}/({$to}/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$do
+<programlisting>(&lt;--AA-->/&lt;--class-->)&lt;--TA-->&lt;--ID-->$do/&lt;--operation-->/&lt;--AA-->/&lt;--class-->&lt;--AA-->&lt;--object-graph-->
 </programlisting>
 
 <para>Specific Instance:</para>
@@ -304,14 +289,34 @@ or
 <programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$do/&lt;--operation-->/&lt;--AA-->&lt;--object-graph-->
 </programlisting>
 
-<para>Generic Instance:</para>
+<para>Template Pattern:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--class-->)&lt;--TA-->&lt;--ID-->$do/&lt;--operation-->/&lt;--AA-->/&lt;--class-->&lt;--AA-->&lt;--object-graph-->
+<programlisting>&lt;--TA-->&lt;--ID-->{$do}/&lt;--operation-->/{$to}&lt;--object-graph-->
+</programlisting>
+
+<para>Community Contract Pattern:</para>
+
+<programlisting>(&lt;--AA-->/&lt;--XCA-->)(&lt;--XCA-->#&lt;--C-ID-->$do
+</programlisting>
+
+<para>Requester Pattern:</para>
+
+<programlisting>(&lt;--RA-->/&lt;--TA-->&lt;--ID-->{$do})$do/$set{$do}/({$to}/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$do
 </programlisting>
 
 </section>
 
 <section><title>Collection Patterns</title>
+
+<para>Generic Instance:</para>
+
+<programlisting>(&lt;--AA-->/&lt;--class-->)&lt;--TA-->&lt;--ID-->[$do]!&lt;--member-id-->/&lt;--operation-->/(&lt;--AA-->/&lt;--class-->)&lt;--AA-->&lt;--object-graph-->
+</programlisting>
+
+<para>Specific Instance:</para>
+
+<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$do]!&lt;--member-id-->/&lt;--operation-->/&lt;--AA-->&lt;--object-graph-->
+</programlisting>
 
 <para>Template Pattern:</para>
 
@@ -321,16 +326,6 @@ or
 <para>Requester Pattern:</para>
 
 <programlisting>TBD
-</programlisting>
-
-<para>Specific Instance:</para>
-
-<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$do]!&lt;--member-id-->/&lt;--operation-->/&lt;--AA-->&lt;--object-graph-->
-</programlisting>
-
-<para>Generic Instance:</para>
-
-<programlisting>(&lt;--AA-->/&lt;--class-->)&lt;--TA-->&lt;--ID-->[$do]!&lt;--member-id-->/&lt;--operation-->/(&lt;--AA-->/&lt;--class-->)&lt;--AA-->&lt;--object-graph-->
 </programlisting>
 
 <para>Where:</para>
