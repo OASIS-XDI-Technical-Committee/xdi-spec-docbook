@@ -270,15 +270,15 @@ endpoint URI on a network.</para>
 
 <section id="s.messages"><title>Messages</title>
 
-<para>A message is itself a context in a graph. It is a member instance under
+<para>A message is itself a context in a graph. It is a member of
 an entity collection identified by a <code>[$msg]</code> context, under an entity that
 is authoritative for the message. That entity is called the <firstterm>sender</firstterm>
-of the message. The member instance is called the <firstterm>message ID</firstterm>.</para>
+of the message. The identifier of the member is called the <firstterm>message ID</firstterm>:</para>
 
 <programlisting>&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;
 </programlisting>
 
-<para>Example message by XDI sender <code>=!:uuid:1111</code>, with message ID <code>*!:uuid:1234</code>:</para>
+<para>Example message by XDI sender <code>=!:uuid:1111</code>, with message ID <code>*!:uuid:m-1</code>:</para>
 
 <programlisting>=!:uuid:1111[$msg]*!:uuid:m-1
 </programlisting>
@@ -293,26 +293,43 @@ of the message. The member instance is called the <firstterm>message ID</firstte
 statements that make up the semantics and purpose of the message.</para>
 
 <para>Following are the statements that are common to both request messages and response
-messages (shown in statement format). This is called the <firstterm>common message pattern</firstterm>. Labels in <code>&lt;--this-form--&gt;</code> represent
-template variables.</para>
+messages (shown in statement format). This is called the <firstterm>common message pattern</firstterm>.
+Labels in <code>&lt;--this-form--&gt;</code> represent pattern variables.</para>
 
 <programlisting>SENDING PEER                &lt;--sending-peer--&gt;/$send/&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;
 RECEIVING PEER              &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is()/&lt;--receiving-peer--&gt;
-MESSAGE TYPE                &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is#/&lt;--message-type--&gt;[$v]&lt;--version-number--&gt;$xdi[$v]@1$msg
+MESSAGE TYPE AND VERSION    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is#/&lt;--message-type--&gt;[$v]&lt;--version-number--&gt;$xdi[$v]@1$msg
 CORRELATION STATEMENT       &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$is$msg/&lt;--previous-sender--&gt;[$msg]&lt;--previous-message-id--&gt;
 TIMESTAMP                   &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;$t>/&amp;/&lt;--timestamp--&gt;
-MESSAGE PARAMETERS          &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
 AUTHENTICATION TOKEN        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--token-type--&gt;&lt;$token&gt;/&amp;/&lt;--token--&gt;
 AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--signature-type--&gt;&lt;$sig&gt;/&amp;/&lt;--signature--&gt;
+MESSAGE PARAMETERS          &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
 </programlisting>
+
+<para>Where:</para>
+<orderedlist>
+<listitem><para><code>&lt;--sender--&gt;</code> is the XDI address of the sender that creates the message.</para></listitem>
+<listitem><para><code>&lt;--message-id--&gt;</code> is an entity instance that is the unique ID of the message in the context of the <code>[$msg]</code> collection of messages sent by the sender.</para></listitem>
+<listitem><para><code>&lt;--sending-peer--&gt;</code> is the XDI peer (XDI endpoint or agent) sending this message.</para></listitem>
+<listitem><para><code>&lt;--receiving-peer--&gt;</code> is the XDI peer (XDI endpoint or agent) receiving this message.</para></listitem>
+<listitem><para><code>&lt;--message-type--&gt;</code> is an optional XDI address specifying a message type.</para></listitem>
+<listitem><para><code>&lt;--version-number--&gt;</code> is the message type version, expressed as an ordered instance of a <code>[$v]</code> collection.</para></listitem>
+<listitem><para><code>&lt;--timestamp--&gt;</code> is the timestamp of the message in XML datetime format as specified by the '''$t''' entry in the XDI $ Dictionary.</para></listitem>
+<listitem><para><code>&lt;--token-type--&gt;</code> is the XDI address defining the type of token provided for message authentication.</para></listitem>
+<listitem><para><code>&lt;--token--&gt;</code> is the literal token value provided for authentication.</para></listitem>
+<listitem><para><code>&lt;--signature-type--&gt;</code> is the context defining the type of signature provided for authentication.</para></listitem>
+<listitem><para><code>&lt;--signature--&gt;</code> is the literal signature value provided for authentication as required by the referenced link contract.</para></listitem>
+<listitem><para><code>&lt;--parameter--&gt;</code> is a message parameter.</para></listitem>
+<listitem><para><code>&lt;--parameter-value--&gt;</code> is the value of a message parameter.</para></listitem>
+</orderedlist>
 
 <section id="s.message.sender"><title>Sender</title>
 
 <para>A message MUST have a <firstterm>sender</firstterm> that creates the message.</para>
 
 <orderedlist>
-<listitem><para><code>&lt;--sender--&gt;</code> is the XDI address of the sender that creates the message.</para></listitem>
-<listitem><para>This XDI address may be any valid XDI entity (e.g., person, organization, thing, device, service, etc.)</para></listitem>
+<listitem><para>This XDI address may be any valid XDI entity (e.g., person, organization,
+thing, device, service, etc.)</para></listitem>
 </orderedlist>
 
 </section>
@@ -322,7 +339,6 @@ AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--
 <para>A message MUST have a <firstterm>message ID</firstterm>.</para>
 
 <orderedlist>
-<listitem><para><code>&lt;--message-id--&gt;</code> is an entity instance that is the unique ID of the message in the context of the <code>[$msg]</code> collection of messages sent by the sender.</para></listitem>
 <listitem><para>The message ID value may be sequential, or based on timestamps, or a random UUID, or use any other algorithm that provides uniqueness in this context.</para></listitem>
 <listitem><para>Sending peers MUST use a different message ID for every message.</para></listitem>
 <listitem><para>Receiving peers MAY enforce uniqueness of message IDs.</para></listitem>
@@ -332,33 +348,62 @@ AUTHENTICATION SIGNATURE    &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--
 
 <section id="s.message.sending.peer"><title>Sending Peer</title>
 
-<para>A message MUST have exactly one <firstterm>sending peer</firstterm>.</para>
+<para>A message MUST have exactly one <firstterm>sending peer</firstterm>, which
+identifies the XDI agent or XDI endpoint that is the sender of the message.</para>
 
-<orderedlist>
-<listitem><para><code>&lt;--sending-peer--&gt;</code> is the XDI peer (XDI endpoint or agent) sending this message.</para></listitem>
-</orderedlist>
+<para>Example sending peer:</para>
+
+<programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
+</programlisting>
+
+<para>A sending peer MAY appear in the context of one or more other peers. This
+expresses a "past path" (or "routing history") of peers the message has previously
+passed through on the way to its receiving peer(s). For example,
+if a message is sent by an XDI agent to an XDI endpoint, which then forwards it,
+then the <glossterm>sending peer</glossterm> is the XDI endpoint in the context of the
+XDI agent.</para>
+
+<para>Example sending peer:</para>
+
+<programlisting>(*!:uuid:8888)(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
+</programlisting>
 
 </section>
 
 <section id="s.message.receiving.peer"><title>Receiving Peer</title>
 
-<para>A message MUST have at least one <firstterm>receiving peer</firstterm>, and MAY have multiple <firstterm>receiving peers</firstterm>.</para>
+<para>A message MUST have at least one <firstterm>receiving peer</firstterm>, and MAY have
+multiple <firstterm>receiving peers</firstterm>, which identify the XDI agent(s) and XDI
+endpoint(s) that are the receiver(s) of the message.</para>
 
 <orderedlist>
-<listitem><para><code>&lt;--receiving-peer--&gt;</code> is the XDI peer (XDI endpoint or agent) receiving the message.</para></listitem>
-<listitem><para>Depending on the binding being used, it may be possible or required to discover an endpoint URI for this peer (see <xref linkend="xdi-discovery-1.0"/>).</para></listitem> 
+<listitem><para>Depending on the binding being used, it may be possible or required
+to discover an endpoint URI for this peer
+(see <xref linkend="xdi-discovery-1.0"/>).</para></listitem> 
 </orderedlist>
+
+<para>Example receiving peer:</para>
+
+<programlisting>=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
+</programlisting>
+
+<para>A receiving peer MAY appear in the context of one or more other peers. This
+expresses a "future path" (or "routing instruction") of peers the message is meant to pass through
+on the way to its receiving peer(s).
+For example, if a message is meant to be sent to an XDI agent via an XDI endpoint,
+the <glossterm>receiving peer</glossterm> is the XDI agent in the context of the
+XDI endpoint.</para>
+
+<para>Example receiving peer:</para>
+
+<programlisting>=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)(*!:uuid:9999)
+</programlisting>
 
 </section>
 
 <section id="s.message.type.version"><title>Message Type and Version</title>
 
 <para>A message MAY have a <firstterm>message type</firstterm> and <firstterm>message version</firstterm>.</para>
-
-<orderedlist>
-<listitem><para><code>&lt;--message-type--&gt;</code> is an optional XDI address specifying a message type.</para></listitem>
-<listitem><para><code>&lt;--version-number--&gt;</code> is the message type version, expressed as an ordered instance of a <code>[$v]</code> collection.</para></listitem>
-</orderedlist>
 
 </section>
 
@@ -388,7 +433,6 @@ specialized to express additional semantics about how two messages are related.<
 <para>A message MAY have a <firstterm>timestamp</firstterm> to indicate at which point in time a requester sent the message.</para>
 
 <orderedlist>
-<listitem><para><code>&lt;--timestamp--&gt;</code> is the timestamp of the message in XML datetime format as specified by the '''$t''' entry in the XDI $ Dictionary.</para></listitem>
 <listitem><para>Receiving peers MAY enforce policies requiring the message <code>&lt;--timestamp--></code> value to be within a certain tolerance.</para></listitem>
 </orderedlist>
 
@@ -399,8 +443,6 @@ specialized to express additional semantics about how two messages are related.<
 <para>A message MAY be authenticated with a token as defined in section 1.4 of <xref linkend="rfc6749"/>.</para>
 
 <orderedlist>
-<listitem><para><code>&lt;--token-type--&gt;</code> is the XDI address defining the type of token provided for message authentication.</para></listitem>
-<listitem><para><code>&lt;--token--&gt;</code> is the literal token value provided for authentication.</para></listitem>
 <listitem><para>The token type <code>&lt;$secret&gt;</code> may be used for shared secrets. Any valid XDI literal value may be used as a shared secret.</para></listitem>
 <listitem><para>The token type <code>&lt;$bearer&gt;</code> may be used for bearer tokens as defined by <xref linkend="rfc6750"/>.</para></listitem>
 <listitem><para>Other token types as registered with the IANA OAuth Access Token Types Registry defined in section 11.1 of <xref linkend="rfc6749"/>.</para></listitem>
@@ -412,11 +454,6 @@ specialized to express additional semantics about how two messages are related.<
 
 <para>A message MAY be signed for authentication. See <xref linkend="xdi-signature1.0"/>.</para>
 
-<orderedlist>
-<listitem><para><code>&lt;--signature-type--&gt;</code> is the context defining the type of signature provided for authentication.</para></listitem>
-<listitem><para><code>&lt;--signature--&gt;</code> is the literal signature value provided for authentication as required by the referenced link contract.</para></listitem>
-</orderedlist>
-
 </section>
 
 <section id="s.message.message.parameters"><title>Message Parameters</title>
@@ -424,8 +461,6 @@ specialized to express additional semantics about how two messages are related.<
 <para>A message MAY have one or more <firstterm>message parameters</firstterm> that govern how the message is executed.</para>
 
 <orderedlist>
-<listitem><para><code>&lt;--parameter--&gt;</code> is a message parameter.</para></listitem>
-<listitem><para><code>&lt;--parameter-value--&gt;</code> is the value of a message parameter.</para></listitem>
 <listitem><para>A message parameter MUST be interpreted to apply only to the message that contains it.</para></listitem>
 </orderedlist>
 
@@ -1372,9 +1407,9 @@ a responder to "impersonate" an arbitrary peer when sending the inner message.</
 
 </section>
 
-<section id="a.common.messaging.patterns.approval"><title>Approval of a Deferred Request Operation</title>
+<section id="a.common.messaging.patterns.approval"><title>Approval of a Deferred Request Message</title>
 
-<para>If a request operation is deferred due to link contract policy (see <xref linkend="xdi-link-contracts-1.0"/>),
+<para>If a request message is deferred due to link contract policy (see <xref linkend="xdi-link-contracts-1.0"/>),
 it can be <firstterm>approved</firstterm>
 by "re-sending" it as an inner message of a new <code>$send</code> request operation.
 The outer message of the <code>$send</code> operation is called <firstterm>approval message</firstterm>.</para>
@@ -1388,7 +1423,7 @@ that was sent to its own graph.</para>
 
 <para>Note that the approval message will trigger the <glossterm>deferred push contract</glossterm>
 (see <xref linkend="xdi-link-contracts-1.0"/>) that
-was automatically created for the deferred request operation.</para>
+was automatically created for the deferred request message.</para>
 
 <para>Example request message deferred due to link contract policy:</para>
 
@@ -1410,7 +1445,7 @@ was automatically created for the deferred request operation.</para>
 
 </section>
 
-<section id="a.common.messaging.patterns.rejection"><title>Rejection of a Deferred Request Operation</title>
+<section id="a.common.messaging.patterns.rejection"><title>Rejection of a Deferred Request Message</title>
 
 <para>If a request message is deferred due to link contract policy</para>
 
