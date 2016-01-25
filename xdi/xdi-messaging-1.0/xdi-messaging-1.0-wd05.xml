@@ -609,7 +609,7 @@ with the following <firstterm>response message pattern</firstterm> (shown in sta
 </para>
 
 <programlisting>OPERATION RESULT GRAPHS  (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operation--&gt;)&lt;--result-graph--&gt;
-DEFERRED PUSH CONTRACTS  (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/&lt;--operation-->$defer$push)&lt;--deferred-push-contracts--&gt;</programlisting>
+DEFERRED PUSH CONTRACTS  (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$defer$push)&lt;--deferred-push-contracts--&gt;</programlisting>
 
 <section id="s.response.message.operation.result.graphs"><title>Operation Result Graphs</title>
 
@@ -642,20 +642,21 @@ which the result graph corresponds.</para></listitem>
 <para>EDITORIAL NOTE: Maybe some parts of this section should be moved to <xref linkend="xdi-link-contracts-1.0"/>.</para>
 
 <para>A response message may have one or more <glossterm>deferred push contracts</glossterm>,
-which indicate that a result graph is not yet available, and that a request operation has
+which indicate that a result graph is not yet available, and that a request message has
 therefore been <firstterm>deferred</firstterm>.</para>
 
 <para><glossterm>Deferred push contracts</glossterm> are <glossterm>push contracts</glossterm> 
-(see <xref linkend="s.push.contracts"/>) that are used for handling deferred request operations.</para>
+(see <xref linkend="xdi-link-contracts-1.0"/>) that are used for pushing the result of a
+deferred message to the requester once it is available.</para>
 
 <para>A request operation may be deferred for the following reasons:</para>
 
 <itemizedlist>
-<listitem><para>The operation is executed asynchronously. The result graph of the operation will be
-pushed once execution is complete.</para></listitem>
-<listitem><para>The operation cannot be executed at the moment. It will be executed as soon as possible,
-and the result graph of the operation will be pushed once execution is complete.</para></listitem>
-<listitem><para>The request operation is deferred due to link contract policy (see <xref linkend="xdi-link-contracts-1.0"/>).
+<listitem><para>One or more operations in the request message are executed asynchronously. The result graph
+of the operation(s) will be pushed once execution is complete.</para></listitem>
+<listitem><para>One or more operations in the request message cannot be executed at the moment. They will be
+executed as soon as possible, and the result graph of the operation(s) will be pushed once execution is complete.</para></listitem>
+<listitem><para>The request message is deferred due to link contract policy (see <xref linkend="xdi-link-contracts-1.0"/>).
 It is expected to be approved or rejected at a future point in time (see <xref linkend="a.common.messaging.patterns.approval"/>
 and <xref linkend="a.common.messaging.patterns.rejection"/>).
 </para></listitem>

@@ -1300,7 +1300,7 @@ the <code>{$push}</code> variable.</para>
 <para>Its policy authorizes messages only from a single specific requester and requires a valid signature.</para>
 
 <para>The <firstterm>standard push link contract template</firstterm> is instantiated automatically every time a
-request operation is <glossterm>deferred</glossterm> (see <xref linkend="s.response.message.deferred.push.contracts"/>).</para>
+request message is <glossterm>deferred</glossterm> (see <xref linkend="s.response.message.deferred.push.contracts"/>).</para>
 
 <para>The <firstterm>standard deferred push link contract template</firstterm> is typically instantiated as an instance in a <code>[$do]</code>
 entity collection, since
