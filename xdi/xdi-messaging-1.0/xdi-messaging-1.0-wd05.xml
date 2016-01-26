@@ -216,7 +216,7 @@ is generated, which represents the result of the request operations. The result 
 <para>A response sent from the responder to the requester may either simply be the result graph itself,
 or it may be a <firstterm>response message</firstterm>, which contains within itself the result graph.
 </para>
-<para>The following diagram shows a typical XDI messaging round-trip:</para>
+<para>The following diagram illustrates the basic pattern of all XDI messaging round-trips:</para>
 
 <para>
   <figure float="true"><title>XDI Messaging Terminology</title>
