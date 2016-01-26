@@ -268,6 +268,8 @@ contract (LC) instantiation process. The LC instantiation process makes use of l
 templates, requester link contracts and link contract instances, and is described in the XDI
 connections specification.</para>
 
+<para>TODO: Add language about legal aspects as well as human-readable parts of link contracts.</para>
+
 </section>
 
 <section id="s.link.contracts"><title>Link Contracts</title>
