@@ -267,7 +267,7 @@ a POST request. The serialized message envelope containing one or more request m
 in the HTTP body.</para>
 
 <para>The responder executes the request message(s) against its peer graph. The responder sends
-a message envelope containing one or more response message(s) in the HTTP body of the response
+a serialized response (either result graph or response message envelope) in the HTTP body of the response
 to the POST request.</para>
 
 <section><title>HTTP Headers</title>      
@@ -358,7 +358,7 @@ associated with the user is the responder.</para>
   value of the <code>ACTION</code> attribute MAY be the URI of a connect service, or it may be empty (see
   next section). 
   </para></listitem>
-  <listitem><para>The form MUST contain a hidden field with the name <code>xdiMessageEnvelope</code>. The
+  <listitem><para>The form MUST contain a hidden field with the name <code>xdi</code>. The
   value of the field is the request message envelope to be transmitted to the responder.</para></listitem>
   <listitem><para>The form MAY contain the HTML microdata <xref linkend="MICRODATA"/> attributes
   <code>itemscope</code> and <code>itemtype="$xdi$msg"</code>, to assist user agents with native
@@ -479,7 +479,7 @@ message rather than simply a result graph SHOULD be requested as described in <x
   In this case, a connect service is used to find the authorization service.
   <programlisting>
     &lt;form itemscope itemtype="$connect$request" action="https://connect-service.projectdanube.org/connect" method="post"&gt;
-    &lt;input type="hidden" name="xdiMessageEnvelope" value="&lt;&lt; XDI JSON serialized request here &gt;&gt;"&gt;	
+    &lt;input type="hidden" name="xdi" value="&lt;&lt; XDI JSON serialized request here &gt;&gt;"&gt;	
     &lt;input type="submit" value="Send request message envelope"&gt;
     &lt;/form&gt;
   </programlisting>
@@ -503,7 +503,7 @@ message rather than simply a result graph SHOULD be requested as described in <x
 <para>The WebSocket Binding defines a mechanism by which message envelopes containing request messages
 and response messages are transmitted using WebSocket connections. The requester acts as a WebSocket client
 and opens a connection to a WebSocket endpoint associated with the responder. During the WebSocket handshake,
-the sub-protocol "xdi" is established. The requester sends the serialized message envelope containing one or more
+the sub-protocol <code>xdi</code> established. The requester sends the serialized message envelope containing one or more
 request message(s) as a WebSocket message using WebSocket text frames.</para>
 
 <para>The responder executes the request message(s) against its peer graph. The responder sends

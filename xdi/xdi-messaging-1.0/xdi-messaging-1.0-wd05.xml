@@ -1376,11 +1376,11 @@ a responder to send a request for a new link contract to the original requester.
 
 <para>The invitation typically references the invitee's <glossterm>send link contract</glossterm> (see <xref linkend="s.send.link.contract"/>).</para>
 
-<para>The inviter typically sets up an instance of the <glossterm>standard digest link contract template</glossterm>
+<para>The inviter typically sets up an instance of the <glossterm>standard message digest link contract template</glossterm>
  (see <xref linkend="s.standard.digest.link.contract.template"/>) to ensure that the inner message &#8211; if accepted by
- the invitee &#8211; is authorized when received by the inviter.</para>
+ the invitee &#8211; is automatically approved when received by the inviter.</para>
 
-<para>Example digest link contract instance set up by the inviter:</para>
+<para>Example message digest link contract instance set up by the inviter:</para>
 
 <programlisting>(=!:uuid:1111/=!:uuid:2222)$msg$digest$do/$all/
 (=!:uuid:1111/=!:uuid:2222)($msg$digest$do$if/$true){$msg}&lt;$digest>/&amp;/"...digest..."
@@ -1429,18 +1429,20 @@ was automatically created for the deferred request message.</para>
 
 <programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
 =!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
-=!:uuid:1111[$msg]*!:uuid:m-1/$do/(=!:uuid:2222/=!:uuid:1111)$get[$do]*!:uuid:
+=!:uuid:1111[$msg]*!:uuid:m-1/$do/(=!:uuid:2222/$connect)$do
 =!:uuid:1111[$msg]*!:uuid:m-1$do/$connect/$get{$do}
 =!:uuid:1111[$msg]*!:uuid:m-1$connect{$get}/$is/=!:uuid:2222&lt;#email>
 </programlisting>
 
 <para>Example approval message:</para>
 
-<programlisting>(=!:uuid:1111)/$send/=!:uuid:1111[$msg]*!:uuid:m-1
-=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
-=!:uuid:1111[$msg]*!:uuid:m-1/$do/(=!:uuid:2222/=!:uuid:1111)$get[$do]*!:uuid:
-=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect/$get{$do}
-=!:uuid:1111[$msg]*!:uuid:m-1$connect{$get}/$is/=!:uuid:2222&lt;#email>
+<programlisting>(=!:uuid:2222)/$send/=!:uuid:2222[$msg]*!:uuid:m-2
+=!:uuid:2222[$msg]*!:uuid:m-2/$is()/(=!:uuid:2222)
+=!:uuid:2222[$msg]*!:uuid:m-2/$do/(=!:uuid:2222/=!:uuid:2222)$do
+(=!:uuid:2222[$msg]*!:uuid:m-2$do/$send)=!:uuid:1111[$msg]*!:uuid:m-1/$is()/(=!:uuid:2222)
+(=!:uuid:2222[$msg]*!:uuid:m-2$do/$send)=!:uuid:1111[$msg]*!:uuid:m-1/$do/(=!:uuid:2222/$connect)$do
+(=!:uuid:2222[$msg]*!:uuid:m-2$do/$send)=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect/$get{$do}
+(=!:uuid:2222[$msg]*!:uuid:m-2$do/$send)=!:uuid:1111[$msg]*!:uuid:m-1$connect{$get}/$is/=!:uuid:2222&lt;#email>
 </programlisting>
 
 </section>

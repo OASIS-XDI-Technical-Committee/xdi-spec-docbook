@@ -281,7 +281,7 @@ identified by a <code>$do</code> context:</para>
 the semantics and purpose of the link contract.</para>
 
 <para>Unless otherwise noted, all subsequent patterns and examples use the singleton form
-<code>$do</code>, even though the collection form <code>[$do]&lt;--member-id--></code>
+<code>$do</code>, even though the collection form <code>[$do]&lt;--link-contract-id--></code>
 can equally be used.</para>
 
 <para>Following are the statements that are common to all link contracts (shown in statement
@@ -301,7 +301,7 @@ format). This is called the <glossterm>common link contract pattern</glossterm>.
 <listitem><para><code>&lt;--TA--></code> is the XDI address of the template authority.</para></listitem>
 <listitem><para><code>&lt;--RA--></code> is the XDI address of the requesting authority.</para></listitem>
 <listitem><para><code>&lt;--AA--></code> is the XDI address of the authorizing authority.</para></listitem>
-<listitem><para><code>&lt;--ID--></code> is an OPTIONAL context for specialization of the singleton <code>$do</code> or collection <code>[$do]&lt;--member-id--></code>. It can serve as a "qualifier" or "tag" that describes the intention of the link contract, e.g. <code>#registration</code>.</para></listitem>
+<listitem><para><code>&lt;--ID--></code> is an OPTIONAL context for specialization of the singleton <code>$do</code> or collection <code>[$do]&lt;--link-contract-id--></code>. It can serve as a "qualifier" or "tag" that describes the intention of the link contract, e.g. <code>#registration</code>.</para></listitem>
 <listitem><para><code>&lt;--link-contract-id--></code> is a unique immutable ID for a member of a link contract collection. (Unordered members start with <code>!</code>, ordered members start with <code>@</code>.)</para></listitem>
 <listitem><para><code>&lt;--permission--></code> is an XDI operation permitted by this link contract (e.g., <code>$get</code>, <code>$set</code>, <code>$del</code>, <code>$copy</code>, <code>$move</code>, or <code>$do&lt;--extension--></code>).</para></listitem>
 <listitem><para><code>&lt;--object-graph--></code> is the XDI graph that is the object of the operations permitted by the link contract.</para></listitem>
@@ -390,7 +390,7 @@ to be authorized under the link contract.</para>
 <section><title>Requesting Operational Permissions</title>
 
 <para>Each relational <code>&lt;--operation--></code> predicate in the <code>$do</code> or
-<code>[$do]&lt;--member-id--></code> context MUST define a permission granted by the link
+<code>[$do]&lt;--link-contract-id--></code> context MUST define a permission granted by the link
 contract to an XDI message that satisfies the link contract policies.</para>
 
 <para>The <code>&lt;--object-graph--></code> of each <code>&lt;--operation--></code> predicate
@@ -1004,7 +1004,7 @@ $defer$push{$do}/$is()/{($from)}
 
 </section>
 
-<section id="s.standard.digest.link.contract.template"><title>Standard Message Digest Link Contract Template</title>
+<section id="s.standard.message.digest.link.contract.template"><title>Standard Message Digest Link Contract Template</title>
 
 <para>The purpose of the <firstterm>standard message digest link contract template</firstterm> is to
 instantiate digest link contracts that only authorize a single specific message. This is achieved
@@ -1014,7 +1014,7 @@ through a policy that requires a certain digest value calculated from the serial
 in a <code>[$do]</code> entity collection, since
 for any given relationship between two peers, multiple <firstterm>message digest link contracts</firstterm> may exist.</para>
 
-<para>The <firstterm>standard digest link contract template</firstterm>:</para>
+<para>The <firstterm>standard message digest link contract template</firstterm>:</para>
 
 <programlisting>$msg$digest{$do}/$all/
 ($msg$digest{$do}$if/$true){{$msg}}&lt;$digest>/{&amp;}/{&lt;$digest>}</programlisting>
@@ -1405,21 +1405,21 @@ link contract template.</para>
 authorizes an instance of Acme's registration link contract template.</para>
 
 <programlisting>## Link contract instance, written by rule
-([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]!:uuid:1122&lt;$add>&lt;$t>&amp;/&amp;/"1965-12-02"
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]*!:uuid:1122&lt;$add>&lt;$t>&amp;/&amp;/"1965-12-02"
 
 ## from Template Attributes
-([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]!:uuid:1122&lt;#en>&lt;$lang>&lt;$label>&amp;/&amp;/"CC Registration Template"	
-([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]!:uuid:1122&lt;$template>&lt;$add>&lt;$t>&amp;/&amp;/"1987-12-12"
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]*!:uuid:1122&lt;#en>&lt;$lang>&lt;$label>&amp;/&amp;/"CC Registration Template"	
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]*!:uuid:1122&lt;$template>&lt;$add>&lt;$t>&amp;/&amp;/"1987-12-12"
 
 ## operational permissions - including optional email attribute (Alice chose work attributes)
-([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]!:uuid:1122/$get/[=]!:uuid:AA&lt;#work>&lt;#email>
-([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]!:uuid:1122/$get/[=]!:uuid:AA&lt;#mobile>&lt;#phone>
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]*!:uuid:1122/$get/[=]!:uuid:AA&lt;#work>&lt;#email>
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]*!:uuid:1122/$get/[=]!:uuid:AA&lt;#mobile>&lt;#phone>
 
 ## usage permissions 
-([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]!:uuid:1122$for&lt;$opt>&amp;/&amp;/true
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]*!:uuid:1122$for&lt;$opt>&amp;/&amp;/true
 
 ## policy expressions 
-([=]!:uuid:AA/[=]!:uuid:RA)([+]!:uuid:TA[$do]!:uuid:1122$if/$true){$from}/$is/[=]!:uuid:RA
+([=]!:uuid:AA/[=]!:uuid:RA)([+]!:uuid:TA[$do]*!:uuid:1122$if/$true){$from}/$is/[=]!:uuid:RA
 </programlisting>
 
 <para>Note that exactly the same statements are added to both Alice's and Acme's graphs. They
@@ -1492,17 +1492,17 @@ authorization relationship.</para>
 
 <para>Generic Instance:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--class-->)&lt;--TA-->&lt;--ID-->[$do]!&lt;--member-id-->/&lt;--operation-->/(&lt;--AA-->/&lt;--class-->)&lt;--AA-->&lt;--object-graph-->
+<programlisting>(&lt;--AA-->/&lt;--class-->)&lt;--TA-->&lt;--ID-->[$do]&lt;--link-contract-id-->/&lt;--operation-->/(&lt;--AA-->/&lt;--class-->)&lt;--AA-->&lt;--object-graph-->
 </programlisting>
 
 <para>Specific Instance:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$do]!&lt;--member-id-->/&lt;--operation-->/&lt;--AA-->&lt;--object-graph-->
+<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$do]&lt;--link-contract-id-->/&lt;--operation-->/&lt;--AA-->&lt;--object-graph-->
 </programlisting>
 
 <para>Template Pattern:</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$do}!&lt;--member-id-->&lt;--operation-->/{$to}&lt;--object-graph-->
+<programlisting>&lt;--TA-->&lt;--ID-->{$do}!&lt;--link-contract-id-->&lt;--operation-->/{$to}&lt;--object-graph-->
 </programlisting>
 
 <para>Requester Pattern:</para>
