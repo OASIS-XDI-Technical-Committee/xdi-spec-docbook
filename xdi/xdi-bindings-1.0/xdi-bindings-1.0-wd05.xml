@@ -427,7 +427,7 @@ response is generated and returned to the requester web page via an HTML form.</
   <listitem><para>The value of the "METHOD" attribute of the HTML form MUST be "POST".</para></listitem>
   <listitem><para>The value of the "ACTION" attribute MUST be the requester's return URI.
   </para></listitem>
-  <listitem><para>The form MUST contain a hidden field with the name "xdiResponse". The
+  <listitem><para>The form MUST contain a hidden field with the name "xdi". The
   value of the field is the response to be transmitted to the requester.</para></listitem>
   <listitem><para>The form MAY contain the HTML microdata <xref linkend="MICRODATA"/> attributes
   <code>itemscope</code> and <code>itemtype="$xdi$msg"</code>, to assist user agents with native
@@ -488,7 +488,7 @@ message rather than simply a result graph SHOULD be requested as described in <x
   The following is an example of an HTML form that contains a synchronous response with a result XDI statement.
   <programlisting>
     &lt;form action="https://acmenews.projectdanube.org/acmenews-return" method="post"&gt;
-    &lt;input type="hidden" name="xdiResponse" value="&lt;&lt; XDI JSON serialized response here &gt;&gt;"&gt;
+    &lt;input type="hidden" name="xdi" value="&lt;&lt; XDI JSON serialized response here &gt;&gt;"&gt;
     &lt;input type="submit" value="Return to requester web page"&gt;
     &lt;/form&gt;
   </programlisting>

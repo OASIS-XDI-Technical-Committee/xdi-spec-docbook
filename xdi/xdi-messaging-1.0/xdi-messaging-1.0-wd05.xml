@@ -270,7 +270,7 @@ endpoint URI on a network.</para>
 
 <section id="s.messages"><title>Messages</title>
 
-<para>A message is itself a context in a graph. It is a member of
+<para>A message is represented as an XDI entity in a graph. It is a member of
 an entity collection identified by a <code>[$msg]</code> context, under an entity that
 is authoritative for the message. That entity is called the <firstterm>sender</firstterm>
 of the message. The identifier of the member is called the <firstterm>message ID</firstterm>:</para>
@@ -720,11 +720,11 @@ in the responder's target graph and returned in the response message. To create 
 (=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
 </programlisting>
 
-<para>A request operation MAY have both a result graph and a deferred push contract in the response message,
+<para>A response message MAY contain both a result graph and a deferred push contract,
 indicating that a partial result is available immediately, and that additional results will be available
 in the future.</para>
 
-<para>A request operation MAY have more than one corresponding deferred push contract, if the result
+<para>A response message MAY contain more than one deferred push contract, if the result
 graph will be delivered in multiple pushes.</para>
 
 <para>Example response message with a deferred push contract:</para>
@@ -732,11 +732,11 @@ graph will be delivered in multiple pushes.</para>
 <programlisting>(=!:uuid:2222)/$send/=!:uuid:2222[$msg]*!:uuid:m-2
 =!:uuid:2222[$msg]*!:uuid:m-2/$is()/(=!:uuid:1111)
 =!:uuid:2222[$msg]*!:uuid:m-2/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
-(=!:uuid:2222[$msg]*!:uuid:m-2/$get$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2/$push/=!:uuid:2222&lt;#email>
-(=!:uuid:2222[$msg]*!:uuid:m-2/$get$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2/$is()/(=!:uuid:1111)
-(=!:uuid:2222[$msg]*!:uuid:m-2/$get$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2$if$and/$true){$from}/$is/=!:uuid:2222
-(=!:uuid:2222[$msg]*!:uuid:m-2/$get$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
-(=!:uuid:2222[$msg]*!:uuid:m-2/$get$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
+(=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2/$push/=!:uuid:2222&lt;#email>
+(=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2/$is()/(=!:uuid:1111)
+(=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2$if$and/$true){$from}/$is/=!:uuid:2222
+(=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:d-2$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
 </programlisting>
 
 </section>
