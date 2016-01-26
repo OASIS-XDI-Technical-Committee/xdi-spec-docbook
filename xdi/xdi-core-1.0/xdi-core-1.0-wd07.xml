@@ -224,7 +224,7 @@ document made available to committee members to support the publishing process.<
                 <listitem>
                     <para><emphasis role="bold">Addressability. </emphasis>The XDI graph model does
                         not allow RDF blank nodes. It also imposes the constraint that the XDI
-                        identifier of every XDI contextual arc must be unique it the scope of its
+                        identifier of every XDI contextual arc must be unique in the scope of its
                         parent node. The result is that every node of every XDI graph has a unique
                         global address—and the address itself is a semantic description of that
                         node.</para>
