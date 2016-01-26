@@ -31,7 +31,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
          "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" 
 [
-<!ENTITY name "xdi-signatures">
+<!ENTITY name "xdi-cryptography">
 <!ENTITY pversion "0.0">
 <!ENTITY version "1.0">
 <!ENTITY stage "wd01">
@@ -40,7 +40,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
 <!ENTITY previous-loc "http://docs.oasis-open.org/templates/DocBook/spec-&pversion;">
 <!ENTITY latest-loc "http://docs.oasis-open.org/templates/DocBook/oasis-specification">
 <!ENTITY pubdate "23 May 2014">
-<!ENTITY title "XDI Signatures V&version;">
+<!ENTITY title "XDI Cryptography V&version;">
 <!ENTITY % xinclude SYSTEM "/Applications/oxygen-13.2/frameworks/docbook/4.4/dtd/xinclude.mod">
 %xinclude;
 ]>

@@ -156,7 +156,7 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
       <author><firstname>Peter </firstname> <surname>Davis</surname></author>.
       <releaseinfo>OASIS &standard;. </releaseinfo>
       <citetitle><ulink url="&latest-loc;/xdi-cryptographic-profiles.html">&latest-loc;/xdi-cryptographic-profiles.html</ulink>.</citetitle>
-    </bibliomixed> <bibliomixed id="xdi-cryptographic-profiles-1.0">
+    </bibliomixed> <bibliomixed id="xdi-security-mechanisms-1.0">
       <abbrev>OASIS-XDI-Security-Mechanisms-V1.0</abbrev> <date>&pubdate; </date>
       <title><ulink url="../../xdi-security-mechanisms-1.0/xdi-security-mechanisms-1.0-wd01.xml">OASIS XDI 1.0 Security Mechanisms Specification</ulink></title>
       <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
