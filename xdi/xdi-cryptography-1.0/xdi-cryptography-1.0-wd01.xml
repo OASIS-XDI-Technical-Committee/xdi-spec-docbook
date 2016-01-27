@@ -185,8 +185,8 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
     </bibliomixed> <bibliomixed id="rfc6750">
       <abbrev>RFC 6750</abbrev><date>October 2012</date>
       <title><ulink url="http://www.ietf.org/rfc/rfc6750.txt">The OAuth 2.0 Authorization Framework: Bearer Token Usage</ulink></title>
-      <author><firstname>M. </firstname> <surname>Jones</surname></author>. 
-      <author><firstname>D. </firstname> <surname>Hardt</surname></author>, 
+      <author><firstname>M. </firstname> <surname>Jones</surname></author>, 
+      <author><firstname>D. </firstname> <surname>Hardt</surname></author>.
       <releaseinfo>IETF (Internet Engineering Task Force)</releaseinfo>
     </bibliomixed>
   </bibliolist>
@@ -195,7 +195,25 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 
 <section><title>Non-Normative References</title>
 
-  <bibliolist>
+    <bibliolist> <bibliomixed id="cid-1">
+      <abbrev>CID-1-Cryptographic-Identifiers</abbrev><date>September 2015</date>
+      <title><ulink url="http://www.ietf.org/rfc/rfc6750.txt">The "cid-1" XDI identifier scheme</ulink></title>
+      <author><firstname>M. </firstname> <surname>Sabadello</surname></author>. 
+      <releaseinfo>Github draft v2</releaseinfo>
+    </bibliomixed> <bibliomixed id="nike">
+      <abbrev>NIKE</abbrev><date>October 2012</date>
+      <title><ulink url="https://eprint.iacr.org/2012/732.pdf">Non-Interactive Key Exchange</ulink></title>
+      <author><firstname>E. </firstname> <surname>Freire</surname></author>, 
+      <author><firstname>D. </firstname> <surname>Hofheinz</surname></author>, 
+      <author><firstname>E. </firstname> <surname>Kiltz</surname></author>, 
+      <author><firstname>K. </firstname> <surname>Paterson</surname></author>.
+      <releaseinfo>Cryptology ePrint Archive</releaseinfo>
+    </bibliomixed> <bibliomixed id="bip32">
+      <abbrev>BIP-32</abbrev><date>February 2012</date>
+      <title><ulink url="https://eprint.iacr.org/2012/732.pdf">BIP32: Hierarchical Deterministic Wallets</ulink></title>
+      <author><firstname>P. </firstname> <surname>Wuille</surname></author>.
+      <releaseinfo>Bitcoin Improvement Proposals</releaseinfo>
+    </bibliomixed>
   </bibliolist>
 
 </section>
@@ -204,20 +222,30 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 
 <section><title>XDI Cryptography</title>
 
-<para>TODO.</para>
+<para>XDI cryptography is used to achieve integrity, authenticity and confidentiality for
+XDI graphs and XDI messages. Therefore, the concepts and operations defined in this specification
+are used heavily in <xref linkend="xdi-messaging-1.0"/> and <xref linkend="xdi-link-contracts-1.0"/>.</para>
+
+<para>This specification defines the standard structure and vocabulary of the following
+XDI cryptographic concepts and operations:</para>
+
+<itemizedlist>
+<listitem><para>Key pairs (see <xref linkend="s.keypairs"/>)</para></listitem>
+<listitem><para>Keys (see <xref linkend="s.keys"/>)</para></listitem>
+<listitem><para>Tokens (see <xref linkend="s.tokens"/>)</para></listitem>
+<listitem><para>Digests (see <xref linkend="s.digests"/>)</para></listitem>
+<listitem><para>Signatures (see <xref linkend="s.signatures"/>)</para></listitem>
+<listitem><para>Encryption (see <xref linkend="s.encryption"/>)</para></listitem>
+</itemizedlist>
 
 <para>Note that many dictionary terms such as <code>&lt;$key></code> or <code>&lt;$token></code> that
 are defined in this specification are by themselves not expressive enough to be useful for concrete
-cryptographic operations.</para>
-
-<para>Therefore, the meaning and purpose of such basic dictionary terms are
+cryptographic operations. Therefore, the meaning and purpose of such basic dictionary terms are
 commonly enhanced by subsumption relationships (i.e. <code>$is#</code> type relations),
 by composition relationships (i.e. contextual relations, see
 section <glossterm>Core Relations</glossterm> in <xref linkend="xdi-core-1.0"/>),
 and/or by the specialization pattern (i.e. a sequence of identifiers, see
-section <glossterm>Core Relations</glossterm> in <xref linkend="xdi-core-1.0"/>).</para>
-
-<para>This specification defines the following crypto</para>
+section <glossterm>Specialization and Generalization</glossterm> in <xref linkend="xdi-core-1.0"/>).</para>
 
 <para>Also note that many cryptographic structures can be expressed either as singletons or as collection members.
 In the latter case, well-known patterns such as the <glossterm>ordered/unordered reference pattern</glossterm>
@@ -295,7 +323,7 @@ can be used as input for cryptographic operations.</para></listitem>
 
 </section>
 
-<section><title>Key Pairs: <code>$keypair</code></title>
+<section id="s.keypairs"><title>Key Pairs: <code>$keypair</code></title>
 
 <para>A <firstterm>cryptographic key pair</firstterm> is represented as an XDI entity in a graph. It may
 be either an entity singleton identified by a <code>$keypair</code> context:</para>
@@ -350,7 +378,7 @@ to express the algorithm used to produce the cryptographic key pair.</para>
 
 </section>
 
-<section><title>Keys: <code>&lt;$key></code></title>
+<section id="s.keys"><title>Keys: <code>&lt;$key></code></title>
 
 <para>A <firstterm>cryptographic key</firstterm> is represented as an XDI attribute in a graph. It may
 be either an attribute singleton identified by a <code>&lt;$key></code> context:</para>
@@ -645,6 +673,9 @@ the cryptographic signature.</para></listitem>
 <listitem><para>If the scope of the cryptographic signature is an XDI message, then the public key is assumed
 to be associated with the sending peer of the message and may be obtained
 using <xref linkend="xdi-discovery-1.0"/>).</para></listitem>
+<listitem><para>It may be possible to extract the public key from a cryptographic identifier (see
+<xref linkend="s.cryptographic.identifiers"/>) that is the sending peer of an XDI message or otherwise
+associated with the cryptographic signature.</para></listitem>
 <listitem><para>Other options that are out of scope of this specification and typically depend on the
 concrete environment of XDI agents and XDI endpoints.</para></listitem>
 </itemizedlist>
@@ -702,6 +733,7 @@ to express the algorithm used to produce the cryptographic signature.</para>
 =!:uuid:x-alice[$msg]*!:uuid:x-1$do/$get/=!:uuid:x-bob&lt;#email>
 =!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$sig>/&amp;/"... Base64-encoded cryptographic signature ..."
 =!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$sig>/$is#/$sha$256$rsa$2048
+=!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$sig>/&lt;$public>&lt;$key>/=!:uuid:x-alice$msg$sig$keypair&lt;$public>&lt;$key>
 
 (=!:uuid:x-bob/=!:uuid:x-alice)$do/$get/=!:uuid:x-bob
 (=!:uuid:x-bob/=!:uuid:x-alice)($do$if$and/$true){$from}/$is/=!:uuid:x-alice
@@ -775,6 +807,43 @@ to express the algorithm used to produce the encrypted data.</para>
 </itemizedlist>
 
 </section>
+
+</section>
+
+<section id="s.cryptographic.identifiers"><title>Cryptographic Identifiers</title>
+
+<para>In addition to storing cryptographic information such as keys or signatures as literals in
+an XDI graph, cryptographic properties may also be found in XDI identifiers. Such identifiers
+are called <glossterm>cryptographic identifiers</glossterm>.</para>
+
+<para>Cryptographic identifiers are typically derived from public keys. One advantage
+of such identifiers is that a signed XDI message
+can be validated directly with the public key embedded in the XDI address that identifies
+the sender of the message.
+In other words, no a priori relationships or round-trips are necessary in order for two XDI
+peers to be able to communicate securely (this is also known as a NIKE technique,
+see <xref linkend="nike"/>). Among other
+scenarios, this can be useful for decentralized registration and discovery, where an XDI peer wishes
+to register with multiple other peers, without relying on a central authority for issuing and
+establishing ownership of XDI identifiers.</para>
+
+<para>Cryptographic identifiers are also useful for establishing relationships between XDI agents
+and XDI endpoints, as well as for temporary/ephemeral relationships such as browser or WebSocket
+sessions. Another use case is hierarchical deterministic keys, where different key pairs may be
+cryptographically correlated in a provable way.</para>
+
+<para>For cryptographic identifiers, the scheme prefix <code>:cid-</code> is reserved
+(see <glossterm>CID</glossterm> in <xref linkend="xdi-core-1.0"/>).</para>
+
+<para>The following cryptographic identifier schemes are defined/proposed:</para>
+
+<itemizedlist>
+<listitem><para><code>:cid-1:</code> is a proposed scheme based on
+Ed25519 elliptic curve public keys (see <xref linkend="cid-1"/>).</para>
+<para>Example: <code>=!:cid-1:x1tFvHLAz45mUw5WH3tawuwimawiSYUnycQTgME6xEU3wo1WDfK</code></para></listitem>
+<listitem><para><code>:cid-2:</code> is a proposed scheme based on
+BIP-32 hierarchical deterministic keys (see <xref linkend="bip32"/>).</para></listitem>
+</itemizedlist>
 
 </section>
 
