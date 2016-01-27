@@ -553,6 +553,7 @@ in order to ensure authenticity of the message</para>
 
 <programlisting>&lt;$secret>&lt;$token>/&amp;/"... secret token ..."
 
+=!:uuid:x-alice[$msg]*!:uuid:x-1/$is()/(=!:uuid:x-bob)
 =!:uuid:x-alice[$msg]*!:uuid:x-1$do/$get/=!:uuid:x-bob&lt;#email>
 =!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$secret>&lt;$token>/&amp;/"... secret token ..."
 
@@ -627,6 +628,7 @@ to express the algorithm used to produce the cryptographic digest.</para>
 <programlisting>&lt;$digest>/&amp;/"... Base64-encoded cryptographic digest ..."
 &lt;$digest>/$is#/$sha$256
 
+=!:uuid:x-alice[$msg]*!:uuid:x-1/$is()/(=!:uuid:x-bob)
 =!:uuid:x-alice[$msg]*!:uuid:x-1$do/$get/=!:uuid:x-bob&lt;#email>
 =!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$digest>/&amp;/"... Base64-encoded cryptographic digest ..."
 =!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$digest>/$is#/$sha$256
@@ -730,6 +732,7 @@ to express the algorithm used to produce the cryptographic signature.</para>
 (=!:uuid:x-alice[&lt;$sig>]&lt;*!:uuid:x-2>/$has)=!:uuid:x-alice/$is#employee/+!:uuid:x-company
 (=!:uuid:x-alice[&lt;$sig>]&lt;*!:uuid:x-2>/$has)=!:uuid:x-alice/#friend/=!:uuid:x-bob
 
+=!:uuid:x-alice[$msg]*!:uuid:x-1/$is()/(=!:uuid:x-bob)
 =!:uuid:x-alice[$msg]*!:uuid:x-1$do/$get/=!:uuid:x-bob&lt;#email>
 =!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$sig>/&amp;/"... Base64-encoded cryptographic signature ..."
 =!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$sig>/$is#/$sha$256$rsa$2048
@@ -805,6 +808,18 @@ to express the algorithm used to produce the encrypted data.</para>
 <listitem><para><code>$rsa</code>: encrypted data produced by an RSA private key</para></listitem>
 <listitem><para><code>$aes$ecb$pkcs$5</code>: encrypted data produced by an AES private key with ECB block cipher mode and PKCS #5 padding</para></listitem>
 </itemizedlist>
+
+</section>
+
+<section><title>Examples</title>
+
+<para>Following are additional examples of the use of <code>&lt;$encrypt></code> attributes:</para>
+
+<programlisting>=!:uuid:x-alice[$msg]*!:uuid:x-1/$is()/(=!:uuid:x-bob)
+=!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$encrypt>/&amp;/"... Base64-encoded encrypted data ..."
+=!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$encrypt>/$is#/$rsa
+=!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$encrypt>/&lt;$private>&lt;$key>/=!:uuid:x-bob$msg$encrypt$keypair&lt;$private>&lt;$key>
+</programlisting>
 
 </section>
 
