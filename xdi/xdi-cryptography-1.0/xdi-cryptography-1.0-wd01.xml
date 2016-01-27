@@ -82,7 +82,7 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 </legalnotice>
 
 <abstract><title>Abstract</title>
-  <para>This working draft is for reviewer comment only and is not yet a standards document or published at OASIS. This specification defines the standard structure and vocabulary of XDI cryptographic concepts and features, including keys, key pairs, encryption, signatures, digests, and tokens.</para>
+  <para>This working draft is for reviewer comment only and is not yet a standards document or published at OASIS. This specification defines the standard structure and vocabulary of XDI cryptographic concepts and operations, including key pairs, keys, tokens, digests, signatures, and encryption.</para>
 </abstract>
 
 <legalnotice role="citation"><title>Citation format</title>
@@ -112,7 +112,7 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 <section id="s.introduction"><title>Introduction</title>
 
   <para>This specification defines the standard structure and vocabulary of XDI cryptographic concepts 
-  and features, including keys, key pairs, encryption, signatures, digests, and tokens.</para>
+  and operations, including key pairs, keys, tokens, digests, signatures, and encryption.</para>
   <para>This builds on the basic XDI graph model (see <xref linkend="xdi-core-1.0"/>) and is used
   in XDI Messaging (see <xref linkend="xdi-messaging-1.0"/>) and XDI Link Contracts
   (see <xref linkend="xdi-link-contracts-1.0"/>).</para>
@@ -159,7 +159,7 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
       <releaseinfo>OASIS &standard;. </releaseinfo>
       <citetitle><ulink url="&latest-loc;/xdi-link-contracts.html">&latest-loc;/xdi-link-contracts.html</ulink>.</citetitle>
     </bibliomixed> <bibliomixed id="xdi-security-mechanisms-1.0">
-      <abbrev>OASIS-XDI-Security-Mechanisms-V1.0</abbrev> <date>&pubdate; </date>
+	      <abbrev>OASIS-XDI-Security-Mechanisms-V1.0</abbrev> <date>&pubdate; </date>
       <title><ulink url="../../xdi-security-mechanisms-1.0/xdi-security-mechanisms-1.0-wd01.xml">OASIS XDI 1.0 Security Mechanisms Specification</ulink></title>
       <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
       <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
@@ -215,17 +215,24 @@ commonly enhanced by subsumption relationships (i.e. <code>$is#</code> type rela
 by composition relationships (i.e. contextual relations, see
 section <glossterm>Core Relations</glossterm> in <xref linkend="xdi-core-1.0"/>),
 and/or by the specialization pattern (i.e. a sequence of identifiers, see
-section <glossterm>Core Relations</glossterm> in <xref linkend="xdi-core-1.0"/>).
-</para>
+section <glossterm>Core Relations</glossterm> in <xref linkend="xdi-core-1.0"/>).</para>
+
+<para>This specification defines the following crypto</para>
+
+<para>Also note that many cryptographic structures can be expressed either as singletons or as collection members.
+In the latter case, well-known patterns such as the <glossterm>ordered/unordered reference pattern</glossterm>
+or the <glossterm>name/number reference pattern</glossterm> (see <xref linkend="xdi-core-1.0"/>) may be used,
+e.g. to establish an order of multiple cryptographic signatures, or to associate names with cryptographic keys.</para>
 
 </section>
 
-<section><title>Scope and Normalization</title>
+<section id="s.scope"><title>Cryptographic Scope</title>
 
-<para>Encryption (see <xref linkend="s.encryption"/>), digests (see <xref linkend="s.digests"/>),
- as well as signatures (see <xref linkend="s.signatures"/>) always apply to a certain set of XDI statements
-that get encrypted, hashed or signed. This set of XDI statements is called the
-<firstterm>scope</firstterm> of the cryptographic method. The scope may be:</para>
+<para>Digests (see <xref linkend="s.digests"/>), signatures (see <xref linkend="s.signatures"/>) and
+encryption (see <xref linkend="s.encryption"/>) always
+apply to a certain set of XDI statements that get hashed, signed or encrypted. This set of XDI statements is called the
+<firstterm>cryptographic scope</firstterm> (or short <firstterm>scope</firstterm>) of the cryptographic
+operation. The scope may include:</para>
 
 <itemizedlist>
 <listitem><para>All XDI statements in a graph</para></listitem>
@@ -234,28 +241,61 @@ that get encrypted, hashed or signed. This set of XDI statements is called the
 <listitem><para>Any arbitrary set of XDI statements</para></listitem>
 </itemizedlist>
 
-<para>In order to produce a sequence of bytes that can be used as input for encryption and signatures,
+<para>The scope of the cryptographic operation by default includes 
+all XDI statements rooted in the parent context of the XDI attribute representing the cryptographic
+digest (<code>&lt;$digest></code>), cryptographic signature (<code>&lt;$sig></code>)
+or encrypted data (<code>&lt;$encrypt</code>), EXCLUDING:</para>
+
+<itemizedlist>
+<listitem><para>All XDI statements rooted in the XDI attribute, and</para></listitem>
+<listitem><para>The contextual statement that establishes the XDI attribute itself.</para></listitem>
+</itemizedlist>
+
+<para>To express a scope other than the default, the <code>$has</code> aggregation
+relation is used as follows:</para>
+
+<itemizedlist>
+<listitem><para>To express a scope that includes all XDI statements in a graph or
+all XDI statements rooted in one or more
+subgraphs, a <code>$has</code> aggregation relation is added on the subgraph(s):</para>
+<programlisting>&lt;$sig>/$has/&lt;-- subgraph -->
+</programlisting>
+</listitem>
+<listitem><para>To express a scope that includes a single XDI statement or
+any arbitrary set of XDI statements,
+a <code>$has</code> aggregation relation is added on an inner root:</para>
+<programlisting>(&lt;$sig>/$has)&lt;-- inner graph -->
+</programlisting>
+</listitem>
+</itemizedlist>
+
+</section>
+
+<section id="s.graph.normalization"><title>Graph Normalization</title>
+
+<para>In order to produce a sequence of bytes that can be used as input for encryption, digests and signatures,
 the XDI statements within the scope have to be serialized in a normalized form. This is done using the following
 algorithm:</para>
 
 <orderedlist>
-<listitem><para>A temporary <firstterm>scope graph</firstterm> is constructed that contains exactly
-the XDI statements within the scope.</para></listitem>
-<listitem><para>The <firstterm>scope graph</firstterm> is serialized using the XDI JSON serialization
-format (see <glossterm>XDI JSON Format Serialization Rules </glossterm> in <xref linkend="xdi-core-1.0"/>)
-with the following properties:
+<listitem><para>A temporary <firstterm>scope graph</firstterm> is constructed which contains exactly
+the XDI statements that are within the cryptographic scope.</para></listitem>
+<listitem><para>The <firstterm>scope graph</firstterm> is serialized using the following rules:
 <itemizedlist>
-<listitem><para>The <code>implied</code> parameter is set to <code>0</code>.</para></listitem>
+<listitem><para>Use the XDI JSON serialization format (see <glossterm>XDI JSON Format Serialization Rules</glossterm>
+in <xref linkend="xdi-core-1.0"/>)</para></listitem>
+<listitem><para>Set the <code>implied</code> parameter to <code>0</code>.</para></listitem>
 <listitem><para>Apply rules for alphabetically ordering XDI statements in the JSON object structure
-( see <glossterm>Readability Rules</glossterm> in <xref linkend="xdi-core-1.0"/>).</para></listitem>
+(see <glossterm>Readability Rules</glossterm> in <xref linkend="xdi-core-1.0"/>).</para></listitem>
 </itemizedlist>
 </para></listitem>
-<listitem><para>The serialized scope graph is encoded in UTF-8 to produce a sequence of bytes.</para></listitem>
+<listitem><para>The serialized scope graph is encoded in UTF-8 to produce a sequence of bytes that
+can be used as input for cryptographic operations.</para></listitem>
 </orderedlist>
 
 </section>
 
-<section><title>Cryptographic Key Pairs: <code>$keypair</code></title>
+<section><title>Key Pairs: <code>$keypair</code></title>
 
 <para>A <firstterm>cryptographic key pair</firstterm> is represented as an XDI entity in a graph. It may
 be either an entity singleton identified by a <code>$keypair</code> context:</para>
@@ -269,7 +309,7 @@ be either an entity singleton identified by a <code>$keypair</code> context:</pa
 </programlisting>
 
 <para>A <code>$keypair</code> entity may be specialized (e.g. by a <code>$sig</code>, <code>$encrypt</code>,
-or <code>$msg</code> entities) to identify a certain purpose of the key pair such as signatures or
+or <code>$msg</code> entity) to identify a certain purpose of the key pair such as signatures or
 encryption, or the use of a key pair for XDI messaging:</para>
 
 <programlisting>$sig$keypair
@@ -278,10 +318,10 @@ $msg$sig$keypair
 $msg$encrypt$keypair
 </programlisting>
 
-<section><title>Algorithm</title>
+<section><title>Algorithms</title>
 
 <para>A <code>$keypair</code> entity SHOULD have a <code>$is#</code> type relation, in order
-to express the cryptographic algorithm used to produce the key pair.</para>
+to express the algorithm used to produce the cryptographic key pair.</para>
 
 <para>XDI processors MUST support the following key pair algorithms:</para>
 
@@ -293,9 +333,24 @@ to express the cryptographic algorithm used to produce the key pair.</para>
 
 </section>
 
+<section><title>Examples</title>
+
+<para>Following are additional examples of the use of <code>$keypair</code> entities:</para>
+
+<programlisting>=!:uuid:x-alice$msg$sig$keypair/$is#/$rsa$2048
+=!:uuid:x-alice$msg$encrypt$keypair/$is#/$rsa$2048
+
+=!:uuid:x-alice[$keypair]*!:uuid:x-2/$is#/$dsa$2048
+=!:uuid:x-alice[$keypair]*!:uuid:x-3/$is#/$dsa$2048
+=!:uuid:x-alice[$keypair]*!:uuid:x-4/$is#/$dsa$2048
+=!:uuid:x-alice[$keypair]*!:uuid:x-5/$is#/$ed25519
+</programlisting>
+
 </section>
 
-<section><title>Cryptographic Keys: <code>&lt;$key></code></title>
+</section>
+
+<section><title>Keys: <code>&lt;$key></code></title>
 
 <para>A <firstterm>cryptographic key</firstterm> is represented as an XDI attribute in a graph. It may
 be either an attribute singleton identified by a <code>&lt;$key></code> context:</para>
@@ -313,20 +368,13 @@ be either an attribute singleton identified by a <code>&lt;$key></code> context:
 <programlisting>&lt;$key>/&amp;/"... encoded cryptographic key ..."
 </programlisting>
 
-<section><title><code>&lt;$public></code></title>
+<section id="s.public.keys"><title><code>&lt;$public></code></title>
 
 <para>A <code>&lt;$key></code> attribute may be specialized by a <code>&lt;$public></code> attribute
 to identify a <firstterm>cryptographic public key</firstterm> used in asymmetric cryptography:</para>
 
 <programlisting>&lt;$public>&lt;$key>
 </programlisting>
-
-<para>For cryptographic public keys, XDI processors MUST support:</para>
-
-<itemizedlist>
-<listitem><para>RSA public keys in PEM-encoded X.509 format</para></listitem>
-<listitem><para>DSA public keys in PEM-encoded X.509 format</para></listitem>
-</itemizedlist>
 
 <para>A <code>&lt;$public>&lt;$key></code> attribute MAY be placed under a <code>$keypair</code> entity, in order
 to express a composition relationship between a key pair and a public key:</para>
@@ -335,25 +383,18 @@ to express a composition relationship between a key pair and a public key:</para
 </programlisting>
 
 <para>In order to enable public key infrastructures (PKIs) for XDI, public keys SHOULD be discoverable
-(see <xref linkend="xdi-discovery-1.0"/>), and they SHOULD be publicly accessible
+for XDI actors (see <xref linkend="xdi-discovery-1.0"/>), and they SHOULD be publicly accessible
 (see section <glossterm>Public Link Contract</glossterm> in <xref linkend="xdi-link-contracts-1.0"/>).</para>
 
 </section>
 
-<section><title><code>&lt;$private></code></title>
+<section id="s.private.keys"><title><code>&lt;$private></code></title>
 
 <para>A <code>&lt;$key></code> attribute may be specialized by a <code>&lt;$private></code> attribute
-to identify a <firstterm>cryptographic private key</firstterm>:</para>
+to identify a <firstterm>cryptographic private key</firstterm> used in asymmetric cryptography:</para>
 
 <programlisting>&lt;$private>&lt;$key>
 </programlisting>
-
-<para>For cryptographic private keys, XDI processors MUST support:</para>
-
-<itemizedlist>
-<listitem><para>RSA public keys in PEM-encoded PKCS #8 format</para></listitem>
-<listitem><para>DSA public keys in PEM-encoded PKCS #8 format</para></listitem>
-</itemizedlist>
 
 <para>A <code>&lt;$private>&lt;$key></code> attribute MAY be placed under a <code>$keypair</code> entity, in order
 to express a composition relationship between a key pair and a private key:</para>
@@ -363,7 +404,7 @@ to express a composition relationship between a key pair and a private key:</par
 
 </section>
 
-<section><title><code>&lt;$secret></code></title>
+<section id="s.secret.keys"><title><code>&lt;$secret></code></title>
 
 <para>A <code>&lt;$key></code> attribute may be specialized by a <code>&lt;$secret></code> attribute
 to identify a <firstterm>cryptographic secret key</firstterm> used in symmetric cryptography:</para>
@@ -371,18 +412,15 @@ to identify a <firstterm>cryptographic secret key</firstterm> used in symmetric 
 <programlisting>&lt;$secret>&lt;$key>
 </programlisting>
 
-<para>For cryptographic secret keys, XDI processors MUST support:</para>
-
-<itemizedlist>
-<listitem><para>AES secret keys in Base64-encoded byte format</para></listitem>
-</itemizedlist>
-
 </section>
 
-<section><title>Algorithm</title>
+<section><title>Algorithms and Formats</title>
 
 <para>A <code>&lt;$key></code> attribute SHOULD have a <code>$is#</code> type relation, in order
-to express the cryptographic algorithm used to produce the key.</para>
+to express the algorithm used to produce the cryptographic key:</para>
+
+<programlisting>&lt;$key>/$is#/&lt;--key-algorithm-->
+</programlisting>
 
 <para>XDI processors MUST support the following key algorithms:</para>
 
@@ -393,15 +431,25 @@ to express the cryptographic algorithm used to produce the key.</para>
 <listitem><para><code>$ed25519</code>: 32 byte Ed25519 key on the Curve25519 elliptic curve</para></listitem>
 </itemizedlist>
 
+<para>XDI processors MUST support the following encodings and formats:</para>
+
+<itemizedlist>
+<listitem><para>For RSA public keys: PEM-encoded X.509 format</para></listitem>
+<listitem><para>For DSA public keys: PEM-encoded X.509 format</para></listitem>
+<listitem><para>For Ed25519 public keys: Base64-encoded byte format</para></listitem>
+<listitem><para>For RSA private keys: PEM-encoded PKCS #8 format</para></listitem>
+<listitem><para>For DSA private keys: PEM-encoded PKCS #8 format</para></listitem>
+<listitem><para>For Ed25519 private keys: Base64-encoded byte format</para></listitem>
+<listitem><para>For AES secret keys: Base64-encoded byte format</para></listitem>
+</itemizedlist>
+
 </section>
 
 <section><title>Examples</title>
 
-<para>Following are examples of XDI statements involving <code>&lt;$key></code> attributes:</para>
+<para>Following are additional examples of the use of <code>&lt;$key></code> attributes:</para>
 
-<programlisting>&lt;$key>/&amp;/"... encoded cryptographic key ..."
-
-&lt;$public>&lt;$key>/&amp;/"... encoded cryptographic key ..."
+<programlisting>&lt;$public>&lt;$key>/&amp;/"... encoded cryptographic key ..."
 &lt;$public>&lt;$key>/$is#/$rsa$256
 
 &lt;$private>&lt;$key>/&amp;/"... encoded cryptographic key ..."
@@ -410,17 +458,19 @@ to express the cryptographic algorithm used to produce the key.</para>
 &lt;$secret>&lt;$key>/&amp;/"... encoded cryptographic key ..."
 &lt;$secret>&lt;$key>/$is#/$aes$256
 
-=alice$msg$sig$keypair&lt;$public>&lt;$key>/&amp;/"... encoded cryptographic key ..."
-=alice$msg$sig$keypair&lt;$private>&lt;$key>/&amp;/"... encoded cryptographic key ..."
+=!:uuid:x-alice$msg$sig$keypair&lt;$public>&lt;$key>/&amp;/"... encoded cryptographic key ..."
+=!:uuid:x-alice$msg$sig$keypair&lt;$private>&lt;$key>/&amp;/"... encoded cryptographic key ..."
+=!:uuid:x-alice$msg$encrypt$keypair&lt;$public>&lt;$key>/&amp;/"... encoded cryptographic key ..."
+=!:uuid:x-alice$msg$encrypt$keypair&lt;$private>&lt;$key>/&amp;/"... encoded cryptographic key ..."
 </programlisting>
 
 </section>
 
 </section>
 
-<section id="s.tokens"><title>Cryptographic Tokens: <code>&lt;$token></code></title>
+<section id="s.tokens"><title>Tokens: <code>&lt;$token></code></title>
 
-<para>A <firstterm>cryptographic token</firstterm> is represented as an XDI attribute in a graph. It may
+<para>A <firstterm>token</firstterm> is represented as an XDI attribute in a graph. It may
 be either an attribute singleton identified by a <code>&lt;$token></code> context:</para>
 
 <programlisting>&lt;$token>
@@ -433,26 +483,20 @@ be either an attribute singleton identified by a <code>&lt;$token></code> contex
 
 <para>The literal value of the attribute is the digest encoded in Base64:</para>
 
-<programlisting>&lt;$token>/&amp;/"... cryptographic token ..."
-</programlisting>
-
-<para>A <code>&lt;$token></code> attribute may be specialized (e.g. by a <code>&lt;$secret></code> attribute) to identify
-a certain purpose of the token:</para>
-
-<programlisting>&lt;$secret>&lt;$token>
+<programlisting>&lt;$token>/&amp;/"... token ..."
 </programlisting>
 
 <para>In order to express whether a token is valid, an attribute singleton identified by a
-<code>&lt;$valid></code> can be used:</para>
+<code>&lt;$valid></code> context can be used:</para>
 
 <programlisting>&lt;$token>&lt;$valid>/&amp;/true
 </programlisting>
 
-<para>Determining whether a token is valid or not may be done in different ways. These processes 
-are out of scope of this specification and typically depend on the concrete environment of XDI agents and
+<para>Determining whether a token is valid or not may be done in different ways. This is
+out of scope of this specification and depends on the concrete environment of XDI agents and
 XDI endpoints.</para>
 
-<para>A <firstterm>cryptographic token</firstterm> can be used as follows:</para>
+<para>A <glossterm>token</glossterm> can be used as follows:</para>
 
 <itemizedlist>
 <listitem><para>It may be added to an XDI message, in order to ensure authenticity of the message.</para></listitem>
@@ -461,6 +505,35 @@ token is valid.</para></listitem>
 <listitem><para>It may be used inside a condition of an XDI link contract's policy, in order to evaluate if a message's
 token has a certain value.</para></listitem>
 </itemizedlist>
+
+<section id="s.secret.tokens"><title><code>&lt;$secret></code></title>
+
+<para>A <code>&lt;$token></code> attribute may be specialized by a <code>&lt;$secret></code> attribute
+to identify a <firstterm>secret token</firstterm>:</para>
+
+<programlisting>&lt;$secret>&lt;$token>
+</programlisting>
+
+<para>A <glossterm>token</glossterm> can be used as a password and added to an XDI message,
+in order to ensure authenticity of the message</para>
+
+</section>
+
+<section><title>Examples</title>
+
+<para>Following are additional examples of the use of <code>&lt;$token></code> attributes:</para>
+
+<programlisting>&lt;$secret>&lt;$token>/&amp;/"... secret token ..."
+
+=!:uuid:x-alice[$msg]*!:uuid:x-1$do/$get/=!:uuid:x-bob&lt;#email>
+=!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$secret>&lt;$token>/&amp;/"... secret token ..."
+
+(=!:uuid:x-bob/=!:uuid:x-alice)$do/$get/=!:uuid:x-bob
+(=!:uuid:x-bob/=!:uuid:x-alice)($do$if$and/$true){$from}/$is/=!:uuid:x-alice
+(=!:uuid:x-bob/=!:uuid:x-alice)($do$if$and/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
+</programlisting>
+
+</section>
 
 </section>
 
@@ -501,20 +574,14 @@ digest has a certain value.</para></listitem>
 
 <section><title>Scope</title>
 
-<para>The scope of the cryptographic digest by default includes 
-all XDI statements rooted in the parent context of the <code>&lt;$digest></code> attribute, EXCLUDING:</para>
-
-<itemizedlist>
-<listitem><para>All XDI statements rooted in the <code>&lt;$digest></code> attribute, and</para></listitem>
-<listitem><para>The contextual statement that establishes the <code>&lt;$digest></code> attribute itself.</para></listitem>
-</itemizedlist>
+<para>The scope of the cryptographic digest is determined as specified in <xref linkend="s.scope"/>.</para>
 
 </section>
 
-<section><title>Algorithm</title>
+<section><title>Algorithms</title>
 
 <para>A <code>&lt;$digest></code> attribute SHOULD have a <code>$is#</code> type relation, in order
-to express the cryptographic algorithm used to produce the digest.</para>
+to express the algorithm used to produce the cryptographic digest.</para>
 
 <para>XDI processors MUST support the following digest algorithms:</para>
 
@@ -522,6 +589,24 @@ to express the cryptographic algorithm used to produce the digest.</para>
 <listitem><para><code>$sha$256</code>: digest produced by the SHA-256 cryptographic hash function</para></listitem>
 <listitem><para><code>$md$5</code>: digest produced by the MD5 hash function</para></listitem>
 </itemizedlist>
+
+</section>
+
+<section><title>Examples</title>
+
+<para>Following are additional examples of the use of <code>&lt;$digest></code> attributes:</para>
+
+<programlisting>&lt;$digest>/&amp;/"... Base64-encoded cryptographic digest ..."
+&lt;$digest>/$is#/$sha$256
+
+=!:uuid:x-alice[$msg]*!:uuid:x-1$do/$get/=!:uuid:x-bob&lt;#email>
+=!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$digest>/&amp;/"... Base64-encoded cryptographic digest ..."
+=!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$digest>/$is#/$sha$256
+
+(=!:uuid:x-bob/=!:uuid:x-alice)$do/$all/
+(=!:uuid:x-bob/=!:uuid:x-alice)($do$if$and/$true){$msg}&lt;$digest>&lt;$valid>/&amp;/true
+(=!:uuid:x-bob/=!:uuid:x-alice)($do$if$and/$true){$msg}&lt;$digest>/&amp;/"... Base64-encoded cryptographic digest ...""
+</programlisting>
 
 </section>
 
@@ -537,13 +622,32 @@ be either an attribute singleton identified by a <code>&lt;$sig></code> context:
 
 <para>Or it may be a member of an attribute collection identified by a <code>[&lt;$sig>]</code> context.</para>
 
-<programlisting>[&lt;$sig>]&lt;--signature-id-->
+<programlisting>[&lt;$sig>]&lt;--cryptographic-signature-id-->
 </programlisting>
 
-<para>The literal value of the attribute is the signature encoded in Base64:</para>
+<para>The literal value of the attribute is the cryptographic signature encoded in Base64:</para>
 
 <programlisting>&lt;$sig>/&amp;/"... Base64-encoded cryptographic signature ..."
 </programlisting>
+
+<para>The attribute may use a <code>&lt;$public>&lt;$key></code> relation to identify a
+public key that can be used to validate the cryptographic signature:</para>
+
+<programlisting>&lt;$sig>/&lt;$public>&lt;$key>/&lt;--public-key-->
+</programlisting>
+
+<para>In the absence of this relation, it may be possible to determine the public key that can be used
+to validate the cryptographic signature in other ways:</para>
+
+<itemizedlist>
+<listitem><para>There may be one or more "default" public key(s) associated with the graph that contains
+the cryptographic signature.</para></listitem>
+<listitem><para>If the scope of the cryptographic signature is an XDI message, then the public key is assumed
+to be associated with the sending peer of the message and may be obtained
+using <xref linkend="xdi-discovery-1.0"/>).</para></listitem>
+<listitem><para>Other options that are out of scope of this specification and typically depend on the
+concrete environment of XDI agents and XDI endpoints.</para></listitem>
+</itemizedlist>
 
 <para>In order to express whether a signature is valid (i.e. whether it can be validated using a certain key),
 an attribute singleton identified by a <code>&lt;$valid></code> can be used:</para>
@@ -551,85 +655,126 @@ an attribute singleton identified by a <code>&lt;$valid></code> can be used:</pa
 <programlisting>&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
-<para>A signature may use a <code>&lt;$public>&lt;$key></code> relation to identify a public key that can be used
-to validate the signature:</para>
-
-<programlisting>&lt;$sig>/$public&lt;$key>/&lt;--public-key-->
-</programlisting>
-
-<para>In the absence of such a relation, it may be possible to determine the public key that can be used to validate
-the signature in other ways:</para>
-
-<itemizedlist>
-<listitem><para>A public key MAY be discoverable (see <xref linkend="xdi-discovery-1.0"/>).</para></listitem>
-<listitem><para>Other options that are out of scope of this specification and typically depend on the
-concrete environment of XDI agents and XDI endpoints.</para></listitem>
-</itemizedlist>
-
 <para>A <firstterm>cryptographic signature</firstterm> can be used as follows:</para>
 
 <itemizedlist>
-<listitem><para>It may be added to an XDI graph, in order to ensure authenticity of XDI statements in the graph.</para></listitem>
-<listitem><para>It may be added to an XDI message, in order to ensure authenticity of the message.</para></listitem>
+<listitem><para>It may be added to an XDI graph, in order to ensure integrity and authenticity of XDI statements in the graph.</para></listitem>
+<listitem><para>It may be added to an XDI message, in order to ensure integrity and authenticity of the message.</para></listitem>
 <listitem><para>It may be used inside a condition of an XDI link contract's policy, in order to evaluate if a message's
 signature is valid.</para></listitem>
 </itemizedlist>
 
 <section><title>Scope</title>
 
-<para>The scope of the cryptographic signature by default includes 
-all XDI statements rooted in the parent context of the <code>&lt;$sig></code> attribute, EXCLUDING:</para>
-
-<itemizedlist>
-<listitem><para>All XDI statements rooted in the <code>&lt;$sig></code> attribute, and</para></listitem>
-<listitem><para>The contextual statement that establishes the <code>&lt;$sig></code> attribute itself.</para></listitem>
-</itemizedlist>
+<para>The scope of the cryptographic signature is determined as specified in <xref linkend="s.scope"/>.</para>
 
 </section>
 
-<section><title>Algorithm</title>
+<section><title>Algorithms</title>
 
 <para>A <code>&lt;$sig></code> attribute SHOULD have a <code>$is#</code> type relation, in order
-to express the cryptographic algorithm used to produce the signature.</para>
+to express the algorithm used to produce the cryptographic signature.</para>
 
 <para>XDI processors MUST support the following signature algorithms:</para>
 
 <itemizedlist>
-<listitem><para><code>$sha$256$rsa$2048</code>: signature produced by a 2048 bit RSA private key and the SHA-256 cryptographic hash function</para></listitem>
-<listitem><para><code>$sha$256$dsa$2048</code>: signature produced by a 2048 bit DSA private key and the SHA-256 cryptographic hash function</para></listitem>
+<listitem><para><code>$sha$256$rsa$2048</code>: cryptographic signature produced by a 2048 bit RSA private key and the SHA-256 cryptographic hash function</para></listitem>
+<listitem><para><code>$sha$256$dsa$2048</code>: cryptographic signature produced by a 2048 bit DSA private key and the SHA-256 cryptographic hash function</para></listitem>
 <listitem><para><code>$sha$256$aes$256</code>: message authentication code (MAC) produced by a 256 bit AES secret key and the SHA-256 cryptographic hash function</para></listitem>
-<listitem><para><code>$ed25519$64</code>: 64 byte signature produced by the Ed25519 signature algorithm on the Curve25519 elliptic curve</para></listitem>
-<listitem><para><code>$ecdsa$64</code>: signature produced by the ECDSA signature algorithm on the P-256 elliptic curve</para></listitem>
+<listitem><para><code>$ed25519$64</code>: 64 byte cryptographic signature produced by the Ed25519 signature algorithm on the Curve25519 elliptic curve</para></listitem>
+<listitem><para><code>$ecdsa$64</code>: 64 byte cryptographic signature produced by the ECDSA signature algorithm on the P-256 elliptic curve</para></listitem>
 </itemizedlist>
 
 </section>
 
-<!-- TODO
+<section><title>Examples</title>
 
-<p>XDI Signatures consist of several characteristics: Algorythm information, Hashing
-      information, and The signature itself. Processing instructions for the creation and validation
-      of XDI signatures are provided in section <a href="#s.sigproccess" title="4 XDI Signatures">Section 4, &#8220;XDI Signatures&#8221;</a>. </p><p>There are several applications for XDI signatures. For XDI messages, they may be used to
-      fufill the requirements in [<a href="#XDISec" title="[XDISec]"><b><span class="abbrev">XDISec</span></b></a>] for message integrity and authenticity.
-      For graph representations, signatures can indicate that the signer is asserting specific
-      statements in the graph (for example, the graph subject is asserting a list of friends
-      addressed by the inner root (<code class="code">=example/#friend</code>) ). Signatures can also be placed
-      in a third parties graph, indicating that the signer is asserting one or more statements about
-      the graph subject (e.g. a subject's emlployer asserts the work email address of the
-      subject).</p>
+<para>Following are additional examples of the use of <code>&lt;$sig></code> attributes:</para>
 
- -->
+<programlisting>=!:uuid:x-alice[&lt;$sig>]&lt;*!:uuid:x-1>/&amp;/"... Base64-encoded cryptographic signature ..."
+=!:uuid:x-alice[&lt;$sig>]&lt;*!:uuid:x-1>/$is#/$sha256$rsa$2048
+=!:uuid:x-alice[&lt;$sig>]&lt;*!:uuid:x-1>/$has/=!:uuid:x-alice[&lt;#email>]
+=!:uuid:x-alice[&lt;$sig>]&lt;*!:uuid:x-2>/&amp;/"... Base64-encoded cryptographic signature ..."
+=!:uuid:x-alice[&lt;$sig>]&lt;*!:uuid:x-2>/$is#/$sha256$rsa$2048
+(=!:uuid:x-alice[&lt;$sig>]&lt;*!:uuid:x-2>/$has)=!:uuid:x-alice/$is#employee/+!:uuid:x-company
+(=!:uuid:x-alice[&lt;$sig>]&lt;*!:uuid:x-2>/$has)=!:uuid:x-alice/#friend/=!:uuid:x-bob
+
+=!:uuid:x-alice[$msg]*!:uuid:x-1$do/$get/=!:uuid:x-bob&lt;#email>
+=!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$sig>/&amp;/"... Base64-encoded cryptographic signature ..."
+=!:uuid:x-alice[$msg]*!:uuid:x-1&lt;$sig>/$is#/$sha$256$rsa$2048
+
+(=!:uuid:x-bob/=!:uuid:x-alice)$do/$get/=!:uuid:x-bob
+(=!:uuid:x-bob/=!:uuid:x-alice)($do$if$and/$true){$from}/$is/=!:uuid:x-alice
+(=!:uuid:x-bob/=!:uuid:x-alice)($do$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+</programlisting>
+
+</section>
 
 </section>
 
 <section id="s.encryption"><title>Encryption: <code>&lt;$encrypt></code></title>
 
-<!--  TODO
+<para>Any set of XDI statements may be <firstterm>cryptographically encrypted</firstterm>. The encrypted
+data is represented as an XDI attribute in a graph. It may
+be either an attribute singleton identified by a <code>&lt;$encrypt></code> context:</para>
 
-<p>The encryption mechanisms defined in this document are ssufficient to fullfill the
-      confidentiality requirements defined in [<a href="#XDISec" title="[XDISec]"><b><span class="abbrev">XDISec</span></b></a>]. The mecahnics of encrypting
-      information in the graph, as well as the neccesary encryption metadata are defined in <a href="#s.encprocess" title="5 Encryption Processing Rules">Section 5, &#8220;Encryption Processing Rules&#8221;</a></p>
+<programlisting>&lt;$encrypt>
+</programlisting>
 
- -->
+<para>Or it may be a member of an attribute collection identified by a <code>[&lt;$encrypt>]</code> context.</para>
+
+<programlisting>[&lt;$encrypt>]&lt;--encrypted-data-id-->
+</programlisting>
+
+<para>The literal value of the attribute is the encrypted data encoded in Base64:</para>
+
+<programlisting>&lt;$encrypt>/&amp;/"... Base64-encoded encrypted data ..."
+</programlisting>
+
+<para>The attribute may use a <code>&lt;$private>&lt;$key></code> relation to identify a
+private key that can be used to decrypt the encrypted subgraph:</para>
+
+<programlisting>&lt;$encrypt>/&lt;$private>&lt;$key>/&lt;--private-key-->
+</programlisting>
+
+<para>In the absence of this relation, it may be possible to determine the private key that can be used
+to decrypt the encrypted subgraph in other ways:</para>
+
+<itemizedlist>
+<listitem><para>There may be one or more "default" private key(s) associated with the graph that contains
+the encrypted subgraph.</para></listitem>
+<listitem><para>If the scope of the encrypted subgraph is an XDI message, then the private key is assumed
+to be associated with the receiving peer of the message.</para></listitem>
+<listitem><para>Other options that are out of scope of this specification and typically depend on the
+concrete environment of XDI agents and XDI endpoints.</para></listitem>
+</itemizedlist>
+
+<para>A <firstterm>encrypted subgraph</firstterm> can be used as follows:</para>
+
+<itemizedlist>
+<listitem><para>It may be added to an XDI graph, in order to ensure confidentiality of XDI statements in the graph.</para></listitem>
+<listitem><para>It may be added to an XDI message, in order to ensure confidentiality of the message.</para></listitem>
+</itemizedlist>
+
+<section><title>Scope</title>
+
+<para>The scope of the encrypted data is determined as specified in <xref linkend="s.scope"/>.</para>
+
+</section>
+
+<section><title>Algorithms</title>
+
+<para>A <code>&lt;$encrypt></code> attribute SHOULD have a <code>$is#</code> type relation, in order
+to express the algorithm used to produce the encrypted data.</para>
+
+<para>XDI processors MUST support the following encryption algorithms:</para>
+
+<itemizedlist>
+<listitem><para><code>$rsa</code>: encrypted data produced by an RSA private key</para></listitem>
+<listitem><para><code>$aes$ecb$pkcs$5</code>: encrypted data produced by an AES private key with ECB block cipher mode and PKCS #5 padding</para></listitem>
+</itemizedlist>
+
+</section>
 
 </section>
 
