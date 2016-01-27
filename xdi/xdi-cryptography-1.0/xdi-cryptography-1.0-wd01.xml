@@ -222,9 +222,9 @@ section <glossterm>Core Relations</glossterm> in <xref linkend="xdi-core-1.0"/>)
 
 <section><title>Scope and Normalization</title>
 
-<para>Encryption (see <xref linkend="s.encryption"/>) as well as signatures
-(see <xref linkend="s.signatures"/>) always apply to a certain set of XDI statements
-that get encrypted or signed. This set of XDI statements is called the
+<para>Encryption (see <xref linkend="s.encryption"/>), digests (see <xref linkend="s.digests"/>),
+ as well as signatures (see <xref linkend="s.signatures"/>) always apply to a certain set of XDI statements
+that get encrypted, hashed or signed. This set of XDI statements is called the
 <firstterm>scope</firstterm> of the cryptographic method. The scope may be:</para>
 
 <itemizedlist>
@@ -266,6 +266,16 @@ be either an entity singleton identified by a <code>$keypair</code> context:</pa
 <para>Or it may be a member of an entity collection identified by a <code>[$keypair]</code> context.</para>
 
 <programlisting>[$keypair]&lt;--key-pair-id-->
+</programlisting>
+
+<para>A <code>$keypair</code> entity may be specialized (e.g. by a <code>$sig</code>, <code>$encrypt</code>,
+or <code>$msg</code> entities) to identify a certain purpose of the key pair such as signatures or
+encryption, or the use of a key pair for XDI messaging:</para>
+
+<programlisting>$sig$keypair
+$encrypt$keypair
+$msg$sig$keypair
+$msg$encrypt$keypair
 </programlisting>
 
 <section><title>Algorithm</title>
@@ -321,8 +331,12 @@ to identify a <firstterm>cryptographic public key</firstterm> used in asymmetric
 <para>A <code>&lt;$public>&lt;$key></code> attribute MAY be placed under a <code>$keypair</code> entity, in order
 to express a composition relationship between a key pair and a public key:</para>
 
-<programlisting>$lt;$keypair>&lt;$public>&lt;$key>
+<programlisting>$keypair&lt;$public>&lt;$key>
 </programlisting>
+
+<para>In order to enable public key infrastructures (PKIs) for XDI, public keys SHOULD be discoverable
+(see <xref linkend="xdi-discovery-1.0"/>), and they SHOULD be publicly accessible
+(see section <glossterm>Public Link Contract</glossterm> in <xref linkend="xdi-link-contracts-1.0"/>).</para>
 
 </section>
 
@@ -344,7 +358,7 @@ to identify a <firstterm>cryptographic private key</firstterm>:</para>
 <para>A <code>&lt;$private>&lt;$key></code> attribute MAY be placed under a <code>$keypair</code> entity, in order
 to express a composition relationship between a key pair and a private key:</para>
 
-<programlisting>$lt;$keypair>&lt;$private>&lt;$key>
+<programlisting>$keypair&lt;$private>&lt;$key>
 </programlisting>
 
 </section>
@@ -381,13 +395,135 @@ to express the cryptographic algorithm used to produce the key.</para>
 
 </section>
 
+<section><title>Examples</title>
+
+<para>Following are examples of XDI statements involving <code>&lt;$key></code> attributes:</para>
+
+<programlisting>&lt;$key>/&amp;/"... encoded cryptographic key ..."
+
+&lt;$public>&lt;$key>/&amp;/"... encoded cryptographic key ..."
+&lt;$public>&lt;$key>/$is#/$rsa$256
+
+&lt;$private>&lt;$key>/&amp;/"... encoded cryptographic key ..."
+&lt;$private>&lt;$key>/$is#/$rsa$256
+
+&lt;$secret>&lt;$key>/&amp;/"... encoded cryptographic key ..."
+&lt;$secret>&lt;$key>/$is#/$aes$256
+
+=alice$msg$sig$keypair&lt;$public>&lt;$key>/&amp;/"... encoded cryptographic key ..."
+=alice$msg$sig$keypair&lt;$private>&lt;$key>/&amp;/"... encoded cryptographic key ..."
+</programlisting>
+
+</section>
+
 </section>
 
 <section id="s.tokens"><title>Cryptographic Tokens: <code>&lt;$token></code></title>
 
+<para>A <firstterm>cryptographic token</firstterm> is represented as an XDI attribute in a graph. It may
+be either an attribute singleton identified by a <code>&lt;$token></code> context:</para>
+
+<programlisting>&lt;$token>
+</programlisting>
+
+<para>Or it may be a member of an attribute collection identified by a <code>[&lt;$token>]</code> context.</para>
+
+<programlisting>[&lt;$token>]&lt;--token-id-->
+</programlisting>
+
+<para>The literal value of the attribute is the digest encoded in Base64:</para>
+
+<programlisting>&lt;$token>/&amp;/"... cryptographic token ..."
+</programlisting>
+
+<para>A <code>&lt;$token></code> attribute may be specialized (e.g. by a <code>&lt;$secret></code> attribute) to identify
+a certain purpose of the token:</para>
+
+<programlisting>&lt;$secret>&lt;$token>
+</programlisting>
+
+<para>In order to express whether a token is valid, an attribute singleton identified by a
+<code>&lt;$valid></code> can be used:</para>
+
+<programlisting>&lt;$token>&lt;$valid>/&amp;/true
+</programlisting>
+
+<para>Determining whether a token is valid or not may be done in different ways. These processes 
+are out of scope of this specification and typically depend on the concrete environment of XDI agents and
+XDI endpoints.</para>
+
+<para>A <firstterm>cryptographic token</firstterm> can be used as follows:</para>
+
+<itemizedlist>
+<listitem><para>It may be added to an XDI message, in order to ensure authenticity of the message.</para></listitem>
+<listitem><para>It may be used inside a condition of an XDI link contract's policy, in order to evaluate if a message's
+token is valid.</para></listitem>
+<listitem><para>It may be used inside a condition of an XDI link contract's policy, in order to evaluate if a message's
+token has a certain value.</para></listitem>
+</itemizedlist>
+
 </section>
 
 <section id="s.digests"><title>Digests: <code>&lt;$digest></code></title>
+
+<para>A <firstterm>cryptographic digest</firstterm> is represented as an XDI attribute in a graph. It may
+be either an attribute singleton identified by a <code>&lt;$digest></code> context:</para>
+
+<programlisting>&lt;$digest>
+</programlisting>
+
+<para>Or it may be a member of an attribute collection identified by a <code>[&lt;$digest>]</code> context.</para>
+
+<programlisting>[&lt;$digest>]&lt;--digest-id-->
+</programlisting>
+
+<para>The literal value of the attribute is the digest encoded in Base64:</para>
+
+<programlisting>&lt;$digest>/&amp;/"... Base64-encoded cryptographic digest ..."
+</programlisting>
+
+<para>In order to express whether a digest is valid (i.e. whether it can be reproduced),
+an attribute singleton identified by a <code>&lt;$valid></code> can be used:</para>
+
+<programlisting>&lt;$digest>&lt;$valid>/&amp;/true
+</programlisting>
+
+<para>A <firstterm>cryptographic digest</firstterm> can be used as follows:</para>
+
+<itemizedlist>
+<listitem><para>It may be added to an XDI graph, in order to ensure integrity of XDI statements in the graph.</para></listitem>
+<listitem><para>It may be added to an XDI message, in order to ensure integrity of the message.</para></listitem>
+<listitem><para>It may be used inside a condition of an XDI link contract's policy, in order to evaluate if a message's
+digest is valid.</para></listitem>
+<listitem><para>It may be used inside a condition of an XDI link contract's policy, in order to evaluate if a message's
+digest has a certain value.</para></listitem>
+</itemizedlist>
+
+<section><title>Scope</title>
+
+<para>The scope of the cryptographic digest by default includes 
+all XDI statements rooted in the parent context of the <code>&lt;$digest></code> attribute, EXCLUDING:</para>
+
+<itemizedlist>
+<listitem><para>All XDI statements rooted in the <code>&lt;$digest></code> attribute, and</para></listitem>
+<listitem><para>The contextual statement that establishes the <code>&lt;$digest></code> attribute itself.</para></listitem>
+</itemizedlist>
+
+</section>
+
+<section><title>Algorithm</title>
+
+<para>A <code>&lt;$digest></code> attribute SHOULD have a <code>$is#</code> type relation, in order
+to express the cryptographic algorithm used to produce the digest.</para>
+
+<para>XDI processors MUST support the following digest algorithms:</para>
+
+<itemizedlist>
+<listitem><para><code>$sha$256</code>: digest produced by the SHA-256 cryptographic hash function</para></listitem>
+<listitem><para><code>$md$5</code>: digest produced by the MD5 hash function</para></listitem>
+</itemizedlist>
+
+</section>
 
 </section>
 
@@ -408,6 +544,36 @@ be either an attribute singleton identified by a <code>&lt;$sig></code> context:
 
 <programlisting>&lt;$sig>/&amp;/"... Base64-encoded cryptographic signature ..."
 </programlisting>
+
+<para>In order to express whether a signature is valid (i.e. whether it can be validated using a certain key),
+an attribute singleton identified by a <code>&lt;$valid></code> can be used:</para>
+
+<programlisting>&lt;$sig>&lt;$valid>/&amp;/true
+</programlisting>
+
+<para>A signature may use a <code>&lt;$public>&lt;$key></code> relation to identify a public key that can be used
+to validate the signature:</para>
+
+<programlisting>&lt;$sig>/$public&lt;$key>/&lt;--public-key-->
+</programlisting>
+
+<para>In the absence of such a relation, it may be possible to determine the public key that can be used to validate
+the signature in other ways:</para>
+
+<itemizedlist>
+<listitem><para>A public key MAY be discoverable (see <xref linkend="xdi-discovery-1.0"/>).</para></listitem>
+<listitem><para>Other options that are out of scope of this specification and typically depend on the
+concrete environment of XDI agents and XDI endpoints.</para></listitem>
+</itemizedlist>
+
+<para>A <firstterm>cryptographic signature</firstterm> can be used as follows:</para>
+
+<itemizedlist>
+<listitem><para>It may be added to an XDI graph, in order to ensure authenticity of XDI statements in the graph.</para></listitem>
+<listitem><para>It may be added to an XDI message, in order to ensure authenticity of the message.</para></listitem>
+<listitem><para>It may be used inside a condition of an XDI link contract's policy, in order to evaluate if a message's
+signature is valid.</para></listitem>
+</itemizedlist>
 
 <section><title>Scope</title>
 
