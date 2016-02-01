@@ -115,7 +115,7 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 protocols such as HTTP and WebSocket.</para>
 
 <para>The XDI 1.0 Core specification <xref linkend="xdi-core-1.0"/> defines the XDI
-graphs and the XDI Messaging specification <xref linkend="xdi-messaging-1.0"/> defines the messaging
+graphs, and the XDI Messaging specification <xref linkend="xdi-messaging-1.0"/> defines the messaging
 patterns and the messages themselves.</para>
 
 <section><title>Terminology</title>
@@ -137,7 +137,15 @@ this document.</para>
 <section><title>Normative References</title>
 
 <bibliolist>
-  <bibliomixed id="xdi-messaging-1.0">
+  <bibliomixed id="xdi-core-1.0">
+      <abbrev>OASIS-XDI-Core-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../../xdi-core-1.0/xdi-core-1.0-wd01.xml">OASIS XDI 1.0 Core Specification</ulink></title>
+      <author><firstname>Joseph </firstname> <surname>Boyle</surname></author>,
+      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>,
+      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>.
+      <releaseinfo>OASIS &standard;. </releaseinfo>
+      <citetitle><ulink url="&latest-loc;/xdi-core.html">&latest-loc;/xdi-core.html</ulink>.</citetitle>
+  </bibliomixed> <bibliomixed id="xdi-messaging-1.0">
       <abbrev>OASIS-XDI-Messaging-V1.0</abbrev> <date>&pubdate; </date>
       <title><ulink url="../../xdi-messaging-1.0/xdi-messaging-1.0-wd01.xml">OASIS XDI 1.0 Messaging Specification</ulink></title>
       <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
@@ -237,10 +245,11 @@ specific terms such as <firstterm>client</firstterm>, <firstterm>server</firstte
 
 <para>The XDI Core specification <xref linkend="xdi-core-1.0"/> defines several serialization formats.</para>
 
-<para>For bindings, the following rule applies:
+<para>For bindings, the following rules apply:
 <itemizedlist>
   <listitem><para>The XDI JSON serialization format (MIME type: <code>application/xdi+json</code>) MUST be
-    supported by both requesters and responders. Other serialization formats MAY be supported.</para></listitem>
+    supported by all requesters and responders.</para></listitem>
+  <listitem><para>Other serialization formats MAY be supported.</para></listitem>
 </itemizedlist>
 </para>
 
@@ -267,7 +276,7 @@ a POST request. The serialized message envelope containing one or more request m
 in the HTTP body.</para>
 
 <para>The responder executes the request message(s) against its peer graph. The responder sends
-a message envelope containing one or more response message(s) in the HTTP body of the response
+a serialized response (either result graph or response message envelope) in the HTTP body of the response
 to the POST request.</para>
 
 <section><title>HTTP Headers</title>      
@@ -358,7 +367,7 @@ associated with the user is the responder.</para>
   value of the <code>ACTION</code> attribute MAY be the URI of a connect service, or it may be empty (see
   next section). 
   </para></listitem>
-  <listitem><para>The form MUST contain a hidden field with the name <code>xdiMessageEnvelope</code>. The
+  <listitem><para>The form MUST contain a hidden field with the name <code>xdi</code>. The
   value of the field is the request message envelope to be transmitted to the responder.</para></listitem>
   <listitem><para>The form MAY contain the HTML microdata <xref linkend="MICRODATA"/> attributes
   <code>itemscope</code> and <code>itemtype="$xdi$msg"</code>, to assist user agents with native
@@ -370,9 +379,9 @@ associated with the user is the responder.</para>
 <section><title>Authorization Service</title>
 
 <para>
-The <firsterm>authorization service</firsterm> is a web application that receives and processes the HTML form
-that contains the request message envelope. It has privileged
-access to the target graph and . It MAY interact with the user by presenting a web-based user interface, for
+The <firstterm>Authorization Service</firstterm> is a web application that receives and processes the 
+submitted HTML form that contains the request message envelope. It has privileged
+access to the target graph. It MAY interact with the user by presenting a web-based user interface, for
 authentication and/or authorization purposes. After this user interaction step, the request message
 envelope is sent to the target XDI endpoint.
 </para>
@@ -390,8 +399,8 @@ authorization service, XDI discovery is performed on the user's discovery key, u
 type <code>&lt;$connect&gt;&lt;$xdi&gt;</code>. This may happen in one of three ways:
 </para>
 <section>
-<title>Discovery via connect service</title>
-<para>The HTML form may be submitted to a well-known "connect service", which interacts with
+<title>Discovery via Connect Service</title>
+<para>The HTML form may be submitted to a well-known <firstterm>Connect Service</firstterm>, which interacts with
 the user by presenting a web-based user interface. The user submits a discovery key to the connect service, which
 uses it to discover the URI of the authorization service. The request message envelope is then forwarded
 to the authorization service without modification, using an HTML form equivalent to the one
@@ -424,10 +433,10 @@ by the scripting code and submitted to the discovered authorization service.</pa
 response is generated and returned to the requester web page via an HTML form.</para>
 <para>The HTML form containing the response MUST have the following characteristics:</para>
 <itemizedlist>
-  <listitem><para>The value of the "METHOD" attribute of the HTML form MUST be "POST".</para></listitem>
-  <listitem><para>The value of the "ACTION" attribute MUST be the requester's return URI.
+  <listitem><para>The value of the <code>METHOD</code> field of the HTML form MUST be <code>POST</code>.</para></listitem>
+  <listitem><para>The value of the <code>ACTION</code> field MUST be the requester's return URI.
   </para></listitem>
-  <listitem><para>The form MUST contain a hidden field with the name "xdiResponse". The
+  <listitem><para>The form MUST contain a hidden field with the name <code>xdi</code>. The
   value of the field is the response to be transmitted to the requester.</para></listitem>
   <listitem><para>The form MAY contain the HTML microdata <xref linkend="MICRODATA"/> attributes
   <code>itemscope</code> and <code>itemtype="$xdi$msg"</code>, to assist user agents with native
@@ -479,7 +488,7 @@ message rather than simply a result graph SHOULD be requested as described in <x
   In this case, a connect service is used to find the authorization service.
   <programlisting>
     &lt;form itemscope itemtype="$connect$request" action="https://connect-service.projectdanube.org/connect" method="post"&gt;
-    &lt;input type="hidden" name="xdiMessageEnvelope" value="&lt;&lt; XDI JSON serialized request here &gt;&gt;"&gt;	
+    &lt;input type="hidden" name="xdi" value="&lt;&lt; XDI JSON serialized request here &gt;&gt;"&gt;	
     &lt;input type="submit" value="Send request message envelope"&gt;
     &lt;/form&gt;
   </programlisting>
@@ -488,7 +497,7 @@ message rather than simply a result graph SHOULD be requested as described in <x
   The following is an example of an HTML form that contains a synchronous response with a result XDI statement.
   <programlisting>
     &lt;form action="https://acmenews.projectdanube.org/acmenews-return" method="post"&gt;
-    &lt;input type="hidden" name="xdiResponse" value="&lt;&lt; XDI JSON serialized response here &gt;&gt;"&gt;
+    &lt;input type="hidden" name="xdi" value="&lt;&lt; XDI JSON serialized response here &gt;&gt;"&gt;
     &lt;input type="submit" value="Return to requester web page"&gt;
     &lt;/form&gt;
   </programlisting>
@@ -503,7 +512,7 @@ message rather than simply a result graph SHOULD be requested as described in <x
 <para>The WebSocket Binding defines a mechanism by which message envelopes containing request messages
 and response messages are transmitted using WebSocket connections. The requester acts as a WebSocket client
 and opens a connection to a WebSocket endpoint associated with the responder. During the WebSocket handshake,
-the sub-protocol "xdi" is established. The requester sends the serialized message envelope containing one or more
+the sub-protocol <code>xdi</code> established. The requester sends the serialized message envelope containing one or more
 request message(s) as a WebSocket message using WebSocket text frames.</para>
 
 <para>The responder executes the request message(s) against its peer graph. The responder sends
