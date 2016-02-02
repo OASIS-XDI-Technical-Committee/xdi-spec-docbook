@@ -197,7 +197,7 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 
     <bibliolist> <bibliomixed id="cid-1">
       <abbrev>CID-1-Cryptographic-Identifiers</abbrev><date>September 2015</date>
-      <title><ulink url="http://www.ietf.org/rfc/rfc6750.txt">The "cid-1" XDI identifier scheme</ulink></title>
+      <title><ulink url="https://github.com/projectdanube/xdi2-crypto-ec25519/blob/master/XDI%20cid-1%20scheme%20draft%20v2.pdf">The "cid-1" XDI identifier scheme</ulink></title>
       <author><firstname>M. </firstname> <surname>Sabadello</surname></author>. 
       <releaseinfo>Github draft v2</releaseinfo>
     </bibliomixed> <bibliomixed id="nike">
