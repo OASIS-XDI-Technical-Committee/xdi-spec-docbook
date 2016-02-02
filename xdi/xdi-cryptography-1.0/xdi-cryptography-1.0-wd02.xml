@@ -524,7 +524,7 @@ be either an attribute singleton identified by a <code>&lt;$token></code> contex
 out of scope of this specification and depends on the concrete environment of XDI agents and
 XDI endpoints.</para>
 
-<para>A <glossterm>secret token</glossterm> can be used as follows:</para>
+<para>A <glossterm>token</glossterm> can be used as follows:</para>
 
 <itemizedlist>
 <listitem><para>It may be added to an XDI message, in order to ensure authenticity of the message.</para></listitem>
