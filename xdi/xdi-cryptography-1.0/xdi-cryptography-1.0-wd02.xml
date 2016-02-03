@@ -272,7 +272,7 @@ operation. The scope may include:</para>
 <para>The scope of the cryptographic operation by default includes 
 all XDI statements rooted in the parent context of the XDI attribute representing the cryptographic
 digest (<code>&lt;$digest></code>), cryptographic signature (<code>&lt;$sig></code>)
-or encrypted data (<code>&lt;$encrypt</code>), EXCLUDING:</para>
+or encrypted data (<code>&lt;$encrypt></code>), EXCLUDING:</para>
 
 <itemizedlist>
 <listitem><para>All XDI statements rooted in the XDI attribute, and</para></listitem>
