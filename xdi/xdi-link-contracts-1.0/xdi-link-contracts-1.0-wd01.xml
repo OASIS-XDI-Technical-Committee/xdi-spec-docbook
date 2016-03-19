@@ -465,7 +465,7 @@ is always the boolean value <code>true</code> or <code>false</code>.</para>
 <para>Policies are used for different purposes in XDI:</para>
 
 <itemizedlist>
-<listitem><para>A link contract's <glossterm>approval policy</glossterm>, <glossterm>defer policy</glossterm>,
+<listitem><para>A link contract's <glossterm>execution policy</glossterm>, <glossterm>defer policy</glossterm>,
 and <glossterm>defer push policy</glossterm> are part of the target graph. They enable an XDI endpoint to
 determine if the input message is authorized and how it is executed.</para></listitem>
 <listitem><para>An <glossterm>message policy</glossterm> is part of the input message. It
@@ -755,7 +755,7 @@ being evaluated. At a minimum, an evaluation context MUST define a <glossterm>po
 that is used to evaluate the policy's conditions. An evaluation context typically also defines variables and
 their values.</para>
 
-<para>For a link contract's <glossterm>approval policy</glossterm>, <glossterm>defer policy</glossterm>,
+<para>For a link contract's <glossterm>execution policy</glossterm>, <glossterm>defer policy</glossterm>,
 and <glossterm>defer push policy</glossterm>, as well as for a <glossterm>message policy</glossterm>,
 the evaluation context is constructed as follows:</para>
 
