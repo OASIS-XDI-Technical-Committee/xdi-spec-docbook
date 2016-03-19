@@ -64,9 +64,6 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
   <editor> <firstname>Markus</firstname><surname>Sabadello</surname>
     <affiliation><orgname>Danube Tech</orgname></affiliation>
     <email>markus@danubetech.com</email> </editor>
-  <editor> <firstname>Peter</firstname><surname>Davis</surname>
-    <affiliation><orgname>Neustar, Inc.</orgname></affiliation>
-    <email>peter.davis@neustar.biz</email> </editor>
 </authorgroup>
 <pubdate>&pubdate;</pubdate>
 <copyright><year>2016</year>
