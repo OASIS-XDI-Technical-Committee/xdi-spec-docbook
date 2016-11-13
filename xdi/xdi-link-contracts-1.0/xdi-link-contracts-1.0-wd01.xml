@@ -275,14 +275,14 @@ connections specification.</para>
 <section id="s.link.contracts"><title>Link Contracts</title>
 
 <para>A <firstterm>link contract</firstterm> is represented as an XDI entity in a graph. It may be either
-an entity singleton identified by a <code>$do</code> context:</para>
+an entity singleton identified by a <code>$contract</code> context:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$do 
+<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$contract 
 </programlisting>
 
-<para>Or it may be a member of an entity collection identified by a <code>[$do]</code> context.</para>
+<para>Or it may be a member of an entity collection identified by a <code>[$contract]</code> context.</para>
 
-<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$do]&lt;--link-contract-id-->
+<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->
 </programlisting>
 
 <para>A context node representing a link contract contains various statements that make up
@@ -292,14 +292,14 @@ the semantics and purpose of the link contract.</para>
 format). This is called the <glossterm>common link contract pattern</glossterm>. Labels in
 <code>&lt;--this-form--></code> represent pattern variables.</para>
 
-<para>Note: This pattern uses the collection form <code>[$do]&lt;--link-contract-id--></code>,
-although the singleton form <code>$do</code> can equally be used.</para>
+<para>Note: This pattern uses the collection form <code>[$contract]&lt;--link-contract-id--></code>,
+although the singleton form <code>$contract</code> can equally be used.</para>
 
-<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$do]&lt;--link-contract-id-->/&lt;--permission-->/&lt;--AA-->&lt;--object-graph--> 
-(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$do]&lt;--link-contract-id-->$if/&lt;--execution-policy-->
-(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$do]&lt;--link-contract-id-->$defer$if/&lt;--defer-policy-->
-(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$do]&lt;--link-contract-id-->$defer$push$if/&lt;--defer-push-policy-->
-(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$do]&lt;--link-contract-id-->$for&lt;$opt>/&amp;/&amp;/true
+<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$do/&lt;--permission-->/&lt;--AA-->&lt;--object-graph--> 
+(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$if/&lt;--execution-policy-->
+(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$defer$if/&lt;--defer-policy-->
+(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$defer$push$if/&lt;--defer-push-policy-->
+(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$for&lt;$opt>/&amp;/&amp;/true
 </programlisting>
 
 <para>Where:</para>
@@ -308,7 +308,7 @@ although the singleton form <code>$do</code> can equally be used.</para>
 <listitem><para><code>&lt;--TA--></code> is the XDI address of the template authority.</para></listitem>
 <listitem><para><code>&lt;--RA--></code> is the XDI address of the requesting authority.</para></listitem>
 <listitem><para><code>&lt;--AA--></code> is the XDI address of the authorizing authority.</para></listitem>
-<listitem><para><code>&lt;--ID--></code> is an OPTIONAL context for specialization of the singleton <code>$do</code> or collection <code>[$do]&lt;--link-contract-id--></code>. It can serve as a "qualifier" or "tag" that describes the intention of the link contract, e.g. <code>#registration</code>.</para></listitem>
+<listitem><para><code>&lt;--ID--></code> is an OPTIONAL context for specialization of the singleton <code>$contract</code> or collection <code>[$contract]&lt;--link-contract-id--></code>. It can serve as a "qualifier" or "tag" that describes the intention of the link contract, e.g. <code>#registration</code>.</para></listitem>
 <listitem><para><code>&lt;--link-contract-id--></code> is a unique immutable ID for a member of a link contract collection. (Unordered members start with <code>!</code>, ordered members start with <code>@</code>.)</para></listitem>
 <listitem><para><code>&lt;--permission--></code> is an permission granted by this link contract (e.g., <code>$get</code>, <code>$set</code>, <code>$del</code>, or <code>$do&lt;--extension--></code>).</para></listitem>
 <listitem><para><code>&lt;--object-graph--></code> is the XDI graph that is the object of the operations permitted by the link contract.</para></listitem>
@@ -382,9 +382,9 @@ changed (which is allowed as long as it is not violating the template). </para>
 <section><title>Link Contract Templates</title>
 
 <para>A <firstterm>link contract template</firstterm> is represented as an XDI entity in a graph.
-It is an entity singleton identified by a <code>{$do}</code> context:</para>
+It is an entity singleton identified by a <code>{$contract}</code> context:</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$do} 
+<programlisting>&lt;--TA-->&lt;--ID-->{$contract} 
 </programlisting>
 
 <para>A context node representing a link contract template contains various statements that make up
@@ -394,13 +394,13 @@ the semantics and purpose of the link contract template.</para>
 format). This is called the <glossterm>common link contract template pattern</glossterm>. Labels in
 <code>&lt;--this-form--></code> represent pattern variables.</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$do}/&lt;--permission-->/{$to}&lt;--object-graph-->
+<programlisting>&lt;--TA-->&lt;--ID-->{$contract}$do/&lt;--permission-->/{$to}&lt;--object-graph-->
 </programlisting>
 
 <section><title>Permissions</title>
 
-<para>Each relational <code>&lt;--operation--></code> predicate in the <code>$do</code> or
-<code>[$do]&lt;--link-contract-id--></code> context MUST define a permission granted by the link
+<para>Each relational <code>&lt;--operation--></code> predicate in the <code>$contract</code> or
+<code>[$contract]&lt;--link-contract-id--></code> context MUST define a permission granted by the link
 contract to an XDI message that satisfies the link contract policies.</para>
 
 <para>The <code>&lt;--object-graph--></code> of each <code>&lt;--operation--></code> predicate
@@ -408,8 +408,8 @@ defines the XDI graph or subgraph over which the permission for the specified op
 granted. A template can indicate whether a requested permission is mandatory or optional
 using the reserved word <code>$required</code>.</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$do}/&lt;--operation-->/{$to}&lt;--object-graph-->&lt;$required>&amp;/&amp;/true  ##mandatory
-&lt;--TA-->&lt;--ID-->{$do}/&lt;--operation-->/{$to}&lt;--object-graph-->&lt;$required>&amp;/&amp;/false  ## optional
+<programlisting>&lt;--TA-->&lt;--ID-->{$contract}$do/&lt;--operation-->/{$to}&lt;--object-graph-->&lt;$required>&amp;/&amp;/true  ##mandatory
+&lt;--TA-->&lt;--ID-->{$contract}/&lt;--operation-->/{$to}&lt;--object-graph-->&lt;$required>&amp;/&amp;/false  ## optional
 </programlisting>
 
 </section>
@@ -420,7 +420,7 @@ using the reserved word <code>$required</code>.</para>
 express the policies requested that an AA apply to allow or deny XDI messages that claim
 to be authorized under the link contract.</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$do}$if/&lt;--policy expression-->
+<programlisting>&lt;--TA-->&lt;--ID-->{$contract}$if/&lt;--policy expression-->
 </programlisting>
 
 </section>
@@ -433,9 +433,9 @@ blanket permissions. RAs SHOULD request more specific usage permissions for the 
 contract template. Additionally, RA’s SHOULD use the <code>$required</code> and <code>$default</code> reserved words
 for an opt-in patterns.</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$do}$for{&lt;$opt>}&lt;$required>&amp;/&amp;/true     ## opt in is required
-&lt;--TA-->&lt;--ID-->{$do}$for{&lt;$opt>}&lt;$default>&amp;/&amp;/false     
-&lt;--TA-->&lt;--ID-->{$do}$for{&lt;$opt>}&lt;--language-->/&amp;/&amp;/"human readable explanation"
+<programlisting>&lt;--TA-->&lt;--ID-->{$contract}$for{&lt;$opt>}&lt;$required>&amp;/&amp;/true     ## opt in is required
+&lt;--TA-->&lt;--ID-->{$contract}$for{&lt;$opt>}&lt;$default>&amp;/&amp;/false     
+&lt;--TA-->&lt;--ID-->{$contract}$for{&lt;$opt>}&lt;--language-->/&amp;/&amp;/"human readable explanation"
 </programlisting>
 
 </section>
@@ -446,9 +446,9 @@ for an opt-in patterns.</para>
 have compliance or other legal significance SHOULD be labeled, time stamped, signed and/or
 version-numbered.</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$do}&lt;--language-context-->/&amp;/&amp;/"human readable label"
-&lt;--TA-->&lt;--ID-->{$do}&lt;$template>&lt;$add>{&lt;$t>}/&amp;/&amp;/&lt;--UTC time-->
-&lt;--TA-->&lt;--ID-->{$do}&lt;-- signature-context --></programlisting>
+<programlisting>&lt;--TA-->&lt;--ID-->{$contract}&lt;--language-context-->/&amp;/&amp;/"human readable label"
+&lt;--TA-->&lt;--ID-->{$contract}&lt;$template>&lt;$add>{&lt;$t>}/&amp;/&amp;/&lt;--UTC time-->
+&lt;--TA-->&lt;--ID-->{$contract}&lt;-- signature-context --></programlisting>
 
 <para>TBD: version</para>
 
@@ -509,7 +509,7 @@ trust framework supporting these policies.</para>
 <para><code>$if</code> defines the root context node of a policy subgraph.</para>
 
 <itemizedlist>
-<listitem><para><code>$if</code> MUST be a child context of a $do context (the root context of an XDI link contract or the operation context of an XDI message).</para></listitem>
+<listitem><para><code>$if</code> MUST be a child context of a $contract context (the root context of an XDI link contract or the operation context of an XDI message).</para></listitem>
 <listitem><para><code>$if</code> MUST be an entity singleton.</para></listitem>
 <listitem><para><code>$if</code> MAY have zero or more boolean subcontexts.</para></listitem>
 <listitem><para><code>$if</code> MAY have zero or more operator predicates.</para></listitem>
@@ -795,7 +795,7 @@ contract from a link contract template. This function may be invoked in the foll
 <para>The function's input parameters are:</para>
 
 <itemizedlist>
-<listitem>A <glossterm>link contract template</glossterm> identified by a <code>{$do}</code> context.</listitem>
+<listitem>A <glossterm>link contract template</glossterm> identified by a <code>{$contract}</code> context.</listitem>
 <listitem>A <glossterm>variable assignment</glossterm> for the variable <code>{$from}</code>.
 This becomes the <glossterm>requesting authority</glossterm> of the instantiated link contract.</listitem>
 <listitem>A <glossterm>variable assignment</glossterm> for the variable <code>{$to}</code>.
@@ -803,7 +803,7 @@ This becomes the <glossterm>authorizing authority</glossterm> of the instantiate
 <listitem>A list of additional <glossterm>variable assignments</glossterm> that may
 be required by the link contract template.</listitem>
 <listitem>An <glossterm>instance flag</glossterm> that states whether the link contract is
-instantiated as a <code>$do</code> entity singleton or as an instance in a <code>[$do]</code> entity collection.</listitem>
+instantiated as a <code>$contract</code> entity singleton or as an instance in a <code>[$contract]</code> entity collection.</listitem>
 </itemizedlist>
 
 <para>The function's output is an instantiated link contract.</para>
@@ -814,7 +814,7 @@ TODO: formal description of the link contract instantiation function</para>
 <para>Example: Given the following input parameters:</para>
 
 <itemizedlist>
-<listitem>The link contract template is <code>$get{$do}</code> (see <xref linkend="s.standard.operations.link.contract.template"/>).</listitem>
+<listitem>The link contract template is <code>$get{$contract}</code> (see <xref linkend="s.standard.operations.link.contract.template"/>).</listitem>
 <listitem>The variable <code>{$from}</code> is assigned the value <code>=!:uuid:1111</code>.
 This is the same variable used for the sender of an XDI message.</listitem>
 <listitem>The variable <code>{$to}</code> is assigned the value <code>=!:uuid:2222</code>.
@@ -825,9 +825,9 @@ This is the same variable used for the receiver of an XDI message.</listitem>
 
 <para>Then the instantiated link contract is as follows:</para>
 
-<programlisting>(=!:uuid:2222/=!:uuid:1111)$get$do/$get/=!:uuid:2222&lt;#email>
-(=!:uuid:2222/=!:uuid:1111)($get$do$if$and/$true){$from}/$is/=!:uuid:1111
-(=!:uuid:2222/=!:uuid:1111)($get$do$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+<programlisting>(=!:uuid:2222/=!:uuid:1111)$get$contract$do/$get/=!:uuid:2222&lt;#email>
+(=!:uuid:2222/=!:uuid:1111)($get$contract$if$and/$true){$from}/$is/=!:uuid:1111
+(=!:uuid:2222/=!:uuid:1111)($get$contract$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 </section>
@@ -859,10 +859,10 @@ wishes to use light pushes or content pushes.</para></listitem>
 <para>Following is the basic structure of a push contract. Labels in <code>&lt;--this-form--&gt;</code> represent
 template variables.</para>
 
-<programlisting>(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)$do/$push/&lt;--target-address--&gt;
-(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)$do/$is()/&lt;--subscriber-->
-(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)($do/$push)&lt;$xdi&gt;&lt;$uri&gt;/&amp;/"&lt;--subscriber endpoint--&gt;"
-(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)($do/$push)&lt;$content&gt;/&amp;/&lt;--light-or-content-push--&gt;
+<programlisting>(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)$contract$do/$push/&lt;--target-address--&gt;
+(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)$contract/$to/&lt;--subscriber-->
+(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)($contract/$push)&lt;$xdi&gt;&lt;$uri&gt;/&amp;/"&lt;--subscriber endpoint--&gt;"
+(&lt;--publisher--&gt;/&lt;--subscriber--&gt;)($contract/$push)&lt;$content&gt;/&amp;/&lt;--light-or-content-push--&gt;
 </programlisting>
 
 <para>If the push contract does not contain at least one push target endpoint URI, the subscriber's XDI endpoint MUST
@@ -915,29 +915,29 @@ to be part of the common graph. They can be used for <glossterm>link contract in
 
 <para>The purpose of the <firstterm>standard root link contract template</firstterm> is to
 instantiate link contracts with a <code>$all</code> permission on an entire graph ("root access").
-The address of this link contract template is <code>$all{$do}</code>.</para>
+The address of this link contract template is <code>$all{$contract}</code>.</para>
 
 <para>Its policy authorizes messages only from a single specific requester and requires either a valid signature
 or a valid secret token.</para>
 
-<para>The standard root link contract template is typically instantiated as a <code>$do</code> entity singleton,
+<para>The standard root link contract template is typically instantiated as a <code>$contract</code> entity singleton,
 since for any given relationship between two peers, having one <firstterm>root link contract</firstterm> is
 sufficient.</para>
 
-<para>The <firstterm>standard root link contract template</firstterm> <code>$all{$do}</code>:</para>
+<para>The <firstterm>standard root link contract template</firstterm> <code>$all{$contract}</code>:</para>
 
-<programlisting>$all{$do}/$all/
-($all{$do}$if$and/$true){{$from}}/$is/{$from}
-($all{$do}$if$and$or/$true){{$msg}}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
-($all{$do}$if$and$or/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+<programlisting>$all{$contract}$do/$all/
+($all{$contract}$if$and/$true){{$from}}/$is/{$from}
+($all{$contract}$if$and$or/$true){{$msg}}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
+($all{$contract}$if$and$or/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 <para>Example instantiated <firstterm>root link contract</firstterm>:</para>
 
-<programlisting>(=!:uuid:2222/=!:uuid:1111)$all$do/$all/
-(=!:uuid:2222/=!:uuid:1111)($all$do$if$and/$true){$from}/$is/=!:uuid:1111
-(=!:uuid:2222/=!:uuid:1111)($all$do$if$and/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
-(=!:uuid:2222/=!:uuid:1111)($all$do$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+<programlisting>(=!:uuid:2222/=!:uuid:1111)$all$contract$do/$all/
+(=!:uuid:2222/=!:uuid:1111)($all$contract$if$and/$true){$from}/$is/=!:uuid:1111
+(=!:uuid:2222/=!:uuid:1111)($all$contract$if$and/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
+(=!:uuid:2222/=!:uuid:1111)($all$contract$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 </section>
@@ -947,38 +947,38 @@ sufficient.</para>
 <para>A <firstterm>standard operation link contract template</firstterm> is defined for each one of
 the XDI operations <code>$get</code>, <code>$set</code>, <code>$add</code>, <code>$mod</code>, <code>$del</code>, 
 <code>$connect</code>, <code>$send</code>, and <code>$push</code>.
-The addresses of these link contract templates are accordingly <code>$get{$do}</code>, <code>$set{$do}</code>, 
-<code>$add{$do}</code>, <code>$mod{$do}</code>, <code>$del{$do}</code>, <code>$connect{$do}</code>, 
-<code>$send{$do}</code>, and <code>$push{$do}</code>.</para>
+The addresses of these link contract templates are accordingly <code>$get{$contract}</code>, <code>$set{$contract}</code>, 
+<code>$add{$contract}</code>, <code>$mod{$contract}</code>, <code>$del{$contract}</code>, <code>$connect{$contract}</code>, 
+<code>$send{$contract}</code>, and <code>$push{$contract}</code>.</para>
 
 <para>The purpose of a <firstterm>standard operation link contract template</firstterm> is to
 instantiate link contracts with a single permission on a certain subgraph identified by a variable. The
 variable corresponds to the operation, e.g. the variable <code>{$get}</code> is used for
-the <code>$get{$do}</code> link contract template.</para>
+the <code>$get{$contract}</code> link contract template.</para>
 
 <para>Its policy authorizes messages only from a single specific requester and requires a valid signature.</para>
 
 <para>A <firstterm>standard operation link contract template</firstterm> is typically instantiated as an instance
-in a <code>[$do]</code> entity collection, since
+in a <code>[$contract]</code> entity collection, since
 for any given relationship between two peers, multiple <firstterm>operation link contracts</firstterm> may exist.</para>
 
 <para>All standard operation link contract templates follow the pattern defined in this section,
-except for <code>$push{$do}</code>, which is defined in the next section.</para>
+except for <code>$push{$contract}</code>, which is defined in the next section.</para>
 
-<para>The <firstterm>standard operation link contract template</firstterm> <code>$get{$do}</code>: (Note: the
+<para>The <firstterm>standard operation link contract template</firstterm> <code>$get{$contract}</code>: (Note: the
 same pattern applies for the other <firstterm>standard operation link contract templates</firstterm> except
-<code>$push{$do}</code>:</para>
+<code>$push{$contract}</code>:</para>
 
-<programlisting>$get{$do}/$get/{$get}
-($get{$do}$if$and/$true){{$from}}/$is/{$from}
-($get{$do}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+<programlisting>$get{$contract}$do/$get/{$get}
+($get{$contract}$if$and/$true){{$from}}/$is/{$from}
+($get{$contract}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 <para>Example instantiated <firstterm>operation link contract</firstterm>:</para>
 
-<programlisting>(=!:uuid:2222/=!:uuid:1111)$get[$do]*!:uuid:lc-1/$get/=!:uuid:2222&lt;#email>
-(=!:uuid:2222/=!:uuid:1111)($get[$do]*!:uuid:lc-1$if$and/$true){$from}/$is/=!:uuid:1111
-(=!:uuid:2222/=!:uuid:1111)($get[$do]*!:uuid:lc-1$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+<programlisting>(=!:uuid:2222/=!:uuid:1111)$get[$contract]*!:uuid:lc-1$do/$get/=!:uuid:2222&lt;#email>
+(=!:uuid:2222/=!:uuid:1111)($get[$contract]*!:uuid:lc-1$if$and/$true){$from}/$is/=!:uuid:1111
+(=!:uuid:2222/=!:uuid:1111)($get[$contract]*!:uuid:lc-1$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 </section>
@@ -987,28 +987,28 @@ same pattern applies for the other <firstterm>standard operation link contract t
 
 <para>The purpose of the <firstterm>standard push link contract template</firstterm> is to
 instantiate push link contracts with a <code>$push</code> permission on a certain subgraph identified by
-the <code>{$push}</code> variable. The address of this link contract template is <code>$push{$do}</code>.</para>
+the <code>{$push}</code> variable. The address of this link contract template is <code>$push{$contract}</code>.</para>
 
 <para>Its policy authorizes messages only from a single specific requester and requires a valid signature.</para>
 
-<para>The <firstterm>standard push link contract template</firstterm> is typically instantiated as an instance in a <code>[$do]</code>
+<para>The <firstterm>standard push link contract template</firstterm> is typically instantiated as an instance in a <code>[$contract]</code>
 entity collection, since
 for any given relationship between two peers, multiple <firstterm>push link contracts</firstterm> may exist.</para>
 
-<para>The <firstterm>standard push link contract template</firstterm> <code>$push{$do}</code>:</para>
+<para>The <firstterm>standard push link contract template</firstterm> <code>$push{$contract}</code>:</para>
 
-<programlisting>$push{$do}/$push/{$push}
-$push{$do}/$is()/{($from)}
-($push{$do}$if$and/$true){{$from}}/$is/{$to}
-($push{$do}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+<programlisting>$push{$contract}$do/$push/{$push}
+$push{$contract}/$to/{($from)}
+($push{$contract}$if$and/$true){{$from}}/$is/{$to}
+($push{$contract}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 <para>Example instantiated <firstterm>push link contract</firstterm>:</para>
 
-<programlisting>(=!:uuid:2222/=!:uuid:1111)$push[$do]*!:uuid:lc-1/$push/=!:uuid:2222&lt;#email>
-(=!:uuid:2222/=!:uuid:1111)$push[$do]*!:uuid:lc-1/$is()/(=!:uuid:1111)
-(=!:uuid:2222/=!:uuid:1111)($push[$do]*!:uuid:lc-1$if$and/$true){$from}/$is/=!:uuid:2222
-(=!:uuid:2222/=!:uuid:1111)($push[$do]*!:uuid:lc-1$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+<programlisting>(=!:uuid:2222/=!:uuid:1111)$push[$contract]*!:uuid:lc-1$do/$push/=!:uuid:2222&lt;#email>
+(=!:uuid:2222/=!:uuid:1111)$push[$contract]*!:uuid:lc-1/$to/(=!:uuid:1111)
+(=!:uuid:2222/=!:uuid:1111)($push[$contract]*!:uuid:lc-1$if$and/$true){$from}/$is/=!:uuid:2222
+(=!:uuid:2222/=!:uuid:1111)($push[$contract]*!:uuid:lc-1$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 </section>
@@ -1017,7 +1017,7 @@ $push{$do}/$is()/{($from)}
 
 <para>The purpose of the <firstterm>standard deferred push link contract template</firstterm> is to
 instantiate deferred push link contracts with a <code>$push</code> permission on a certain subgraph identified by
-the <code>{$push}</code> variable. The address of this link contract template is <code>$defer$push{$do}</code>.</para>
+the <code>{$push}</code> variable. The address of this link contract template is <code>$defer$push{$contract}</code>.</para>
 
 <para>Its policy authorizes messages only from a single specific requester and requires a valid signature.
 In addition, its policy authorizes only message that are a <glossterm>response message</glossterm> to a
@@ -1026,26 +1026,26 @@ single specific <glossterm>request message</glossterm>.</para>
 <para>The <firstterm>standard push link contract template</firstterm> is instantiated automatically every time a
 request message is <glossterm>deferred</glossterm> (see <xref linkend="s.response.message.deferred.push.contracts"/>).</para>
 
-<para>The <firstterm>standard deferred push link contract template</firstterm> is typically instantiated as an instance in a <code>[$do]</code>
+<para>The <firstterm>standard deferred push link contract template</firstterm> is typically instantiated as an instance in a <code>[$contract]</code>
 entity collection, since
 for any given relationship between two peers, multiple <firstterm>push link contracts</firstterm> may exist.</para>
 
-<para>The <firstterm>standard deferred push link contract template</firstterm> <code>$defer$push{$do}</code>:</para>
+<para>The <firstterm>standard deferred push link contract template</firstterm> <code>$defer$push{$contract}</code>:</para>
 
-<programlisting>$defer$push{$do}/$push/{$push}
-$defer$push{$do}/$is()/{($from)}
-($defer$push{$do}$if$and/$true){{$from}}/$is/{$to}
-($defer$push{$do}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
-($defer$push{$do}$if$and/$true){{$msg}}/$is$msg/{$msg}
+<programlisting>$defer$push{$contract}$do/$push/{$push}
+$defer$push{$contract}/$to/{($from)}
+($defer$push{$contract}$if$and/$true){{$from}}/$is/{$to}
+($defer$push{$contract}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+($defer$push{$contract}$if$and/$true){{$msg}}/$is$msg/{$msg}
 </programlisting> 
 
 <para>Example instantiated <firstterm>deferred push link contract</firstterm>:</para>
 
-<programlisting>(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:lc-1/$push/=!:uuid:2222&lt;#email>
-(=!:uuid:2222/=!:uuid:1111)$defer$push[$do]*!:uuid:lc-1/$is()/(=!:uuid:1111)
-(=!:uuid:2222/=!:uuid:1111)($defer$push[$do]*!:uuid:lc-1$if$and/$true){$from}/$is/=!:uuid:2222
-(=!:uuid:2222/=!:uuid:1111)($defer$push[$do]*!:uuid:lc-1$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
-(=!:uuid:2222/=!:uuid:1111)($defer$push[$do]*!:uuid:lc-1$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
+<programlisting>(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:lc-1$do/$push/=!:uuid:2222&lt;#email>
+(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:lc-1/$to/(=!:uuid:1111)
+(=!:uuid:2222/=!:uuid:1111)($defer$push[$contract]*!:uuid:lc-1$if$and/$true){$from}/$is/=!:uuid:2222
+(=!:uuid:2222/=!:uuid:1111)($defer$push[$contract]*!:uuid:lc-1$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:2222/=!:uuid:1111)($defer$push[$contract]*!:uuid:lc-1$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
 </programlisting>
 
 </section>
@@ -1059,18 +1059,18 @@ through a policy that requires a certain message digest value.</para>
 <para>Message digest values are described in <xref linkend="xdi-cryptographic-profiles-1.0"/>.</para>
 
 <para>The <firstterm>standard message digest link contract template</firstterm> is typically instantiated as an instance
-in a <code>[$do]</code> entity collection, since
+in a <code>[$contract]</code> entity collection, since
 for any given relationship between two peers, multiple <firstterm>message digest link contracts</firstterm> may exist.</para>
 
-<para>The <firstterm>standard message digest link contract template</firstterm> <code>$msg$digest{$do}</code>:</para>
+<para>The <firstterm>standard message digest link contract template</firstterm> <code>$msg$digest{$contract}</code>:</para>
 
-<programlisting>$msg$digest{$do}/$all/
-($msg$digest{$do}$if/$true){{$msg}}&lt;$digest>/{&amp;}/{&lt;$digest>}</programlisting>
+<programlisting>$msg$digest{$contract}$do/$all/
+($msg$digest{$contract}$if/$true){{$msg}}&lt;$digest>/{&amp;}/{&lt;$digest>}</programlisting>
 
 <para>Example instantiated <firstterm>message digest link contract</firstterm>:</para>
 
-<programlisting>(=!:uuid:2222/=!:uuid:1111)$msg$digest[$do]*!:uuid:lc-1/$all/
-(=!:uuid:2222/=!:uuid:1111)($msg$digest{$do}$if/$true){$msg}&lt;$digest>/&amp;/"... message digest ..."
+<programlisting>(=!:uuid:2222/=!:uuid:1111)$msg$digest[$contract]*!:uuid:lc-1/$all/
+(=!:uuid:2222/=!:uuid:1111)($msg$digest{$contract}$if/$true){$msg}&lt;$digest>/&amp;/"... message digest ..."
 </programlisting>
 
 </section>
@@ -1113,8 +1113,8 @@ to the legal concepts of custodianship or guardianship (e.g. parent-child).</par
 
 <para>Root link contract pattern:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--AA-->)($do$if&lt;--policy-expression-->
-(&lt;--AA-->/&lt;--AA-->)$do/$all/
+<programlisting>(&lt;--AA-->/&lt;--AA-->)($contract$if&lt;--policy-expression-->
+(&lt;--AA-->/&lt;--AA-->)$contract$do/$all/
 </programlisting>
 
 <para>A <firstterm>root link contract</firstterm> contains a <code>$all</code> permission on 
@@ -1122,10 +1122,10 @@ an entire graph ("root access").</para>
 
 <para>Example root link contract:</para>
 
-<programlisting>(=!:uuid:1111/=!:uuid:1111)$do/$all/
-(=!:uuid:1111/=!:uuid:1111)($do$if$and/$true){$from}/$is/=!:uuid:1111
-(=!:uuid:1111/=!:uuid:1111)($do$if$and$or/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
-(=!:uuid:1111/=!:uuid:1111)($do$if$and$or/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+<programlisting>(=!:uuid:1111/=!:uuid:1111)$contract$do/$all/
+(=!:uuid:1111/=!:uuid:1111)($contract$if$and/$true){$from}/$is/=!:uuid:1111
+(=!:uuid:1111/=!:uuid:1111)($contract$if$and$or/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
+(=!:uuid:1111/=!:uuid:1111)($contract$if$and$or/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 </section>
@@ -1149,7 +1149,7 @@ certain limited subgraphs that are intended to be publicly available.</para>
 
 <para>Public Link Contract Pattern:</para>
 
-<programlisting>(&lt;--AA-->/$public)$do/$get/&lt;--AA-->&lt;--object-graph-->
+<programlisting>(&lt;--AA-->/$public)$contract$do/$get/&lt;--AA-->&lt;--object-graph-->
 </programlisting>
 
 <para>Note that authorities can further customize the public link contract, e.g. to prevent spam.</para>
@@ -1158,13 +1158,13 @@ certain limited subgraphs that are intended to be publicly available.</para>
 
 <para>Example public link contract:</para>
 
-<programlisting>(=!:uuid:1111/$public)($do/$get)=!:uuid:1111/$is$ref/{}
-(=!:uuid:1111/$public)($do/$get)/$is$ref/{}
-(=!:uuid:1111/$public)$do/$get/=!:uuid:1111$public
-(=!:uuid:1111/$public)$do/$get/=!:uuid:1111$msg$sig$keypair&lt;$public>&lt;$key>
-(=!:uuid:1111/$public)$do/$get/=!:uuid:1111$msg$encrypt$keypair&lt;$public>&lt;$key>
-(=!:uuid:1111/$public)($do/$get)=!:uuid:1111$msg$sig$keypair/$is#/{}
-(=!:uuid:1111/$public)($do/$get)=!:uuid:1111$msg$encrypt$keypair/$is#/{}
+<programlisting>(=!:uuid:1111/$public)($contract$do/$get)=!:uuid:1111/$is$ref/{}
+(=!:uuid:1111/$public)($contract$do/$get)/$is$ref/{}
+(=!:uuid:1111/$public)$contract$do/$get/=!:uuid:1111$public
+(=!:uuid:1111/$public)$contract$do/$get/=!:uuid:1111$msg$sig$keypair&lt;$public>&lt;$key>
+(=!:uuid:1111/$public)$contract$do/$get/=!:uuid:1111$msg$encrypt$keypair&lt;$public>&lt;$key>
+(=!:uuid:1111/$public)($contract$do/$get)=!:uuid:1111$msg$sig$keypair/$is#/{}
+(=!:uuid:1111/$public)($contract$do/$get)=!:uuid:1111$msg$encrypt$keypair/$is#/{}
 </programlisting>
 
 </section>
@@ -1178,9 +1178,9 @@ an entire graph (see <xref linkend="s.operation.connect"/>).</para>
 
 <para>Example connect link contract:</para>
 
-<programlisting>(=!:uuid:1111/$connect)$do/$connect/
-(=!:uuid:1111/$connect)($do$defer$push$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
-(=!:uuid:1111/$connect)$do$if//$not
+<programlisting>(=!:uuid:1111/$connect)$contract$do/$connect/
+(=!:uuid:1111/$connect)($contract$defer$push$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:1111/$connect)$contract$if//$not
 </programlisting>
 
 </section>
@@ -1194,9 +1194,9 @@ an entire graph (see <xref linkend="s.operation.send"/>).</para>
 
 <para>Example send link contract:</para>
 
-<programlisting>(=!:uuid:1111/$send)$do/$send/
-(=!:uuid:1111/$send)($do$defer$push$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
-(=!:uuid:1111/$send)$do$if//$not
+<programlisting>(=!:uuid:1111/$send)$contract$do/$send/
+(=!:uuid:1111/$send)($contract$defer$push$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:1111/$send)$contract$if//$not
 </programlisting>
 
 </section>
@@ -1211,43 +1211,43 @@ an entire graph (see <xref linkend="s.operation.send"/>).</para>
 <para>Link contract policy that checks that the secret token in the message matches the secret token in the graph:</para>
 
 <programlisting>$secret&lt;$token>&amp;/&amp;/"s3cr3t"
-$do$if/$true/({$msg}$secret&lt;$token>/$equals/$secret&lt;$token>)
+$contract$if/$true/({$msg}$secret&lt;$token>/$equals/$secret&lt;$token>)
 </programlisting>
 
 <para>Link contract policy that checks that the message timestamp comes before a certain time:</para>
 
-<programlisting>$do$if/$true/({$msg}&lt;$t>/$lesser/...$do#expiration&lt;$t>)
-$do#expiration&lt;$t>&amp;/&amp;/"2012-12-12"
+<programlisting>$contract$if/$true/({$msg}&lt;$t>/$lesser/...$contract#expiration&lt;$t>)
+$contract#expiration&lt;$t>&amp;/&amp;/"2012-12-12"
 </programlisting>
 
 <para>Link contract policy that checks that the message comes from one of the approved senders:</para>
 
-<programlisting>($do$if/$true){$from}/$is/[=]!2222
-($do$if/$true){$from}/$is/[=]!3333
-($do$if/$true){$from}/$is/[=]!4444
+<programlisting>($contract$if/$true){$from}/$is/[=]!2222
+($contract$if/$true){$from}/$is/[=]!3333
+($contract$if/$true){$from}/$is/[=]!4444
 </programlisting>
 
 <para>Link contract policy that excludes a certain sender:</para>
 
-<programlisting>($do$if/$false){$from}/$is/[=]!1111
+<programlisting>($contract$if/$false){$from}/$is/[=]!1111
 </programlisting>
 
 <para>Link contract policy that excludes a certain sender (other way of doing it):</para>
 
-<programlisting>($do$if$not/$true){$from}/$is/[=]!1111
+<programlisting>($contract$if$not/$true){$from}/$is/[=]!1111
 </programlisting>
 
 <para>Link contract for "root access" to an authority's own graph:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--AA-->)$do/$all/
-(&lt;--AA-->/&lt;--AA-->)($do$if$and/$true){$from}/$is/&lt;--AA-->
-(&lt;--AA-->/&lt;--AA-->)($do$if$and$or/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>&amp;/&amp;/true
-(&lt;--AA-->/&lt;--AA-->)($do$if$and$or/$true){$msg}&lt;$sig>&lt;$valid>&amp;/&amp;/true
+<programlisting>(&lt;--AA-->/&lt;--AA-->)$contract/$all/
+(&lt;--AA-->/&lt;--AA-->)($contract$if$and/$true){$from}/$is/&lt;--AA-->
+(&lt;--AA-->/&lt;--AA-->)($contract$if$and$or/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>&amp;/&amp;/true
+(&lt;--AA-->/&lt;--AA-->)($contract$if$and$or/$true){$msg}&lt;$sig>&lt;$valid>&amp;/&amp;/true
 </programlisting>
 
 <para>Link contract for the "public branch" of an XDI graph:</para>
 
-<programlisting>$public$do/$get/$public
+<programlisting>$public$contract/$get/$public
 </programlisting>
 
 <para>Link contract to allow Bob access to Alice's phone number:</para>
@@ -1255,47 +1255,47 @@ $do#expiration&lt;$t>&amp;/&amp;/"2012-12-12"
 <programlisting>=alice/$ref/[=]!1111
 =bob/$ref/[=]!2222
 [=]!1111$&lt;#tel>&amp;/&amp;/"#1-123-567-8900"
-($do$if/$true){$from}/$is/[=]!2222)
-$do/$get/[=]!1111&lt;#tel>
+($contract$if/$true){$from}/$is/[=]!2222)
+$contract/$get/[=]!1111&lt;#tel>
 </programlisting>
 
 <para>Link contract policy that checks that the message comes either from myself <code>([=]!1111)</code>
 or from one of my friends:</para>
 
-<programlisting>($do$if$or/$true)[=]!1111/$is/{$from}
-($do$if$or/$true)[=]!1111/#friend/{$from}
+<programlisting>($contract$if$or/$true)[=]!1111/$is/{$from}
+($contract$if$or/$true)[=]!1111/#friend/{$from}
 </programlisting>
 
-<para>Link contract that allows a $do$signal operation only on certain statements (with variables):</para>
+<para>Link contract that allows a $contract$signal operation only on certain statements (with variables):</para>
 
-<programlisting>$do/$do$signal/[=]!1111[#channel]!23[#event]
-($do$if$and/$do$signal)[=]!1111[#channel]!23[#event]{1}/#domain/#cloudos)
-($do$if$and$or/$do$signal)[=]!1111[#channel]!23[#event]{1}/#type/#notification
-($do$if$and$or/$do$signal)[=]!1111[#channel]!23[#event]{1}/#type/#subscription
-($do$if$and$or/$do$signal)[=]!1111[#channel]!23[#event]{1}/#type/#deletion
+<programlisting>$contract/$contract$signal/[=]!1111[#channel]!23[#event]
+($contract$if$and/$contract$signal)[=]!1111[#channel]!23[#event]{1}/#domain/#cloudos)
+($contract$if$and$or/$contract$signal)[=]!1111[#channel]!23[#event]{1}/#type/#notification
+($contract$if$and$or/$contract$signal)[=]!1111[#channel]!23[#event]{1}/#type/#subscription
+($contract$if$and$or/$contract$signal)[=]!1111[#channel]!23[#event]{1}/#type/#deletion
 </programlisting>
 
 <para>Combination of the previous two examples:</para>
 
 <programlisting>
 [=]!1111/#friend/[=]!2222
-$do/$do$signal/[=]!1111[#channel]!23[#event]
-($do$if$and[$or]!2/$true)[=]!1111/$is/{$from}
-($do$if$and[$or]!2/$true)[=]!1111/#friend/{$from}
-($do$if$and/$do$signal)[=]!1111[#channel]!23[#event]{1}/#domain/#cloudos
-($do$if$and[$or]!1/$do$signal)[=]!1111[#channel]!23[#event]{1}/#type/#notification
-($do$if$and[$or]!1/$do$signal)[=]!1111[#channel]!23[#event]{1}/#type/#subscription
-($do$if$and[$or]!1/$do$signal)[=]!1111[#channel]!23[#event]{1}/#type/#deletion
+$contract/$contract$signal/[=]!1111[#channel]!23[#event]
+($contract$if$and[$or]!2/$true)[=]!1111/$is/{$from}
+($contract$if$and[$or]!2/$true)[=]!1111/#friend/{$from}
+($contract$if$and/$contract$signal)[=]!1111[#channel]!23[#event]{1}/#domain/#cloudos
+($contract$if$and[$or]!1/$contract$signal)[=]!1111[#channel]!23[#event]{1}/#type/#notification
+($contract$if$and[$or]!1/$contract$signal)[=]!1111[#channel]!23[#event]{1}/#type/#subscription
+($contract$if$and[$or]!1/$contract$signal)[=]!1111[#channel]!23[#event]{1}/#type/#deletion
 </programlisting>
 
 <para>Link contract policy that allows the message if it is not sent on Friday 13th, and
 it is not sent by =drummond or =markus. (Note that the weekday and day-of-month
 definitions still need to be defined in the XDI <code>$</code> Dictionary.)</para>
 
-<programlisting>($do$if$and[$not]!1$and/$true)[weekday_is_friday]
-($do$if$and[$not]!1$and/$true)[day_is_13th]
-($do$if$and[$not]!2$or/$true)(=drummond/$is/{$from}
-($do$if$and[$not]!2$or/$true)=markus/$is/{$from}
+<programlisting>($contract$if$and[$not]!1$and/$true)[weekday_is_friday]
+($contract$if$and[$not]!1$and/$true)[day_is_13th]
+($contract$if$and[$not]!2$or/$true)(=drummond/$is/{$from}
+($contract$if$and[$not]!2$or/$true)=markus/$is/{$from}
 </programlisting>
 
 <para>Complex example, expressing this pseudocode</para>
@@ -1315,10 +1315,10 @@ definitions still need to be defined in the XDI <code>$</code> Dictionary.)</par
 
 <para>in XDI, as</para>
 
-<programlisting>(=aa/=ra)($do$if$or[$and]!1/$true)=ra&lt;#gold>&amp;/&amp;/true
-(=aa/=ra)($do$if$or[$and]!1$not$and/$true)=ra&lt;#ex>&amp;/&amp;/true
-(=aa/=ra)($do$if$or[$and]!1$not$and/$true)+bank&lt;#nomoney>&amp;/&amp;/false
-(=aa/=ra)($do$if$or/$true)=ra&lt;#ex>&amp;/&amp;/false
+<programlisting>(=aa/=ra)($contract$if$or[$and]!1/$true)=ra&lt;#gold>&amp;/&amp;/true
+(=aa/=ra)($contract$if$or[$and]!1$not$and/$true)=ra&lt;#ex>&amp;/&amp;/true
+(=aa/=ra)($contract$if$or[$and]!1$not$and/$true)+bank&lt;#nomoney>&amp;/&amp;/false
+(=aa/=ra)($contract$if$or/$true)=ra&lt;#ex>&amp;/&amp;/false
 </programlisting>
 
 </section>
@@ -1330,31 +1330,33 @@ predicate for readability and to add comments. See JSON Serialization Rules for 
 
 <section><title>Requester Link Contract Pattern</title>
 
+<para>TODO</para>
+
 <para>A requester link contract is used by an RA to authorize acceptance of link contract
 instances in its graph from an AA based on a link contract template. IMPORTANT: the XDI
 address of the requester link contract is algorithmically composed by placing the XDI address
 of the link contract within an inner root of the requesting authority followed by the template
 authority context. This enables XDI clients to reference the requester link contract for
-authorization in an XDI <code>$set{$do}</code> message for a new link contract instance (see XDI messaging).</para>
+authorization in an XDI <code>$set{$contract}</code> message for a new link contract instance (see XDI messaging).</para>
 
 <para>All requester link contracts except a root requester link contract (see below) MUST
 consist of a set of XDI statements in one of the two following patterns:</para>
 
 <section><title>Requester Link Contract Singleton Pattern</title>
 
-<programlisting>(&lt;--RA-->/&lt;--TA-->&lt;--ID-->{$do})$do/$set{$do}/({$to}/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$do
+<programlisting>(&lt;--RA-->/&lt;--TA-->&lt;--ID-->{$contract})$do/$set{$contract}/({$to}/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$contract
 </programlisting>
 
 </section>
 
 <section><title>Requester link contract pattern with policy expression</title>
 
-<programlisting>(&lt;--RA-->/&lt;--TA-->&lt;--ID-->{$do})$do$if/&lt;--policy-expression-->
-(&lt;--RA-->/&lt;--TA-->&lt;--ID-->{$do})$do/$set{$do}/({$to}/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$do</programlisting>
+<programlisting>(&lt;--RA-->/&lt;--TA-->&lt;--ID-->{$contract})$do$if/&lt;--policy-expression-->
+(&lt;--RA-->/&lt;--TA-->&lt;--ID-->{$contract})$do/$set{$contract}/({$to}/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$contract</programlisting>
 
-<section><title><code>$set{$do}</code> Operation</title>
+<section><title><code>$set{$contract}</code> Operation</title>
 
-<para>A requester link contract uses the <code>$set{$do}</code> operation that is used to
+<para>A requester link contract uses the <code>$set{$contract}</code> operation that is used to
 authorize new link contract instances. The object of this predicate MUST be the XDI address
 of the link contract template for which it will authorize instances.</para>
 
@@ -1385,14 +1387,7 @@ the authorizing authority to:</para>
 <para>In this XDI graph, the public link contract provides access to the endpoint URIs in the
 XDI graph for the authority <code>[=]!:uuid:2</code> to support XDI Discovery.</para>
 
-<programlisting>/$is$ref/([=]!:uuid:2)                                    &lt;== inverse statement of peer root address for the XDI authority
-([=]!:uuid:2)/$ref/                                       &lt;== direct statement of peer root address for the XDI authority
-[&lt;$uri>]&lt;!1>&amp;/&amp;/"https://xdi.example.com/1224/"           &lt;== endpoint URI 1
-[&lt;$uri>]&lt;!2>&amp;/&amp;/"https://xdi2.example.com/1224/"          &lt;== endpoint URI 2
-&lt;$uri>/$ref/[&lt;$uri>]&lt;!1>                                  &lt;== reference to URI 1 as default endpoint URI
-[=]!:uuid:2$to$anon$from$public$do/$get/&lt;$uri>            &lt;== public link contract to get reference to default endpoint URI
-[=]!:uuid:2$to$anon$from$public$do/$get/[&lt;$uri>]          &lt;== public link contract to get collection of all endpoint URIs
-</programlisting>
+<programlisting>TODO</programlisting>
 
 </section>
 
@@ -1412,23 +1407,23 @@ with the red color are used to denote comments amidst XDI statements</para>
 and requester link contract before Alice has authorized an instance of this template.</para>
 
 <programlisting>## use of name/number pattern to select instance of template
-[+]!:uuid:TA#registration{$do}/$ref/[+]!:uuid:TA[{$do}(]!:uuid:1122}
+[+]!:uuid:TA#registration{$contract}/$ref/[+]!:uuid:TA[{$contract}(]!:uuid:1122}
 
 ## Template Attributes
-[+]!:uuid:TA[{$do}]!:uuid:1122&lt;#en>&lt;$lang>{&lt;$label>}&amp;/&amp;/"CC Registration Template"
-[+]!:uuid:TA[{$do}]!:uuid:1122&lt;$template>&lt;$add>&lt;$t>&amp;/&amp;/"1987-12-12"
+[+]!:uuid:TA[{$contract}]!:uuid:1122&lt;#en>&lt;$lang>{&lt;$label>}&amp;/&amp;/"CC Registration Template"
+[+]!:uuid:TA[{$contract}]!:uuid:1122&lt;$template>&lt;$add>&lt;$t>&amp;/&amp;/"1987-12-12"
 
 ## operational permissions
-([+]!:uuid:TA[{$do}]!:uuid:1122/$get){$to}{&lt;#email>}&lt;$required>&amp;/&amp;/false
-([+]!:uuid:TA[{$do}]!:uuid:1122/$get){$to}{&lt;#phone>}&lt;$required>&amp;/&amp;/true
+([+]!:uuid:TA[{$contract}]!:uuid:1122/$get){$to}{&lt;#email>}&lt;$required>&amp;/&amp;/false
+([+]!:uuid:TA[{$contract}]!:uuid:1122/$get){$to}{&lt;#phone>}&lt;$required>&amp;/&amp;/true
 
 ## usage permissions
-[+]!:uuid:TA[{$do}]!:uuid:1122$for{&lt;$opt>}&lt;$required>&amp;/&amp;/true
-[+]!:uuid:TA[{$do}]!:uuid:1122$for{&lt;$opt>}&lt;$default>&amp;/&amp;/false
-[+]!:uuid:TA[{$do}]!:uuid:1122$for{&lt;$opt>}&lt;#en>&lt;$lang>&lt;$label>&amp;/&amp;/"To let you know about our special offers"
+[+]!:uuid:TA[{$contract}]!:uuid:1122$for{&lt;$opt>}&lt;$required>&amp;/&amp;/true
+[+]!:uuid:TA[{$contract}]!:uuid:1122$for{&lt;$opt>}&lt;$default>&amp;/&amp;/false
+[+]!:uuid:TA[{$contract}]!:uuid:1122$for{&lt;$opt>}&lt;#en>&lt;$lang>&lt;$label>&amp;/&amp;/"To let you know about our special offers"
 
 ## policy expressions
-([+]!:uuid:TA[{$do}]!:uuid:1122$if/$true){{$from}}/$is/{$from}
+([+]!:uuid:TA[{$contract}]!:uuid:1122$if/$true){{$from}}/$is/{$from}
 </programlisting>
 
 </section>
@@ -1459,21 +1454,21 @@ link contract template.</para>
 authorizes an instance of Acme's registration link contract template.</para>
 
 <programlisting>## Link contract instance, written by rule
-([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]*!:uuid:1122&lt;$add>&lt;$t>&amp;/&amp;/"1965-12-02"
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$contract]*!:uuid:1122&lt;$add>&lt;$t>&amp;/&amp;/"1965-12-02"
 
 ## from Template Attributes
-([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]*!:uuid:1122&lt;#en>&lt;$lang>&lt;$label>&amp;/&amp;/"CC Registration Template"	
-([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]*!:uuid:1122&lt;$template>&lt;$add>&lt;$t>&amp;/&amp;/"1987-12-12"
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$contract]*!:uuid:1122&lt;#en>&lt;$lang>&lt;$label>&amp;/&amp;/"CC Registration Template"	
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$contract]*!:uuid:1122&lt;$template>&lt;$add>&lt;$t>&amp;/&amp;/"1987-12-12"
 
 ## operational permissions - including optional email attribute (Alice chose work attributes)
-([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]*!:uuid:1122/$get/[=]!:uuid:AA&lt;#work>&lt;#email>
-([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]*!:uuid:1122/$get/[=]!:uuid:AA&lt;#mobile>&lt;#phone>
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$contract]*!:uuid:1122/$get/[=]!:uuid:AA&lt;#work>&lt;#email>
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$contract]*!:uuid:1122/$get/[=]!:uuid:AA&lt;#mobile>&lt;#phone>
 
 ## usage permissions 
-([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$do]*!:uuid:1122$for&lt;$opt>&amp;/&amp;/true
+([=]!:uuid:AA/[=]!:uuid:RA)[+]!:uuid:TA[$contract]*!:uuid:1122$for&lt;$opt>&amp;/&amp;/true
 
 ## policy expressions 
-([=]!:uuid:AA/[=]!:uuid:RA)([+]!:uuid:TA[$do]*!:uuid:1122$if/$true){$from}/$is/[=]!:uuid:RA
+([=]!:uuid:AA/[=]!:uuid:RA)([+]!:uuid:TA[$contract]*!:uuid:1122$if/$true){$from}/$is/[=]!:uuid:RA
 </programlisting>
 
 <para>Note that exactly the same statements are added to both Alice's and Acme's graphs. They
@@ -1503,7 +1498,7 @@ authorization relationship.</para>
 <orderedlist>
 <listitem><para>A <glossterm>link contract template</glossterm> is a link contract containing XDI variables that must be replaced by the authorizing authority in order to create a valid link contract instance. A link contract template may be published by any XDI authority, not just a requesting or authorizing authority. Templates provided by neutral third parties make it much easier for link contracts to be standardized, promoting interoperability of XDI vocabulary and permissions. Note: Separating the RA and TA function has not been specified in detailed examples in this working draft or tested in implementation by TC members.</para></listitem>
 <listitem><para>A <glossterm>link contract instance</glossterm> is produced by replacing the variables in a link contract template.</para></listitem>
-<listitem><para>A <glossterm>community link contract</glossterm> is an AA link contract used to authorize a link contract instantiation request ({$do} message) from an RA. A community contract does for an AA what a requestor contract does for an RA. A community contract allows the members of a community (of any size) to establish a common policy or set of policies that will govern members of the community accepting new link contracts from each other. A simple community contract can prevent link contract requests from being used as a form of spam. The policy for this could be as simple as requiring a link contract request to come from another member of that community. A community link contract address is not derived algorithmically from a link contract template address. Rather, it is simply a well-known XDI address to all members of that community.</para></listitem>
+<listitem><para>A <glossterm>community link contract</glossterm> is an AA link contract used to authorize a link contract instantiation request ({$contract} message) from an RA. A community contract does for an AA what a requestor contract does for an RA. A community contract allows the members of a community (of any size) to establish a common policy or set of policies that will govern members of the community accepting new link contracts from each other. A simple community contract can prevent link contract requests from being used as a form of spam. The policy for this could be as simple as requiring a link contract request to come from another member of that community. A community link contract address is not derived algorithmically from a link contract template address. Rather, it is simply a well-known XDI address to all members of that community.</para></listitem>
 <listitem><para>A <glossterm>requester link contract</glossterm> is a special link contract used by a requesting authority to govern acceptance of link contract instances conforming to a specific link contract template. The requester link contract expresses the policies enforced by a specific requesting authority for accepting LC instances in its own graph. The address of a requester link contract is algorithmically derived from the address of the link contract template on which it is based, providing a standard way to authorize acceptance of link contract instances based on a known template. The requester link contract also provides a way for the AA to update an LC instance repeatedly as needed, or to delete the instance in the RA’s graph.</para></listitem>
 </orderedlist>
 
@@ -1517,27 +1512,17 @@ authorization relationship.</para>
 
 <para>Generic Instance:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--class-->)&lt;--TA-->&lt;--ID-->$do/&lt;--operation-->/&lt;--AA-->/&lt;--class-->&lt;--AA-->&lt;--object-graph-->
+<programlisting>(&lt;--AA-->/&lt;--class-->)&lt;--TA-->&lt;--ID-->$contract$do/&lt;--operation-->/&lt;--AA-->/&lt;--class-->&lt;--AA-->&lt;--object-graph-->
 </programlisting>
 
 <para>Specific Instance:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$do/&lt;--operation-->/&lt;--AA-->&lt;--object-graph-->
+<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$contract$do/&lt;--operation-->/&lt;--AA-->&lt;--object-graph-->
 </programlisting>
 
 <para>Template Pattern:</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$do}/&lt;--operation-->/{$to}&lt;--object-graph-->
-</programlisting>
-
-<para>Community Contract Pattern:</para>
-
-<programlisting>(&lt;--AA-->/&lt;--XCA-->)(&lt;--XCA-->#&lt;--C-ID-->$do
-</programlisting>
-
-<para>Requester Pattern:</para>
-
-<programlisting>(&lt;--RA-->/&lt;--TA-->&lt;--ID-->{$do})$do/$set{$do}/({$to}/&lt;--RA-->)&lt;--TA-->&lt;--ID-->$do
+<programlisting>&lt;--TA-->&lt;--ID-->{$contract}$do/&lt;--operation-->/{$to}&lt;--object-graph-->
 </programlisting>
 
 </section>
@@ -1546,29 +1531,23 @@ authorization relationship.</para>
 
 <para>Generic Instance:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--class-->)&lt;--TA-->&lt;--ID-->[$do]&lt;--link-contract-id-->/&lt;--operation-->/(&lt;--AA-->/&lt;--class-->)&lt;--AA-->&lt;--object-graph-->
+<programlisting>(&lt;--AA-->/&lt;--class-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$do/&lt;--operation-->/(&lt;--AA-->/&lt;--class-->)&lt;--AA-->&lt;--object-graph-->
 </programlisting>
 
 <para>Specific Instance:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$do]&lt;--link-contract-id-->/&lt;--operation-->/&lt;--AA-->&lt;--object-graph-->
+<programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$do/&lt;--operation-->/&lt;--AA-->&lt;--object-graph-->
 </programlisting>
 
 <para>Template Pattern:</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$do}!&lt;--link-contract-id-->&lt;--operation-->/{$to}&lt;--object-graph-->
-</programlisting>
-
-<para>Requester Pattern:</para>
-
-<programlisting>TBD
+<programlisting>&lt;--TA-->&lt;--ID-->{$contract}&lt;--link-contract-template-id-->$do&lt;--operation-->/{$to}&lt;--object-graph-->
 </programlisting>
 
 <para>Notes about this overall architecture:</para>
 
 <itemizedlist>
 <listitem><para>The only difference between the singleton and collection patterns is whether the link contract node itself is an XDI entity singleton or entity collection.</para></listitem>
-<listitem><para>Both the instance and the requester patterns begin with an inner root so that they can have an algorithmically-generated address relative to an AA and RR that is always identical in both authorities’ graphs. `The template and the requester contain an XDI <code>{$to}</code> variable to refer to AA variables outside of the policy expression branch. The instance pattern does not include XDI variables because they have been instantiated in order to create the instance.</para></listitem>
 </itemizedlist>
 
 </section>
