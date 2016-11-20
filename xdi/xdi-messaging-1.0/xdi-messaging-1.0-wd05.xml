@@ -1252,7 +1252,7 @@ TODO: formal description of the message instantiation function</para>
 
 <programlisting>=!:uuid:2222[$msg]*!:uuid:m-2/$from/(=!:uuid:2222)
 =!:uuid:2222[$msg]*!:uuid:m-2/$to/(=!:uuid:3333)
-=!:uuid:2222[$msg]*!:uuid:m-2/$connect/(=!:uuid:3333/=!:uuid:2222)$get$contract
+=!:uuid:2222[$msg]*!:uuid:m-2/$contract/(=!:uuid:3333/=!:uuid:2222)$get$contract
 =!:uuid:2222[$msg]*!:uuid:m-2$do/$get/=!:uuid:3333&lt;#email>
 </programlisting>
 
