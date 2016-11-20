@@ -1390,11 +1390,11 @@ a responder to send a request for a new link contract to the original requester.
 
 </section>
 
-<section id="a.common.messaging.patterns.impersonation"><title>Impersonation</title>
+<section id="a.common.messaging.patterns.masquerading"><title>Masquerading</title>
 
-<para>An <firstterm>impersonation</firstterm> is a <code>$send</code> request operation with an inner message whose
+<para><firstterm>Masquerading</firstterm> is a <code>$send</code> request operation with an inner message whose
 requester is different from the responder of the outer message. In other words, it is a way for a requester to ask
-a responder to "impersonate" an arbitrary peer when sending the inner message.</para>
+a responder to "masquerade" as an arbitrary peer when sending the inner message.</para>
 
 </section>
 
