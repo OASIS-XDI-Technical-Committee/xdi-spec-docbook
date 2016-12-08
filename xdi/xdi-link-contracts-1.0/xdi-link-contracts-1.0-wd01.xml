@@ -131,45 +131,31 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 
     <bibliolist> <bibliomixed id="xdi-core-1.0">
       <abbrev>OASIS-XDI-Core-V1.0</abbrev> <date>&pubdate; </date>
-      <title><ulink url="../../xdi-core-1.0/xdi-core-1.0-wd01.xml">OASIS XDI 1.0 Core Specification</ulink></title>
+      <title><ulink url="../xdi-core-1.0/xdi-core-v1.0-csd01.xml">OASIS XDI 1.0 Core Specification</ulink></title>
       <author><firstname>Joseph </firstname> <surname>Boyle</surname></author>,
       <author><firstname>Drummond </firstname> <surname>Reed</surname></author>. 
       <releaseinfo>OASIS &standard;. </releaseinfo>
       <citetitle><ulink url="&latest-loc;/xdi-core.html">&latest-loc;/xdi-core.html</ulink>.</citetitle>
     </bibliomixed> <bibliomixed id="xdi-messaging-1.0">
       <abbrev>OASIS-XDI-Messaging-V1.0</abbrev> <date>&pubdate; </date>
-      <title><ulink url="../../xdi-messaging-1.0/xdi-messaging-1.0-wd01.xml">OASIS XDI 1.0 Messaging Specification</ulink></title>
+      <title><ulink url="../xdi-messaging-1.0/xdi-messaging-1.0-wd04.xml">OASIS XDI 1.0 Messaging Specification</ulink></title>
       <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
       <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
       <releaseinfo>OASIS &standard;. </releaseinfo>
       <citetitle><ulink url="&latest-loc;/xdi-messaging.html">&latest-loc;/xdi-messaging.html</ulink>.</citetitle>
     </bibliomixed> <bibliomixed id="xdi-discovery-1.0">
       <abbrev>OASIS-XDI-Discovery-V1.0</abbrev> <date>&pubdate; </date>
-      <title><ulink url="../../xdi-discovery-1.0/xdi-discovery-1.0-wd01.xml">OASIS XDI 1.0 Discovery Specification</ulink></title>
+      <title><ulink url="../xdi-discovery-1.0/xdi-discovery-1.0-wd01.xml">OASIS XDI 1.0 Discovery Specification</ulink></title>
       <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
       <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
       <releaseinfo>OASIS &standard;. </releaseinfo>
       <citetitle><ulink url="&latest-loc;/xdi-discovery.html">&latest-loc;/xdi-discovery.html</ulink>.</citetitle>
-    </bibliomixed> <bibliomixed id="xdi-cryptographic-profiles-1.0">
-      <abbrev>OASIS-XDI-Cryptographic-Profiles-V1.0</abbrev> <date>&pubdate; </date>
-      <title><ulink url="../../xdi-cryptographic-profiles-1.0/xdi-cryptographic-profiles-1.0-wd01.xml">OASIS XDI 1.0 Cryptographic Profiles Specification</ulink></title>
-      <author><firstname>Peter </firstname> <surname>Davis</surname></author>.
+    </bibliomixed> <bibliomixed id="xdi-cryptography-1.0">
+      <abbrev>OASIS-XDI-Cryptography-V1.0</abbrev> <date>&pubdate; </date>
+      <title><ulink url="../xdi-cryptography-1.0/xdi-cryptography-1.0-wd01.xml">OASIS XDI 1.0 Cryptography Specification</ulink></title>
+      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>.
       <releaseinfo>OASIS &standard;. </releaseinfo>
       <citetitle><ulink url="&latest-loc;/xdi-cryptographic-profiles.html">&latest-loc;/xdi-cryptographic-profiles.html</ulink>.</citetitle>
-    </bibliomixed> <bibliomixed id="xdi-security-mechanisms-1.0">
-      <abbrev>OASIS-XDI-Security-Mechanisms-V1.0</abbrev> <date>&pubdate; </date>
-      <title><ulink url="../../xdi-security-mechanisms-1.0/xdi-security-mechanisms-1.0-wd01.xml">OASIS XDI 1.0 Security Mechanisms Specification</ulink></title>
-      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
-      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
-      <releaseinfo>OASIS &standard;. </releaseinfo>
-      <citetitle><ulink url="&latest-loc;/xdi-security-mechanisms.html">&latest-loc;/xdi-security-mechanisms.html</ulink>.</citetitle>
-    </bibliomixed> <bibliomixed id="xdi-privacy-mechanisms-1.0">
-      <abbrev>OASIS-XDI-Privacy-Mechanisms-V1.0</abbrev> <date>&pubdate; </date>
-      <title><ulink url="../../xdi-privacy-mechanisms-1.0/xdi-privacy-mechanisms-1.0-wd01.xml">OASIS XDI 1.0 Privacy Mechanisms Specification</ulink></title>
-      <author><firstname>Markus </firstname> <surname>Sabadello</surname></author>,
-      <author><firstname>Drummond </firstname> <surname>Reed</surname></author>.
-      <releaseinfo>OASIS &standard;. </releaseinfo>
-      <citetitle><ulink url="&latest-loc;/xdi-privacy-mechanisms.html">&latest-loc;/xdi-privacy.html</ulink>.</citetitle>
     </bibliomixed> <bibliomixed id="rfc2119">
       <abbrev>RFC 2119</abbrev><date>March 1997</date>
       <title><ulink url="http://www.ietf.org/rfc/rfc2119.txt">Key words for use in RFCs to Indicate Requirement Levels</ulink></title>
