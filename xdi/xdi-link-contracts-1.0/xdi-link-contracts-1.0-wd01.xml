@@ -217,8 +217,7 @@ against information in a target graph.</para>
 <orderedlist>
 <listitem><para><glossterm>Authorizing Authority (AA): </glossterm>the XDI authority authorizing a link contract granting permissions to an XDI graph.</para></listitem>
 <listitem><para><glossterm>Requesting Authority (RA): </glossterm>the XDI authority requesting a link contract to obtain permissions to an XDI graph.</para></listitem>
-<listitem><para><glossterm>XDI Community Authority (XCA): </glossterm>the XDI authority for a community link contract.</para></listitem>
-<listitem><para><glossterm>Template authority (TA): </glossterm>the XDI authority publishing a link contract template, which may or may not be the requesting authority or authorizing authority.</para></listitem>
+<listitem><para><glossterm>Template Authority (TA): </glossterm>the XDI authority publishing a link contract template, which may or may not be the requesting authority or authorizing authority.</para></listitem>
 </orderedlist>
 
 </section>
@@ -285,7 +284,7 @@ although the singleton form <code>$contract</code> can equally be used.</para>
 (&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$if/&lt;--execution-policy-->
 (&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$defer$if/&lt;--defer-policy-->
 (&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$defer$push$if/&lt;--defer-push-policy-->
-(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$for&lt;$opt>/&amp;/&amp;/true
+(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$for/&lt;--usage-policy-->
 </programlisting>
 
 <para>Where:</para>
@@ -301,6 +300,7 @@ although the singleton form <code>$contract</code> can equally be used.</para>
 <listitem><para><code>&lt;--execution-policy--></code> is an XDI policy that determines if a request message is executed.</para></listitem>
 <listitem><para><code>&lt;--defer-policy--></code> is an XDI policy that determines if a request message is deferred.</para></listitem>
 <listitem><para><code>&lt;--defer-push-policy--></code> is an XDI policy that determines if a request message is deferred with a push link contract.</para></listitem>
+<listitem><para><code>&lt;--usage-policy--></code> is an XDI policy that expresses the purpose for which the link contract may be used.</para></listitem>
 </itemizedlist>
 
 <para>TODO: Describe "generic" <code>(&lt;--AA-->/&lt;--RA-->)</code> vs. "specific" <code>(&lt;--AA-->/&lt;--class-->)</code> link contracts.</para>
@@ -354,6 +354,8 @@ link contract evaluation process (see <xref linkend="s.link.contract.evaluation"
 <para>Link contract instances MUST grant required usage permissions (otherwise
 no LC instance would be created).</para>
 
+<para>TODO: Describe how the usage policy works.</para>
+
 </section>
 
 <section><title>Other Parameters</title>
@@ -398,8 +400,8 @@ defines the XDI graph or subgraph over which the permission for the specified op
 granted. A template can indicate whether a requested permission is mandatory or optional
 using the reserved word <code>$required</code>.</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$contract}$do/&lt;--operation-->/{$to}&lt;--object-graph-->&lt;$required>&amp;/&amp;/true  ##mandatory
-&lt;--TA-->&lt;--ID-->{$contract}/&lt;--operation-->/{$to}&lt;--object-graph-->&lt;$required>&amp;/&amp;/false  ## optional
+<programlisting>&lt;--TA-->&lt;--ID-->{$contract}$do/&lt;--operation-->/{$to}&lt;--object-graph-->&lt;$required>/&amp;/true  ##mandatory
+&lt;--TA-->&lt;--ID-->{$contract}/&lt;--operation-->/{$to}&lt;--object-graph-->&lt;$required>/&amp;/false  ## optional
 </programlisting>
 
 </section>
@@ -423,9 +425,9 @@ blanket permissions. RAs SHOULD request more specific usage permissions for the 
 contract template. Additionally, RA’s SHOULD use the <code>$required</code> and <code>$default</code> reserved words
 for an opt-in patterns.</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$contract}$for{&lt;$opt>}&lt;$required>&amp;/&amp;/true     ## opt in is required
-&lt;--TA-->&lt;--ID-->{$contract}$for{&lt;$opt>}&lt;$default>&amp;/&amp;/false     
-&lt;--TA-->&lt;--ID-->{$contract}$for{&lt;$opt>}&lt;--language-->/&amp;/&amp;/"human readable explanation"
+<programlisting>&lt;--TA-->&lt;--ID-->{$contract}$for{&lt;$opt>}&lt;$required>/&amp;/true     ## opt in is required
+&lt;--TA-->&lt;--ID-->{$contract}$for{&lt;$opt>}&lt;$default>/&amp;/false     
+&lt;--TA-->&lt;--ID-->{$contract}$for{&lt;$opt>}&lt;--language-->//&amp;/"human readable explanation"
 </programlisting>
 
 </section>
@@ -436,8 +438,8 @@ for an opt-in patterns.</para>
 have compliance or other legal significance SHOULD be labeled, time stamped, signed and/or
 version-numbered.</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$contract}&lt;--language-context-->/&amp;/&amp;/"human readable label"
-&lt;--TA-->&lt;--ID-->{$contract}&lt;$template>&lt;$add>{&lt;$t>}/&amp;/&amp;/&lt;--UTC time-->
+<programlisting>&lt;--TA-->&lt;--ID-->{$contract}&lt;--language-context-->//&amp;/"human readable label"
+&lt;--TA-->&lt;--ID-->{$contract}&lt;$template>&lt;$add>{&lt;$t>}//&amp;/&lt;--UTC time-->
 &lt;--TA-->&lt;--ID-->{$contract}&lt;-- signature-context --></programlisting>
 
 <para>TBD: version</para>
@@ -1197,21 +1199,19 @@ an entire graph (see <xref linkend="s.operation.send"/>).</para>
 
 </appendix>
 
-<appendix><title>OUTDATED: Further Examples</title>
-
-<section><title>Policy Expression Examples</title>
+<appendix><title>Policy Expression Examples</title>
 
 <para>These examples are written in XDI Display Format. See JSON Serialization Rules for the over-the-wire format.</para>
 <para>Link contract policy that checks that the secret token in the message matches the secret token in the graph:</para>
 
-<programlisting>$secret&lt;$token>&amp;/&amp;/"s3cr3t"
-$contract$if/$true/({$msg}$secret&lt;$token>/$equals/$secret&lt;$token>)
+<programlisting>$secret&lt;$token>/&amp;/"s3cr3t"
+($contract$if/$true){$msg}&lt;$secret>&lt;$token>/$equals/&lt;$secret>&lt;$token>
 </programlisting>
 
 <para>Link contract policy that checks that the message timestamp comes before a certain time:</para>
 
-<programlisting>$contract$if/$true/({$msg}&lt;$t>/$lesser/...$contract#expiration&lt;$t>)
-$contract#expiration&lt;$t>&amp;/&amp;/"2012-12-12"
+<programlisting>($contract$if/$true){$msg}&lt;$t>/$lesser/...$contract#expiration&lt;$t>
+$contract#expiration&lt;$t>/&amp;/"2012-12-12"
 </programlisting>
 
 <para>Link contract policy that checks that the message comes from one of the approved senders:</para>
@@ -1235,8 +1235,8 @@ $contract#expiration&lt;$t>&amp;/&amp;/"2012-12-12"
 
 <programlisting>(&lt;--AA-->/&lt;--AA-->)$contract/$all/
 (&lt;--AA-->/&lt;--AA-->)($contract$if$and/$true){$from}/$is/&lt;--AA-->
-(&lt;--AA-->/&lt;--AA-->)($contract$if$and$or/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>&amp;/&amp;/true
-(&lt;--AA-->/&lt;--AA-->)($contract$if$and$or/$true){$msg}&lt;$sig>&lt;$valid>&amp;/&amp;/true
+(&lt;--AA-->/&lt;--AA-->)($contract$if$and$or/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
+(&lt;--AA-->/&lt;--AA-->)($contract$if$and$or/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 <para>Link contract for the "public branch" of an XDI graph:</para>
@@ -1248,7 +1248,7 @@ $contract#expiration&lt;$t>&amp;/&amp;/"2012-12-12"
 
 <programlisting>=alice/$ref/=!:uuid:1111
 =bob/$ref/=!:uuid:2222
-=!:uuid:1111$&lt;#tel>&amp;/&amp;/"#1-123-567-8900"
+=!:uuid:1111$&lt;#tel>/&amp;/"#1-123-567-8900"
 ($contract$if/$true){$from}/$is/=!:uuid:2222)
 $contract/$get/=!:uuid:1111&lt;#tel>
 </programlisting>
@@ -1260,36 +1260,35 @@ or from one of my friends:</para>
 ($contract$if$or/$true)=!:uuid:1111/#friend/{$from}
 </programlisting>
 
-<para>Link contract that allows a $contract$signal operation only on certain statements (with variables):</para>
+<para>Link contract that allows a <code>$do$signal</code> operation to signal certain "events" on a certain "channel":</para>
 
-<programlisting>$contract/$contract$signal/=!:uuid:1111[#channel]!23[#event]
-($contract$if$and/$contract$signal)=!:uuid:1111[#channel]!23[#event]{1}/#domain/#cloudos)
-($contract$if$and$or/$contract$signal)=!:uuid:1111[#channel]!23[#event]{1}/#type/#notification
-($contract$if$and$or/$contract$signal)=!:uuid:1111[#channel]!23[#event]{1}/#type/#subscription
-($contract$if$and$or/$contract$signal)=!:uuid:1111[#channel]!23[#event]{1}/#type/#deletion
+<programlisting>$contract/$do$signal/=!:uuid:1111[#channel]*!23[#event]
+($contract$if$and/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#domain/#cloudos
+($contract$if$and$or/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#notification
+($contract$if$and$or/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#subscription
+($contract$if$and$or/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#deletion
 </programlisting>
 
 <para>Combination of the previous two examples:</para>
 
-<programlisting>
-=!:uuid:1111/#friend/=!:uuid:2222
-$contract/$contract$signal/=!:uuid:1111[#channel]!23[#event]
-($contract$if$and[$or]!2/$true)=!:uuid:1111/$is/{$from}
-($contract$if$and[$or]!2/$true)=!:uuid:1111/#friend/{$from}
-($contract$if$and/$contract$signal)=!:uuid:1111[#channel]!23[#event]{1}/#domain/#cloudos
-($contract$if$and[$or]!1/$contract$signal)=!:uuid:1111[#channel]!23[#event]{1}/#type/#notification
-($contract$if$and[$or]!1/$contract$signal)=!:uuid:1111[#channel]!23[#event]{1}/#type/#subscription
-($contract$if$and[$or]!1/$contract$signal)=!:uuid:1111[#channel]!23[#event]{1}/#type/#deletion
+<programlisting>=!:uuid:1111/#friend/=!:uuid:2222
+$contract/$contract$signal/=!:uuid:1111[#channel]*!23[#event]
+($contract$if$and/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#domain/#cloudos
+($contract$if$and[$or]@~1/$true)=!:uuid:1111/$is/{$from}
+($contract$if$and[$or]@~1/$true)=!:uuid:1111/#friend/{$from}
+($contract$if$and[$or]@~2/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#notification
+($contract$if$and[$or]@~2/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#subscription
+($contract$if$and[$or]@~2/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#deletion
 </programlisting>
 
 <para>Link contract policy that allows the message if it is not sent on Friday 13th, and
-it is not sent by =drummond or =markus. (Note that the weekday and day-of-month
+it is not sent by <code>=drummond</code> or <code>=markus</code>. (Note that the weekday and day-of-month
 definitions still need to be defined in the XDI <code>$</code> Dictionary.)</para>
 
-<programlisting>($contract$if$and[$not]!1$and/$true)[weekday_is_friday]
-($contract$if$and[$not]!1$and/$true)[day_is_13th]
-($contract$if$and[$not]!2$or/$true)(=drummond/$is/{$from}
-($contract$if$and[$not]!2$or/$true)=markus/$is/{$from}
+<programlisting>($contract$if$and[$not]@~1$and/$true)&lt;--weekday_is_friday-->
+($contract$if$and[$not]@~1$and/$true)&lt;--day_is_13th-->
+($contract$if$and[$not]@~2$or/$true)=drummond/$is/{$from}
+($contract$if$and[$not]@~2$or/$true)=markus/$is/{$from}
 </programlisting>
 
 <para>Complex example, expressing this pseudocode</para>
@@ -1309,13 +1308,11 @@ definitions still need to be defined in the XDI <code>$</code> Dictionary.)</par
 
 <para>in XDI, as</para>
 
-<programlisting>(=aa/=ra)($contract$if$or[$and]!1/$true)=ra&lt;#gold>&amp;/&amp;/true
-(=aa/=ra)($contract$if$or[$and]!1$not$and/$true)=ra&lt;#ex>&amp;/&amp;/true
-(=aa/=ra)($contract$if$or[$and]!1$not$and/$true)+bank&lt;#nomoney>&amp;/&amp;/false
-(=aa/=ra)($contract$if$or/$true)=ra&lt;#ex>&amp;/&amp;/false
+<programlisting>(=aa/=ra)($contract$if$or[$and]@~1/$true)=ra&lt;#gold>/&amp;/true
+(=aa/=ra)($contract$if$or[$and]@~1$not$and/$true)=ra&lt;#ex>/&amp;/true
+(=aa/=ra)($contract$if$or[$and]@~1$not$and/$true)+bank&lt;#nomoney>/&amp;/false
+(=aa/=ra)($contract$if$or/$true)=ra&lt;#ex>/&amp;/false
 </programlisting>
-
-</section>
 
 </appendix>
 
