@@ -190,11 +190,11 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 
 <para>To meet the security and privacy requirements of XDI-based systems acting for different authorities,
 the XDI protocol enables systems to precisely describe access and usage rights to the data they control.
-In order for these rights to be enforced uniformly by the all XDI authorities to which they are granted,
+In order for these rights to be enforced uniformly by all XDI authorities to which they are granted,
 XDI authorization is described in XDI itself. This includes the ability to express any policy governing
 authorization and for policies to reference data, variables, relations, and other statements in the
 relevant XDI graphs. XDI’s primary policy building blocks are a protocol for message operations, a policy
-expression syntax (using Boolean constructs) and the link contract. The link contract is an access control
+expression syntax (using boolean constructs) and the link contract. The link contract is an access control
 mechanism designed to work equally well in either a centralized, or distributed (peer to peer) model.</para>
 
 </section>
@@ -251,7 +251,7 @@ of authorities (such as "all customers" or "all friends").</para>
 
 <para>Link contracts reflecting relationships among authorities are created through a link
 contract (LC) instantiation process. The LC instantiation process makes use of link contract
-templates, requester link contracts and link contract instances, and is described in the XDI
+templates and is described in the XDI
 connections specification.</para>
 
 <para>TODO: Add language about legal aspects as well as human-readable parts of link contracts.</para>
