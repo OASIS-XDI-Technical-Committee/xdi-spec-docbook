@@ -1201,7 +1201,7 @@ an entire graph (see <xref linkend="s.operation.send"/>).</para>
 
 <appendix><title>Policy Expression Examples</title>
 
-<para>These examples are written in XDI Display Format. See JSON Serialization Rules for the over-the-wire format.</para>
+<para>These examples are written in XDI Display Format.</para>
 <para>Link contract policy that checks that the secret token in the message matches the secret token in the graph:</para>
 
 <programlisting>$secret&lt;$token>/&amp;/"s3cr3t"
