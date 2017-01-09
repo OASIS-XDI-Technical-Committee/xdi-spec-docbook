@@ -495,7 +495,7 @@ with the following <firstterm>request message pattern</firstterm> (shown in stat
 </para>
 
 <programlisting>LINK CONTRACT ADDRESS        &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;/$contract/&lt;--link-contract-address--&gt;
-MESSAGE POLICY               &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$if&lt;--boolean-context--&gt;/&lt;--boolean-operator--&gt;/&lt;--condition--&gt;
+MESSAGE POLICY               &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do$if&lt;--boolean-context--&gt;/&lt;--boolean-operator--&gt;/&lt;--condition--&gt;
 OPERATION PARAMETERS         &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--parameter--&gt;/&amp;/&lt;--parameter-value--&gt;
 VARIABLE ADDRESS ASSIGNMENT  &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--variable--&gt;/$is/&lt;--variable-value--&gt;
 VARIABLE LITERAL ASSIGNMENT  &lt;--sender--&gt;[$msg]&lt;--message-id--&gt;&lt;--operation--&gt;&lt;--variable--&gt;/&amp;/"&lt;--variable-value--&gt;"
@@ -537,7 +537,7 @@ OPERATION ON INNER GRAPH     (&lt;--sender--&gt;[$msg]&lt;--message-id--&gt;$do/
 
 <orderedlist>
 <listitem><para>A request message MAY have a policy to specify conditions for its execution at an XDI endpoint.</para></listitem>
-<listitem><para>If an XDI message includes a <code>&lt;--sender--&gt;[$msg]&lt;--id--&gt;$if</code> sub context, the set of message policy statements in this context MUST be evaluated by the XDI endpoint.</para></listitem>
+<listitem><para>If an XDI message includes a <code>&lt;--sender--&gt;[$msg]&lt;--id--&gt;$do$if</code> sub context, the set of message policy statements in this context MUST be evaluated by the XDI endpoint.</para></listitem>
 <listitem><para>Request messages MUST be executed only if the [[XdiPolicyExpression|link contract policies]] evaluates to <code>true</code>.</para></listitem>
 <listitem><para>For privacy reasons, a message policy may only access parts of the target graph which it has <code>$get</code> access to under the link contract referenced in the message.</para></listitem>
 </orderedlist>
@@ -713,11 +713,11 @@ in the responder's target graph and returned in the response message. To create 
 
 <para>Example instantiated deferred push contract:</para>
 
-<programlisting>(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2/$push/=!:uuid:2222&lt;#email>
+<programlisting>(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$do/$push/=!:uuid:2222&lt;#email>
 (=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2/$to/(=!:uuid:1111)
-(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$if$and/$true){$from}/$is/=!:uuid:2222
-(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
-(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
+(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$do$if$and/$true){$from}/$is/=!:uuid:2222
+(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$do$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$do$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
 </programlisting>
 
 <para>A response message MAY contain both a result graph and a deferred push contract,
@@ -732,11 +732,11 @@ graph will be delivered in multiple pushes.</para>
 <programlisting>=!:uuid:2222[$msg]*!:uuid:m-2/$from/(=!:uuid:2222)
 =!:uuid:2222[$msg]*!:uuid:m-2/$to/(=!:uuid:1111)
 =!:uuid:2222[$msg]*!:uuid:m-2/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
-(=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2/$push/=!:uuid:2222&lt;#email>
+(=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$do/$push/=!:uuid:2222&lt;#email>
 (=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2/$to/(=!:uuid:1111)
-(=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$if$and/$true){$from}/$is/=!:uuid:2222
-(=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
-(=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
+(=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$do$if$and/$true){$from}/$is/=!:uuid:2222
+(=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$do$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:2222[$msg]*!:uuid:m-2/$defer$push)(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:d-2$do$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
 </programlisting>
 
 </section>
@@ -1007,9 +1007,9 @@ The link contract template MUST be discovered from this address (see <xref linke
 <para>Example:</para>
 <programlisting>=!:uuid:1111[$msg]*!:uuid:m-1/$from/(=!:uuid:1111)
 =!:uuid:1111[$msg]*!:uuid:m-1/$to/(=!:uuid:2222)
-(=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect)$get{$contract}/$get/{$get}
-(=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect)($get{$contract}$if$and/$true){{$from}}/$is/{$from}
-(=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect)($get{$contract}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect)$get{$contract}$do/$get/{$get}
+(=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect)($get{$contract}$do$if$and/$true){{$from}}/$is/{$from}
+(=!:uuid:1111[$msg]*!:uuid:m-1$do/$connect)($get{$contract}$do$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
 =!:uuid:1111[$msg]*!:uuid:m-1$connect{$get}/$is/=!:uuid:2222&lt;#email>
 </programlisting>
 
@@ -1334,7 +1334,7 @@ execute a <code>$get</code> operation on a certain subgraph identified by the
 
 <para>The <firstterm>standard get message template</firstterm>:</para>
 
-<programlisting>$get{$msg}/$get/{$get}
+<programlisting>$get{$msg}$do/$get/{$get}
 </programlisting>
 
 <para>Example instantiated <firstterm>get message</firstterm>:</para>
@@ -1373,8 +1373,8 @@ a responder to send a request for a new link contract to the original requester.
 
 <para>Example message digest link contract instance set up by the inviter:</para>
 
-<programlisting>(=!:uuid:1111/=!:uuid:2222)$msg$digest$contract/$all/
-(=!:uuid:1111/=!:uuid:2222)($msg$digest$contract$if/$true){$msg}&lt;$digest>/&amp;/"...digest..."
+<programlisting>(=!:uuid:1111/=!:uuid:2222)$msg$digest$contract$do/$all/
+(=!:uuid:1111/=!:uuid:2222)($msg$digest$contract$do$if/$true){$msg}&lt;$digest>/&amp;/"...digest..."
 </programlisting>
 
 <para>Example invitation from inviter <code>=!:uuid:1111</code> to invitee <code>=!:uuid:2222</code>:</para>
@@ -1382,10 +1382,10 @@ a responder to send a request for a new link contract to the original requester.
 <programlisting>=!:uuid:1111[$msg]*!:uuid:m-1/$from/(=!:uuid:1111)
 =!:uuid:1111[$msg]*!:uuid:m-1/$to/(=!:uuid:2222)
 =!:uuid:1111[$msg]*!:uuid:m-1/$contract/(=!:uuid:2222/$send)$contract
-(=!:uuid:1111[$msg]*!:uuid:m-1/$send)=!:uuid:2222[$msg]*!:uuid:m-2/$to/(=!:uuid:1111)
-(=!:uuid:1111[$msg]*!:uuid:m-1/$send)=!:uuid:2222[$msg]*!:uuid:m-2/$contract/(=!:uuid:1111/=!:uuid:2222)$msg$digest$contract
-(=!:uuid:1111[$msg]*!:uuid:m-1/$send)=!:uuid:2222[$msg]*!:uuid:m-2/$connect/$get{$contract}
-(=!:uuid:1111[$msg]*!:uuid:m-1/$send)=!:uuid:2222[$msg]*!:uuid:m-2$connect{$get}/$is/=!:uuid:1111&lt;#email>
+(=!:uuid:1111[$msg]*!:uuid:m-1$do/$send)=!:uuid:2222[$msg]*!:uuid:m-2/$to/(=!:uuid:1111)
+(=!:uuid:1111[$msg]*!:uuid:m-1$do/$send)=!:uuid:2222[$msg]*!:uuid:m-2/$contract/(=!:uuid:1111/=!:uuid:2222)$msg$digest$contract
+(=!:uuid:1111[$msg]*!:uuid:m-1$do/$send)=!:uuid:2222[$msg]*!:uuid:m-2$do/$connect/$get{$contract}
+(=!:uuid:1111[$msg]*!:uuid:m-1$do/$send)=!:uuid:2222[$msg]*!:uuid:m-2$connect{$get}/$is/=!:uuid:1111&lt;#email>
 </programlisting>
 
 </section>
