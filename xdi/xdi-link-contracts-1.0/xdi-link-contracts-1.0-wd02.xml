@@ -315,7 +315,9 @@ although the singleton form <code>$contract</code> can equally be used.</para>
 
 <section><title>Permissions</title>
 
-<para>TODO Permissions</para>
+<para>Each relational <code>&lt;--operation--></code> predicate in the <code>$contract</code> or
+<code>[$contract]&lt;--link-contract-id--></code> context MUST define a permission granted by the link
+contract to a request message.</para>
 
 </section>
 
@@ -417,6 +419,13 @@ It is an entity singleton identified by a <code>{$contract}</code> context:</par
 
 <programlisting>&lt;--TA-->&lt;--ID-->{$contract} 
 </programlisting>
+
+<para>Where:</para>
+
+<itemizedlist>
+<listitem><para><code>&lt;--TA--></code> is the XDI address of the template authority.</para></listitem>
+<listitem><para><code>&lt;--ID--></code> is an OPTIONAL context for specialization of the singleton <code>{$contract}</code>. It can serve as a "qualifier" or "tag" that describes the intention of the link contract template, e.g. <code>#registration</code>.</para></listitem>
+</itemizedlist>
 
 <para>A context node representing a link contract template contains various statements that make up
 the semantics and purpose of the link contract template.</para>
@@ -1246,14 +1255,14 @@ an entire graph (see <xref linkend="s.operation.send"/>).</para>
 
 <para>Link contract policy that checks if the secret token in a message matches the secret token in the link contract:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--RA-->)$contract$secret&lt;$token>/&amp;/"s3cr3t"
-(&lt;--AA-->/&lt;--RA-->)($contract$do$if/$true){$msg}&lt;$secret>&lt;$token>/$equals/(&lt;--AA-->/&lt;--AA-->)$contract&lt;$secret>&lt;$token>
+<programlisting>(&lt;--AA-->/&lt;--RA-->)$contract&lt;$secret>&lt;$token>/&amp;/"s3cr3t"
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if/$true){$msg}&lt;$secret>&lt;$token>/$equals/(&lt;--AA-->/&lt;--RA-->)$contract&lt;$secret>&lt;$token>
 </programlisting>
 
 <para>Link contract policy that checks if a link contract is not used after a certain time, i.e. is not expired:</para>
 
 <programlisting>(&lt;--AA-->/&lt;--RA-->)$contract&lt;#end>&lt;$t>/&amp;/"2017-12-31"
-(&lt;--AA-->/&lt;--RA-->)($contract$do$if/$true){$msg}&lt;$t>/$lesser/(&lt;--AA-->/&lt;--RA-->)$contract&lt;#expiration>&lt;$t>
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if/$true){$msg}&lt;$t>/$lesser/(&lt;--AA-->/&lt;--RA-->)$contract&lt;#end>&lt;$t>
 </programlisting>
 
 <para>Link contract policy that checks if a link contract is active, and not used before or after a certain time:</para>
@@ -1289,7 +1298,7 @@ an entire graph (see <xref linkend="s.operation.send"/>).</para>
 =bob/$ref/=!:uuid:2222
 =!:uuid:1111&lt;#tel>/&amp;/"#1-123-567-8900"
 (=!:uuid:1111/=!:uuid:2222)$contract$do/$get/=!:uuid:1111&lt;#tel>
-(=!:uuid:1111/=!:uuid:2222)($contract$do$if/$true){$from}/$is/=!:uuid:2222)
+(=!:uuid:1111/=!:uuid:2222)($contract$do$if/$true){$from}/$is/=!:uuid:2222
 </programlisting>
 
 <para>Link contract policy that checks that the message comes either from myself <code>(=!:uuid:1111)</code>
