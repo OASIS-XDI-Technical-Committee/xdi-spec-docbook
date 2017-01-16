@@ -72,7 +72,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
     <email>drummond.reed@xdi.org</email> </editor>
 </authorgroup>
 <pubdate>&pubdate;</pubdate>
-<copyright><year>2015</year>
+<copyright><year>2017</year>
 <holder>OASIS Open, Inc. All Rights Reserved.</holder></copyright>
  <legalnotice role="additional"><title>Additional artifacts</title>
  <para>This prose specification is one component of a Work Product which also includes:</para>
@@ -99,7 +99,7 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 </bibliomixed> </bibliolist>
 </legalnotice>
 <legalnotice role="notices"><title>Notices</title>
-<para>Copyright &#169; OASIS&#174; Open 2015. All Rights Reserved.  </para>
+<para>Copyright &#169; OASIS&#174; Open 2017. All Rights Reserved.  </para>
 <para>All capitalized terms in the following text have the meanings assigned to them in the OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full Policy may be found at <ulink  url="http://www.oasis-open.org/who/intellectualproperty.php">http://www.oasis-open.org/who/intellectualproperty.php</ulink>.</para>
 <para>This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to OASIS, except as needed for the purpose of developing any document or deliverable produced by an OASIS Technical Committee (in which case the rules applicable to copyrights, as set forth in the OASIS IPR Policy, must be followed) or as required to translate it into languages other than English.</para> 
 <para>The limited permissions granted above are perpetual and will not be revoked by OASIS or its successors or assigns.</para>
@@ -300,9 +300,9 @@ although the singleton form <code>$contract</code> can equally be used.</para>
 <listitem><para><code>&lt;--link-contract-id--></code> is a unique immutable ID for a member of a link contract collection. (Unordered members start with <code>!</code>, ordered members start with <code>@</code>.)</para></listitem>
 <listitem><para><code>&lt;--permission--></code> is an permission granted by this link contract (e.g., <code>$get</code>, <code>$set</code>, <code>$del</code>, or <code>$do&lt;--extension--></code>).</para></listitem>
 <listitem><para><code>&lt;--object-graph--></code> is the XDI graph that is the object of the operations permitted by the link contract.</para></listitem>
-<listitem><para><code>&lt;--execution-policy--></code> is an XDI policy that decides if a request message gets executed.</para></listitem>
-<listitem><para><code>&lt;--defer-policy--></code> is an XDI policy that decides if a request message gets deferred.</para></listitem>
-<listitem><para><code>&lt;--defer-push-policy--></code> is an XDI policy that decides if a request message gets deferred with a push link contract.</para></listitem>
+<listitem><para><code>&lt;--execution-policy--></code> is an XDI policy that decides if a <glossterm>request message</glossterm> gets executed.</para></listitem>
+<listitem><para><code>&lt;--defer-policy--></code> is an XDI policy that decides if a <glossterm>request message</glossterm> gets deferred.</para></listitem>
+<listitem><para><code>&lt;--defer-push-policy--></code> is an XDI policy that decides if a <glossterm>request message</glossterm> gets deferred with a push link contract.</para></listitem>
 <listitem><para><code>&lt;--usage-policy--></code> is an XDI policy that expresses the purpose for which the link contract may be used.</para></listitem>
 <listitem><para><code>&lt;--deletion-policy--></code> is an XDI policy that decides if the link contract gets deleted.</para></listitem>
 <listitem><para><code>&lt;--trigger-message--></code> is an XDI message that gets executed if decided by the <code>&lt;--trigger-policy--></code>.</para></listitem>
@@ -317,14 +317,14 @@ although the singleton form <code>$contract</code> can equally be used.</para>
 
 <para>Each relational <code>&lt;--operation--></code> predicate in the <code>$contract</code> or
 <code>[$contract]&lt;--link-contract-id--></code> context MUST define a permission granted by the link
-contract to a request message.</para>
+contract to a <glossterm>request message</glossterm>.</para>
 
 </section>
 
 <section><title>Execution Policy</title>
 
 <para>A link contract MAY contain an <firstterm>execution policy</firstterm>.
-This policy is evaluated to decide if a request message gets executed by a responder.
+This policy is evaluated to decide if a <glossterm>request message</glossterm> gets executed by a responder.
 Evaluation of this policy (see <xref linkend="s.policy.evaluation"/>) is part of the overall
 link contract evaluation process (see <xref linkend="s.link.contract.evaluation"/>).</para>
 
@@ -341,7 +341,7 @@ link contract evaluation process (see <xref linkend="s.link.contract.evaluation"
 <section><title>Defer Policy</title>
 
 <para>A link contract MAY contain a <firstterm>defer policy</firstterm>.
-This policy is evaluated to decide if a request message gets deferred by a responder.</para>
+This policy is evaluated to decide if a <glossterm>request message</glossterm> gets deferred by a responder.</para>
 <para>Evaluation of this policy (see <xref linkend="s.policy.evaluation"/>) is part of the overall
 link contract evaluation process (see <xref linkend="s.link.contract.evaluation"/>).</para>
 
@@ -350,7 +350,7 @@ link contract evaluation process (see <xref linkend="s.link.contract.evaluation"
 <section><title>Defer Push Policy</title>
 
 <para>A link contract MAY contain a <firstterm>defer push policy</firstterm>.
-This policy is evaluated to decide if a request message gets deferred by a responder, and
+This policy is evaluated to decide if a <glossterm>request message</glossterm> gets deferred by a responder, and
 a push link contract is created.</para>
 <para>Evaluation of this policy (see <xref linkend="s.policy.evaluation"/>) is part of the overall
 link contract evaluation process (see <xref linkend="s.link.contract.evaluation"/>).</para>
@@ -370,9 +370,9 @@ no LC instance would be created).</para>
 
 <para>A link contract MAY contain a <firstterm>deletion policy</firstterm>.
 This policy is evaluated to decide if the link contract gets deleted. This
-policy has no effect on the current request message, i.e. the request message can still
+policy has no effect on the current <glossterm>request message</glossterm>, i.e. the <glossterm>request message</glossterm> can still
 get executed or deferred even if the link contract gets deleted. This policy is independent of other
-policies, i.e. is evaluated whether the current request message is executed, deferred, or rejected.</para>
+policies, i.e. is evaluated whether the current <glossterm>request message</glossterm> is executed, deferred, or rejected.</para>
 <para>Evaluation of this policy (see <xref linkend="s.policy.evaluation"/>) is part of the overall
 link contract evaluation process (see <xref linkend="s.link.contract.evaluation"/>).</para>
 
@@ -392,8 +392,8 @@ link contract evaluation process (see <xref linkend="s.link.contract.evaluation"
 
 <para>A link contract MAY contain a <firstterm>trigger policy</firstterm>.
 This policy is evaluated to decide if the <glossterm>trigger message</glossterm> gets executed. This
-policy has no effect on the current request message. This policy is independent of
-other policies, i.e. it is evaluated whether the current request message is executed, deferred, or rejected.</para>
+policy has no effect on the current <glossterm>request message</glossterm>. This policy is independent of
+other policies, i.e. it is evaluated whether the current <glossterm>request message</glossterm> is executed, deferred, or rejected.</para>
 <para>Evaluation of this policy (see <xref linkend="s.policy.evaluation"/>) is part of the overall
 link contract evaluation process (see <xref linkend="s.link.contract.evaluation"/>).</para>
 
@@ -507,7 +507,7 @@ is always the boolean value <code>true</code> or <code>false</code>.</para>
 <itemizedlist>
 <listitem><para>A link contract's <glossterm>execution policy</glossterm>, <glossterm>defer policy</glossterm>,
 and <glossterm>defer push policy</glossterm> are part of the target graph. They enable an XDI endpoint to
-determine if the input message is authorized and how it is executed.</para></listitem>
+decide if a <glossterm>request message</glossterm> is authorized and how it is handled.</para></listitem>
 <listitem><para>An <glossterm>message policy</glossterm> is part of the input message. It
 provides a way for an XDI client to request execution of the input message only if certain conditions
 are met. XDI link contract policies and XDI message policies are evaluated by the XDI endpoint that hosts
@@ -790,14 +790,14 @@ considered to be an arbitrary XDI statement.</para>
 <section id="s.policy.evaluation"><title>Policy Evaluation</title>
 
 <para>In order to evaluate a policy to either <code>true</code> or <code>false</code>, an <glossterm>evaluation
-context</glossterm> has to be constructed. This evaluation context depends on the purpose of the policy that is
+context</glossterm> has to be defined. This evaluation context depends on the purpose of the policy that is
 being evaluated. At a minimum, an evaluation context MUST define a <glossterm>policy evaluation graph</glossterm>
-that is used to evaluate the policy's conditions. An evaluation context typically also defines variables and
-their values.</para>
+that is used as a basis to evaluate the policy's conditions. An evaluation context typically also supplies values
+for variables that are used by the policy.</para>
 
 <para>For a link contract's <glossterm>execution policy</glossterm>, <glossterm>defer policy</glossterm>,
 and <glossterm>defer push policy</glossterm>, as well as for a <glossterm>message policy</glossterm>,
-the evaluation context is constructed as follows:</para>
+the evaluation context is defined as follows:</para>
 
 <itemizedlist>
 <listitem><para>The <glossterm>policy evaluation graph</glossterm> is defined to be the <glossterm>target
@@ -828,7 +828,7 @@ contract from a link contract template. This function may be invoked in the foll
 
 <itemizedlist>
 <listitem>When the <code>$connect</code> operation is executed (see <xref linkend="xdi-messaging-1.0"/>).</listitem>
-<listitem>When a request message is deferred (see <xref linkend="xdi-messaging-1.0"/>).</listitem>
+<listitem>When a <glossterm>request message</glossterm> is deferred (see <xref linkend="xdi-messaging-1.0"/>).</listitem>
 <listitem>Through other mechanisms that are out of scope of this specification.</listitem>
 </itemizedlist>
 
@@ -874,7 +874,7 @@ This is the same variable used for the receiver of an XDI message.</listitem>
 
 <section id="s.push.contracts"><title>Push Link Contracts</title>
 
-<para>A push link contract is a link contract that expresses a publish/subscribe relationship between 
+<para>A <firstterm>push link contract</firstterm> is a link contract that establishes a publish/subscribe relationship between 
 peers. It enables a peer called  <firstterm>publishing peer</firstterm> (or short <firstterm>publisher</firstterm>)
 to notify one or more other peers called <firstterm>subscribing peers</firstterm> (or short <firstterm>subscribers</firstterm>)
 of changes in a graph for which the publisher is authoritative.</para>
@@ -883,7 +883,7 @@ of changes in a graph for which the publisher is authoritative.</para>
 a link contract with certain properties. This link contract is called a <firstterm>push link contract</firstterm>
 (or short <firstterm>push contract</firstterm>).</para>
 
-<para>A push contract conforms to the link contract pattern (see <xref linkend="s.link.contracts"/>)
+<para>A <glossterm>push contract</glossterm> conforms to the link contract pattern (see <xref linkend="s.link.contracts"/>),
 and in addition MUST meet the following conditions:</para>
 
 <orderedlist>
@@ -929,7 +929,7 @@ push contracts can be created in which multiple peers simultaneously fulfill the
 subscribers. The notification is itself an XDI message. This message is called a <firstterm>push message</firstterm>
 (or short <firstterm>push</firstterm>).</para>
 
-<para>A <firstterm>push message</firstterm> MUST conform to the request message pattern
+<para>A <firstterm>push message</firstterm> MUST conform to the <glossterm>request message</glossterm> pattern
 (see <xref linkend="xdi-messaging-1.0"/>) and in addition MUST meet the following conditions:</para>
 
 <orderedlist>
@@ -976,8 +976,8 @@ sufficient.</para>
 
 <programlisting>(=!:uuid:2222/=!:uuid:1111)$all$contract$do/$all/
 (=!:uuid:2222/=!:uuid:1111)($all$contract$do$if$and/$true){$from}/$is/=!:uuid:1111
-(=!:uuid:2222/=!:uuid:1111)($all$contract$do$if$and/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
-(=!:uuid:2222/=!:uuid:1111)($all$contract$do$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:2222/=!:uuid:1111)($all$contract$do$if$and$or/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
+(=!:uuid:2222/=!:uuid:1111)($all$contract$do$if$and$or/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 </section>
@@ -1064,7 +1064,7 @@ In addition, its policy authorizes only message that are a <glossterm>response m
 single specific <glossterm>request message</glossterm>.</para>
 
 <para>The <firstterm>standard push link contract template</firstterm> is instantiated automatically every time a
-request message is <glossterm>deferred</glossterm> (see <xref linkend="s.response.message.deferred.push.contracts"/>).</para>
+<glossterm>request message</glossterm> is <glossterm>deferred</glossterm> (see <xref linkend="s.response.message.deferred.push.contracts"/>).</para>
 
 <para>The <firstterm>standard deferred push link contract template</firstterm> is typically instantiated as an instance in a <code>[$contract]</code>
 entity collection, since
@@ -1391,7 +1391,7 @@ definitions still need to be defined in the XDI <code>$</code> Dictionary.)</par
 
 <para>Link contract that gets deactivated after it receives a message with an invalid signature:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--RA-->)$contract&lt;#active&gt;&lt;$t&gt;/&amp;/true
+<programlisting>(&lt;--AA-->/&lt;--RA-->)$contract&lt;#active&gt;/&amp;/true
 (&lt;--AA-->/&lt;--RA-->)($contract$msg$do/$set)(&lt;--AA-->/&lt;--RA-->)$contract&lt;#active&gt;/&amp;/false
 (&lt;--AA-->/&lt;--RA-->)($contract$msg$do$if/$true){$msg}&lt;$sig&gt;&lt;$valid&gt;/&amp;/false
 </programlisting>
