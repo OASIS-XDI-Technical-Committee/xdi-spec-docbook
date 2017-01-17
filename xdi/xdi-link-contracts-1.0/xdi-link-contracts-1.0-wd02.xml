@@ -231,14 +231,14 @@ public link contract allowing anonymous access to them. If parts of the graph ar
 authorities, the controlling authority can create generic or specific link contract instances for them
 through link contract instantiation exchanges.</para>
 
-<para>Thus, link contracts may be set at various contexts of a graph. In general, a link contract specifically
-addresses the subject nodes. However, the public link contract and root link contract address an entire graph.</para>
+<para>The permissions granted by link contracts may cover any desired context(s) or statement(s) in a graph.
+Some link contracts such as root link contracts (see <xref linkend="s.root.link.contract"/>) may grant permissions that cover an entire graph.</para>
 
-<para>All access to the graph other than by its controlling authority's software occurs via XDI messages. XDI
+<para>All access to a graph occurs via XDI messages. XDI
 messages may be submitted to the graph for policy evaluation through local APIs or over a network interface.</para>
 
 <para>An XDI graph may be controlled by one authority yet contain sub-graphs that are controlled by other
-authorities. These sub-graphs are expressed as inner roots to mark them clearly as originating from another
+authorities. These sub-graphs are expressed as peer roots to mark them clearly as originating from another
 authority. When the two authorities choose to cooperate, the authority containing the subgraph should respect
 the originating authority’s link contracts.</para>
 
@@ -248,10 +248,8 @@ contract – to set default policies over a broad graph context. Other link cont
 relationships with specific external authorities (such as an individual person) or generic types
 of authorities (such as "all customers" or "all friends").</para>
 
-<para>Link contracts reflecting relationships among authorities are created through a link
-contract (LC) instantiation process. The LC instantiation process makes use of link contract
-templates and is described in the XDI
-connections specification.</para>
+<para><glossterm>Link contracts</glossterm> reflecting relationships among authorities can be created from <glossterm>link contract templates</glossterm>
+through the <glossterm>link contract instantiation</glossterm> process (see <xref linkend="s.link.contract.instantiation"/>).</para>
 
 <para>TODO: Add language about legal aspects as well as human-readable parts of link contracts.</para>
 
@@ -297,7 +295,7 @@ although the singleton form <code>$contract</code> can equally be used.</para>
 <listitem><para><code>&lt;--RA--></code> is the XDI address of the requesting authority.</para></listitem>
 <listitem><para><code>&lt;--TA--></code> is the XDI address of the template authority.</para></listitem>
 <listitem><para><code>&lt;--ID--></code> is an OPTIONAL context for specialization of the singleton <code>$contract</code> or collection <code>[$contract]&lt;--link-contract-id--></code>. It can serve as a "qualifier" or "tag" that describes the intention of the link contract, e.g. <code>#registration</code>.</para></listitem>
-<listitem><para><code>&lt;--link-contract-id--></code> is a unique immutable ID for a member of a link contract collection. (Unordered members start with <code>!</code>, ordered members start with <code>@</code>.)</para></listitem>
+<listitem><para><code>&lt;--link-contract-id--></code> is a unique immutable ID for a member of a link contract collection.</para></listitem>
 <listitem><para><code>&lt;--permission--></code> is an permission granted by this link contract (e.g., <code>$get</code>, <code>$set</code>, <code>$del</code>, or <code>$do&lt;--extension--></code>).</para></listitem>
 <listitem><para><code>&lt;--object-graph--></code> is the XDI graph that is the object of the operations permitted by the link contract.</para></listitem>
 <listitem><para><code>&lt;--execution-policy--></code> is an XDI policy that decides if a <glossterm>request message</glossterm> gets executed.</para></listitem>
@@ -315,9 +313,12 @@ although the singleton form <code>$contract</code> can equally be used.</para>
 
 <section><title>Permissions</title>
 
-<para>Each relational <code>&lt;--operation--></code> predicate in the <code>$contract</code> or
+<para>Each relational <code>&lt;--permission--></code> predicate in the <code>$contract</code> or
 <code>[$contract]&lt;--link-contract-id--></code> context MUST define a permission granted by the link
 contract to a <glossterm>request message</glossterm>.</para>
+
+<para>The <code>&lt;--object-graph--></code> of each <code>&lt;--permission--></code> predicate
+defines the context(s) or statement(s) that are covered by the permission.</para>
 
 </section>
 
@@ -431,7 +432,7 @@ It is an entity singleton identified by a <code>{$contract}</code> context:</par
 the semantics and purpose of the link contract template.</para>
 
 <para>Following are the statements that are common to all link contract templates (shown in statement
-format). This is called the <glossterm>common link contract template pattern</glossterm>. Labels in
+format). Labels in
 <code>&lt;--this-form--></code> represent pattern variables.</para>
 
 <programlisting>&lt;--TA-->&lt;--ID-->{$contract}$do/&lt;--permission-->/{$to}&lt;--object-graph-->
@@ -439,18 +440,18 @@ format). This is called the <glossterm>common link contract template pattern</gl
 
 <section><title>Permissions</title>
 
-<para>Each relational <code>&lt;--operation--></code> predicate in the <code>$contract</code> or
-<code>[$contract]&lt;--link-contract-id--></code> context MUST define a permission granted by the link
-contract to an XDI message that satisfies the link contract policies.</para>
+<para>Each relational <code>&lt;--permission--></code> predicate in the <code>{$contract}</code>
+context MUST define a permission granted by the link
+contract template to a <glossterm>request message</glossterm>.</para>
 
-<para>The <code>&lt;--object-graph--></code> of each <code>&lt;--operation--></code> predicate
-defines the XDI graph or subgraph over which the permission for the specified operation is
-granted. A template can indicate whether a requested permission is mandatory or optional
+<para>A template can indicate whether a requested permission is mandatory or optional
 using the reserved word <code>$required</code>.</para>
 
 <programlisting>&lt;--TA-->&lt;--ID-->{$contract}$do/&lt;--operation-->/{$to}&lt;--object-graph-->&lt;$required>/&amp;/true  ##mandatory
 &lt;--TA-->&lt;--ID-->{$contract}/&lt;--operation-->/{$to}&lt;--object-graph-->&lt;$required>/&amp;/false  ## optional
 </programlisting>
+
+TODO: bad syntax here
 
 </section>
 
@@ -480,7 +481,7 @@ for an opt-in patterns.</para>
 
 </section>
 
-<section><title>Other Permissions</title>
+<section><title>Other Attributes</title>
 
 <para>Templates for link contracts meant to serve official or business purposes that may
 have compliance or other legal significance SHOULD be labeled, time stamped, signed and/or
@@ -498,7 +499,7 @@ version-numbered.</para>
 
 <section><title>Policies</title>
 
-<para>An <firstterm>XDI policy</firstterm> expressed a set of conditions that are used by XDI link contracts
+<para>An <firstterm>XDI policy</firstterm> contains a set of conditions that are used by XDI link contracts
 and XDI messages. An XDI policy is always evaluated in an <glossterm>evaluation context</glossterm>, and the result
 is always the boolean value <code>true</code> or <code>false</code>.</para>
 
@@ -506,7 +507,7 @@ is always the boolean value <code>true</code> or <code>false</code>.</para>
 
 <itemizedlist>
 <listitem><para>A link contract's <glossterm>execution policy</glossterm>, <glossterm>defer policy</glossterm>,
-<glossterm>deletion policy</glossterm>, and <glossterm>defer push policy</glossterm> are part of the link contract and therefore the target
+<glossterm>defer push policy</glossterm>, <glossterm>deletion policy</glossterm>, and <glossterm>trigger policy</glossterm> are part of the link contract and therefore the target
 graph. They enable an XDI endpoint to decide if a <glossterm>request message</glossterm> is authorized and how it is
 handled.</para></listitem>
 <listitem><para>A <glossterm>message policy</glossterm> is part of the request message. It
@@ -1155,7 +1156,7 @@ to the legal concepts of custodianship or guardianship (e.g. parent-child).</par
 <para>Root link contract pattern:</para>
 
 <programlisting>(&lt;--AA-->/&lt;--AA-->)$contract$do/$all/
-(&lt;--AA-->/&lt;--AA-->)($contract$do$if&lt;--policy-expression-->
+(&lt;--AA-->/&lt;--AA-->)$contract$do$if&lt;--policy-expression-->
 </programlisting>
 
 <para>A <firstterm>root link contract</firstterm> contains a <code>$all</code> permission on 
@@ -1195,7 +1196,7 @@ certain limited subgraphs that are intended to be publicly available.</para>
 
 <para>Note that authorities can further customize the public link contract, e.g. to prevent spam.</para>
 
-<para>A public link contract does not contain a policy, i.e. it always evaluates to <emphasis>true</emphasis>.</para>
+<para>A public link contract does not contain any policies, i.e. a <glossterm>request message</glossterm> always gets executed.</para>
 
 <para>Example public link contract:</para>
 
@@ -1339,29 +1340,6 @@ definitions still need to be defined in the XDI <code>$</code> Dictionary.)</par
 (&lt;--AA-->/&lt;--RA-->)($contract$do$if$and[$not]@~1$and/$true)&lt;--day_is_13th-->
 (&lt;--AA-->/&lt;--RA-->)($contract$do$if$and[$not]@~2$or/$true)=drummond/$is/{$from}
 (&lt;--AA-->/&lt;--RA-->)($contract$do$if$and[$not]@~2$or/$true)=markus/$is/{$from}
-</programlisting>
-
-<para>Complex example, expressing this pseudocode</para>
-
-<programlisting>if a cardholder has a GOLD account THEN
-    (if cardholder exceeded credit limit AND
-    if bank is running out of money) THEN
-       FALSE
-    ELSE
-       TRUE
- ELSE
-   if cardholder exceeded credit limit THEN
-      FALSE
-   ELSE
-      TRUE
-</programlisting>
-
-<para>in XDI, as</para>
-
-<programlisting>(&lt;--AA-->/&lt;--RA-->)($contract$so$if$or[$and]@~1/$true)&lt;--RA-->&lt;#gold>/&amp;/true
-(&lt;--AA-->/&lt;--RA-->)($contract$do$if$or[$and]@~1$not$and/$true)&lt;--RA-->&lt;#ex>/&amp;/true
-(&lt;--AA-->/&lt;--RA-->)($contract$do$if$or[$and]@~1$not$and/$true)+bank&lt;#nomoney>/&amp;/false
-(&lt;--AA-->/&lt;--RA-->)($contract$do$if$or/$true)&lt;--RA-->&lt;#ex>/&amp;/false
 </programlisting>
 
 </section>
