@@ -290,9 +290,9 @@ although the singleton form <code>$contract</code> can equally be used.</para>
 <para>Where:</para>
 
 <itemizedlist>
-<listitem><para><code>&lt;--TA--></code> is the XDI address of the template authority.</para></listitem>
-<listitem><para><code>&lt;--RA--></code> is the XDI address of the requesting authority.</para></listitem>
 <listitem><para><code>&lt;--AA--></code> is the XDI address of the authorizing authority.</para></listitem>
+<listitem><para><code>&lt;--RA--></code> is the XDI address of the requesting authority.</para></listitem>
+<listitem><para><code>&lt;--TA--></code> is the XDI address of the template authority.</para></listitem>
 <listitem><para><code>&lt;--ID--></code> is an OPTIONAL context for specialization of the singleton <code>$contract</code> or collection <code>[$contract]&lt;--link-contract-id--></code>. It can serve as a "qualifier" or "tag" that describes the intention of the link contract, e.g. <code>#registration</code>.</para></listitem>
 <listitem><para><code>&lt;--link-contract-id--></code> is a unique immutable ID for a member of a link contract collection. (Unordered members start with <code>!</code>, ordered members start with <code>@</code>.)</para></listitem>
 <listitem><para><code>&lt;--permission--></code> is an permission granted by this link contract (e.g., <code>$get</code>, <code>$set</code>, <code>$del</code>, or <code>$do&lt;--extension--></code>).</para></listitem>
@@ -458,13 +458,14 @@ is always the boolean value <code>true</code> or <code>false</code>.</para>
 
 <itemizedlist>
 <listitem><para>A link contract's <glossterm>execution policy</glossterm>, <glossterm>defer policy</glossterm>,
-and <glossterm>defer push policy</glossterm> are part of the target graph. They enable an XDI endpoint to
-determine if the input message is authorized and how it is executed.</para></listitem>
-<listitem><para>An <glossterm>message policy</glossterm> is part of the input message. It
-provides a way for an XDI client to request execution of the input message only if certain conditions
+<glossterm>deletion policy</glossterm>, and <glossterm>defer push policy</glossterm> are part of the link contract and therefore the target
+graph. They enable an XDI endpoint to decide if the request message is authorized and how it is
+handled.</para></listitem>
+<listitem><para>A <glossterm>message policy</glossterm> is part of the request message. It
+provides a way for an XDI client to request execution of the request message only if certain conditions
 are met. XDI link contract policies and XDI message policies are evaluated by the XDI endpoint that hosts
-the target graph and receives the input message.</para></listitem>
-<listitem><para>An <glossterm>data usage policy</glossterm> controls usage of the requested data outside the scope
+the target graph and receives the request message.</para></listitem>
+<listitem><para>A <glossterm>data usage policy</glossterm> controls usage of the requested data outside the scope
 of XDI enforcement. Data usage policies are attached to a link contract controlling access to part of the
 target graph. XDI data usage policies are evaluated by the authority that holds the data to which the XDI
 data usage policy applies. This may be the XDI endpoint that hosts the target graph, or it may be any other
