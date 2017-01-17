@@ -1211,8 +1211,8 @@ an entire graph (see <xref linkend="s.operation.send"/>).</para>
 
 <para>Link contract policy that checks that the message timestamp comes before a certain time:</para>
 
-<programlisting>($contract$if/$true){$msg}&lt;$t>/$lesser/...$contract#expiration&lt;$t>
-$contract#expiration&lt;$t>/&amp;/"2012-12-12"
+<programlisting>($contract$if/$true){$msg}&lt;$t>/$lesser/...$contract&lt;#expiration>&lt;$t>
+$contract&lt;#expiration>&lt;$t>/&amp;/"2012-12-12"
 </programlisting>
 
 <para>Link contract policy that checks that the message comes from one of the approved senders:</para>
