@@ -72,7 +72,7 @@ href="file:///c:/oasis/spec-0.6/stylesheets/oasis-specification-html-offline.xsl
     <email>drummond.reed@xdi.org</email> </editor>
 </authorgroup>
 <pubdate>&pubdate;</pubdate>
-<copyright><year>2015</year>
+<copyright><year>2017</year>
 <holder>OASIS Open, Inc. All Rights Reserved.</holder></copyright>
  <legalnotice role="additional"><title>Additional artifacts</title>
  <para>This prose specification is one component of a Work Product which also includes:</para>
@@ -99,7 +99,7 @@ publishing materials: <ulink url="&this-loc;/&name;-&version;-&stage;.zip">&this
 </bibliomixed> </bibliolist>
 </legalnotice>
 <legalnotice role="notices"><title>Notices</title>
-<para>Copyright &#169; OASIS&#174; Open 2015. All Rights Reserved.  </para>
+<para>Copyright &#169; OASIS&#174; Open 2017. All Rights Reserved.  </para>
 <para>All capitalized terms in the following text have the meanings assigned to them in the OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full Policy may be found at <ulink  url="http://www.oasis-open.org/who/intellectualproperty.php">http://www.oasis-open.org/who/intellectualproperty.php</ulink>.</para>
 <para>This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published, and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this section are included on all such copies and derivative works. However, this document itself may not be modified in any way, including by removing the copyright notice or references to OASIS, except as needed for the purpose of developing any document or deliverable produced by an OASIS Technical Committee (in which case the rules applicable to copyrights, as set forth in the OASIS IPR Policy, must be followed) or as required to translate it into languages other than English.</para> 
 <para>The limited permissions granted above are perpetual and will not be revoked by OASIS or its successors or assigns.</para>
@@ -281,10 +281,13 @@ format). This is called the <glossterm>common link contract pattern</glossterm>.
 although the singleton form <code>$contract</code> can equally be used.</para>
 
 <programlisting>(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$do/&lt;--permission-->/&lt;--AA-->&lt;--object-graph--> 
-(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$if/&lt;--execution-policy-->
+(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$do$if/&lt;--execution-policy-->
 (&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$defer$if/&lt;--defer-policy-->
 (&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$defer$push$if/&lt;--defer-push-policy-->
-(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$for/&lt;--usage-policy-->
+(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$use$if/&lt;--usage-policy-->
+(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$del$if/&lt;--deletion-policy-->
+(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$msg/&lt;--trigger-message-->
+(&lt;--AA-->/&lt;--RA-->)&lt;--TA-->&lt;--ID-->[$contract]&lt;--link-contract-id-->$msg$do$if/&lt;--trigger-policy-->
 </programlisting>
 
 <para>Where:</para>
@@ -297,10 +300,13 @@ although the singleton form <code>$contract</code> can equally be used.</para>
 <listitem><para><code>&lt;--link-contract-id--></code> is a unique immutable ID for a member of a link contract collection. (Unordered members start with <code>!</code>, ordered members start with <code>@</code>.)</para></listitem>
 <listitem><para><code>&lt;--permission--></code> is an permission granted by this link contract (e.g., <code>$get</code>, <code>$set</code>, <code>$del</code>, or <code>$do&lt;--extension--></code>).</para></listitem>
 <listitem><para><code>&lt;--object-graph--></code> is the XDI graph that is the object of the operations permitted by the link contract.</para></listitem>
-<listitem><para><code>&lt;--execution-policy--></code> is an XDI policy that determines if a request message is executed.</para></listitem>
-<listitem><para><code>&lt;--defer-policy--></code> is an XDI policy that determines if a request message is deferred.</para></listitem>
-<listitem><para><code>&lt;--defer-push-policy--></code> is an XDI policy that determines if a request message is deferred with a push link contract.</para></listitem>
+<listitem><para><code>&lt;--execution-policy--></code> is an XDI policy that decides if a <glossterm>request message</glossterm> gets executed.</para></listitem>
+<listitem><para><code>&lt;--defer-policy--></code> is an XDI policy that decides if a <glossterm>request message</glossterm> gets deferred.</para></listitem>
+<listitem><para><code>&lt;--defer-push-policy--></code> is an XDI policy that decides if a <glossterm>request message</glossterm> gets deferred with a push link contract.</para></listitem>
 <listitem><para><code>&lt;--usage-policy--></code> is an XDI policy that expresses the purpose for which the link contract may be used.</para></listitem>
+<listitem><para><code>&lt;--deletion-policy--></code> is an XDI policy that decides if the link contract gets deleted.</para></listitem>
+<listitem><para><code>&lt;--trigger-message--></code> is an XDI message that gets executed if decided by the <code>&lt;--trigger-policy--></code>.</para></listitem>
+<listitem><para><code>&lt;--trigger-policy--></code> is an XDI policy that decides if the <code>&lt;--trigger-message--></code> gets executed.</para></listitem>
 </itemizedlist>
 
 <para>TODO: Describe "generic" <code>(&lt;--AA-->/&lt;--RA-->)</code> vs. "specific" <code>(&lt;--AA-->/&lt;--class-->)</code> link contracts.</para>
@@ -309,14 +315,16 @@ although the singleton form <code>$contract</code> can equally be used.</para>
 
 <section><title>Permissions</title>
 
-<para>TODO Permissions</para>
+<para>Each relational <code>&lt;--operation--></code> predicate in the <code>$contract</code> or
+<code>[$contract]&lt;--link-contract-id--></code> context MUST define a permission granted by the link
+contract to a <glossterm>request message</glossterm>.</para>
 
 </section>
 
 <section><title>Execution Policy</title>
 
 <para>A link contract MAY contain an <firstterm>execution policy</firstterm>.
-This policy is evaluated to determine if a request message is executed by a responder.
+This policy is evaluated to decide if a <glossterm>request message</glossterm> gets executed by a responder.
 Evaluation of this policy (see <xref linkend="s.policy.evaluation"/>) is part of the overall
 link contract evaluation process (see <xref linkend="s.link.contract.evaluation"/>).</para>
 
@@ -333,8 +341,8 @@ link contract evaluation process (see <xref linkend="s.link.contract.evaluation"
 <section><title>Defer Policy</title>
 
 <para>A link contract MAY contain a <firstterm>defer policy</firstterm>.
-This policy is evaluated to determine if a request message is deferred by a responder. 
-Evaluation of this policy (see <xref linkend="s.policy.evaluation"/>) is part of the overall
+This policy is evaluated to decide if a <glossterm>request message</glossterm> gets deferred by a responder.</para>
+<para>Evaluation of this policy (see <xref linkend="s.policy.evaluation"/>) is part of the overall
 link contract evaluation process (see <xref linkend="s.link.contract.evaluation"/>).</para>
 
 </section>
@@ -342,9 +350,9 @@ link contract evaluation process (see <xref linkend="s.link.contract.evaluation"
 <section><title>Defer Push Policy</title>
 
 <para>A link contract MAY contain a <firstterm>defer push policy</firstterm>.
-This policy is evaluated to determine if a request message is deferred by a responder and
-a push link contract created. 
-Evaluation of this policy (see <xref linkend="s.policy.evaluation"/>) is part of the overall
+This policy is evaluated to decide if a <glossterm>request message</glossterm> gets deferred by a responder, and
+a push link contract is created.</para>
+<para>Evaluation of this policy (see <xref linkend="s.policy.evaluation"/>) is part of the overall
 link contract evaluation process (see <xref linkend="s.link.contract.evaluation"/>).</para>
 
 </section>
@@ -355,6 +363,39 @@ link contract evaluation process (see <xref linkend="s.link.contract.evaluation"
 no LC instance would be created).</para>
 
 <para>TODO: Describe how the usage policy works.</para>
+
+</section>
+
+<section><title>Deletion Policy</title>
+
+<para>A link contract MAY contain a <firstterm>deletion policy</firstterm>.
+This policy is evaluated to decide if the link contract gets deleted. This
+policy has no effect on the current <glossterm>request message</glossterm>, i.e. the <glossterm>request message</glossterm> can still
+get executed or deferred even if the link contract gets deleted. This policy is independent of other
+policies, i.e. is evaluated whether the current <glossterm>request message</glossterm> is executed, deferred, or rejected.</para>
+<para>Evaluation of this policy (see <xref linkend="s.policy.evaluation"/>) is part of the overall
+link contract evaluation process (see <xref linkend="s.link.contract.evaluation"/>).</para>
+
+</section>
+
+<section><title>Trigger Message</title>
+
+<para>A link contract MAY contain a <firstterm>trigger message</firstterm>.
+This XDI message gets executed if decided by the <glossterm>trigger policy</glossterm>. It may apply
+operations to modify the link contract itself or other parts of the <glossterm>target graph</glossterm>.</para>
+<para>Evaluation of this policy (see <xref linkend="s.policy.evaluation"/>) is part of the overall
+link contract evaluation process (see <xref linkend="s.link.contract.evaluation"/>).</para>
+
+</section>
+
+<section><title>Trigger Policy</title>
+
+<para>A link contract MAY contain a <firstterm>trigger policy</firstterm>.
+This policy is evaluated to decide if the <glossterm>trigger message</glossterm> gets executed. This
+policy has no effect on the current <glossterm>request message</glossterm>. This policy is independent of
+other policies, i.e. it is evaluated whether the current <glossterm>request message</glossterm> is executed, deferred, or rejected.</para>
+<para>Evaluation of this policy (see <xref linkend="s.policy.evaluation"/>) is part of the overall
+link contract evaluation process (see <xref linkend="s.link.contract.evaluation"/>).</para>
 
 </section>
 
@@ -378,6 +419,13 @@ It is an entity singleton identified by a <code>{$contract}</code> context:</par
 
 <programlisting>&lt;--TA-->&lt;--ID-->{$contract} 
 </programlisting>
+
+<para>Where:</para>
+
+<itemizedlist>
+<listitem><para><code>&lt;--TA--></code> is the XDI address of the template authority.</para></listitem>
+<listitem><para><code>&lt;--ID--></code> is an OPTIONAL context for specialization of the singleton <code>{$contract}</code>. It can serve as a "qualifier" or "tag" that describes the intention of the link contract template, e.g. <code>#registration</code>.</para></listitem>
+</itemizedlist>
 
 <para>A context node representing a link contract template contains various statements that make up
 the semantics and purpose of the link contract template.</para>
@@ -412,7 +460,7 @@ using the reserved word <code>$required</code>.</para>
 express the policies requested that an AA apply to allow or deny XDI messages that claim
 to be authorized under the link contract.</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$contract}$if/&lt;--policy expression-->
+<programlisting>&lt;--TA-->&lt;--ID-->{$contract}$do$if/&lt;--policy expression-->
 </programlisting>
 
 </section>
@@ -421,13 +469,13 @@ to be authorized under the link contract.</para>
 
 <para>An operational permission leaving usage permissions unspecified is, in effect, requesting
 blanket permissions. RAs SHOULD request more specific usage permissions for the data in an
-<code>&lt;--object-graph--></code> using the <code>$for</code> reserved word and the <code>$opt</code> reserved word in their link
+<code>&lt;--object-graph--></code> using the <code>$use</code> reserved word and the <code>$opt</code> reserved word in their link
 contract template. Additionally, RA’s SHOULD use the <code>$required</code> and <code>$default</code> reserved words
 for an opt-in patterns.</para>
 
-<programlisting>&lt;--TA-->&lt;--ID-->{$contract}$for{&lt;$opt>}&lt;$required>/&amp;/true     ## opt in is required
-&lt;--TA-->&lt;--ID-->{$contract}$for{&lt;$opt>}&lt;$default>/&amp;/false     
-&lt;--TA-->&lt;--ID-->{$contract}$for{&lt;$opt>}&lt;--language-->//&amp;/"human readable explanation"
+<programlisting>&lt;--TA-->&lt;--ID-->{$contract}$use{&lt;$opt>}&lt;$required>/&amp;/true     ## opt in is required
+&lt;--TA-->&lt;--ID-->{$contract}$use{&lt;$opt>}&lt;$default>/&amp;/false     
+&lt;--TA-->&lt;--ID-->{$contract}$use{&lt;$opt>}&lt;--language-->//&amp;/"human readable explanation"
 </programlisting>
 
 </section>
@@ -459,7 +507,7 @@ is always the boolean value <code>true</code> or <code>false</code>.</para>
 <itemizedlist>
 <listitem><para>A link contract's <glossterm>execution policy</glossterm>, <glossterm>defer policy</glossterm>,
 <glossterm>deletion policy</glossterm>, and <glossterm>defer push policy</glossterm> are part of the link contract and therefore the target
-graph. They enable an XDI endpoint to decide if the request message is authorized and how it is
+graph. They enable an XDI endpoint to decide if a <glossterm>request message</glossterm> is authorized and how it is
 handled.</para></listitem>
 <listitem><para>A <glossterm>message policy</glossterm> is part of the request message. It
 provides a way for an XDI client to request execution of the request message only if certain conditions
@@ -483,7 +531,7 @@ trust framework supporting these policies.</para>
 
 <para>A policy MUST consist of one or more XDI statements in the following pattern: </para>
 
-<programlisting>&lt;--policy-context--> $if&lt;--boolean-context-->/&lt;--boolean-operator-->/&lt;--condition-->
+<programlisting>&lt;--policy-context-->$if&lt;--boolean-context-->/&lt;--boolean-operator-->/&lt;--condition-->
 </programlisting>
 
 <para>Where:</para>
@@ -704,17 +752,17 @@ considered to be an arbitrary XDI statement.</para>
 <section><title>Usage Permissions</title>
 
 <para>The following reserved words are proposed for usage policy expression, also called usage permissions.</para>
-<para>See the example section for the use of the $for branch within a detailed link contract instantiation scenario.</para>
+<para>See the example section for the use of the $use branch within a detailed link contract instantiation scenario.</para>
 
-<section><title><code>$for</code></title>
+<section><title><code>$use</code></title>
 
-<para>Included within a link contract instance to specify the context of usage. Uses the $opt, $required, $default and other reserved words.  The $for pattern makes use of $opt and other patterns.</para>
+<para>Included within a link contract instance to specify the context of usage. Uses the $opt, $required, $default and other reserved words.  The $use pattern makes use of $opt and other patterns.</para>
 
 </section>
 
 <section><title><code>$opt</code></title>
 
-<para>Included within a $for subgraph support the opt-in process associated with a link contract giving a requesting authority access to data.</para>
+<para>Included within a $use subgraph support the opt-in process associated with a link contract giving a requesting authority access to data.</para>
 
 </section>
 
@@ -743,14 +791,14 @@ considered to be an arbitrary XDI statement.</para>
 <section id="s.policy.evaluation"><title>Policy Evaluation</title>
 
 <para>In order to evaluate a policy to either <code>true</code> or <code>false</code>, an <glossterm>evaluation
-context</glossterm> has to be constructed. This evaluation context depends on the purpose of the policy that is
+context</glossterm> has to be defined. This evaluation context depends on the purpose of the policy that is
 being evaluated. At a minimum, an evaluation context MUST define a <glossterm>policy evaluation graph</glossterm>
-that is used to evaluate the policy's conditions. An evaluation context typically also defines variables and
-their values.</para>
+that is used as a basis to evaluate the policy's conditions. An evaluation context typically also supplies values
+for variables that are used by the policy.</para>
 
 <para>For a link contract's <glossterm>execution policy</glossterm>, <glossterm>defer policy</glossterm>,
 and <glossterm>defer push policy</glossterm>, as well as for a <glossterm>message policy</glossterm>,
-the evaluation context is constructed as follows:</para>
+the evaluation context is defined as follows:</para>
 
 <itemizedlist>
 <listitem><para>The <glossterm>policy evaluation graph</glossterm> is defined to be the <glossterm>target
@@ -781,7 +829,7 @@ contract from a link contract template. This function may be invoked in the foll
 
 <itemizedlist>
 <listitem>When the <code>$connect</code> operation is executed (see <xref linkend="xdi-messaging-1.0"/>).</listitem>
-<listitem>When a request message is deferred (see <xref linkend="xdi-messaging-1.0"/>).</listitem>
+<listitem>When a <glossterm>request message</glossterm> is deferred (see <xref linkend="xdi-messaging-1.0"/>).</listitem>
 <listitem>Through other mechanisms that are out of scope of this specification.</listitem>
 </itemizedlist>
 
@@ -819,15 +867,15 @@ This is the same variable used for the receiver of an XDI message.</listitem>
 <para>Then the instantiated link contract is as follows:</para>
 
 <programlisting>(=!:uuid:2222/=!:uuid:1111)$get$contract$do/$get/=!:uuid:2222&lt;#email>
-(=!:uuid:2222/=!:uuid:1111)($get$contract$if$and/$true){$from}/$is/=!:uuid:1111
-(=!:uuid:2222/=!:uuid:1111)($get$contract$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:2222/=!:uuid:1111)($get$contract$do$if$and/$true){$from}/$is/=!:uuid:1111
+(=!:uuid:2222/=!:uuid:1111)($get$contract$do$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 </section>
 
 <section id="s.push.contracts"><title>Push Link Contracts</title>
 
-<para>A push link contract is a link contract that expresses a publish/subscribe relationship between 
+<para>A <firstterm>push link contract</firstterm> is a link contract that establishes a publish/subscribe relationship between 
 peers. It enables a peer called  <firstterm>publishing peer</firstterm> (or short <firstterm>publisher</firstterm>)
 to notify one or more other peers called <firstterm>subscribing peers</firstterm> (or short <firstterm>subscribers</firstterm>)
 of changes in a graph for which the publisher is authoritative.</para>
@@ -836,7 +884,7 @@ of changes in a graph for which the publisher is authoritative.</para>
 a link contract with certain properties. This link contract is called a <firstterm>push link contract</firstterm>
 (or short <firstterm>push contract</firstterm>).</para>
 
-<para>A push contract conforms to the link contract pattern (see <xref linkend="s.link.contracts"/>)
+<para>A <glossterm>push contract</glossterm> conforms to the link contract pattern (see <xref linkend="s.link.contracts"/>),
 and in addition MUST meet the following conditions:</para>
 
 <orderedlist>
@@ -882,7 +930,7 @@ push contracts can be created in which multiple peers simultaneously fulfill the
 subscribers. The notification is itself an XDI message. This message is called a <firstterm>push message</firstterm>
 (or short <firstterm>push</firstterm>).</para>
 
-<para>A <firstterm>push message</firstterm> MUST conform to the request message pattern
+<para>A <firstterm>push message</firstterm> MUST conform to the <glossterm>request message</glossterm> pattern
 (see <xref linkend="xdi-messaging-1.0"/>) and in addition MUST meet the following conditions:</para>
 
 <orderedlist>
@@ -920,17 +968,17 @@ sufficient.</para>
 <para>The <firstterm>standard root link contract template</firstterm> <code>$all{$contract}</code>:</para>
 
 <programlisting>$all{$contract}$do/$all/
-($all{$contract}$if$and/$true){{$from}}/$is/{$from}
-($all{$contract}$if$and$or/$true){{$msg}}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
-($all{$contract}$if$and$or/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+($all{$contract}$do$if$and/$true){{$from}}/$is/{$from}
+($all{$contract}$do$if$and$or/$true){{$msg}}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
+($all{$contract}$do$if$and$or/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 <para>Example instantiated <firstterm>root link contract</firstterm>:</para>
 
 <programlisting>(=!:uuid:2222/=!:uuid:1111)$all$contract$do/$all/
-(=!:uuid:2222/=!:uuid:1111)($all$contract$if$and/$true){$from}/$is/=!:uuid:1111
-(=!:uuid:2222/=!:uuid:1111)($all$contract$if$and/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
-(=!:uuid:2222/=!:uuid:1111)($all$contract$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:2222/=!:uuid:1111)($all$contract$do$if$and/$true){$from}/$is/=!:uuid:1111
+(=!:uuid:2222/=!:uuid:1111)($all$contract$do$if$and$or/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
+(=!:uuid:2222/=!:uuid:1111)($all$contract$do$if$and$or/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 </section>
@@ -963,15 +1011,15 @@ same pattern applies for the other <firstterm>standard operation link contract t
 <code>$push{$contract}</code>:</para>
 
 <programlisting>$get{$contract}$do/$get/{$get}
-($get{$contract}$if$and/$true){{$from}}/$is/{$from}
-($get{$contract}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+($get{$contract}$do$if$and/$true){{$from}}/$is/{$from}
+($get{$contract}$do$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 <para>Example instantiated <firstterm>operation link contract</firstterm>:</para>
 
 <programlisting>(=!:uuid:2222/=!:uuid:1111)$get[$contract]*!:uuid:lc-1$do/$get/=!:uuid:2222&lt;#email>
-(=!:uuid:2222/=!:uuid:1111)($get[$contract]*!:uuid:lc-1$if$and/$true){$from}/$is/=!:uuid:1111
-(=!:uuid:2222/=!:uuid:1111)($get[$contract]*!:uuid:lc-1$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:2222/=!:uuid:1111)($get[$contract]*!:uuid:lc-1$do$if$and/$true){$from}/$is/=!:uuid:1111
+(=!:uuid:2222/=!:uuid:1111)($get[$contract]*!:uuid:lc-1$do$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 </section>
@@ -992,16 +1040,16 @@ for any given relationship between two peers, multiple <firstterm>push link cont
 
 <programlisting>$push{$contract}$do/$push/{$push}
 $push{$contract}/$to/{($from)}
-($push{$contract}$if$and/$true){{$from}}/$is/{$to}
-($push{$contract}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+($push{$contract}$do$if$and/$true){{$from}}/$is/{$to}
+($push{$contract}$do$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 <para>Example instantiated <firstterm>push link contract</firstterm>:</para>
 
 <programlisting>(=!:uuid:2222/=!:uuid:1111)$push[$contract]*!:uuid:lc-1$do/$push/=!:uuid:2222&lt;#email>
 (=!:uuid:2222/=!:uuid:1111)$push[$contract]*!:uuid:lc-1/$to/(=!:uuid:1111)
-(=!:uuid:2222/=!:uuid:1111)($push[$contract]*!:uuid:lc-1$if$and/$true){$from}/$is/=!:uuid:2222
-(=!:uuid:2222/=!:uuid:1111)($push[$contract]*!:uuid:lc-1$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:2222/=!:uuid:1111)($push[$contract]*!:uuid:lc-1$do$if$and/$true){$from}/$is/=!:uuid:2222
+(=!:uuid:2222/=!:uuid:1111)($push[$contract]*!:uuid:lc-1$do$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 </section>
@@ -1017,7 +1065,7 @@ In addition, its policy authorizes only message that are a <glossterm>response m
 single specific <glossterm>request message</glossterm>.</para>
 
 <para>The <firstterm>standard push link contract template</firstterm> is instantiated automatically every time a
-request message is <glossterm>deferred</glossterm> (see <xref linkend="s.response.message.deferred.push.contracts"/>).</para>
+<glossterm>request message</glossterm> is <glossterm>deferred</glossterm> (see <xref linkend="s.response.message.deferred.push.contracts"/>).</para>
 
 <para>The <firstterm>standard deferred push link contract template</firstterm> is typically instantiated as an instance in a <code>[$contract]</code>
 entity collection, since
@@ -1027,18 +1075,18 @@ for any given relationship between two peers, multiple <firstterm>push link cont
 
 <programlisting>$defer$push{$contract}$do/$push/{$push}
 $defer$push{$contract}/$to/{($from)}
-($defer$push{$contract}$if$and/$true){{$from}}/$is/{$to}
-($defer$push{$contract}$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
-($defer$push{$contract}$if$and/$true){{$msg}}/$is$msg/{$msg}
+($defer$push{$contract}$do$if$and/$true){{$from}}/$is/{$to}
+($defer$push{$contract}$do$if$and/$true){{$msg}}&lt;$sig>&lt;$valid>/&amp;/true
+($defer$push{$contract}$do$if$and/$true){{$msg}}/$is$msg/{$msg}
 </programlisting> 
 
 <para>Example instantiated <firstterm>deferred push link contract</firstterm>:</para>
 
 <programlisting>(=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:lc-1$do/$push/=!:uuid:2222&lt;#email>
 (=!:uuid:2222/=!:uuid:1111)$defer$push[$contract]*!:uuid:lc-1/$to/(=!:uuid:1111)
-(=!:uuid:2222/=!:uuid:1111)($defer$push[$contract]*!:uuid:lc-1$if$and/$true){$from}/$is/=!:uuid:2222
-(=!:uuid:2222/=!:uuid:1111)($defer$push[$contract]*!:uuid:lc-1$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
-(=!:uuid:2222/=!:uuid:1111)($defer$push[$contract]*!:uuid:lc-1$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
+(=!:uuid:2222/=!:uuid:1111)($defer$push[$contract]*!:uuid:lc-1$do$if$and/$true){$from}/$is/=!:uuid:2222
+(=!:uuid:2222/=!:uuid:1111)($defer$push[$contract]*!:uuid:lc-1$do$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:2222/=!:uuid:1111)($defer$push[$contract]*!:uuid:lc-1$do$if$and/$true){$msg}/$is$msg/=!:uuid:1111[$msg]*!:uuid:m-1
 </programlisting>
 
 </section>
@@ -1058,12 +1106,12 @@ for any given relationship between two peers, multiple <firstterm>message digest
 <para>The <firstterm>standard message digest link contract template</firstterm> <code>$msg$digest{$contract}</code>:</para>
 
 <programlisting>$msg$digest{$contract}$do/$all/
-($msg$digest{$contract}$if/$true){{$msg}}&lt;$digest>/{&amp;}/{&lt;$digest>}</programlisting>
+($msg$digest{$contract}$do$if/$true){{$msg}}&lt;$digest>/{&amp;}/{&lt;$digest>}</programlisting>
 
 <para>Example instantiated <firstterm>message digest link contract</firstterm>:</para>
 
 <programlisting>(=!:uuid:2222/=!:uuid:1111)$msg$digest[$contract]*!:uuid:lc-1/$all/
-(=!:uuid:2222/=!:uuid:1111)($msg$digest{$contract}$if/$true){$msg}&lt;$digest>/&amp;/"... message digest ..."
+(=!:uuid:2222/=!:uuid:1111)($msg$digest[$contract]*!:uuid:lc-1$do$if/$true){$msg}&lt;$digest>/&amp;/"... message digest ..."
 </programlisting>
 
 </section>
@@ -1106,8 +1154,8 @@ to the legal concepts of custodianship or guardianship (e.g. parent-child).</par
 
 <para>Root link contract pattern:</para>
 
-<programlisting>(&lt;--AA-->/&lt;--AA-->)($contract$if&lt;--policy-expression-->
-(&lt;--AA-->/&lt;--AA-->)$contract$do/$all/
+<programlisting>(&lt;--AA-->/&lt;--AA-->)$contract$do/$all/
+(&lt;--AA-->/&lt;--AA-->)($contract$do$if&lt;--policy-expression-->
 </programlisting>
 
 <para>A <firstterm>root link contract</firstterm> contains a <code>$all</code> permission on 
@@ -1116,9 +1164,9 @@ an entire graph ("root access").</para>
 <para>Example root link contract:</para>
 
 <programlisting>(=!:uuid:1111/=!:uuid:1111)$contract$do/$all/
-(=!:uuid:1111/=!:uuid:1111)($contract$if$and/$true){$from}/$is/=!:uuid:1111
-(=!:uuid:1111/=!:uuid:1111)($contract$if$and$or/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
-(=!:uuid:1111/=!:uuid:1111)($contract$if$and$or/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
+(=!:uuid:1111/=!:uuid:1111)($contract$do$if$and/$true){$from}/$is/=!:uuid:1111
+(=!:uuid:1111/=!:uuid:1111)($contract$do$if$and$or/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
+(=!:uuid:1111/=!:uuid:1111)($contract$do$if$and$or/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
 </programlisting>
 
 </section>
@@ -1173,7 +1221,7 @@ an entire graph (see <xref linkend="s.operation.connect"/>).</para>
 
 <programlisting>(=!:uuid:1111/$connect)$contract$do/$connect/
 (=!:uuid:1111/$connect)($contract$defer$push$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
-(=!:uuid:1111/$connect)$contract$if//$not
+(=!:uuid:1111/$connect)$contract$do$if//$not
 </programlisting>
 
 <para>TODO: Add some explanation what role this link contract plays for <code>$connect</code> operations and
@@ -1193,7 +1241,7 @@ an entire graph (see <xref linkend="s.operation.send"/>).</para>
 
 <programlisting>(=!:uuid:1111/$send)$contract$do/$send/
 (=!:uuid:1111/$send)($contract$defer$push$if$and/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
-(=!:uuid:1111/$send)$contract$if//$not
+(=!:uuid:1111/$send)$contract$do$if//$not
 </programlisting>
 
 </section>
@@ -1202,94 +1250,95 @@ an entire graph (see <xref linkend="s.operation.send"/>).</para>
 
 <appendix><title>Policy Expression Examples</title>
 
-<para>These examples are written in XDI Display Format. See JSON Serialization Rules for the over-the-wire format.</para>
-<para>Link contract policy that checks that the secret token in the message matches the secret token in the graph:</para>
+<section><title>Usage Policy Examples</title>
 
-<programlisting>$secret&lt;$token>/&amp;/"s3cr3t"
-($contract$if/$true){$msg}&lt;$secret>&lt;$token>/$equals/&lt;$secret>&lt;$token>
+<para>These examples are written in statement format.</para>
+
+<para>Link contract policy that checks if the secret token in a message matches the secret token in the link contract:</para>
+
+<programlisting>(&lt;--AA-->/&lt;--RA-->)$contract&lt;$secret>&lt;$token>/&amp;/"s3cr3t"
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if/$true){$msg}&lt;$secret>&lt;$token>/$equals/(&lt;--AA-->/&lt;--RA-->)$contract&lt;$secret>&lt;$token>
 </programlisting>
 
-<para>Link contract policy that checks that the message timestamp comes before a certain time:</para>
+<para>Link contract policy that checks if a link contract is not used after a certain time, i.e. is not expired:</para>
 
-<programlisting>($contract$if/$true){$msg}&lt;$t>/$lesser/...$contract&lt;#expiration>&lt;$t>
-$contract&lt;#expiration>&lt;$t>/&amp;/"2012-12-12"
+<programlisting>(&lt;--AA-->/&lt;--RA-->)$contract&lt;#end>&lt;$t>/&amp;/"2017-12-31"
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if/$true){$msg}&lt;$t>/$lesser/(&lt;--AA-->/&lt;--RA-->)$contract&lt;#end>&lt;$t>
+</programlisting>
+
+<para>Link contract policy that checks if a link contract is active, and not used before or after a certain time:</para>
+
+<programlisting>(&lt;--AA-->/&lt;--RA-->)$contract&lt;#active&gt;/&amp;/true
+(&lt;--AA-->/&lt;--RA-->)$contract&lt;#start&gt;&lt;$t&gt;/&amp;/"2017-01-01"
+(&lt;--AA-->/&lt;--RA-->)$contract&lt;#end&gt;&lt;$t&gt;/&amp;/"2017-12-31"
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and/$true)(&lt;--AA-->/&lt;--RA-->)$contract&lt;#active&gt;/&amp;/true
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and/$true){$msg}&lt;$t&gt;/$greater/(&lt;--AA-->/&lt;--RA-->)$contract&lt;#start&gt;&lt;$t&gt;
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and/$true){$msg}&lt;$t&gt;/$lesser/(&lt;--AA-->/&lt;--RA-->)$contract&lt;#end&gt;&lt;$t&gt;
 </programlisting>
 
 <para>Link contract policy that checks that the message comes from one of the approved senders:</para>
 
-<programlisting>($contract$if/$true){$from}/$is/=!:uuid:2222
-($contract$if/$true){$from}/$is/=!:uuid:3333
-($contract$if/$true){$from}/$is/=!:uuid:4444
+<programlisting>(&lt;--AA-->/&lt;--RA-->)($contract$do$if/$true){$from}/$is/=!:uuid:2222
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if/$true){$from}/$is/=!:uuid:3333
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if/$true){$from}/$is/=!:uuid:4444
 </programlisting>
 
 <para>Link contract policy that excludes a certain sender:</para>
 
-<programlisting>($contract$if/$false){$from}/$is/=!:uuid:1111
+<programlisting>(&lt;--AA-->/&lt;--RA-->)($contract$do$if/$false){$from}/$is/=!:uuid:1111
 </programlisting>
 
 <para>Link contract policy that excludes a certain sender (other way of doing it):</para>
 
-<programlisting>($contract$if$not/$true){$from}/$is/=!:uuid:1111
-</programlisting>
-
-<para>Link contract for "root access" to an authority's own graph:</para>
-
-<programlisting>(&lt;--AA-->/&lt;--AA-->)$contract/$all/
-(&lt;--AA-->/&lt;--AA-->)($contract$if$and/$true){$from}/$is/&lt;--AA-->
-(&lt;--AA-->/&lt;--AA-->)($contract$if$and$or/$true){$msg}&lt;$secret>&lt;$token>&lt;$valid>/&amp;/true
-(&lt;--AA-->/&lt;--AA-->)($contract$if$and$or/$true){$msg}&lt;$sig>&lt;$valid>/&amp;/true
-</programlisting>
-
-<para>Link contract for the "public branch" of an XDI graph:</para>
-
-<programlisting>$public$contract/$get/$public
+<programlisting>(&lt;--AA-->/&lt;--RA-->)($contract$do$if$not/$true){$from}/$is/=!:uuid:1111
 </programlisting>
 
 <para>Link contract to allow Bob access to Alice's phone number:</para>
 
 <programlisting>=alice/$ref/=!:uuid:1111
 =bob/$ref/=!:uuid:2222
-=!:uuid:1111$&lt;#tel>/&amp;/"#1-123-567-8900"
-($contract$if/$true){$from}/$is/=!:uuid:2222)
-$contract/$get/=!:uuid:1111&lt;#tel>
+=!:uuid:1111&lt;#tel>/&amp;/"#1-123-567-8900"
+(=!:uuid:1111/=!:uuid:2222)$contract$do/$get/=!:uuid:1111&lt;#tel>
+(=!:uuid:1111/=!:uuid:2222)($contract$do$if/$true){$from}/$is/=!:uuid:2222
 </programlisting>
 
 <para>Link contract policy that checks that the message comes either from myself <code>(=!:uuid:1111)</code>
 or from one of my friends:</para>
 
-<programlisting>($contract$if$or/$true)=!:uuid:1111/$is/{$from}
-($contract$if$or/$true)=!:uuid:1111/#friend/{$from}
+<programlisting>=!:uuid:1111/#friend/=!:uuid:2222
+(=!:uuid:1111/#friend)($contract$do$if$or/$true)=!:uuid:1111/$is/{$from}
+(=!:uuid:1111/#friend)($contract$do$if$or/$true)=!:uuid:1111/#friend/{$from}
 </programlisting>
 
 <para>Link contract that allows a <code>$do$signal</code> operation to signal certain "events" on a certain "channel":</para>
 
-<programlisting>$contract/$do$signal/=!:uuid:1111[#channel]*!23[#event]
-($contract$if$and/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#domain/#cloudos
-($contract$if$and$or/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#notification
-($contract$if$and$or/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#subscription
-($contract$if$and$or/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#deletion
+<programlisting>(&lt;--AA-->/&lt;--RA-->)$contract$do/$do$signal/=!:uuid:1111[#channel]*!23[#event]
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#domain/#cloudos
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and$or/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#notification
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and$or/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#subscription
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and$or/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#deletion
 </programlisting>
 
 <para>Combination of the previous two examples:</para>
 
 <programlisting>=!:uuid:1111/#friend/=!:uuid:2222
-$contract/$contract$signal/=!:uuid:1111[#channel]*!23[#event]
-($contract$if$and/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#domain/#cloudos
-($contract$if$and[$or]@~1/$true)=!:uuid:1111/$is/{$from}
-($contract$if$and[$or]@~1/$true)=!:uuid:1111/#friend/{$from}
-($contract$if$and[$or]@~2/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#notification
-($contract$if$and[$or]@~2/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#subscription
-($contract$if$and[$or]@~2/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#deletion
+(&lt;--AA-->/&lt;--RA-->)$contract$do/$do$signal/=!:uuid:1111[#channel]*!23[#event]
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#domain/#cloudos
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and[$or]@~1/$true)=!:uuid:1111/$is/{$from}
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and[$or]@~1/$true)=!:uuid:1111/#friend/{$from}
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and[$or]@~2/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#notification
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and[$or]@~2/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#subscription
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and[$or]@~2/$do$signal)=!:uuid:1111[#channel]*!23[#event]{}/#type/#deletion
 </programlisting>
 
 <para>Link contract policy that allows the message if it is not sent on Friday 13th, and
 it is not sent by <code>=drummond</code> or <code>=markus</code>. (Note that the weekday and day-of-month
 definitions still need to be defined in the XDI <code>$</code> Dictionary.)</para>
 
-<programlisting>($contract$if$and[$not]@~1$and/$true)&lt;--weekday_is_friday-->
-($contract$if$and[$not]@~1$and/$true)&lt;--day_is_13th-->
-($contract$if$and[$not]@~2$or/$true)=drummond/$is/{$from}
-($contract$if$and[$not]@~2$or/$true)=markus/$is/{$from}
+<programlisting>(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and[$not]@~1$and/$true)&lt;--weekday_is_friday-->
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and[$not]@~1$and/$true)&lt;--day_is_13th-->
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and[$not]@~2$or/$true)=drummond/$is/{$from}
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$and[$not]@~2$or/$true)=markus/$is/{$from}
 </programlisting>
 
 <para>Complex example, expressing this pseudocode</para>
@@ -1309,11 +1358,46 @@ definitions still need to be defined in the XDI <code>$</code> Dictionary.)</par
 
 <para>in XDI, as</para>
 
-<programlisting>(=aa/=ra)($contract$if$or[$and]@~1/$true)=ra&lt;#gold>/&amp;/true
-(=aa/=ra)($contract$if$or[$and]@~1$not$and/$true)=ra&lt;#ex>/&amp;/true
-(=aa/=ra)($contract$if$or[$and]@~1$not$and/$true)+bank&lt;#nomoney>/&amp;/false
-(=aa/=ra)($contract$if$or/$true)=ra&lt;#ex>/&amp;/false
+<programlisting>(&lt;--AA-->/&lt;--RA-->)($contract$so$if$or[$and]@~1/$true)&lt;--RA-->&lt;#gold>/&amp;/true
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$or[$and]@~1$not$and/$true)&lt;--RA-->&lt;#ex>/&amp;/true
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$or[$and]@~1$not$and/$true)+bank&lt;#nomoney>/&amp;/false
+(&lt;--AA-->/&lt;--RA-->)($contract$do$if$or/$true)&lt;--RA-->&lt;#ex>/&amp;/false
 </programlisting>
+
+</section>
+
+<section><title>Deletion Policy Examples</title>
+
+<para>Link contract that gets deleted after it expires:</para>
+
+<programlisting>(&lt;--AA-->/&lt;--RA-->)$contract&lt;#end&gt;&lt;$t&gt;/&amp;/"2017-12-31"
+(&lt;--AA-->/&lt;--RA-->)($contract$del$if/$true){$msg}&lt;$t&gt;/$greater/(&lt;--AA-->/&lt;--RA-->)$contract&lt;#end&gt;&lt;$t&gt;
+</programlisting>
+
+<para>Link contract that gets deleted after a single use (the <glossterm>deletion policy</glossterm> always evaluates to <code>true</code>):</para>
+
+<programlisting>(&lt;--AA-->/&lt;--RA-->)$contract$del//$if
+</programlisting>
+
+</section>
+
+<section><title>Trigger Policy and Trigger Message Examples</title>
+
+<para>Link contract that gets deleted after it expires:</para>
+
+<programlisting>(&lt;--AA-->/&lt;--RA-->)$contract&lt;#end&gt;&lt;$t&gt;/&amp;/"2017-12-31"
+(&lt;--AA-->/&lt;--RA-->)$contract$msg$do/$del/(&lt;--AA-->/&lt;--RA-->)$contract
+(&lt;--AA-->/&lt;--RA-->)($contract$msg$do$if/$true){$msg}&lt;$t&gt;/$greater/(&lt;--AA-->/&lt;--RA-->)$contract&lt;#end&gt;&lt;$t&gt;
+</programlisting>
+
+<para>Link contract that gets deactivated after it receives a message with an invalid signature:</para>
+
+<programlisting>(&lt;--AA-->/&lt;--RA-->)$contract&lt;#active&gt;/&amp;/true
+(&lt;--AA-->/&lt;--RA-->)($contract$msg$do/$set)(&lt;--AA-->/&lt;--RA-->)$contract&lt;#active&gt;/&amp;/false
+(&lt;--AA-->/&lt;--RA-->)($contract$msg$do$if/$true){$msg}&lt;$sig&gt;&lt;$valid&gt;/&amp;/false
+</programlisting>
+
+</section>
 
 </appendix>
 
